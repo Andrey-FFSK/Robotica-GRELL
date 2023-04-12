@@ -13,8 +13,8 @@
 #define mot2_in1 10
 #define mot2_in2 8
 
-int pinos[11] = {6,5,4,3,2,12,13,11,9,10,8};
-
+//Usando array para colocar todos os pinos
+int pinos[] = {6,5,4,3,2,12,13,11,9,10,8};
 
 //Definindo variaveis para as funções e o timing, a velocidade vai ser responsavel para colocar no motor1ou2_lig
 int temp = 1000;
@@ -97,68 +97,56 @@ void mot2_par() //Função para o motor 2 ficar parado (mot2_lig LOW)
 {
   analogWrite(mot2_lig, 0);
 }
-
+//Definindo algumas variaveis
+#define  preto true
+#define branco false
 void loop()
 { 
-  bool oeste = digitalRead(s_oeste);
-  bool noroeste = digitalRead(s_noroeste);
-  bool norte = digitalRead(s_norte);
-  bool nordeste = digitalRead(s_nordeste);
-  bool leste = digitalRead(s_leste);
-  
-  bool condicao0 = (oeste == false && noroeste == false && norte == false && nordeste == false && leste == false);
-  bool condicao1 = (oeste == false && noroeste == false && norte == false && nordeste == false && leste == true);
-  bool condicao2 = (oeste == false && noroeste == false && norte == false && nordeste == true && leste == false);
-  bool condicao3 = (oeste == false && noroeste == false && norte == false && nordeste == true && leste == true);
-  bool condicao4 = (oeste == false && noroeste == false && norte == true && nordeste == false && leste == false); 
-  bool condicao5 = (oeste == false && noroeste == false && norte == true && nordeste == false && leste == true);
-  bool condicao6 = (oeste == false && noroeste == false && norte == true && nordeste == true && leste == false);
-  bool condicao7 = (oeste == false && noroeste == false && norte == true && nordeste == true && leste == true);
-  bool condicao8 = (oeste == false && noroeste == true && norte == false && nordeste == false && leste == false);
-  bool condicao9 = (oeste == false && noroeste == true && norte == false && nordeste == false && leste == true);
-  bool condicao10 = (oeste == false && noroeste == true && norte == false && nordeste == true && leste == false);
-  bool condicao11 = (oeste == false && noroeste == true && norte == false && nordeste == true && leste == true);
-  bool condicao12 = (oeste == false && noroeste == true && norte == true && nordeste == false && leste == false);
-  bool condicao13 = (oeste == false && noroeste == true && norte == true && nordeste == false && leste == true);
-  bool condicao14 = (oeste == false && noroeste == true && norte == true && nordeste == true && leste == false);
-  bool condicao15 = (oeste == false && noroeste == true && norte == true && nordeste == true && leste == true);
-  bool condicao16 = (oeste == true && noroeste == false && norte == false && nordeste == false && leste == false);
-  bool condicao17 = (oeste == true && noroeste == false && norte == false && nordeste == false && leste == true);
-  bool condicao18 = (oeste == true && noroeste == false && norte == false && nordeste == true && leste == false);
-  bool condicao19 = (oeste == true && noroeste == false && norte == false && nordeste == true && leste == true);
-  bool condicao20 = (oeste == true && noroeste == false && norte == true && nordeste == false && leste == false);
-  bool condicao21 = (oeste == true && noroeste == false && norte == true && nordeste == false && leste == true);
-  bool condicao22 = (oeste == true && noroeste == false && norte == true && nordeste == true && leste == false);
-  bool condicao23 = (oeste == true && noroeste == false && norte == true && nordeste == true && leste == true);
-  bool condicao24 = (oeste == true && noroeste == true && norte == false && nordeste == false && leste == false);
-  bool condicao25 = (oeste == true && noroeste == true && norte == false && nordeste == false && leste == true);
-  bool condicao26 = (oeste == true && noroeste == true && norte == false && nordeste == true && leste == false);
-  bool condicao27 = (oeste == true && noroeste == true && norte == false && nordeste == true && leste == true);
-  bool condicao28 = (oeste == true && noroeste == true && norte == true && nordeste == false && leste == false);
-  bool condicao29 = (oeste == true && noroeste == true && norte == true && nordeste == false && leste == true);
-  bool condicao30 = (oeste == true && noroeste == true && norte == true && nordeste == true && leste == false);
-  bool condicao31 = (oeste == true && noroeste == true && norte == true && nordeste == true && leste == true);
-  
-  digitalWrite(s_oeste, 0);
-  digitalWrite(s_noroeste, 0);
-  digitalWrite(s_norte, 0);
-  digitalWrite(s_nordeste, 0);
-  digitalWrite(s_leste, 0);
-  
-  if(condicao0)
-  {
-   Serial.println("deu certo");
-  }
+byte ff[] = {0,0,0,0,0}; //Não vai funcionar no robo, definir os sensores
+
+byte leitura = 0; //Definir sempre 0 quando definir algo com o for abaixo
+for(int i = 0; i < 5; i++) leitura |= ff[i] << i; //Um bit shifther automatico com as entradas do sensores
+Serial.println(leitura, BIN); //Impimindo no serial para testes
+
+//Condições que usa a tabela da verdade, consultar para ver
+if((leitura == 0b00000) || (leitura == 0b00001) || (leitura == 0b00010) || (leitura == 0b00100) || (leitura == 0b00110) || (leitura == 0b00111) || (leitura == 0b01000) || (leitura == 0b01010) || (leitura == 0b01100) || (leitura == 0b01110) || (leitura == 0b10100) || (leitura == 0b10101))
+{
+Serial.println("frente");
+mot1_hor_t();
+mot2_hor_t();
+}
+else if((leitura == 0b00011) | (leitura == 0b01011) | (leitura == 0b01111) | (leitura == 0b01011) | (leitura == 0b10010) | (leitura == 0b10011) | (leitura == 0b10111))
+{
+Serial.println("direita");
+mot1_hor_t();
+mot2_anti_t();
+}
+else if((leitura == 0b01001) | (leitura == 0b11000) | (leitura == 0b11001) | (leitura == 0b11100) | (leitura == 0b11010) | (leitura == 0b11101))
+{
+Serial.println("esquerda");
+mot1_anti_t();
+mot2_hor_t();
+
+}
+else if((leitura == 0b10000) | (leitura == 0b10001))
+{
+Serial.println("tras");
+mot1_anti_t();
+mot2_anti_t();
+}
+else if(leitura == 0b11111)
+{
+Serial.println("parar");
+mot1_par();
+mot2_par();
+};
+
 }
 
 /***********************************************
 Tem que ajeitar a tabela da verdade
 utilizar funções foi uma boa ideia mas nao sei se ao longo prazo
-Usar arrays
 Mudar a parte de definir sensores quando for na pratica
-Colocar leds
-usar o array junto com as condições
-usar ou nao usar as varaveis do sensores
 
 https://circuitdigest.com/microcontroller-projects/arduino-uno-line-follower-robot
 https://www.manualdaeletronica.com.br/ponte-h-o-que-e-como-funciona/
