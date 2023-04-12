@@ -32,30 +32,16 @@ void setup()
 }
 
 //Inicio das funções, para cada caso, totalizando 10 funções diferente
-void mot1_anti_t() //Função para o motor 1 girar no sentido anti horario com a velocidade maxima
+void mot1_anti(int velo) //Função para o motor 1 girar no sentido anti horario com a velocidade maxima
 {
-  analogWrite(mot1_lig, velo_t);
+  analogWrite(mot1_lig, velo);
   digitalWrite(mot1_in1, 0);
   digitalWrite(mot1_in2, 1);
 }
 
-void mot1_hor_t() //Função para o motor 1 girar no sentido horario com a velocidade maxima
+void mot1_hor(int velo) //Função para o motor 1 girar no sentido horario com a velocidade maxima
 {
-  analogWrite(mot1_lig, velo_t);
-  digitalWrite(mot1_in1, 1);
-  digitalWrite(mot1_in2, 0);
-}
-
-void mot1_anti_m() //Função para o motor 1 girar no sentido anti horario com a metade da velocidade
-{
-  analogWrite(mot1_lig, velo_m);
-  digitalWrite(mot1_in1, 0);
-  digitalWrite(mot1_in2, 1);
-}
-
-void mot1_hor_m() //Função para o motor 1 girar no sentido horario com a metade da velocidade
-{
-  analogWrite(mot1_lig, velo_m);
+  analogWrite(mot1_lig, velo);
   digitalWrite(mot1_in1, 1);
   digitalWrite(mot1_in2, 0);
 }
@@ -65,30 +51,16 @@ void mot1_par() //Função para o motor 1 ficar parado (mot1_lig LOW)
   analogWrite(mot1_lig, 0);
 }
 
-void mot2_anti_t() //Função para o motor 2 girar no sentido anti horario com a velocidade maxima
+void mot2_anti(int velo) //Função para o motor 2 girar no sentido anti horario com a velocidade maxima
 {
-  analogWrite(mot2_lig, velo_t);
+  analogWrite(mot2_lig, velo);
   digitalWrite(mot2_in1, 0);
   digitalWrite(mot2_in2, 1);
 }
 
-void mot2_hor_t() //Função para o motor 2 girar no sentido horario com a velocidade maxim
+void mot2_hor(int velo) //Função para o motor 2 girar no sentido horario com a velocidade maxim
 {
-  analogWrite(mot2_lig, velo_t);
-  digitalWrite(mot2_in1, 1);
-  digitalWrite(mot2_in2, 0);
-}
-
-void mot2_anti_m() //Função para o motor 2 girar no sentido anti horario com a metade da velocidade
-{
-  analogWrite(mot2_lig, velo_m);
-  digitalWrite(mot2_in1, 0);
-  digitalWrite(mot2_in2, 1);
-}
-
-void mot2_hor_m() //Função para o motor 2 girar no sentido horario com a metade da velocidade
-{
-  analogWrite(mot2_lig, velo_m);
+  analogWrite(mot2_lig, velo);
   digitalWrite(mot2_in1, 1);
   digitalWrite(mot2_in2, 0);
 }
@@ -97,6 +69,7 @@ void mot2_par() //Função para o motor 2 ficar parado (mot2_lig LOW)
 {
   analogWrite(mot2_lig, 0);
 }
+
 //Definindo algumas variaveis
 #define  preto true
 #define branco false
@@ -112,27 +85,26 @@ Serial.println(leitura, BIN); //Impimindo no serial para testes
 if((leitura == 0b00000) || (leitura == 0b00001) || (leitura == 0b00010) || (leitura == 0b00100) || (leitura == 0b00110) || (leitura == 0b00111) || (leitura == 0b01000) || (leitura == 0b01010) || (leitura == 0b01100) || (leitura == 0b01110) || (leitura == 0b10100) || (leitura == 0b10101))
 {
 Serial.println("frente");
-mot1_hor_t();
-mot2_hor_t();
+mot1_hor(255);
+mot2_hor(255);
 }
 else if((leitura == 0b00011) | (leitura == 0b01011) | (leitura == 0b01111) | (leitura == 0b01011) | (leitura == 0b10010) | (leitura == 0b10011) | (leitura == 0b10111))
 {
 Serial.println("direita");
-mot1_hor_t();
-mot2_anti_t();
+mot1_hor(255);
+mot2_anti(255);
 }
 else if((leitura == 0b01001) | (leitura == 0b11000) | (leitura == 0b11001) | (leitura == 0b11100) | (leitura == 0b11010) | (leitura == 0b11101))
 {
 Serial.println("esquerda");
-mot1_anti_t();
-mot2_hor_t();
-
+mot1_anti(255);
+mot2_hor(255);
 }
 else if((leitura == 0b10000) | (leitura == 0b10001))
 {
 Serial.println("tras");
-mot1_anti_t();
-mot2_anti_t();
+mot1_anti(255);
+mot2_anti(255);
 }
 else if(leitura == 0b11111)
 {
