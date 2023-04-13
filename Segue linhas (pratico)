@@ -75,162 +75,157 @@ byte leitura = 0; //Definir sempre 0 quando definir algo como o for abaixo
 for(int i = 0; i < 5; i++) leitura |= digitalRead(pinos[i]) << i; //Colocando as entrada da tabela da verdade usando um bitshift automatico
 
 //Condições que usa a tabela da verdade, consultar para ver
-if(leitura == 0b00000)
+if(leitura == 0b00000) //Condição 1
 {
   mot1_hor(100);
   mot2_hor(100);
 }
-else if(leitura == 0b00001)
+else if(leitura == 0b00001) //Condição 2
 {
   mot1_hor(100);
   mot2_hor(100);
 }
-else if(leitura == 0b00010)
+else if(leitura == 0b00010) //Condição 3
 {
   mot1_hor(100);
   mot2_hor(100);
 }
-else if(leitura == 0b00011)
+else if(leitura == 0b00011) //Condição 4
+{
+  mot1_hor(100);
+  mot2_anti(100);
+}
+else if(leitura == 0b00100) //Condição 5
 {
   mot1_hor(100);
   mot2_hor(100);
 }
-else if(leitura == 0b00100)
+else if(leitura == 0b00101) //Condição 6
+{
+
+}
+else if(leitura == 0b00110) //Condição 7
 {
   mot1_hor(100);
   mot2_hor(100);
 }
-else if(leitura == 0b00101)
+else if(leitura == 0b00111) //Condição 8
+{
+  mot1_hor(100); //Ver. frente
+  mot2_hor(100);
+}
+else if(leitura == 0b01000) //Condição 9
 {
   mot1_hor(100);
   mot2_hor(100);
 }
-else if(leitura == 0b00110)
+else if(leitura == 0b01001) //Condição 10
+{
+  mot1_anti(100);
+  mot2_hor(100);
+}
+else if(leitura == 0b01010) //Condição 11
 {
   mot1_hor(100);
   mot2_hor(100);
 }
-else if(leitura == 0b00111)
+else if(leitura == 0b01011) //Condição 12
+{
+  mot1_hor(100);
+  mot2_anti(100);
+}
+else if(leitura == 0b01100) //Condição 13
 {
   mot1_hor(100);
   mot2_hor(100);
 }
-else if(leitura == 0b01000)
+else if(leitura == 0b01101) //Condição 14
+{
+
+}
+else if(leitura == 0b01110) //Condição 15
 {
   mot1_hor(100);
   mot2_hor(100);
 }
-else if(leitura == 0b01001)
+else if(leitura == 0b01111) //Condição 16
+{
+  mot1_hor(100);
+  mot2_anti(100);
+}
+else if(leitura == 0b10000) //Condição 17
+{
+  mot1_anti(100);
+  mot2_anti(100);
+}
+else if(leitura == 0b10001) //Condição 18
+{
+  mot1_anti(100);
+  mot2_anti(100);
+}
+else if(leitura == 0b10010) //Condição 19
+{
+  mot1_hor(100);
+  mot2_anti(100);
+}
+else if(leitura == 0b10011) //Condição 20
+{
+  mot1_hor(100);
+  mot2_anti(100);
+}
+else if(leitura == 0b10100) //Condição 21
 {
   mot1_hor(100);
   mot2_hor(100);
 }
-else if(leitura == 0b01010)
+else if(leitura == 0b10101) //Condição 22
 {
   mot1_hor(100);
   mot2_hor(100);
 }
-else if(leitura == 0b01011)
+else if(leitura == 0b10110) //Condição 23
+{
+
+}
+else if(leitura == 0b10111) //Condição 24
 {
   mot1_hor(100);
-  mot2_hor(100);
+  mot2_anti(100);
 }
-else if(leitura == 0b01100)
+else if(leitura == 0b11000) //Condição 25
 {
-  mot1_hor(100);
+  mot1_anti(100);
   mot2_hor(100);
 }
-else if(leitura == 0b01101)
+else if(leitura == 0b11001) //Condição 26
 {
-  mot1_hor(100);
+  mot1_anti(100);
   mot2_hor(100);
 }
-else if(leitura == 0b01110)
+else if(leitura == 0b11010) //Condição 27
 {
-  mot1_hor(100);
+  mot1_anti(100);
   mot2_hor(100);
 }
-else if(leitura == 0b01111)
+else if(leitura == 0b11011) //Condição 28
 {
-  mot1_hor(100);
-  mot2_hor(100);
+
 }
-else if(leitura == 0b10000)
+else if(leitura == 0b11100) //Condição 29
 {
-  mot1_hor(100);
+  mot1_anti(100);
   mot2_hor(100);
 }
-else if(leitura == 0b10001)
+else if(leitura == 0b11101) //Condição 30
 {
-  mot1_hor(100);
+  mot1_anti(100);
   mot2_hor(100);
 }
-else if(leitura == 0b10010)
+else if(leitura == 0b11110) //Condição 31
 {
-  mot1_hor(100);
-  mot2_hor(100);
+  
 }
-else if(leitura == 0b10011)
-{
-  mot1_hor(100);
-  mot2_hor(100);
-}
-else if(leitura == 0b10100)
-{
-  mot1_hor(100);
-  mot2_hor(100);
-}
-else if(leitura == 0b10101)
-{
-  mot1_hor(100);
-  mot2_hor(100);
-}
-else if(leitura == 0b10110)
-{
-  mot1_hor(100);
-  mot2_hor(100);
-}
-else if(leitura == 0b10111)
-{
-  mot1_hor(100);
-  mot2_hor(100);
-}
-else if(leitura == 0b11000)
-{
-  mot1_hor(100);
-  mot2_hor(100);
-}
-else if(leitura == 0b11001)
-{
-  mot1_hor(100);
-  mot2_hor(100);
-}
-else if(leitura == 0b11010)
-{
-  mot1_hor(100);
-  mot2_hor(100);
-}
-else if(leitura == 0b11011)
-{
-  mot1_hor(100);
-  mot2_hor(100);
-}
-else if(leitura == 0b11100)
-{
-  mot1_hor(100);
-  mot2_hor(100);
-}
-else if(leitura == 0b11101)
-{
-  mot1_hor(100);
-  mot2_hor(100);
-}
-else if(leitura == 0b11110)
-{
-  mot1_hor(100);
-  mot2_hor(100);
-}
-else if(leitura == 0b11111)
+else if(leitura == 0b11111) //Condição 32
 {
   mot1_par();
   mot2_par();
