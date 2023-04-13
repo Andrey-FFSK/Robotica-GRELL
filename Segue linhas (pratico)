@@ -237,3 +237,32 @@ https://circuitdigest.com/microcontroller-projects/arduino-uno-line-follower-rob
 https://www.manualdaeletronica.com.br/ponte-h-o-que-e-como-funciona/
 https://www.tinkercad.com/things/b8lj8q4rLVm?sharecode=XG58k9cH3BYTgXNEN8JuCELvxrjPnArmHrRolu-5djQ
 ***********************************************/
+
+
+/***************************
+int che_d(int vel0, int vel1, int temp)
+{  
+bool res = false;
+byte leitura;
+delay(500);
+mot1_hor(vel0);
+mot2_anti(vel1);
+delay(temp);
+mot1_par();
+mot2_par();
+for(int i = 0; i < 5; i++) leitura |= digitalRead(pinos[i]) << i;
+return leitura;
+res = !res;
+mot1_anti(vel0);
+mot2_hor(vel1);
+delay(temp);
+}
+
+byte leitura;
+bool res;
+if(res = false)   
+{
+  byte leitura = 0; //Definir sempre 0 quando definir algo como o for abaixo
+for(int i = 0; i < 5; i++) leitura |= digitalRead(pinos[i]) << i; //Colocando as entrada da tabela da verdade usando um bitshift automatico
+}
+******************************/
