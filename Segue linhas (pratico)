@@ -236,6 +236,8 @@ else if(leitura == 0b11111) //Condição 32
 /***********************************************
 Tem que ajeitar a tabela da verdade
 Usar led no led pra indicativo
+Falta a parte dos sensores
+
 
 https://circuitdigest.com/microcontroller-projects/arduino-uno-line-follower-robot
 https://www.manualdaeletronica.com.br/ponte-h-o-que-e-como-funciona/
