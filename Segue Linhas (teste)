@@ -79,36 +79,161 @@ for(int i = 0; i < 5; i++) leitura |= ff[i] << i; //Colocando as entrada da tabe
 Serial.println(leitura, BIN); //Impimindo no serial para testes, e usando BIN para mostrar em binario
 
 //Condições que usa a tabela da verdade, consultar para ver
-if((leitura == 0b00000) || (leitura == 0b00001) || (leitura == 0b00010) || (leitura == 0b00100) || (leitura == 0b00110) || (leitura == 0b00111) || (leitura == 0b01000) || (leitura == 0b01010) || (leitura == 0b01100) || (leitura == 0b01110) || (leitura == 0b10100) || (leitura == 0b10101))
+if(leitura == 0b00000) //Condição 1
 {
-Serial.println("frente");
-mot1_hor(255);
-mot2_hor(255);
+  mot1_hor(100);
+  mot2_hor(100);
 }
-else if((leitura == 0b00011) | (leitura == 0b01011) | (leitura == 0b01111) | (leitura == 0b01011) | (leitura == 0b10010) | (leitura == 0b10011) | (leitura == 0b10111))
+else if(leitura == 0b00001) //Condição 2
 {
-Serial.println("direita");
-mot1_hor(255);
-mot2_anti(255);
+  mot1_hor(100);
+  mot2_hor(100);
 }
-else if((leitura == 0b01001) | (leitura == 0b11000) | (leitura == 0b11001) | (leitura == 0b11100) | (leitura == 0b11010) | (leitura == 0b11101))
+else if(leitura == 0b00010) //Condição 3
 {
-Serial.println("esquerda");
-mot1_anti(255);
-mot2_hor(255);
+  mot1_hor(100);
+  mot2_hor(100);
 }
-else if((leitura == 0b10000) | (leitura == 0b10001))
+else if(leitura == 0b00011) //Condição 4
 {
-Serial.println("tras");
-mot1_anti(255);
-mot2_anti(255);
+  mot1_hor(100);
+  mot2_anti(100);
 }
-else if(leitura == 0b11111)
+else if(leitura == 0b00100) //Condição 5
 {
-Serial.println("parar");
-mot1_par();
-mot2_par();
-};
+  mot1_hor(100);
+  mot2_hor(100);
+}
+else if(leitura == 0b00101) //Condição 6
+{
+
+}
+else if(leitura == 0b00110) //Condição 7
+{
+  mot1_hor(100);
+  mot2_hor(100);
+}
+else if(leitura == 0b00111) //Condição 8
+{
+  mot1_hor(100); //Ver. frente
+  mot2_hor(100);
+}
+else if(leitura == 0b01000) //Condição 9
+{
+  mot1_hor(100);
+  mot2_hor(100);
+}
+else if(leitura == 0b01001) //Condição 10
+{
+  mot1_anti(100);
+  mot2_hor(100);
+}
+else if(leitura == 0b01010) //Condição 11
+{
+  mot1_hor(100);
+  mot2_hor(100);
+}
+else if(leitura == 0b01011) //Condição 12
+{
+  mot1_hor(100);
+  mot2_anti(100);
+}
+else if(leitura == 0b01100) //Condição 13
+{
+  mot1_hor(100);
+  mot2_hor(100);
+}
+else if(leitura == 0b01101) //Condição 14
+{
+
+}
+else if(leitura == 0b01110) //Condição 15
+{
+  mot1_hor(100);
+  mot2_hor(100);
+}
+else if(leitura == 0b01111) //Condição 16
+{
+  mot1_hor(100);
+  mot2_anti(100);
+}
+else if(leitura == 0b10000) //Condição 17
+{
+  mot1_anti(100);
+  mot2_anti(100);
+}
+else if(leitura == 0b10001) //Condição 18
+{
+  mot1_anti(100);
+  mot2_anti(100);
+}
+else if(leitura == 0b10010) //Condição 19
+{
+  mot1_hor(100);
+  mot2_anti(100);
+}
+else if(leitura == 0b10011) //Condição 20
+{
+  mot1_hor(100);
+  mot2_anti(100);
+}
+else if(leitura == 0b10100) //Condição 21
+{
+  mot1_hor(100);
+  mot2_hor(100);
+}
+else if(leitura == 0b10101) //Condição 22
+{
+  mot1_hor(100);
+  mot2_hor(100);
+}
+else if(leitura == 0b10110) //Condição 23
+{
+
+}
+else if(leitura == 0b10111) //Condição 24
+{
+  mot1_hor(100);
+  mot2_anti(100);
+}
+else if(leitura == 0b11000) //Condição 25
+{
+  mot1_anti(100);
+  mot2_hor(100);
+}
+else if(leitura == 0b11001) //Condição 26
+{
+  mot1_anti(100);
+  mot2_hor(100);
+}
+else if(leitura == 0b11010) //Condição 27
+{
+  mot1_anti(100);
+  mot2_hor(100);
+}
+else if(leitura == 0b11011) //Condição 28
+{
+
+}
+else if(leitura == 0b11100) //Condição 29
+{
+  mot1_anti(100);
+  mot2_hor(100);
+}
+else if(leitura == 0b11101) //Condição 30
+{
+  mot1_anti(100);
+  mot2_hor(100);
+}
+else if(leitura == 0b11110) //Condição 31
+{
+
+}
+else if(leitura == 0b11111) //Condição 32
+{
+  mot1_par();
+  mot2_par();
+}
 
 }
 
