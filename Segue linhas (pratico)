@@ -24,14 +24,8 @@ int velo_m = 127;
 void setup()
 {
   //Colocando os sensores como INPUT, e o resto como OUTPUT
-  for(int i = 0; i < 5; i++)
-  {
-    pinMode(pinos[i], INPUT);
-  }
-  for(int i = 5; i < 6; i++)
-  {
-    pinMode(pinos[i], OUTPUT);
-  }
+  for(int i = 0; i < 5; i++) pinMode(pinos[i], INPUT);
+  for(int i = 5; i < 6; i++) pinMode(pinos[i], OUTPUT);
 }
 
 //Inicio das funções, para cada caso, totalizando 6 funções diferente
