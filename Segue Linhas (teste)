@@ -114,11 +114,10 @@ mot2_par();
 
 /***********************************************
 Tem que ajeitar a tabela da verdade
-Talvez tenha que usar um if para cada condição
 Usar led no led pra indicativo
-Mudar a parte de definir sensores quando for na pratica
+Esse serve como teste e nao vai ser usado para o robo
 
 https://circuitdigest.com/microcontroller-projects/arduino-uno-line-follower-robot
 https://www.manualdaeletronica.com.br/ponte-h-o-que-e-como-funciona/
-https://www.tinkercad.com/things/b8lj8q4rLVm-6-sensor-ir-desafio/editel
+https://www.tinkercad.com/things/b8lj8q4rLVm?sharecode=XG58k9cH3BYTgXNEN8JuCELvxrjPnArmHrRolu-5djQ
 ***********************************************/
