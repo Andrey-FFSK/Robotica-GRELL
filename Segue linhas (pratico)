@@ -5,13 +5,14 @@
 #define s_nordeste 3
 #define s_leste 2 
 
-#define mot1_lig 12
-#define mot1_in1 13
-#define mot1_in2 11
+#define mot1_lig 11 //cinza, esquerda
+#define mot2_lig 9 //laranja, direita
 
-#define mot2_lig 9
-#define mot2_in1 10
-#define mot2_in2 8
+#define mot2_in2 13 //preto, mot2, atras
+#define mot2_in1 12 //azul, mot2, frente
+#define mot1_in1 8 //amarelo, mot1, frente
+#define mot1_in2 7 //vermelho, mot1, atras
+//Consultar as fotos
 
 //Usando array para colocar todos os pinos
 int pinos[] = {6,5,4,3,2,12,13,11,9,10,8};
@@ -231,6 +232,7 @@ else if(leitura == 0b11111) //Condição 32
 Tem que ajeitar a tabela da verdade
 Usar led no led pra indicativo
 Falta a parte dos sensores
+Lembrar os input na hora de fazer os treco
 
 
 https://circuitdigest.com/microcontroller-projects/arduino-uno-line-follower-robot
