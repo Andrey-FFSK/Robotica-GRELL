@@ -5,13 +5,13 @@
 #define s_nordeste 3
 #define s_leste 2 
 
-#define mot1_lig 12
-#define mot1_in1 13
-#define mot1_in2 11
+#define mot1_lig 11 //cinza, esquerda
+#define mot2_lig 9 //laranja, direita
 
-#define mot2_lig 9
-#define mot2_in1 10
-#define mot2_in2 8
+#define mot2_in2 13 //preto, mot2, atras
+#define mot2_in1 12 //azul, mot2, frente
+#define mot1_in1 8 //amarelo, mot1, frente
+#define mot1_in2 7 //vermelho, mot1, atras
 
 //Usando array para colocar todos os pinos
 int pinos[] = {6,5,4,3,2,12,13,11,9,10,8};
@@ -72,7 +72,7 @@ void mot2_par() //Função para o motor 2 ficar parado (mot2_lig LOW)
 
 void loop()
 { 
-byte ff[] = {0,0,0,0,0}; //Não vai funcionar no robo, definindo os sensores
+byte ff[] = {0,0,0,1,1}; //Não vai funcionar no robo, definindo os sensores
 
 byte leitura = 0; //Definir sempre 0 quando definir algo como o for abaixo
 for(int i = 0; i < 5; i++) leitura |= ff[i] << i; //Colocando as entrada da tabela da verdade usando mm bitshift automatico
@@ -241,6 +241,7 @@ else if(leitura == 0b11111) //Condição 32
 Tem que ajeitar a tabela da verdade
 Usar led no led pra indicativo
 Esse serve como teste e nao vai ser usado para o robo
+Lembrar dos input pq nao é certinho
 
 https://circuitdigest.com/microcontroller-projects/arduino-uno-line-follower-robot
 https://www.manualdaeletronica.com.br/ponte-h-o-que-e-como-funciona/
