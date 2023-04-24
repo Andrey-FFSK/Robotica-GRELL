@@ -72,7 +72,7 @@ void mot2_par() //Função para o motor 2 ficar parado (mot2_lig LOW)
 
 void loop()
 { 
-byte ff[] = {0,0,0,1,1}; //Não vai funcionar no robo, definindo os sensores
+byte ff[] = {0,0,0,1,1}; //Não vai funcionar no robo, definindo os sensores, INVERTIDO
 
 byte leitura = 0; //Definir sempre 0 quando definir algo como o for abaixo
 for(int i = 0; i < 5; i++) leitura |= ff[i] << i; //Colocando as entrada da tabela da verdade usando mm bitshift automatico
