@@ -1,0 +1,48 @@
+#define in1 3 //Motor Esquerdo Tras, cabo amarelo
+#define in2 5 //Motor Esquerdo Frente, cabo laranja
+#define in3 6 //Motor Direito Frente, cabo vermelho
+#define in4 9 //Motor Direito Tras, cabo cinza
+
+int vel = 100;
+int temp = 1000;
+
+void setup() {
+pinMode(in1,OUTPUT); //digital IN1
+pinMode(in2,OUTPUT); //digital IN2
+pinMode(in3,OUTPUT); //digital IN3
+pinMode(in4,OUTPUT); //digital IN4
+}
+
+void frente(int velo, int temp) {
+analogWrite(in2, velo);
+analogWrite(in3, velo);
+delay(temp);
+analogWrite(in2, 0);
+analogWrite(in3, 0);
+delay(1000);
+}
+
+void Reixo(int velo, int temp) {
+analogWrite(in2, velo);
+analogWrite(in4, velo);
+delay(temp);
+analogWrite(in2, 0);
+analogWrite(in4, 0);
+delay(1000);
+}
+
+void Leixo(int velo, int temp) {
+analogWrite(in3, velo);
+analogWrite(in1, velo);
+delay(temp);
+analogWrite(in3, 0);
+analogWrite(in1, 0);
+delay(1000);
+}
+
+void loop(){
+frente(100,1300);
+Reixo(100,1400); //perfeito para direita
+frente(100,500);
+Leixo(100,1000);
+}
