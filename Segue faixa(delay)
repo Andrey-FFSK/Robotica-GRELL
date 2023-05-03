@@ -22,7 +22,7 @@ analogWrite(in3, 0);
 delay(1000);
 }
 
-void Reixo(int velo, int temp) {
+void reixo(int velo, int temp) {
 analogWrite(in2, velo);
 analogWrite(in4, velo);
 delay(temp);
@@ -31,7 +31,7 @@ analogWrite(in4, 0);
 delay(1000);
 }
 
-void Leixo(int velo, int temp) {
+void leixo(int velo, int temp) {
 analogWrite(in3, velo);
 analogWrite(in1, velo);
 delay(temp);
@@ -41,8 +41,29 @@ delay(1000);
 }
 
 void loop(){
-frente(100,1300);
-Reixo(100,1400); //perfeito para direita
-frente(100,500);
-Leixo(100,1000);
+//Ver foto da pista para conseguir compreender
+//primeira placa
+frente(100,1600);  //frente ate a curva da direita
+//segumda placa
+reixo(100,1400); //virar a direita, perfeito para direita
+frente(100,700); //frente ate a curva da esuqerda
+leixo(100,1400); //virar a esquerda
+frente(100,800); //frente ate a curva da esquerda, que é perquena
+leixo(100,1400); //virar a esuqerda
+frente(100,1200); //frente ate a curva da direita
+reixo(100,1300); //virar a direita
+frente(100,1000); // frente ate a curva da direita
+reixo(100,1400); //virar a direita,
+frente(100,800);
+leixo(100,1400);
+frente(100,1800);
+//terceira placa
+reixo(100, 1400);
+frente(100,1600);
+//quarta placa
+leixo(100,1400);
+frente(100,800);
+reixo(100,1400);
+
+delay(100000);
 }
