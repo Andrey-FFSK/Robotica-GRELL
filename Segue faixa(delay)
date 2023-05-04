@@ -3,8 +3,9 @@
 #define in3 6 //Motor Direito Frente, cabo vermelho
 #define in4 9 //Motor Direito Tras, cabo cinza
 
-int vel = 100;
+int i = 100;
 int temp = 1000;
+
 
 void setup() {
 pinMode(in1,OUTPUT); //digital IN1
@@ -19,7 +20,7 @@ analogWrite(in3, velo);
 delay(temp);
 analogWrite(in2, 0);
 analogWrite(in3, 0);
-delay(1000);
+delay(10);
 }
 
 void reixo(int velo, int temp) {
@@ -28,7 +29,7 @@ analogWrite(in4, velo);
 delay(temp);
 analogWrite(in2, 0);
 analogWrite(in4, 0);
-delay(1000);
+delay(10);
 }
 
 void leixo(int velo, int temp) {
@@ -37,33 +38,50 @@ analogWrite(in1, velo);
 delay(temp);
 analogWrite(in3, 0);
 analogWrite(in1, 0);
-delay(1000);
+delay(10);
 }
 
 void loop(){
 //Ver foto da pista para conseguir compreender
 //primeira placa
-frente(100,1600);  //frente ate a curva da direita
+frente(i,1600);  //frente ate a curva da direita
 //segumda placa
-reixo(100,1400); //virar a direita, perfeito para direita
-frente(100,700); //frente ate a curva da esuqerda
-leixo(100,1400); //virar a esquerda
-frente(100,800); //frente ate a curva da esquerda, que é perquena
-leixo(100,1400); //virar a esuqerda
-frente(100,1200); //frente ate a curva da direita
-reixo(100,1300); //virar a direita
-frente(100,1000); // frente ate a curva da direita
-reixo(100,1400); //virar a direita,
-frente(100,800);
-leixo(100,1400);
-frente(100,1800);
+reixo(i,1400); //virar a direita, perfeito para direita
+frente(i,700); //frente ate a curva da esuqerda
+leixo(i,1400); //virar a esquerda
+frente(i,800); //frente ate a curva da esquerda, que é perquena
+leixo(i,1400); //virar a esuqerda
+frente(i,1400); //frente ate a curva da direita
+reixo(i,1300); //virar a direita
+frente(i,1000); // frente ate a curva da direita
+reixo(i,1400); //virar a direita,
+frente(i,500);
+leixo(i,1400);
+frente(i,2000);
 //terceira placa
-reixo(100, 1400);
-frente(100,1600);
+reixo(i, 1300);
+frente(i,1600);
 //quarta placa
-leixo(100,1400);
-frente(100,800);
-reixo(100,1400);
+leixo(i,1400);
+frente(i,1000);
+reixo(i,1300);
+frente(i,650);
+reixo(i,1400);
+frente(i,800);
+leixo(i,500);
+frente(i,500);
+leixo(i,500);
+frente(i,100);
+leixo(i,500);
+frente(i,100);
+leixo(i,500);
+frente(i,950);
+reixo(i,500);
+frente(i,1600);
+reixo(i,1280);
+frente(i,3800);
+reixo(i,1300);
+frente(i,900);
 
 delay(100000);
 }
