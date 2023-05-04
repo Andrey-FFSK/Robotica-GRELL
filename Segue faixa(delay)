@@ -60,7 +60,7 @@ leixo(i,1500);
 frente(i,2000);
 //terceira placa
 reixo(i, 1300);
-frente(i,1600);
+frente(i,1400);
 //quarta placa
 leixo(i,1400);
 frente(i,1000);
@@ -76,11 +76,11 @@ leixo(i,500);
 frente(i,100);
 leixo(i,500);
 frente(i,950);
-reixo(i,700);
-frente(i,1700);
+reixo(i,600);
+frente(i,1750);
 //quinta placa
-reixo(i,1200);
-frente(i,4400);
+reixo(i,1300);
+frente(i,4500);
 //sexta placa
 //setima placa
 reixo(i,1300);
