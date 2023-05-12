@@ -1,67 +1,57 @@
 //Definindo as portas dos sensores e da portas H
-#define s_oeste 6 
-#define s_noroeste 5
-#define s_norte 4
-#define s_nordeste 3
-#define s_leste 2 
+#define s_oeste  4//amarelo
+#define s_noroeste 3 //verde
+#define s_norte 2 //azul
+#define s_nordeste 1 //roxo
+#define s_leste 0 //cinza
 
-#define mot1_lig 11 //cinza, esquerda
-#define mot2_lig 9 //laranja, direita
-
-#define mot2_in2 13 //preto, mot2, atras
-#define mot2_in1 12 //azul, mot2, frente
-#define mot1_in1 8 //amarelo, mot1, frente
-#define mot1_in2 7 //vermelho, mot1, atras
-//Consultar as fotos
+//Motor 1 = esquerda; Motor 2 = direita
+#define mot_in1 11 //, mot1, atras
+#define mot_in2 10 //, mot2, frente
+#define mot_in3 6 //, mot1, frente
+#define mot_in4 5 //, mot2, atras
 
 //Usando array para colocar todos os pinos
-int pinos[] = {6,5,4,3,2,12,13,11,9,10,8};
+int pinos[] = {4,3,2,1,0,11,10,6,5};
 
-//Definindo variaveis para as funções e o timing, a velocidade vai ser responsavel para colocar no motor1ou2_lig
+//Definindo variaveis para as funções e o timing
 int temp = 1000;
-int velo_t = 255;
-int velo_m = 127;
 
 void setup()
 {
   //Colocando os sensores como INPUT, e o resto como OUTPUT
   for(int i = 0; i < 5; i++) pinMode(pinos[i], INPUT);
-  for(int i = 5; i < 6; i++) pinMode(pinos[i], OUTPUT);
+  for(int i = 5; i < 9; i++) pinMode(pinos[i], OUTPUT);
 }
 
 //Inicio das funções, para cada caso, totalizando 6 funções diferente
-void mot1_anti(int velo) //Função para o motor 1 girar no sentido anti horario com a velocidade variavel
+void mot1_anti(int velo) //Função para o motor da esquerda girar no sentido anti horario com a velocidade variavel
 {
-  analogWrite(mot1_lig, velo);
-  digitalWrite(mot1_in1, 0);
-  digitalWrite(mot1_in2, 1);
+  analogWrite(mot_in2, velo);
 }
-void mot1_hor(int velo) //Função para o motor 1 girar no sentido horario com a velocidade variavel
+void mot1_hor(int velo) //Função para o motor da esquerda girar no sentido horario com a velocidade variavel
 {
-  analogWrite(mot1_lig, velo);
-  digitalWrite(mot1_in1, 1);
-  digitalWrite(mot1_in2, 0);
+  analogWrite(mot_in4, velo);
 }
-void mot1_par() //Função para o motor 1 ficar parado (mot1_lig LOW)
+void mot1_par() //Função para o motor da esquerda ficar parado
 {
-  analogWrite(mot1_lig, 0);
+  analogWrite(mot_in2, 0);
+  analogWrite(mot_in4, 0);
+
 }
 
-void mot2_anti(int velo) //Função para o motor 2 girar no sentido anti horario com a velocidade variavel
+void mot2_anti(int velo) //Função para o motor da direita girar no sentido anti horario com a velocidade variavel
 {
-  analogWrite(mot2_lig, velo);
-  digitalWrite(mot2_in1, 0);
-  digitalWrite(mot2_in2, 1);
+  analogWrite(mot_in1, velo);
 }
-void mot2_hor(int velo) //Função para o motor 2 girar no sentido horario com a velocidade variavel
+void mot2_hor(int velo) //Função para o motor da direita girar no sentido horario com a velocidade variavel
 {
-  analogWrite(mot2_lig, velo);
-  digitalWrite(mot2_in1, 1);
-  digitalWrite(mot2_in2, 0);
+  analogWrite(mot_in3, velo);
 }
-void mot2_par() //Função para o motor 2 ficar parado (mot2_lig LOW)
+void mot2_par() //Função para o motor da direita ficar parado
 {
-  analogWrite(mot2_lig, 0);
+  analogWrite(mot_in1, 0);
+  analogWrite(mot_in3, 0);
 }
 
 void loop()
@@ -247,16 +237,16 @@ int che_d(int vel0, int vel1, int temp)
 bool res = false;
 byte leitura;
 delay(500);
-mot1_hor(vel0);
-mot2_anti(vel1);
+mot_hor(vel0);
+mot_anti(vel1);
 delay(temp);
-mot1_par();
-mot2_par();
+mot_par();
+mot_par();
 for(int i = 0; i < 5; i++) leitura |= digitalRead(pinos[i]) << i;
 return leitura;
 res = !res;
-mot1_anti(vel0);
-mot2_hor(vel1);
+mot_anti(vel0);
+mot_hor(vel1);
 delay(temp);
 }
 
