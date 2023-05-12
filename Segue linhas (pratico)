@@ -1,18 +1,18 @@
 //Definindo as portas dos sensores e da portas H
-#define s_oeste  4//amarelo
-#define s_noroeste 3 //verde
-#define s_norte 2 //azul
-#define s_nordeste 1 //roxo
-#define s_leste 0 //cinza
+#define s_oeste  A0 //amarelo
+#define s_noroeste A1 //verde
+#define s_norte A2 //azul
+#define s_nordeste A3 //roxo
+#define s_leste A4 //cinza
 
 //Motor 1 = esquerda; Motor 2 = direita
-#define mot_in1 11 //, mot1, atras
-#define mot_in2 10 //, mot2, frente
-#define mot_in3 6 //, mot1, frente
-#define mot_in4 5 //, mot2, atras
+#define mot_in1 5 //preto, esquerda, tras
+#define mot_in2 6 //branco, esquerda, frente
+#define mot_in3 9 //cinza, direita, frente
+#define mot_in4 10 //roxo, direita, tras MAL CONTATO
 
 //Usando array para colocar todos os pinos
-int pinos[] = {4,3,2,1,0,11,10,6,5};
+int pinos[] = {A0,A1,A2,A3,A4,5,6,9,10};
 
 //Definindo variaveis para as funções e o timing
 int temp = 1000;
@@ -27,22 +27,22 @@ void setup()
 //Inicio das funções, para cada caso, totalizando 6 funções diferente
 void mot1_anti(int velo) //Função para o motor da esquerda girar no sentido anti horario com a velocidade variavel
 {
-  analogWrite(mot_in2, velo);
+  analogWrite(mot_in1, velo);
 }
 void mot1_hor(int velo) //Função para o motor da esquerda girar no sentido horario com a velocidade variavel
 {
-  analogWrite(mot_in4, velo);
+  analogWrite(mot_in2, velo);
 }
 void mot1_par() //Função para o motor da esquerda ficar parado
 {
+  analogWrite(mot_in1, 0);
   analogWrite(mot_in2, 0);
-  analogWrite(mot_in4, 0);
 
 }
 
 void mot2_anti(int velo) //Função para o motor da direita girar no sentido anti horario com a velocidade variavel
 {
-  analogWrite(mot_in1, velo);
+  analogWrite(mot_in4, velo);
 }
 void mot2_hor(int velo) //Função para o motor da direita girar no sentido horario com a velocidade variavel
 {
@@ -50,14 +50,16 @@ void mot2_hor(int velo) //Função para o motor da direita girar no sentido hora
 }
 void mot2_par() //Função para o motor da direita ficar parado
 {
-  analogWrite(mot_in1, 0);
   analogWrite(mot_in3, 0);
+  analogWrite(mot_in4, 0);
 }
 
 void loop()
 { 
+
 byte leitura = 0; //Definir sempre 0 quando definir algo como o for abaixo
 for(int i = 0; i < 5; i++) leitura |= digitalRead(pinos[i]) << i; //Colocando as entrada da tabela da verdade usando um bitshift automatico
+leitura != leitura; //Colocando um inversor para que funcione com a tabela da verdade
 
 //Condições que usa a tabela da verdade, consultar para ver
 if(leitura == 0b00000) //Condição 1
