@@ -1,17 +1,14 @@
-#define in1 3 //Motor Esquerdo Tras, cabo amarelo
-#define in2 5 //Motor Esquerdo Frente, cabo laranja
-#define in3 6 //Motor Direito Frente, cabo vermelho
-#define in4 9 //Motor Direito Tras, cabo cinza
+#define in1 5 //Motor Esquerdo Tras, cabo preto
+#define in2 6 //Motor Esquerdo Frente, cabo branco
+#define in3 9 //Motor Direito Frente, cabo cinza
+#define in4 10 //Motor Direito Tras, cabo roxo
 
 int i = 100;
 int temp = 1000;
-
+int pinos[] = {5,6,9,10};
 
 void setup() {
-pinMode(in1,OUTPUT); //digital IN1
-pinMode(in2,OUTPUT); //digital IN2
-pinMode(in3,OUTPUT); //digital IN3
-pinMode(in4,OUTPUT); //digital IN4
+for(i = 0; i < 4; i++) pinMode(pinos[i], OUTPUT);
 }
 
 void frente(int velo, int temp) {
