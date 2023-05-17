@@ -1,9 +1,9 @@
 // Definindo as portas dos sensores e da portas H
-#define s_oeste A4    // cinza
-#define s_noroeste A3 // roxo
-#define s_norte A1    // verde
-#define s_nordeste A2 // azul
-#define s_leste A0    // amarelo
+#define s_oeste A4    // cinza, OUT1 
+#define s_noroeste A3 // roxo, OUT2
+#define s_norte A2    // verde, OUT4
+#define s_nordeste A1 // azul, OUT3                                 
+#define s_leste A0    // amarelo, OUT5
 
 // Motor 1 = esquerda; Motor 2 = direita
 #define mot_in1 5  // preto, esquerda, tras
@@ -12,7 +12,7 @@
 #define mot_in4 10 // roxo, direita, tras MAL CONTATO 
 
 // Usando array para colocar todos os pinos, coloquei os sensores invertido por causa do BitSwift em baixo
-int pinos[] = {A2, A3, A1, A2, A3, 5, 6, 9, 10};
+int pinos[] = {A1, A3, A2, A1, A0, 5, 6, 9, 10};
 
 // Definindo variaveis para as funções e o timing
 int i = 150;
@@ -65,7 +65,7 @@ void loop()
 
   byte leitura = 0; // Definir sempre 0 quando definir algo como o for abaixo
   for (int i = 0; i < 2; i++)
-    leitura |= digitalRead(pinos[i]) << i; // Colocando as entrada da tabela da verdade usando um bitshift automatico
+    leitura |= digitalRead(pinos[i]) << i; //Colocando as entrada da tabela da verdade usando um bitshift automatico
   leitura = (~leitura) & 0b00000011;   // Colocando um inversor para que funcione com a tabela da verdade, com uma mascara para ir so os bits que eu quero
   Serial.println(leitura, BIN);    
 
@@ -77,25 +77,27 @@ void loop()
   }
   else if (leitura == 0b01) // Condição 2, VIRAR DIREITA
   {
-
+    mot1_hor(i);
+    mot2_anti(i);
 
    /* while(s_noroeste == 0){
       mot1_anti(i);
       mot2_hor(i);       
     }
-*/          
+   */          
   }
   
   else if (leitura == 0b10) // Condição 3, VIRAR ESQUERDA
   {
-   
+    mot1_anti(i);
+    mot2_hor(i);
    
    
    /* while(s_nordeste == 0){
       mot1_anti(i);
       mot2_hor(i);
     }
-*/    
+   */    
   }
   
   else if (leitura == 0b11) // Condição 4, PARADO
