@@ -64,10 +64,11 @@ void loop()
 {
 
   byte leitura = 0; // Definir sempre 0 quando definir algo como o for abaixo
-  for (int i = 0; i < 2; i++)
+  for (int i = 0; i < 2; i++) 
     leitura |= digitalRead(pinos[i]) << i; //Colocando as entrada da tabela da verdade usando um bitshift automatico
   leitura = (~leitura) & 0b00000011;   // Colocando um inversor para que funcione com a tabela da verdade, com uma mascara para ir so os bits que eu quero
-  Serial.println(leitura, BIN);    
+  Serial.println(leitura, BIN);   
+  Serial.println(digitalRead(A3)); 
 
   // Condições que usa a tabela da verdade, consultar para ver
   if (leitura == 0b00) // Condição 1, FRENTE
@@ -77,27 +78,20 @@ void loop()
   }
   else if (leitura == 0b01) // Condição 2, VIRAR DIREITA
   {
-    mot1_hor(i);
-    mot2_anti(i);
-
-   /* while(s_noroeste == 0){
-      mot1_anti(i);
-      mot2_hor(i);       
+    while(s_noroeste == 1){
+      mot1_hor(i);
+      mot2_anti(i);       
     }
-   */          
+            
   }
   
   else if (leitura == 0b10) // Condição 3, VIRAR ESQUERDA
-  {
-    mot1_anti(i);
-    mot2_hor(i);
-   
-   
-   /* while(s_nordeste == 0){
+  { 
+    while(s_nordeste == 1){
       mot1_anti(i);
       mot2_hor(i);
     }
-   */    
+       
   }
   
   else if (leitura == 0b11) // Condição 4, PARADO
@@ -105,6 +99,10 @@ void loop()
     mot1_par();
     mot2_par();
   }
+//mot1_par();
+//mot2_par();
+
+  
 }
 
 /***********************************************
