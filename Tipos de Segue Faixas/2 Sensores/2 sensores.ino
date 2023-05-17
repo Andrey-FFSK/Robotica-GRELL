@@ -1,8 +1,8 @@
 // Definindo as portas dos sensores e da portas H
 #define s_oeste A4    // cinza
 #define s_noroeste A3 // roxo
-#define s_norte A2    // azul
-#define s_nordeste A1 // verde
+#define s_norte A1    // verde
+#define s_nordeste A2 // azul
 #define s_leste A0    // amarelo
 
 // Motor 1 = esquerda; Motor 2 = direita
@@ -12,10 +12,10 @@
 #define mot_in4 10 // roxo, direita, tras MAL CONTATO 
 
 // Usando array para colocar todos os pinos, coloquei os sensores invertido por causa do BitSwift em baixo
-int pinos[] = {A1, A3, A1, A2, A3, 5, 6, 9, 10};
+int pinos[] = {A2, A3, A1, A2, A3, 5, 6, 9, 10};
 
 // Definindo variaveis para as funções e o timing
-int temp = 1000;
+int i = 150;
 
 void setup()
 {
@@ -24,7 +24,7 @@ void setup()
     pinMode(pinos[i], INPUT);
   for (int i = 5; i < 9; i++)
     pinMode(pinos[i], OUTPUT);
-  Serial.begin(9600);
+    Serial.begin(9600);
 }
 
 // Inicio das funções, para cada caso, totalizando 6 funções diferente
@@ -66,26 +66,39 @@ void loop()
   byte leitura = 0; // Definir sempre 0 quando definir algo como o for abaixo
   for (int i = 0; i < 2; i++)
     leitura |= digitalRead(pinos[i]) << i; // Colocando as entrada da tabela da verdade usando um bitshift automatico
-  leitura = (~leitura) & 0b00000011;       // Colocando um inversor para que funcione com a tabela da verdade, com uma mascara para ir so os bits que eu quero
-  Serial.println(leitura, BIN);
+  leitura = (~leitura) & 0b00000011;   // Colocando um inversor para que funcione com a tabela da verdade, com uma mascara para ir so os bits que eu quero
+  Serial.println(leitura, BIN);    
 
   // Condições que usa a tabela da verdade, consultar para ver
-  if (leitura == 0b00) // Condição 1
+  if (leitura == 0b00) // Condição 1, FRENTE
   {
-    mot1_hor(100);
-    mot2_hor(100);
+    mot1_hor(i);
+    mot2_hor(i);
   }
-  else if (leitura == 0b01) // Condição 2
+  else if (leitura == 0b01) // Condição 2, VIRAR DIREITA
   {
-    mot1_hor(100);
-    mot2_anti(100);
+
+
+   /* while(s_noroeste == 0){
+      mot1_anti(i);
+      mot2_hor(i);       
+    }
+*/          
   }
-  else if (leitura == 0b10) // Condição 3
+  
+  else if (leitura == 0b10) // Condição 3, VIRAR ESQUERDA
   {
-    mot1_anti(100);
-    mot2_hor(100);
+   
+   
+   
+   /* while(s_nordeste == 0){
+      mot1_anti(i);
+      mot2_hor(i);
+    }
+*/    
   }
-  else if (leitura == 0b11) // Condição 4
+  
+  else if (leitura == 0b11) // Condição 4, PARADO
   {
     mot1_par();
     mot2_par();
