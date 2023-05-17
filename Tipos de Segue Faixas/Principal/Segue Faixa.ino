@@ -1,13 +1,13 @@
-// Incluindo as bibliotecas necessarias para o Oled
+/* Incluindo as bibliotecas necessarias para o Oled
 #include <Adafruit_GFX.h>
 #include <Wire.h>
 #include <Adafruit_SSD1306.h>
-
+*/
 // Definindo as portas dos sensores, esta definido como o visualmente correto
 #define s_oeste A4    // cinza
 #define s_noroeste A3 // roxo
-#define s_norte A2    // azul
-#define s_nordeste A1 // verde
+#define s_norte A1    // verde
+#define s_nordeste A2 // azul
 #define s_leste A0    // amarelo
 
 // Motor 1 = esquerda; Motor 2 = direita
@@ -19,8 +19,9 @@
 // Usando array para colocar todos os pinos, no BitSwift os sensores vão ter que ficar invertido
 const PROGMEM int pinos[] = {A4, A3, A2, A1, A0, 5, 6, 9, 10};
 
-// Configurando o display, criando classe chamado dis com as especificações do display
+/* Configurando o display, criando classe chamado dis com as especificações do display
 Adafruit_SSD1306 dis(128, 64, &Wire, -1);
+*/
 
 void setup()
 {
@@ -29,12 +30,13 @@ void setup()
     pinMode(pinos[i], INPUT);
   for (int i = 5; i < 9; i++)
     pinMode(pinos[i], OUTPUT);
-
+/*
   dis.begin(SSD1306_SWITCHCAPVCC, 0x3C); // Inicio de qualquer display, o medelo do Oled é SSD1306, "0x3c" é inmudavel
   dis.clearDisplay();                    // Limpar o display, tambem inicio de qualquer display
   dis.setTextSize(3);                    // Colocando a fonte do tamanho
   dis.setTextColor(WHITE);               // Colocando a cor do texto
   dis.setCursor(0, 0);                   // Escolhendo onde usar o cursor (quando dar clear ele coloca automaticamente no 0,0)
+ */
 }
 
 // Inicio das funções, para cada caso, totalizando 6 funções diferente
@@ -72,6 +74,7 @@ void mot2_par() // Função para o motor da direita ficar parado
 
 void loop()
 {
+  /*
   dis.print("O\tNO\tN\tNE\tE");
   for (int i = 0; i < 5; i++)
   {
@@ -79,7 +82,8 @@ void loop()
     dis.print("\t");
   }
   dis.display();
-
+  */
+  
   byte leitura = 0; // Definir sempre 0 quando definir algo como o for abaixo
   for (int i = 0; i < 5; i++)
     leitura |= digitalRead(pinos[i]) << i; // Colocando as entrada da tabela da verdade usando um bitshift automatico
