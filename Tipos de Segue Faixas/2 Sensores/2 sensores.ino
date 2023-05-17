@@ -7,12 +7,12 @@
 
 // Motor 1 = esquerda; Motor 2 = direita
 #define mot_in1 5  // preto, esquerda, tras
-#define mot_in2 6  // branco, esquerda, frente
+#define mot_in2 6  // branco, esquerda, frente 
 #define mot_in3 9  // cinza, direita, frente
-#define mot_in4 10 // roxo, direita, tras MAL CONTATO
+#define mot_in4 10 // roxo, direita, tras MAL CONTATO 
 
 // Usando array para colocar todos os pinos, coloquei os sensores invertido por causa do BitSwift em baixo
-int pinos[] = {A0, A4, A1, A2, A3, 5, 6, 9, 10};
+int pinos[] = {A1, A3, A1, A2, A3, 5, 6, 9, 10};
 
 // Definindo variaveis para as funções e o timing
 int temp = 1000;
