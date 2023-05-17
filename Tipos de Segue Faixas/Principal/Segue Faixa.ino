@@ -4,11 +4,11 @@
 #include <Adafruit_SSD1306.h>
 */
 // Definindo as portas dos sensores, esta definido como o visualmente correto
-#define s_oeste A4    // cinza
-#define s_noroeste A3 // roxo
-#define s_norte A1    // verde
-#define s_nordeste A2 // azul
-#define s_leste A0    // amarelo
+#define s_oeste A4    // cinza, OUT1 
+#define s_noroeste A3 // roxo, OUT2
+#define s_norte A2    // verde, OUT4
+#define s_nordeste A1 // azul, OUT3                                 
+#define s_leste A0    // amarelo, OUT5
 
 // Motor 1 = esquerda; Motor 2 = direita
 #define mot_in1 5  // preto, esquerda, tras
