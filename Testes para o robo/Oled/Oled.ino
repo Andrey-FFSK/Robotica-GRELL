@@ -1,6 +1,7 @@
+#include <Adafruit_SSD1306.h>
 #include <Adafruit_GFX.h>
 #include <Wire.h>
-#include <Adafruit_SSD1306.h>
+
 
 int pinos[] = {A0, A1, A2, A3, A4, 6, 5, 9, 10};
 int val[] = {0, 1, 1, 1, 0};
@@ -13,6 +14,7 @@ void setup()
     dis.clearDisplay();
     dis.setTextSize(3);
     dis.setTextColor(WHITE);
+    
     dis.setCursor(0, 0);
 }
 
