@@ -20,9 +20,9 @@ int i = 150;
 void setup()
 {
   // Colocando os sensores como INPUT, e o resto como OUTPUT
-  for (int i = 0; i <= 5; i++)
+  for (int i = 0; i < 5; i++)
     pinMode(pinos[i], INPUT);
-  for (int i = 5; i <= 9; i++)
+  for (int i = 5; i < 9; i++)
     pinMode(pinos[i], OUTPUT);
     Serial.begin(9600);
 }
