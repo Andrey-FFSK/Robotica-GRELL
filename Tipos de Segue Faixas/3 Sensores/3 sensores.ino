@@ -1,21 +1,21 @@
 // Definindo as portas dos sensores e da portas H
-#define s_oeste A4    // cinza, OUT1 
+#define s_oeste A4    // cinza, OUT1
 #define s_noroeste A3 // roxo, OUT2
 #define s_norte A2    // verde, OUT4
-#define s_nordeste A1 // azul, OUT3                                 
+#define s_nordeste A1 // azul, OUT3
 #define s_leste A0    // amarelo, OUT5
 
 // Motor 1 = esquerda; Motor 2 = direita
 #define mot_in1 5  // preto, esquerda, tras
-#define mot_in2 6  // branco, esquerda, frente 
+#define mot_in2 6  // branco, esquerda, frente
 #define mot_in3 9  // cinza, direita, frente
-#define mot_in4 10 // roxo, direita, tras MAL CONTATO 
+#define mot_in4 10 // roxo, direita, tras MAL CONTATO
 
 // Usando array para colocar todos os pinos, coloquei os sensores invertido por causa do BitSwift em baixo
-int pinos[] = {A1, A3, A2, A1, A0, 5, 6, 9, 10};
+const PROGMEM int pinos[] = {A1, A2, A3, A4, A0, 5, 6, 9, 10};
 
-// Definindo variaveis para as funções e o timing
-int i = 150;
+// Definindo variaveis
+int o = 150;
 
 void setup()
 {
@@ -24,7 +24,7 @@ void setup()
     pinMode(pinos[i], INPUT);
   for (int i = 5; i < 9; i++)
     pinMode(pinos[i], OUTPUT);
-    Serial.begin(9600);
+  Serial.begin(9600);
 }
 
 // Inicio das funções, para cada caso, totalizando 6 funções diferente
@@ -64,44 +64,78 @@ void loop()
 {
 
   byte leitura = 0; // Definir sempre 0 quando definir algo como o for abaixo
-  for (int i = 0; i < 2; i++) 
-    leitura |= digitalRead(pinos[i]) << i; //Colocando as entrada da tabela da verdade usando um bitshift automatico
-  leitura = (~leitura) & 0b00000011;   // Colocando um inversor para que funcione com a tabela da verdade, com uma mascara para ir so os bits que eu quero
-  Serial.println(leitura, BIN);   
+  for (int i = 0; i < 2; i++)
+    leitura |= digitalRead(pinos[i]) << i; // Colocando as entrada da tabela da verdade usando um bitshift automatico
+  leitura = (~leitura) & 0b00000111;       // Colocando um inversor para que funcione com a tabela da verdade, com uma mascara para ir so os bits que eu quero
+  Serial.println(leitura, BIN);
 
-  // Condições que usa a tabela da verdade, consultar para ver
-  if (leitura == 0b00) // Condição 1, FRENTE
+  // Condições que usa a tabela da verdade
+  if (leitura == 0b000) // Condição 1, FRENTE
   {
-    mot1_hor(i);
-    mot2_hor(i);
+    mot1_hor(o);
+    mot2_hor(o);
   }
-  else if (leitura == 0b01) // Condição 2, VIRAR DIREITA
+  else if (leitura == 0b001) // Condição 2, VIRAR DIREITA
   {
-    while(s_noroeste == 1){
-      mot1_hor(i);
-      mot2_anti(i);       
+    while (s_noroeste == 1)
+    {
+      mot1_hor(o);
+      mot2_anti(o);
     }
-            
-  }
-  
-  else if (leitura == 0b10) // Condição 3, VIRAR ESQUERDA
-  { 
-    while(s_nordeste == 1){
-      mot1_anti(i);
-      mot2_hor(i);
-    }
-       
-  }
-  
-  else if (leitura == 0b11) // Condição 4, PARADO
-  {
     mot1_par();
     mot2_par();
   }
-//mot1_par();
-//mot2_par();
 
-  
+  else if (leitura == 0b010) // Condição 3, FRENTE
+  {
+    mot1_hor(o);
+    mot2_hor(o);
+  }
+
+  else if (leitura == 0b011) // Condição 4, VIRAR DIREITA
+  {
+    while (s_noroeste == 1)
+    {
+      mot1_hor(o);
+      mot2_anti(o;)
+    }
+    mot1_par();
+    mot2_par();
+  }
+
+  else if (leitura == 0b100) // Condição 5, VIRAR ESQUERDA
+  {
+    while (s_nordeste == 1)
+    {
+      mot1_anti(o);
+      mot2_hor(o);
+    }
+    mot1_par();
+    mot2_par();
+  }
+
+  else if (leitura == 0b101) // Condição 6,
+  {
+  }
+
+  else if (leitura == 0b110) // Condição 7, VIRAR ESQUERDA
+  {
+    while (s_nordeste == 1)
+    {
+      mot1_anti(o);
+      mot2_hor(o);
+    }
+    mot1_par();
+    mot2_par();
+  }
+
+  else // Condição 8,
+  {
+    mot1_par(o);
+    mot2_par(o);
+  }
+  // mot1_par();
+  // mot2_par();
 }
 
 /***********************************************
@@ -111,31 +145,3 @@ Tem que ajeitar a tabela da verdade
 
 https://circuitdigest.com/microcontroller-projects/arduino-uno-line-follower-robot
 ***********************************************/
-
-/***************************
-int che_d(int vel0, int vel1, int temp)
-{
-bool res = false;
-byte leitura;
-delay(500);
-mot_hor(vel0);
-mot_anti(vel1);
-delay(temp);
-mot_par();
-mot_par();
-for(int i = 0; i < 5; i++) leitura |= digitalRead(pinos[i]) << i;
-return leitura;
-res = !res;
-mot_anti(vel0);
-mot_hor(vel1);
-delay(temp);
-}
-
-byte leitura;
-bool res;
-if(res = false)
-{
-  byte leitura = 0; //Definir sempre 0 quando definir algo como o for abaixo
-for(int i = 0; i < 5; i++) leitura |= digitalRead(pinos[i]) << i; //Colocando as entrada da tabela da verdade usando um bitshift automatico
-}
-******************************/

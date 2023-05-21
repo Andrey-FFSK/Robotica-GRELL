@@ -12,7 +12,7 @@
 #define mot_in4 10 // roxo, direita, tras MAL CONTATO 
 
 // Usando array para colocar todos os pinos, coloquei os sensores invertido por causa do BitSwift em baixo
-int pinos[] = {A1, A3, A2, A1, A0, 5, 6, 9, 10};
+const PROGMEM int pinos[] = {A1, A3, A2, A1, A0, 5, 6, 9, 10};
 
 // Definindo variaveis para as funções e o timing
 int i = 150;
@@ -112,31 +112,3 @@ Tem que ajeitar a tabela da verdade
 
 https://circuitdigest.com/microcontroller-projects/arduino-uno-line-follower-robot
 ***********************************************/
-
-/***************************
-int che_d(int vel0, int vel1, int temp)
-{
-bool res = false;
-byte leitura;
-delay(500);
-mot_hor(vel0);
-mot_anti(vel1);
-delay(temp);
-mot_par();
-mot_par();
-for(int i = 0; i < 5; i++) leitura |= digitalRead(pinos[i]) << i;
-return leitura;
-res = !res;
-mot_anti(vel0);
-mot_hor(vel1);
-delay(temp);
-}
-
-byte leitura;
-bool res;
-if(res = false)
-{
-  byte leitura = 0; //Definir sempre 0 quando definir algo como o for abaixo
-for(int i = 0; i < 5; i++) leitura |= digitalRead(pinos[i]) << i; //Colocando as entrada da tabela da verdade usando um bitshift automatico
-}
-******************************/
