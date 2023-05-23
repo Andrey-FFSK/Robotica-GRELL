@@ -20,9 +20,9 @@ void setup()
 
 void loop()
 {
-    if(millis() - ant >= temp){
+    if(millis() - ant = temp){
     ant = millis();
-    dis.print("O-NO-N-NE-E");
+    dis.println("O-NO-N-NE-E");
     for (int i = 0; i < 5; i++)
     {
         dis.print(val[i]);
@@ -32,4 +32,5 @@ void loop()
     }
     dis.display();
     }
+    dis.clearDisplay();
 }
