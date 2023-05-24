@@ -1,4 +1,4 @@
-int pins[] = {7,6,5,4,3};
+int pins[] = {8, 10, 11, 12, 13};
 
 void setup(){
   Serial.begin(9600);
@@ -8,10 +8,8 @@ void setup(){
 }
 
 void loop(){
-  Serial.print(digitalRead(7));
-  Serial.print(digitalRead(6));
-  Serial.print(digitalRead(5));
-  Serial.print(digitalRead(4));
-  Serial.println(digitalRead(3));
+
+for(int i; i < 5; i++) Serial.print(digitalRead(pins[i]));
+Serial.println();
   
 }
