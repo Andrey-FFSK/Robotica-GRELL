@@ -1,9 +1,9 @@
 // Definindo as portas dos sensores e da portas H
-#define s_oeste A4    // cinza, OUT1 
-#define s_noroeste A3 // roxo, OUT2
-#define s_norte A2    // verde, OUT4
-#define s_nordeste A1 // azul, OUT3                                 
-#define s_leste A0    // amarelo, OUT5
+#define s_oeste 0    // rosa, OUT1 
+#define s_noroeste 1 // amarelo, OUT2
+#define s_norte 2    // azul, OUT4
+#define s_nordeste 3 // vermelho, OUT3                                 
+#define s_leste 4    // marrom, OUT5
 
 // Motor 1 = esquerda; Motor 2 = direita
 #define mot_in1 5  // preto, esquerda, tras
@@ -12,7 +12,7 @@
 #define mot_in4 10 // roxo, direita, tras MAL CONTATO 
 
 // Usando array para colocar todos os pinos, coloquei os sensores invertido por causa do BitSwift em baixo
-const PROGMEM int pinos[] = {A1, A3, A2, A1, A0, 5, 6, 9, 10};
+const PROGMEM int pinos[] = {1, 3, 0, 2, 4, 5, 6, 9, 10};
 
 // Definindo variaveis para as funções e o timing
 int i = 150;
