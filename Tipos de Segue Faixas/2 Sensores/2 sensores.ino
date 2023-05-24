@@ -1,18 +1,18 @@
 // Definindo as portas dos sensores e da portas H
-#define s_oeste 0    // rosa, OUT1 
-#define s_noroeste 1 // amarelo, OUT2
-#define s_norte 2    // azul, OUT4
-#define s_nordeste 3 // vermelho, OUT3                                 
-#define s_leste 4    // marrom, OUT5
+#define s_oeste 8    // rosa, OUT1 
+#define s_noroeste 10 // amarelo, OUT2
+#define s_norte 11    // azul, OUT4
+#define s_nordeste 12 // vermelho, OUT3                                 
+#define s_leste 13    // marrom, OUT5
 
 // Motor 1 = esquerda; Motor 2 = direita
-#define mot_in1 5  // preto, esquerda, tras
+#define mot_in1 9  // preto, esquerda, tras
 #define mot_in2 6  // branco, esquerda, frente 
-#define mot_in3 9  // cinza, direita, frente
-#define mot_in4 10 // roxo, direita, tras MAL CONTATO 
+#define mot_in3 5  // cinza, direita, frente
+#define mot_in4 3 // roxo, direita, tras MAL CONTATO 
 
 // Usando array para colocar todos os pinos, coloquei os sensores invertido por causa do BitSwift em baixo
-const PROGMEM int pinos[] = {1, 3, 0, 2, 4, 5, 6, 9, 10};
+const PROGMEM int pinos[] = {10, 12, 8, 11, 13, 9, 6, 5, 3};
 
 // Definindo variaveis para as funções e o timing
 int i = 150;
@@ -68,7 +68,6 @@ void loop()
     leitura |= digitalRead(pinos[i]) << i; //Colocando as entrada da tabela da verdade usando um bitshift automatico
   leitura = (~leitura) & 0b00000011;   // Colocando um inversor para que funcione com a tabela da verdade, com uma mascara para ir so os bits que eu quero
   Serial.println(leitura, BIN);   
-  Serial.println(digitalRead(A3)); 
 
   // Condições que usa a tabela da verdade, consultar para ver
   if (leitura == 0b00) // Condição 1, FRENTE
