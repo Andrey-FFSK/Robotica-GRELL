@@ -1,9 +1,9 @@
 // Definindo as portas dos sensores e da portas H
-#define s_oeste A4    // cinza, OUT1
-#define s_noroeste A3 // roxo, OUT2
-#define s_norte A2    // verde, OUT4
-#define s_nordeste A1 // azul, OUT3
-#define s_leste A0    // amarelo, OUT5
+#define s_oeste 8    // rosa, OUT1 
+#define s_noroeste 10 // amarelo, OUT2
+#define s_norte 11    // azul, OUT4
+#define s_nordeste 12 // vermelho, OUT3                                 
+#define s_leste 13    // marrom, OUT5
 
 // Motor 1 = esquerda; Motor 2 = direita
 #define mot_in1 9  // roxo, direita, tras
@@ -12,7 +12,7 @@
 #define mot_in4 5 // preto, esquerda, tras
 
 // Usando array para colocar todos os pinos, coloquei os sensores invertido por causa do BitSwift em baixo
-int pinos[] = {8, 10, 11, 12, 13, 9, 6, 3, 5};
+int pinos[] = {10, 11, 12, 8, 13, 9, 6, 3, 5};
 
 // Definindo variaveis
 int o = 150;
