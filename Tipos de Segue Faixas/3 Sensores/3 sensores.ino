@@ -64,7 +64,7 @@ void loop()
 {
 
   byte leitura = 0; // Definir sempre 0 quando definir algo como o for abaixo
-  for (int i = 0; i < 2; i++)
+  for (int i = 0; i < 3; i++)
     leitura |= digitalRead(pinos[i]) << i; // Colocando as entrada da tabela da verdade usando um bitshift automatico
   leitura = (~leitura) & 0b00000111;       // Colocando um inversor para que funcione com a tabela da verdade, com uma mascara para ir so os bits que eu quero
   Serial.println(leitura, BIN);
