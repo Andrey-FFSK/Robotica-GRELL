@@ -12,7 +12,7 @@
 #define mot_in4 5 // preto, esquerda, tras
 
 // Usando array para colocar todos os pinos, coloquei os sensores invertido por causa do BitSwift em baixo
-const PROGMEM int pinos[] = {A1, A2, A3, A4, A0, 5, 6, 9, 10};
+int pinos[] = {8, 10, 11, 12, 13, 9, 6, 3, 5};
 
 // Definindo variaveis
 int o = 150;
