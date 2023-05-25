@@ -12,10 +12,10 @@
 #define mot_in4 5 // preto, esquerda, tras
 
 // Usando array para colocar todos os pinos, coloquei os sensores invertido por causa do BitSwift em baixo
-int pinos[] = {10, 11, 12, 8, 13, 9, 6, 3, 5};
+int pinos[] = {12, 11, 10, 8, 13, 9, 6, 3, 5};
 
 // Definindo variaveis
-int o = 150;
+int o = 200;
 
 void setup()
 {
@@ -77,6 +77,10 @@ void loop()
   }
   else if (leitura == 0b001) // Condição 2, VIRAR DIREITA
   {
+    mot1_hor(o);
+    mot2_anti(o);
+
+    /*
     while (s_noroeste == 1)
     {
       mot1_hor(o);
@@ -84,6 +88,7 @@ void loop()
     }
     mot1_par();
     mot2_par();
+    */
   }
 
   else if (leitura == 0b010) // Condição 3, FRENTE
@@ -94,6 +99,10 @@ void loop()
 
   else if (leitura == 0b011) // Condição 4, VIRAR DIREITA
   {
+    mot1_hor(o);
+    mot2_anti(o);
+
+    /*
     while (s_noroeste == 1)
     {
       mot1_hor(o);
@@ -101,10 +110,15 @@ void loop()
     }
     mot1_par();
     mot2_par();
+    */
   }
 
   else if (leitura == 0b100) // Condição 5, VIRAR ESQUERDA
   {
+    mot1_anti(o);
+    mot2_hor(o);
+
+    /*
     while (s_nordeste == 1)
     {
       mot1_anti(o);
@@ -112,6 +126,7 @@ void loop()
     }
     mot1_par();
     mot2_par();
+    */
   }
 
   else if (leitura == 0b101) // Condição 6,
@@ -120,6 +135,10 @@ void loop()
 
   else if (leitura == 0b110) // Condição 7, VIRAR ESQUERDA
   {
+    mot1_anti(o);
+    mot2_hor(o);
+
+    /*
     while (s_nordeste == 1)
     {
       mot1_anti(o);
@@ -127,6 +146,7 @@ void loop()
     }
     mot1_par();
     mot2_par();
+    */
   }
 
   else // Condição 8,
