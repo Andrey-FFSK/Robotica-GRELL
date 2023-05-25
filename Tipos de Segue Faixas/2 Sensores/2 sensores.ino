@@ -8,14 +8,14 @@
 // Motor 1 = esquerda; Motor 2 = direita
 #define mot_in1 9  // preto, esquerda, tras
 #define mot_in2 6  // branco, esquerda, frente 
-#define mot_in3 5  // cinza, direita, frente
-#define mot_in4 3 // roxo, direita, tras MAL CONTATO 
+#define mot_in3 3  // cinza, direita, frente
+#define mot_in4 5 // roxo, direita, tras MAL CONTATO 
 
 // Usando array para colocar todos os pinos, coloquei os sensores invertido por causa do BitSwift em baixo
-const PROGMEM int pinos[] = {10, 12, 8, 11, 13, 9, 6, 5, 3};
+int pinos[] = {10, 12, 8, 11, 13, 9, 6, 3, 5};
 
 // Definindo variaveis para as funções e o timing
-int i = 150;
+int o = 150;
 
 void setup()
 {
@@ -72,14 +72,14 @@ void loop()
   // Condições que usa a tabela da verdade, consultar para ver
   if (leitura == 0b00) // Condição 1, FRENTE
   {
-    mot1_hor(i);
-    mot2_hor(i);
+    mot1_hor(o);
+    mot2_hor(o);
   }
   else if (leitura == 0b01) // Condição 2, VIRAR DIREITA
   {
     while(s_noroeste == 1){
-      mot1_hor(i);
-      mot2_anti(i);       
+      mot1_hor(o);
+      mot2_anti(o);       
     }
             
   }
@@ -87,8 +87,8 @@ void loop()
   else if (leitura == 0b10) // Condição 3, VIRAR ESQUERDA
   { 
     while(s_nordeste == 1){
-      mot1_anti(i);
-      mot2_hor(i);
+      mot1_anti(o);
+      mot2_hor(o);
     }
        
   }
