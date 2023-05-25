@@ -97,7 +97,7 @@ void loop()
     while (s_noroeste == 1)
     {
       mot1_hor(o);
-      mot2_anti(o;)
+      mot2_anti(o);
     }
     mot1_par();
     mot2_par();
@@ -131,8 +131,8 @@ void loop()
 
   else // Condição 8,
   {
-    mot1_par(o);
-    mot2_par(o);
+    mot1_par();
+    mot2_par();
   }
   // mot1_par();
   // mot2_par();
