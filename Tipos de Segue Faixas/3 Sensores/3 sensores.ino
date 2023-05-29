@@ -17,7 +17,7 @@
 #define mot_in4 5 // preto, esquerda, tras
 
 // Usando array para colocar todos os pinos, coloquei os sensores invertido por causa do BitSwift em baixo
-int pinos[] = {8, 10, 11, 12, 13, 9, 6, 3, 5};
+int pinos[] = {10, 11, 12, 8, 13, 9, 6, 3, 5};
 
 /* Configurando o display, criando classe chamado dis com as especificações do display
 Adafruit_SSD1306 dis(128, 64, &Wire, -1);
