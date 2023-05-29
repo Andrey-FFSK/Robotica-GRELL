@@ -11,13 +11,13 @@
 #define s_leste 13    // marrom, OUT5
 
 // Motor 1 = esquerda; Motor 2 = direita
-#define mot_in1 9  // roxo, direita, tras
-#define mot_in2 6  // cinza, direita, frente 
-#define mot_in3 3  // branco, esquerda, frente
-#define mot_in4 5 // preto, esquerda, tras
+#define mot_in1 3  // preto, esquerda, tras
+#define mot_in2 5  // laranja, esquerda, frente
+#define mot_in3 6  // branco, direita, frente
+#define mot_in4 9 // amarelo, direita, tras
 
 // Usando array para colocar todos os pinos, coloquei os sensores invertido por causa do BitSwift em baixo
-int pinos[] = {8, 10, 11, 12, 13, 9, 6, 3, 5};
+int pinos[] = {8, 10, 11, 12, 13, 5, 3, 6, 9};
 
 /* Configurando o display, criando classe chamado dis com as especificações do display
 Adafruit_SSD1306 dis(128, 64, &Wire, -1);
