@@ -6,13 +6,13 @@
 #define s_leste 13    // marrom, OUT5
 
 // Motor 1 = esquerda; Motor 2 = direita
-#define mot_in1 9  // roxo, direita, tras
-#define mot_in2 6  // cinza, direita, frente 
-#define mot_in3 3  // branco, esquerda, frente
-#define mot_in4 5 // preto, esquerda, tras MAL CONTATO 
+#define mot_in1 5  // preto, direita, tras
+#define mot_in2 3  // laranja, direita, frente 
+#define mot_in3 6  // branco, esquerda, frente
+#define mot_in4 9 // amarelo, esquerda, tras
 
 // Usando array para colocar todos os pinos, coloquei os sensores invertido por causa do BitSwift em baixo
-int pinos[] = {8, 10, 11, 12, 13, 9, 6, 3, 5};
+int pinos[] = {8, 10, 11, 12, 13, 5, 3, 6, 9};
 
 //Definindo variaveis
 int temp = 500;
