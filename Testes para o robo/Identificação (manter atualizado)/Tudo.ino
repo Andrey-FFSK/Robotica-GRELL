@@ -17,7 +17,9 @@ int pinos[] = {8, 10, 11, 12, 13, 5, 3, 6, 9};
 //Definindo variaveis
 int temp = 500;
 int ant = 0;
+
 int o = 150;
+float tensaoA0;
 
 void setup(){
   Serial.begin(9600);
@@ -28,21 +30,36 @@ void setup(){
 
 void loop(){
 
-mot1_hor(o);
-mot2_hor(o);
+//mot1_hor(o);
+//mot2_hor(o);
 
 //mot1_anti(o);
 //mot2_anti(o);
 
 if(millis() - ant >= temp){
-  ant = millis();
+ant = millis();
+Serial.print("Leitura: ");
 byte leitura = 0;
 for(int i = 0; i < 5; i++) leitura |= digitalRead(pinos[i]) << i;
 leitura = (~leitura) & 0b00011111;
-Serial.println(leitura, BIN);
+Serial.print(leitura, BIN);
+Serial.print("Bits / ");
+tensaoA0 = (div(A0) * 5) / 1024.0;
+tensaoA0 *= 8.4;
+Serial.print("Tensão: ");
+Serial.print(tensaoA0);
+Serial.println("V");
 }
-  
 }
+
+float div(uint8_t A0) {
+  float total=0;  
+  for (int i = 0; i < 12; i++){
+    total += 1.0 * analogRead(A0);
+    delay(5);
+  }
+  return total / (float)12;
+}  
 
 // Inicio das funções, para cada caso, totalizando 6 funções diferente
 void mot1_anti(int velo) // Função para o motor da esquerda girar no sentido anti horario com a velocidade variavel
