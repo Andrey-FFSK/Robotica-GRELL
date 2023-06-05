@@ -3,6 +3,7 @@
 #include <Wire.h>
 #include <Adafruit_SSD1306.h>
 */
+
 // Definindo as portas dos sensores e da portas H
 #define s_oeste 8    // rosa, OUT1 
 #define s_noroeste 10 // amarelo, OUT2
@@ -17,7 +18,7 @@
 #define mot_in4 9 // amarelo, direita, tras
 
 // Usando array para colocar todos os pinos, coloquei os sensores invertido por causa do BitSwift em baixo
-int pinos[] = {8, 10, 11, 12, 13, 5, 3, 6, 9};
+int pinos[] = {8, 10, 11, 12, 13, 9, 6, 5, 3};
 
 int j = 150;
 
@@ -32,6 +33,7 @@ void setup()
     pinMode(pinos[i], INPUT);
   for (int i = 5; i < 9; i++)
     pinMode(pinos[i], OUTPUT);
+  Serial.begin(9600);
 /*
   dis.begin(SSD1306_SWITCHCAPVCC, 0x3C); // Inicio de qualquer display, o medelo do Oled é SSD1306, "0x3c" é inmudavel
   dis.clearDisplay();                    // Limpar o display, tambem inicio de qualquer display
@@ -40,7 +42,7 @@ void setup()
   dis.setCursor(0, 0);                   // Escolhendo onde usar o cursor (quando dar clear ele coloca automaticamente no 0,0)
  */
 }
-
+/*
 float div(uint8_t A0) {
   float total=0;  
   for (int i = 0; i < 12; i++){
@@ -49,6 +51,7 @@ float div(uint8_t A0) {
   }
   return total / (float)12;
 }
+*/
 
 // Inicio das funções, para cada caso, totalizando 6 funções diferente
 void mot1_anti(int velo) // Função para o motor da esquerda girar no sentido anti horario com a velocidade variavel
@@ -94,17 +97,19 @@ void loop()
   }
   dis.display();
   */
-  
+  /*
+  float tensaoA0 = (div(A0) * 5) / 1024.0;
+  tensaoA0 *= 8.4;
+  Serial.print("Tensão: ");
+  Serial.println(tensaoA0);
+  */
+ 
   byte leitura = 0; // Definir sempre 0 quando definir algo como o for abaixo
   for (int i = 0; i < 5; i++)
     leitura |= digitalRead(pinos[i]) << i; // Colocando as entrada da tabela da verdade usando um bitshift automatico
-  leitura = (~leitura) & (0b00011111);     // Colocando um inversor para que funcione com a tabela da verdade, AND uma mascara para ir so os bits que eu quero
+  leitura = (~leitura) & (0b00011111); // Colocando um inversor para que funcione com a tabela da verdade, AND uma mascara para ir so os bits que eu quero  
+  Serial.println(leitura, BIN);   
 
-  tensaoA0 = (div(A0) * 5) / 1024.0;
-  tensaoA0 *= 8.4;
-  Serial.print("Tensão: ");
-  Serial.print(tensaoA0)
-  
   // Condições que usa a tabela da verdade, consultar para ver
   if (leitura == 0b00000) // Condição 1
   {
@@ -114,12 +119,12 @@ void loop()
   else if (leitura == 0b00001) // Condição 2
   {
     mot1_hor(j);
-    mot2_hor(j);
+    mot2_anti(j);
   }
   else if (leitura == 0b00010) // Condição 3
   {
     mot1_hor(j);
-    mot2_hor(j);
+    mot2_anti(j);
   }
   else if (leitura == 0b00011) // Condição 4
   {
@@ -137,16 +142,16 @@ void loop()
   else if (leitura == 0b00110) // Condição 7
   {
     mot1_hor(j);
-    mot2_hor(j);
+    mot2_anti(j);
   }
   else if (leitura == 0b00111) // Condição 8
   {
     mot1_hor(j); // Ver. frente
-    mot2_hor(j);
+    mot2_anti(j);
   }
   else if (leitura == 0b01000) // Condição 9
   {
-    mot1_hor(j);
+    mot1_anti(j);
     mot2_hor(j);
   }
   else if (leitura == 0b01001) // Condição 10
@@ -166,7 +171,7 @@ void loop()
   }
   else if (leitura == 0b01100) // Condição 13
   {
-    mot1_hor(j);
+    mot1_anti(j);
     mot2_hor(j);
   }
   else if (leitura == 0b01101) // Condição 14
@@ -185,12 +190,11 @@ void loop()
   else if (leitura == 0b10000) // Condição 17
   {
     mot1_anti(j);
-    mot2_anti(j);
+    mot2_hor(j);
   }
   else if (leitura == 0b10001) // Condição 18
   {
-    mot1_anti(j);
-    mot2_anti(j);
+ 
   }
   else if (leitura == 0b10010) // Condição 19
   {
@@ -250,11 +254,12 @@ void loop()
   }
   else if (leitura == 0b11110) // Condição 31
   {
+    mot1_anti(j);
+    mot2_hor(j);
   }
   else if (leitura == 0b11111) // Condição 32
   {
-    mot1_par();
-    mot2_par();
+
   }
 }
 
