@@ -70,17 +70,8 @@ void loop()
   Serial.println(leitura, BIN);
 //0 e 3 = frente; 6 e 8 = vazi; 2 e 4 = direita; 5 e 7 = esquerda
   switch(leitura){
-    case Condicao[0] | Condicao[2]:
-    mot1_hor(j);
-    mot2_hor(j);
-    break;
-    case Condicao[1] | Condicao[3]:
-    mot1_hor(j);
-    mot2_anti(j);
-    break;
-    case Condicao[4] | Condicao[6]:
-    mot1_anti(j);
-    mot2_hor(j);
-    break;
+    case Condicao[0] | Condicao[2]: mot1_hor(j); mot2_hor(j);  break;
+    case Condicao[1] | Condicao[3]: mot1_hor(j); mot2_anti(j); break;
+    case Condicao[4] | Condicao[6]: mot1_anti(j); mot2_hor(j); break;
   } 
 }
