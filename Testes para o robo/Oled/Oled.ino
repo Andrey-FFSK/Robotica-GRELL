@@ -14,13 +14,13 @@ void setup()
 
 void loop()
 {
-    dis.println("O-NO-N-NE-E");
+    display.println("O-NO-N-NE-E");
     for (int i = 0; i < 5; i++)
     {
-        dis.print(val[i]);
+        display.print(val[i]);
         if(i < 4){
-          dis.print("-");
+          display.print("-");
         }
     }
-    dis.display();
+    display.display();
 }
