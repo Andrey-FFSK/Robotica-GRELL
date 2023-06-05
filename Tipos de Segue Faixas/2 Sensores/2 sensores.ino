@@ -74,6 +74,7 @@ void loop()
     case Condicao[0]]: mot1_hor(j); mot2_hor(j);  break;
     case Condicao[1]: mot1_hor(j); mot2_anti(j); break;
     case Condicao[2]: mot1_anti(j); mot2_hor(j); break;
+  }
 /*
   // Condições que usa a tabela da verdade, consultar para ver
   if (leitura == 0b00) // Condição 1, FRENTE
