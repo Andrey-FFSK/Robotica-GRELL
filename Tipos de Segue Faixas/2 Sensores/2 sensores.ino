@@ -12,7 +12,8 @@
 #define mot_in4 9 // amarelo, direita, tras
 
 // Usando array para colocar todos os pinos, coloquei os sensores invertido por causa do BitSwift em baixo
-int pinos[] = {10, 12, 8, 11, 13, 5, 3, 6, 9};
+int pinos[] = {12, 10, 8, 11, 13, 5, 3, 6, 9};
+byte Condicao[] = {{00000},{00001},{00010},{00011},{00100},{00101},{00110},{00111},{01000},{01001},{01010},{01011},{01100},{01101},{01110},{01111},{10000},{10001},{10010},{10011},{10100},{10101},{10110},{10111},{11000},{11001},{11010},{11011},{11100},{11101},{11110},{11111}}
 
 // Definindo variaveis para as funções e o timing
 int o = 150;
@@ -68,7 +69,12 @@ void loop()
     leitura |= digitalRead(pinos[i]) << i; //Colocando as entrada da tabela da verdade usando um bitshift automatico
   leitura = (~leitura) & 0b00000011;   // Colocando um inversor para que funcione com a tabela da verdade, com uma mascara para ir so os bits que eu quero
   Serial.println(leitura, BIN);   
-
+  
+  switch(leitura){
+    case Condicao[0]]: mot1_hor(j); mot2_hor(j);  break;
+    case Condicao[1]: mot1_hor(j); mot2_anti(j); break;
+    case Condicao[2]: mot1_anti(j); mot2_hor(j); break;
+/*
   // Condições que usa a tabela da verdade, consultar para ver
   if (leitura == 0b00) // Condição 1, FRENTE
   {
@@ -100,7 +106,7 @@ void loop()
   }
 //mot1_par();
 //mot2_par();
-
+*/
   
 }
 
