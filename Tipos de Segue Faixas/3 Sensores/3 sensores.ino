@@ -12,7 +12,7 @@
 #define mot_in4 9 // amarelo, direita, tras
 
 // Usando array para colocar todos os pinos, coloquei os sensores invertido por causa do BitSwift em baixo
-int pinos[] = {10, 11, 12, 8, 13, 9, 6, 3, 5};
+int pinos[] = {12, 11, 10, 8, 13, 9, 6, 3, 5};
 
 int j = 150;
 
