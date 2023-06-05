@@ -39,6 +39,15 @@ void setup()
  */
 }
 
+float div(uint8_t A0) {
+  float total=0;  
+  for (int i = 0; i < 12; i++){
+    total += 1.0 * analogRead(A0);
+    delay(5);
+  }
+  return total / (float)12;
+}
+
 // Inicio das funções, para cada caso, totalizando 6 funções diferente
 void mot1_anti(int velo) // Função para o motor da esquerda girar no sentido anti horario com a velocidade variavel
 {
@@ -89,6 +98,11 @@ void loop()
     leitura |= digitalRead(pinos[i]) << i; // Colocando as entrada da tabela da verdade usando um bitshift automatico
   leitura = (~leitura) & (0b00011111);     // Colocando um inversor para que funcione com a tabela da verdade, AND uma mascara para ir so os bits que eu quero
 
+  tensaoA0 = (div(A0) * 5) / 1024.0;
+  tensaoA0 *= 8.4;
+  Serial.print("Tensão: ");
+  Serial.print(tensaoA0)
+  
   // Condições que usa a tabela da verdade, consultar para ver
   if (leitura == 0b00000) // Condição 1
   {
