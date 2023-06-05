@@ -1,3 +1,4 @@
+
 // Definindo as portas dos sensores e da portas H
 #define s_oeste 8    // rosa, OUT1 
 #define s_noroeste 10 // amarelo, OUT2
@@ -13,6 +14,7 @@
 
 // Usando array para colocar todos os pinos, coloquei os sensores invertido por causa do BitSwift em baixo
 int pinos[] = {12, 11, 10, 8, 13, 9, 6, 3, 5};
+byte Condicao[] = {{00000},{00001},{00010},{00011},{00100},{00101},{00110},{00111},{01000},{01001},{01010},{01011},{01100},{01101},{01110},{01111},{10000},{10001},{10010},{10011},{10100},{10101},{10110},{10111},{11000},{11001},{11010},{11011},{11100},{11101},{11110},{11111}}
 
 int j = 150;
 
@@ -66,43 +68,19 @@ void loop()
     leitura |= digitalRead(pinos[i]) << i; // Colocando as entrada da tabela da verdade usando um bitshift automatico
   leitura = (~leitura) & (0b00000111); // Colocando um inversor para que funcione com a tabela da verdade, AND uma mascara para ir so os bits que eu quero
   Serial.println(leitura, BIN);
-
-  // Condições que usa a tabela da verdade, consultar para ver
-  if (leitura == 0b000) // Condição 1
-  {
+//0 e 3 = frente; 6 e 8 = vazi; 2 e 4 = direita; 5 e 7 = esquerda
+  switch(leitura){
+    case Condicao[0] | Condicao[2]:
     mot1_hor(j);
     mot2_hor(j);
-  }
-  else if (leitura == 0b001) // Condição 2
-  {
+    break;
+    case Condicao[1] | Condicao[3]:
     mot1_hor(j);
     mot2_anti(j);
-  }
-  else if (leitura == 0b010) // Condição 3
-  {
-    mot1_hor(j);
-    mot2_hor(j);
-  }
-  else if (leitura == 0b011) // Condição 4
-  {
-    mot1_hor(j);
-    mot2_anti(j);
-  }
-  else if (leitura == 0b100) // Condição 5
-  {
+    break;
+    case Condicao[4] | Condicao[6]:
     mot1_anti(j);
     mot2_hor(j);
-  }
-  else if (leitura == 0b101) // Condição 6
-  {
-  }
-  else if (leitura == 0b110) // Condição 7
-  {
-    mot1_anti(j);
-    mot2_hor(j);
-  }
-  else // Condição 8
-  {
-
-  }
+    break;
+  } 
 }
