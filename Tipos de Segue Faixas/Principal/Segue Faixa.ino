@@ -19,6 +19,8 @@
 // Usando array para colocar todos os pinos, coloquei os sensores invertido por causa do BitSwift em baixo
 int pinos[] = {8, 10, 11, 12, 13, 5, 3, 6, 9};
 
+int j = 150;
+
 /* Configurando o display, criando classe chamado dis com as especificações do display
 Adafruit_SSD1306 dis(128, 64, &Wire, -1);
 */
@@ -106,145 +108,145 @@ void loop()
   // Condições que usa a tabela da verdade, consultar para ver
   if (leitura == 0b00000) // Condição 1
   {
-    mot1_hor(100);
-    mot2_hor(100);
+    mot1_hor(j);
+    mot2_hor(j);
   }
   else if (leitura == 0b00001) // Condição 2
   {
-    mot1_hor(100);
-    mot2_hor(100);
+    mot1_hor(j);
+    mot2_hor(j);
   }
   else if (leitura == 0b00010) // Condição 3
   {
-    mot1_hor(100);
-    mot2_hor(100);
+    mot1_hor(j);
+    mot2_hor(j);
   }
   else if (leitura == 0b00011) // Condição 4
   {
-    mot1_hor(100);
-    mot2_anti(100);
+    mot1_hor(j);
+    mot2_anti(j);
   }
   else if (leitura == 0b00100) // Condição 5
   {
-    mot1_hor(100);
-    mot2_hor(100);
+    mot1_hor(j);
+    mot2_hor(j);
   }
   else if (leitura == 0b00101) // Condição 6
   {
   }
   else if (leitura == 0b00110) // Condição 7
   {
-    mot1_hor(100);
-    mot2_hor(100);
+    mot1_hor(j);
+    mot2_hor(j);
   }
   else if (leitura == 0b00111) // Condição 8
   {
-    mot1_hor(100); // Ver. frente
-    mot2_hor(100);
+    mot1_hor(j); // Ver. frente
+    mot2_hor(j);
   }
   else if (leitura == 0b01000) // Condição 9
   {
-    mot1_hor(100);
-    mot2_hor(100);
+    mot1_hor(j);
+    mot2_hor(j);
   }
   else if (leitura == 0b01001) // Condição 10
   {
-    mot1_anti(100);
-    mot2_hor(100);
+    mot1_anti(j);
+    mot2_hor(j);
   }
   else if (leitura == 0b01010) // Condição 11
   {
-    mot1_hor(100);
-    mot2_hor(100);
+    mot1_hor(j);
+    mot2_hor(j);
   }
   else if (leitura == 0b01011) // Condição 12
   {
-    mot1_hor(100);
-    mot2_anti(100);
+    mot1_hor(j);
+    mot2_anti(j);
   }
   else if (leitura == 0b01100) // Condição 13
   {
-    mot1_hor(100);
-    mot2_hor(100);
+    mot1_hor(j);
+    mot2_hor(j);
   }
   else if (leitura == 0b01101) // Condição 14
   {
   }
   else if (leitura == 0b01110) // Condição 15
   {
-    mot1_hor(100);
-    mot2_hor(100);
+    mot1_hor(j);
+    mot2_hor(j);
   }
   else if (leitura == 0b01111) // Condição 16
   {
-    mot1_hor(100);
-    mot2_anti(100);
+    mot1_hor(j);
+    mot2_anti(j);
   }
   else if (leitura == 0b10000) // Condição 17
   {
-    mot1_anti(100);
-    mot2_anti(100);
+    mot1_anti(j);
+    mot2_anti(j);
   }
   else if (leitura == 0b10001) // Condição 18
   {
-    mot1_anti(100);
-    mot2_anti(100);
+    mot1_anti(j);
+    mot2_anti(j);
   }
   else if (leitura == 0b10010) // Condição 19
   {
-    mot1_hor(100);
-    mot2_anti(100);
+    mot1_hor(j);
+    mot2_anti(j);
   }
   else if (leitura == 0b10011) // Condição 20
   {
-    mot1_hor(100);
-    mot2_anti(100);
+    mot1_hor(j);
+    mot2_anti(j);
   }
   else if (leitura == 0b10100) // Condição 21
   {
-    mot1_hor(100);
-    mot2_hor(100);
+    mot1_hor(j);
+    mot2_hor(j);
   }
   else if (leitura == 0b10101) // Condição 22
   {
-    mot1_hor(100);
-    mot2_hor(100);
+    mot1_hor(j);
+    mot2_hor(j);
   }
   else if (leitura == 0b10110) // Condição 23
   {
   }
   else if (leitura == 0b10111) // Condição 24
   {
-    mot1_hor(100);
-    mot2_anti(100);
+    mot1_hor(j);
+    mot2_anti(j);
   }
   else if (leitura == 0b11000) // Condição 25
   {
-    mot1_anti(100);
-    mot2_hor(100);
+    mot1_anti(j);
+    mot2_hor(j);
   }
   else if (leitura == 0b11001) // Condição 26
   {
-    mot1_anti(100);
-    mot2_hor(100);
+    mot1_anti(j);
+    mot2_hor(j);
   }
   else if (leitura == 0b11010) // Condição 27
   {
-    mot1_anti(100);
-    mot2_hor(100);
+    mot1_anti(j);
+    mot2_hor(j);
   }
   else if (leitura == 0b11011) // Condição 28
   {
   }
   else if (leitura == 0b11100) // Condição 29
   {
-    mot1_anti(100);
-    mot2_hor(100);
+    mot1_anti(j);
+    mot2_hor(j);
   }
   else if (leitura == 0b11101) // Condição 30
   {
-    mot1_anti(100);
-    mot2_hor(100);
+    mot1_anti(j);
+    mot2_hor(j);
   }
   else if (leitura == 0b11110) // Condição 31
   {
