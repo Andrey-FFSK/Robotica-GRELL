@@ -68,10 +68,10 @@ void loop()
     leitura |= digitalRead(pinos[i]) << i; // Colocando as entrada da tabela da verdade usando um bitshift automatico
   leitura = (~leitura) & (0b00000111); // Colocando um inversor para que funcione com a tabela da verdade, AND uma mascara para ir so os bits que eu quero
   Serial.println(leitura, BIN);
-//0 e 3 = frente; 6 e 8 = vazi; 2 e 4 = direita; 5 e 7 = esquerda
-  switch(leitura){ 
+//0 e 3 = frente; 6 e 8 = vazio; 2 e 4 = direita; 5 e 7 = esquerda
+  switch(leitura){
     case Condicao[0] | Condicao[2]: mot1_hor(j); mot2_hor(j);  break;
-    case Condicao[1] | Condicao[3]: mot1_hor(j); mot2_anti(j); break;
-    case Condicao[4] | Condicao[6]: mot1_anti(j); mot2_hor(j); break;
+    case Condicao[1] | Condicao[3]:if(s_leste == 1){mot1_hor(j); mot2_hor(j); delay(500); mot1_hor(j); mot2_anti(j); delay(500);} else{mot1_hor(j); mot2_anti(j);} break;
+    case Condicao[4] | Condicao[6]:if(s_oeste == 1){ mot1_hor(j); mot2_hor(j) delay(500); mot1_anti(j); mot2_hor(j); delay(500);} else{mot1_anti(j); mot2_hor(j);} break;
   } 
 }
