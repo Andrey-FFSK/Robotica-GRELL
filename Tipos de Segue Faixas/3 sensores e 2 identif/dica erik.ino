@@ -12,7 +12,7 @@
 #define mot_in4 9 // amarelo, direita, tras
 
 // Usando array para colocar todos os pinos, coloquei os sensores invertido por causa do BitSwift em baixo
-int pinos[] = {12, 11, 10, 8, 13, 9, 6, 3, 5};
+int pinos[] = {8, 10, 11, 12, 13, 9, 6, 3, 5};
 
 int j = 180;
 
@@ -63,7 +63,7 @@ void loop()
 {
   byte leitura = 0; // Definir sempre 0 quando definir algo como o for abaixo
   for (int i = 0; i < 3; i++)
-    leitura |= digitalRead(pinos[i]) << i; // Colocando as entrada da tabela da verdade usando um bitshift automatico
+    leitura |= digitalRead(pinos[i+1]) << i; // Colocando as entrada da tabela da verdade usando um bitshift automatico
   leitura = (~leitura) & (0b00000111); // Colocando um inversor para que funcione com a tabela da verdade, AND uma mascara para ir so os bits que eu quero
   Serial.println(leitura, BIN);
 
