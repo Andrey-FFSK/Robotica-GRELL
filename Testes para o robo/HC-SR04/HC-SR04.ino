@@ -1,6 +1,6 @@
 #include <Ultrasonic.h>
-#define trig 12
-#define echo 13
+#define trig 7
+#define echo 4
 
 Ultrasonic sensor(trig, echo);
 
