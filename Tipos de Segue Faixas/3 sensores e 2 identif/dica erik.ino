@@ -13,8 +13,7 @@
 #define mot_in4 9 // amarelo, direita, tras
 
 // Usando array para colocar todos os pinos, coloquei os sensores invertido por causa do BitSwift em baixo
-int pinos[] = {12, 11, 10, 8, 13, 9, 6, 3, 5};
-byte Condicao[] = {{00000},{00001},{00010},{00011},{00100},{00101},{00110},{00111},{01000},{01001},{01010},{01011},{01100},{01101},{01110},{01111},{10000},{10001},{10010},{10011},{10100},{10101},{10110},{10111},{11000},{11001},{11010},{11011},{11100},{11101},{11110},{11111}};
+int pinos[] = {10, 11};
 
 int j = 150;
 
@@ -70,8 +69,10 @@ void loop()
   Serial.println(leitura, BIN);
 //0 e 3 = frente; 6 e 8 = vazio; 2 e 4 = direita; 5 e 7 = esquerda
   switch(leitura){
-    case Condicao[0] | Condicao[2]: mot1_hor(j); mot2_hor(j);  break;
-    case Condicao[1] | Condicao[3]:if(s_leste == 1){mot1_par(); mot2_par(); delay(70); mot1_hor(j); mot2_hor(j); delay(500); mot1_hor(j); mot2_anti(j); delay(500);} else{mot1_hor(j); mot2_anti(j);} break;
-    case Condicao[4] | Condicao[6]:if(s_oeste == 1){mot1_par(); mot2_par(); delay(70); mot1_hor(j); mot2_hor(j) delay(500); mot1_anti(j); mot2_hor(j); delay(500);} else{mot1_anti(j); mot2_hor(j);} break;
+    case 0b000 | 0b010: mot1_hor(j); mot2_hor(j);  break;
+    case 0b001 | 0b011: mot1_hor(j); mot2_anti(j); break;
+    case 0b100 | 0b110: mot1_anti(j); mot2_hor(j); break;
   } 
+  //if(s_oeste == 1){mot1_par(); mot2_par(); delay(70); mot1_hor(j); mot2_hor(j); delay(500); mot1_anti(j); mot2_hor(j); delay(500);}
+  //if(s_leste == 1){mot1_par(); mot2_par(); delay(70); mot1_hor(j); mot2_hor(j); delay(500); mot1_hor(j); mot2_anti(j); delay(500);} else{
 }
