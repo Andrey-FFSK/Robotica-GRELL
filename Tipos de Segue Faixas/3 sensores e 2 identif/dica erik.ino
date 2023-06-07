@@ -14,7 +14,7 @@
 // Usando array para colocar todos os pinos, coloquei os sensores invertido por causa do BitSwift em baixo
 int pinos[] = {12, 11, 10, 8, 13, 9, 6, 3, 5};
 
-int j = 150;
+int j = 180;
 
 void setup()
 {
@@ -72,8 +72,6 @@ void loop()
   {
     mot1_hor(j);
     mot2_hor(j);
-
-
     /*
     while(leitura == 0b010){
     mot1_hor(j);
@@ -84,7 +82,6 @@ void loop()
   {
     mot1_hor(j);
     mot2_anti(j);
-
     /*
     while(leitura == 0b010){
     mot1_hor(j);
@@ -93,6 +90,12 @@ void loop()
   }
   else if (leitura == 0b011) // Condição 4
   {
+    /*
+    if(digitalRead(s_leste) == 0){
+      mot1_par();
+      mot2_par();
+      delay(1000);
+    }*/
     mot1_hor(j);
     mot2_hor(j);
     delay(200);
@@ -100,14 +103,12 @@ void loop()
     mot1_hor(j);
     mot2_anti(j);
     }
-    
+    delay(200);
   }
   else if (leitura == 0b100) // Condição 5
   {
     mot1_anti(j);
     mot2_hor(j); 
-
-
     /*
     while(leitura == 0b000){
     mot1_anti(j);
@@ -116,9 +117,18 @@ void loop()
   }
   else if (leitura == 0b101) // Condição 6
   {
+    mot1_par();
+    mot2_par();
+    delay(200);
   }
   else if (leitura == 0b110) // Condição 7
   {
+    /*
+    if(digitalRead(s_oeste) == 0){
+      mot1_par();
+      mot2_par();
+      delay(1000);
+    }*/
     mot1_hor(j);
     mot2_hor(j);
     delay(200);
@@ -126,6 +136,7 @@ void loop()
     mot1_anti(j);
     mot2_hor(j);
     }
+    delay(200);
     
   }
   else // Condição 8
