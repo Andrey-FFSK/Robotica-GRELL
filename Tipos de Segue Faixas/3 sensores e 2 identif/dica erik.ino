@@ -1,3 +1,5 @@
+#include <Ultrasonic.h>
+
 // Definindo as portas dos sensores e da portas H
 #define s_oeste 8    // rosa, OUT1 
 #define s_noroeste 10 // amarelo, OUT2
@@ -12,9 +14,11 @@
 #define mot_in4 9 // amarelo, direita, tras
 
 // Usando array para colocar todos os pinos, coloquei os sensores invertido por causa do BitSwift em baixo
-int pinos[] = {8, 10, 11, 12, 13, 9, 6, 3, 5};
+int pinos[] = {12, 11, 10, 8, 13, 9, 6, 3, 5};
 
 int j = 180;
+Ultrasonic sensor(7, 4);
+
 
 void setup()
 {
@@ -58,14 +62,41 @@ void mot2_par() // Função para o motor da direita ficar parado
   analogWrite(mot_in3, 0);
   analogWrite(mot_in4, 0);
 }
+void desv_d(int velo)
+{
+  byte p = 0;
+  mot1_par();
+  mot2_par();
+  delay(200);
+  mot1_hor(velo);
+  mot2_anti(velo);
+  delay(500);
+  for (int i = 0; i < 3; i++)
+    p |= digitalRead(pinos[i]) << i; // Colocando as entrada da tabela da verdade usando um bitshift automatico
+  p = (~p) & (0b00000111);
+  byte u = p;
+  while(u == p){
+  for (int i = 0; i < 3; i++)
+    p |= digitalRead(pinos[i]) << i; // Colocando as entrada da tabela da verdade usando um bitshift automatico
+  p = (~p) & (0b00000111); // Colocando um inversor para que funcione com a tabela da verdade, AND uma mascara para ir so os bits que eu quero
+  mot1_hor(velo-50);
+  mot2_hor(velo);
+  }
+}
 
 void loop()
 {
   byte leitura = 0; // Definir sempre 0 quando definir algo como o for abaixo
   for (int i = 0; i < 3; i++)
-    leitura |= digitalRead(pinos[i+1]) << i; // Colocando as entrada da tabela da verdade usando um bitshift automatico
+    leitura |= digitalRead(pinos[i]) << i; // Colocando as entrada da tabela da verdade usando um bitshift automatico
   leitura = (~leitura) & (0b00000111); // Colocando um inversor para que funcione com a tabela da verdade, AND uma mascara para ir so os bits que eu quero
-  Serial.println(leitura, BIN);
+  Serial.print(leitura, BIN);
+  Serial.print(" sens: ");
+  Serial.println(sensor.read());
+
+  if(sensor.read() <= 14){
+    desv_d(j);
+  }
 
   // Condições que usa a tabela da verdade, consultar para ver
   if ((leitura == 0b000) | (leitura == 0b010)) // Condição 1
