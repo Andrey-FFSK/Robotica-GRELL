@@ -1,3 +1,5 @@
+#include <Ultrasonic.h>
+
 // Definindo as portas dos sensores e da portas H
 #define s_oeste 8    // rosa, OUT1 
 #define s_noroeste 10 // amarelo, OUT2
@@ -13,6 +15,7 @@
 
 // Usando array para colocar todos os pinos, coloquei os sensores invertido por causa do BitSwift em baixo
 int pinos[] = {8, 10, 11, 12, 13, 5, 3, 6, 9};
+Ultrasonic sensor(7, 4);
 
 //Definindo variaveis
 int temp = 500;
@@ -48,7 +51,9 @@ tensaoA0 = (div(A0) * 5) / 1024.0;
 tensaoA0 *= 8.4;
 Serial.print("Tensão: ");
 Serial.print(tensaoA0);
-Serial.println("V");
+Serial.print("V / ");
+Serial.print(sensor.read());
+Serial.println("cm");
 }
 }
 
