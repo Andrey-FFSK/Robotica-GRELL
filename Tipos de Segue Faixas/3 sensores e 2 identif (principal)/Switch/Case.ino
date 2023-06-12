@@ -94,46 +94,33 @@ void loop()
   Serial.println(sensor.read());
 
   if(sensor.read() <= 14){
-    desv_d(j);
+    //desv_d(j);
   }
 
-  Switch(leitura){
+switch (leitura) {
   case (0b000) | (0b010):
     mot1_hor(j);
     mot2_hor(j);
     break;
-  case 0b001:
-    mot1_hor(j);
-    mot2_anti(j);
-    break;
-  case 0b011:
-    mot1_hor(j);
-    mot2_hor(j);
-    delay(200);
+  case (0b011) | (0b001):
     while(digitalRead(s_norte) == 1){
     mot1_hor(j);
     mot2_anti(j);
     }
-    delay(200);
-    break;
-  case 0b100:
-    mot1_anti(j);
-    mot2_hor(j); 
+    //delay(200);
     break;
   case 0b101:
     mot1_par();
     mot2_par();
     delay(200);
     break;
-  case 0b110:
-    mot1_hor(j);
-    mot2_hor(j);
-    delay(200);
+  case (0b110) | (0b100):
     while(digitalRead(s_norte) == 1){
     mot1_anti(j);
     mot2_hor(j);
     }
-    delay(200);
+    //delay(200);
     break;
   }
+  //https://forum.arduino.cc/t/switch-case-question/123891
 }
