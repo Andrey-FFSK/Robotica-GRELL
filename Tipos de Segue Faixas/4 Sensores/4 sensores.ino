@@ -99,34 +99,18 @@ void loop()
   }
 
   // Condições que usa a tabela da verdade, consultar para ver
-  if ((leitura == 0b000) | (leitura == 0b010)) // Condição 1
+  if (leitura == 0b0000) // Condição 1
   {
     mot1_hor(j);
     mot2_hor(j);
-    /*
-    while(leitura == 0b010){
-    mot1_hor(j);
-    mot2_hor(j);
-    }*/
   }
-  else if ((leitura == 0b001)) // Condição 2
+  else if (leitura == 0b0010) // Condição 2
   {
     mot1_hor(j);
     mot2_anti(j);
-    /*
-    while(leitura == 0b010){
-    mot1_hor(j);
-    mot2_anti(j);
-    }*/
   }
-  else if (leitura == 0b011) // Condição 4
+  else if (leitura == 0b0011) // Condição 4
   {
-    /*
-    if(digitalRead(s_leste) == 0){
-      mot1_par();
-      mot2_par();
-      delay(1000);
-    }*/
     mot1_hor(j);
     mot2_hor(j);
     delay(200);
@@ -136,30 +120,19 @@ void loop()
     }
     delay(200);
   }
-  else if (leitura == 0b100) // Condição 5
+  else if (leitura == 0b0100) // Condição 5
   {
     mot1_anti(j);
     mot2_hor(j); 
-    /*
-    while(leitura == 0b000){
-    mot1_anti(j);
-    mot2_hor(j);
-    } */
   }
-  else if (leitura == 0b101) // Condição 6
+  else if (leitura == 0b0110 | leitura == 0b1001) // Condição 6, LEMBRANDO DOS PARANTESES
   {
     mot1_par();
     mot2_par();
     delay(200);
   }
-  else if (leitura == 0b110) // Condição 7
+  else if (leitura == 0b1100) // Condição 7
   {
-    /*
-    if(digitalRead(s_oeste) == 0){
-      mot1_par();
-      mot2_par();
-      delay(1000);
-    }*/
     mot1_hor(j);
     mot2_hor(j);
     delay(200);
@@ -168,10 +141,13 @@ void loop()
     mot2_hor(j);
     }
     delay(200);
-    
   }
   else // Condição 8
   {
 
   }
+  /*
+  LEMBRAR DAS VARIAVEIS COM ENCRUZILHADA
+  COMO ELE VAI PARAR?
+  */
 }
