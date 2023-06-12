@@ -2,10 +2,10 @@
 
 // Definindo as portas dos sensores e da portas H
 #define s_oeste 8    // rosa, OUT1 
-#define s_noroeste 10 // amarelo, OUT2
-#define s_norte 11    // azul, OUT4
-#define s_nordeste 12 // vermelho, OUT3                                 
-#define s_leste 13    // marrom, OUT5
+#define s_noroeste 13 // amarelo, OUT2
+#define s_norte 12    // azul, OUT4
+#define s_nordeste 11 // vermelho, OUT3                                 
+#define s_leste 10    // marrom, OUT5
 
 // Motor 1 = esquerda; Motor 2 = direita
 #define mot_in1 3  // preto, esquerda, tras
@@ -14,7 +14,7 @@
 #define mot_in4 9 // amarelo, direita, tras
 
 // Usando array para colocar todos os pinos, coloquei os sensores invertido por causa do BitSwift em baixo
-int pinos[] = {12, 11, 10, 8, 13, 9, 6, 3, 5};
+int pinos[] = {11, 12, 13, 8, 13, 9, 6, 3, 5};
 
 int j = 180;
 Ultrasonic sensor(7, 4);
