@@ -26,11 +26,11 @@ const unsigned char aeiapeqena [] PROGMEM = {
 };
 
 // Definindo as portas dos sensores e da portas H
-#define s_oeste 8    // rosa, OUT1 
-#define s_noroeste 10 // amarelo, OUT2
-#define s_norte 11    // azul, OUT4
-#define s_nordeste 12 // vermelho, OUT3                                 
-#define s_leste 13    // marrom, OUT5
+#define s_oeste 8    // cinza, OUT1 
+#define s_noroeste 10 // branco, OUT2
+#define s_norte 11    // verde, OUT4
+#define s_nordeste 12 // preto, OUT3                                 
+#define s_leste 13    // azul, OUT5
 
 // Motor 1 = esquerda; Motor 2 = direita
 #define mot_in1 3  // preto, esquerda, tras
@@ -39,7 +39,7 @@ const unsigned char aeiapeqena [] PROGMEM = {
 #define mot_in4 9 // amarelo, direita, tras
 
 // Usando array para colocar todos os pinos, coloquei os sensores invertido por causa do BitSwift em baixo
-int pinos[] = {8, 10, 11, 12, 13, 5, 3, 6, 9};
+int pinos[] = {8, 13, 12, 11, 10, 5, 3, 6, 9};
 Ultrasonic sensor(7, 4);
 
 //Definindo variaveis
