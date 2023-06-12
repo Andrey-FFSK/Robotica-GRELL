@@ -147,9 +147,12 @@ void setup() {
 	display.display();
 	delay(500);
 
-	display.fillCircle(82, 56-4, 4, BLACK);
-	display.fillCircle(82, 56, 4, WHITE);
-	display.display();
+ for(int i = 52; i <= 56; i++){
+  display.fillCircle(82, i, 4, Black);
+  display.fillCircle(82, i, 4, WHITE);
+  display.display();
+  delay(250);
+ }
 
 	for(int i = 4; i < 128; i++) {
 		display.fillCircle(82, 56, i, WHITE);
