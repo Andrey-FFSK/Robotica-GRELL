@@ -14,7 +14,7 @@
 #define mot_in4 9 // amarelo, direita, tras
 
 // Usando array para colocar todos os pinos, coloquei os sensores invertido por causa do BitSwift em baixo
-int pinos[] = {11, 12, 13, 8, 13, 9, 6, 3, 5};
+int pinos[] = {10, 11, 13, 8, 12, 9, 6, 3, 5};
 
 int j = 180;
 Ultrasonic sensor(7, 4);
@@ -87,9 +87,9 @@ void desv_d(int velo)
 void loop()
 {
   byte leitura = 0; // Definir sempre 0 quando definir algo como o for abaixo
-  for (int i = 0; i < 3; i++)
+  for (int i = 0; i < 4; i++)
     leitura |= digitalRead(pinos[i]) << i; // Colocando as entrada da tabela da verdade usando um bitshift automatico
-  leitura = (~leitura) & (0b00000111); // Colocando um inversor para que funcione com a tabela da verdade, AND uma mascara para ir so os bits que eu quero
+  leitura = (~leitura) & (0b00001111); // Colocando um inversor para que funcione com a tabela da verdade, AND uma mascara para ir so os bits que eu quero
   Serial.print(leitura, BIN);
   Serial.print(" sens: ");
   Serial.println(sensor.read());
@@ -99,71 +99,55 @@ void loop()
   }
 
   // Condições que usa a tabela da verdade, consultar para ver
-  if (leitura == 0b010) // Condição 1
+  if (leitura == 0b0000) // Condição 1
   {
     mot1_hor(j);
     mot2_hor(j);
-    /*
-    while(leitura == 0b010){
-    mot1_hor(j);
-    mot2_hor(j);
-    }*/
   }
-  /*
-  else if (leitura == 0b001) // Condição 2
+  else if ((leitura == 0b0010) | (leitura == 0b0001)) // Condição 2
   {
     mot1_hor(j);
     mot2_anti(j);
-    /*
-    while(leitura == 0b010){
-    mot1_hor(j);
-    mot2_anti(j);
-    }
-  }*/
-  else if ((leitura == 0b011) | (leitura == 0b001)) // Condição 4
+  }
+  else if (leitura == 0b0011) // Condição 4
   {
-    /*
-    if(digitalRead(s_leste) == 0){
-      mot1_par();
-      mot2_par();
-      delay(1000);
-    }*/
-   
+    mot1_hor(j);
+    mot2_hor(j);
+    delay(300);
     while(digitalRead(s_norte) == 1){
     mot1_hor(j);
     mot2_anti(j);
     }
-    //delay(200);
-  }/*
-  else if (leitura == 0b100) // Condição 5
+    delay(200);
+  }
+  else if ((leitura == 0b0100) | (leitura == 0b1000)) // Condição 5
   {
     mot1_anti(j);
     mot2_hor(j); 
-    /*
-    while(leitura == 0b000){
-    mot1_anti(j);
-    mot2_hor(j);
-    } 
-  }*/
-  else if (leitura == 0b101) // Condição 6
+  }
+  else if (leitura == 0b0110 | leitura == 0b1001) // Condição 6, LEMBRANDO DOS PARANTESES
   {
     mot1_par();
     mot2_par();
     delay(200);
   }
-  else if ((leitura == 0b110) | (leitura == 0b100)) // Condição 7
+  else if (leitura == 0b1100) // Condição 7
   {
-    /*
-    if(digitalRead(s_oeste) == 0){
-      mot1_par();
-      mot2_par();
-      delay(1000);
-    }*/
+    mot1_hor(j);
+    mot2_hor(j);
+    delay(300);
     while(digitalRead(s_norte) == 1){
     mot1_anti(j);
     mot2_hor(j);
     }
-    //delay(200);
-    
+    delay(200);
   }
+  else // Condição 8
+  {
+
+  }
+  /*
+  LEMBRAR DAS VARIAVEIS COM ENCRUZILHADA
+  COMO ELE VAI PARAR?
+  */
 }
