@@ -17,7 +17,7 @@
 int pinos[] = {10, 11, 13, 8, 12, 9, 6, 3, 5};
 
 int j = 180;
-Ultrasonic sensor(7, 4);
+Ultrasonic sensor(7, 4); //trig == 7; echo == 4
 
 
 void setup()
@@ -64,24 +64,26 @@ void mot2_par() // Função para o motor da direita ficar parado
 }
 void desv_d(int velo)
 {
-  byte p = 0;
   mot1_par();
   mot2_par();
   delay(200);
   mot1_hor(velo);
   mot2_anti(velo);
-  delay(500);
-  for (int i = 0; i < 3; i++)
-    p |= digitalRead(pinos[i]) << i; // Colocando as entrada da tabela da verdade usando um bitshift automatico
-  p = (~p) & (0b00000111);
-  byte u = p;
-  while(u == p){
-  for (int i = 0; i < 3; i++)
-    p |= digitalRead(pinos[i]) << i; // Colocando as entrada da tabela da verdade usando um bitshift automatico
-  p = (~p) & (0b00000111); // Colocando um inversor para que funcione com a tabela da verdade, AND uma mascara para ir so os bits que eu quero
-  mot1_hor(velo-50);
+  delay(800);
+  //while(digitalRead(s_norte) == 1){
+  mot1_hor(velo);
   mot2_hor(velo);
-  }
+  delay(2100);
+  mot1_anti(velo);
+  mot2_hor(velo);
+  delay(800);
+  mot1_hor(velo);
+  mot2_hor(velo);
+  delay(2000);
+  mot1_anti(velo);
+  mot2_hor(velo);
+  delay(800);
+  //}
 }
 
 void loop()
@@ -94,8 +96,8 @@ void loop()
   Serial.print(" sens: ");
   Serial.println(sensor.read());
 
-  if(sensor.read() <= 14){
-    //desv_d(j);
+  if(sensor.read() <= 18){
+    desv_d(j);
   }
 
   // Condições que usa a tabela da verdade, consultar para ver
