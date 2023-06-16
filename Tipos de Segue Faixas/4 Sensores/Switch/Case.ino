@@ -99,16 +99,30 @@ void loop()
   if(sensor.read() <= 18)
     //desv_d(j);
  switch(leitura) {
-        case 0b0000: mot1_hor(j); mot2_hor(j); break;
-        case 0b0001:
-        case 0b0010:  break;
-        case 0b0011:  break;
-        case 0b0100:
-        case 0b1000:  break;
-        case 0b0110:
-        case 0b1001:  break;
-        case 0b1100:  break;
-        default: break;
+  case 0b0000: mot1_hor(j); mot2_hor(j); break;
+  case 0b0001:
+  case 0b0010: mot1_hor(j);mot2_anti(j); break;
+  case 0b0011: mot1_hor(j);
+    mot2_hor(j);
+    delay(300);
+    while(digitalRead(s_norte) == 1){
+    mot1_hor(j);
+    mot2_anti(j);
+    }
+    delay(200); break;
+  case 0b0100:
+  case 0b1000: mot1_anti(j); mot2_hor(j); break;
+  case 0b0110:
+  case 0b1001: mot1_par(); mot2_par(); delay(200); break;
+  case 0b1100: mot1_hor(j);
+    mot2_hor(j);
+    delay(300);
+    while(digitalRead(s_norte) == 1){
+    mot1_anti(j);
+    mot2_hor(j);
+    }
+    delay(200); break;
+ default: break;
   
   
 /***********
