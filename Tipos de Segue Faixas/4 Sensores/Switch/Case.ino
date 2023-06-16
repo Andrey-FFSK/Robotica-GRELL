@@ -111,3 +111,36 @@ void loop()
         default: break;
   
   
+/***********
+  #include <iostream>
+
+using namespace std;
+
+enum class byte : unsigned char {};
+
+int main()
+{
+    loop: 
+    byte leitura = (byte) 0b0001;
+    
+    cout << "-------------" << endl;
+    cout << endl;
+    
+    switch(leitura) {
+        case (byte) 0b0000: cout << "condicao 1"; break;
+        case (byte) 0b0001:
+        case (byte) 0b0010: cout << "condicao 2"; break;
+        case (byte) 0b0011: cout << "condicao 4"; break;
+        case (byte) 0b0100:
+        case (byte) 0b1000: cout << "condicao 5"; break;
+        case (byte) 0b0110:
+        case (byte) 0b1001: cout << "condicao 6"; break;
+        case (byte) 0b1100: cout << "condicao 7"; break;
+        default: cout << "condicao 8"; break;
+    }
+
+    //goto loop;
+
+    return 0;
+}
+******/
