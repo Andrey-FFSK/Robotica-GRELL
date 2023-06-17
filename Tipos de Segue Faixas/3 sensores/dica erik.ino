@@ -121,7 +121,7 @@ void loop()
     //desv_d(j);
   }
 
-  //Condições que usa a melhor situação dos sensores, o bit mais da direita é o s_leste e o bit mais na esquerda é o s_oeste
+  //Condições que usa a melhor situação dos sensores, o bit mais da direita é o s_nordeste e o bit mais na esquerda é o s_noroeste
   //Algumas tem if com OR por conta que eles fazem a mesma coisa na condição.
   //Condição de 011 ou 110: é o algoritimo de 90 graus
   if (leitura == 0b010) // Condição 1
