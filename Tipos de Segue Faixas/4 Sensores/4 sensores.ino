@@ -1,11 +1,11 @@
 #include <Ultrasonic.h> //Incluindo a biblioteca do ultrasonic de erik simoes
 
 // Definindo as portas dos sensores e da portas H
-#define s_oeste 8    // rosa, OUT1 
-#define s_noroeste 13 // amarelo, OUT2
-#define s_norte 12    // azul, OUT4
-#define s_nordeste 11 // vermelho, OUT3                                 
-#define s_leste 10    // marrom, OUT5
+#define s_oeste 8    // cinza, OUT1 
+#define s_noroeste 13 // branco, OUT2
+#define s_norte 12    // verde, OUT4
+#define s_nordeste 11 // preto, OUT3                                 
+#define s_leste 10    // azul, OUT5
 
 // Motor 1 = esquerda; Motor 2 = direita
 #define mot_in1 3  // preto, esquerda, tras
@@ -97,7 +97,7 @@ void loop()
   Serial.println(sensor.read());
 
   if(sensor.read() <= 18){ //Se o sensor dectar que esta 18cm de distancia ativa a função de desviar
-    desv_d(j);
+    // desv_d(j);
   }
 
   //Condições que usa a melhor situação dos sensores, o bit mais da direita é o s_leste e o bit mais na esquerda é o s_oeste
@@ -119,8 +119,8 @@ void loop()
     mot2_hor(j);
     delay(300);
     while(digitalRead(s_norte) == 1){
-    mot1_hor(j);
-    mot2_anti(j);
+      mot1_hor(j);
+      mot2_anti(j);
     }
     delay(200);
   }
@@ -141,8 +141,8 @@ void loop()
     mot2_hor(j);
     delay(300);
     while(digitalRead(s_norte) == 1){
-    mot1_anti(j);
-    mot2_hor(j);
+      mot1_anti(j);
+      mot2_hor(j);
     }
     delay(200);
   } //Tirei o else que nao fazia nada
