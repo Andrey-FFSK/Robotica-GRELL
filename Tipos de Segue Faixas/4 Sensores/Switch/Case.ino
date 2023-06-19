@@ -28,6 +28,52 @@ void setup()
     pinMode(pinos[i], OUTPUT);
     Serial.begin(9600);
 }
+void loop()
+{
+  //Essa parte é o bitSwift, criar uma variavel leitura do tipo byte, porem a gente so usa os bits dessa varaivel, a quantidade de bits depende de quantos sensores estao usando
+  byte leitura = 0; // Definir sempre 0 quando definir algo como o for abaixo
+  for (int i = 0; i < 4; i++)
+    leitura |= digitalRead(pinos[i]) << i; // Colocando as entrada da tabela da verdade usando um bitshift automatico, o valor do i depende dos sensores
+  leitura = (~leitura) & (0b00001111); // Colocando um inversor para que funcione com a tabela da verdade, pq o sensor dectectar no branco, AND uma mascara para ir so os bits que eu quero
+  Serial.print(leitura, BIN);
+  Serial.print(" sens: ");
+  Serial.println(sensor.read());
+
+  if(sensor.read() <= 18) //Se o sensor dectar que esta 18cm de distancia ativa a função de desviar
+    //desv_d(j);
+
+  //Condições que usa a melhor situação dos sensores, o bit mais da direita é o s_leste e o bit mais na esquerda é o s_oeste
+  //Algumas tem if com OR por conta que eles fazem a mesma coisa na condição.
+  //Condição de 0011 ou 1100: é o algoritimo de 90 graus, pensando que so vai ativar no 90
+ switch(leitura) {
+  case 0b0000: mot1_hor(j); mot2_hor(j); break;
+  case 0b0010: mot1_hor(j);mot2_anti(j); break;
+  case 0b0011: 
+    mot1_hor(j);
+    mot2_hor(j);
+    delay(300);
+    while(digitalRead(s_norte) == 1){
+    mot1_hor(j);
+    mot2_anti(j);
+    }
+    delay(200); break;
+  case 0b0100: mot1_anti(j); mot2_hor(j); break;
+  case 0b0110:
+  case 0b1001: mot1_par(); mot2_par(); delay(200); break;
+  case 0b1100: 
+    mot1_hor(j);
+    mot2_hor(j);
+    delay(300);
+    while(digitalRead(s_norte) == 1){
+    mot1_anti(j);
+    mot2_hor(j);
+    }
+    delay(200); break;
+   case 0b1111: mot1_hor(j); mot2_hor(j); delay(300);
+ default: break;
+  
+ }
+}
 
 // Inicio das funções, para cada caso, totalizando 6 funções diferente
 void mot1_anti(int velo) // Função para o motor da esquerda girar no sentido anti horario com a velocidade variavel
@@ -85,53 +131,6 @@ void desv_d(int velo) // Função para o robo desviar pela direita o obstaculo
   //}
 }
 
-void loop()
-{
-  //Essa parte é o bitSwift, criar uma variavel leitura do tipo byte, porem a gente so usa os bits dessa varaivel, a quantidade de bits depende de quantos sensores estao usando
-  byte leitura = 0; // Definir sempre 0 quando definir algo como o for abaixo
-  for (int i = 0; i < 4; i++)
-    leitura |= digitalRead(pinos[i]) << i; // Colocando as entrada da tabela da verdade usando um bitshift automatico, o valor do i depende dos sensores
-  leitura = (~leitura) & (0b00001111); // Colocando um inversor para que funcione com a tabela da verdade, pq o sensor dectectar no branco, AND uma mascara para ir so os bits que eu quero
-  Serial.print(leitura, BIN);
-  Serial.print(" sens: ");
-  Serial.println(sensor.read());
-
-  if(sensor.read() <= 18) //Se o sensor dectar que esta 18cm de distancia ativa a função de desviar
-    //desv_d(j);
-
-  //Condições que usa a melhor situação dos sensores, o bit mais da direita é o s_leste e o bit mais na esquerda é o s_oeste
-  //Algumas tem if com OR por conta que eles fazem a mesma coisa na condição.
-  //Condição de 0011 ou 1100: é o algoritimo de 90 graus, pensando que so vai ativar no 90
- switch(leitura) {
-  case 0b0000: mot1_hor(j); mot2_hor(j); break;
-  case 0b0001:
-  case 0b0010: mot1_hor(j);mot2_anti(j); break;
-  case 0b0011: 
-    mot1_hor(j);
-    mot2_hor(j);
-    delay(300);
-    while(digitalRead(s_norte) == 1){
-    mot1_hor(j);
-    mot2_anti(j);
-    }
-    delay(200); break;
-  case 0b0100:
-  case 0b1000: mot1_anti(j); mot2_hor(j); break;
-  case 0b0110:
-  case 0b1001: mot1_par(); mot2_par(); delay(200); break;
-  case 0b1100: 
-    mot1_hor(j);
-    mot2_hor(j);
-    delay(300);
-    while(digitalRead(s_norte) == 1){
-    mot1_anti(j);
-    mot2_hor(j);
-    }
-    delay(200); break;
- default: break;
-  
- }
-}
 //codigo de teste da entrada das condiçoes de switch
 /***********
   #include <iostream>
