@@ -108,7 +108,7 @@ void loop()
     mot1_hor(j);
     mot2_hor(j);
   }
-  else if ((leitura == 0b0010) | (leitura == 0b0001)) // Condição 2
+  else if ((leitura == 0b0010) /*| (leitura == 0b0001)*/) // Condição 2
   {
     mot1_hor(j);
     mot2_anti(j);
@@ -124,7 +124,7 @@ void loop()
     }
     delay(200);
   }
-  else if ((leitura == 0b0100) | (leitura == 0b1000)) // Condição 5
+  else if ((leitura == 0b0100) /*| (leitura == 0b1000)*/) // Condição 5
   {
     mot1_anti(j);
     mot2_hor(j); 
@@ -145,7 +145,12 @@ void loop()
       mot2_hor(j);
     }
     delay(200);
-  } //Tirei o else que nao fazia nada
+  } else if (leitura == 0b1111)
+  {
+    mot1_hor(j);
+    mot2_hor(j);
+    delay(300);
+  }
   /*
   LEMBRAR DAS VARIAVEIS COM ENCRUZILHADA
   COMO ELE VAI PARAR?
