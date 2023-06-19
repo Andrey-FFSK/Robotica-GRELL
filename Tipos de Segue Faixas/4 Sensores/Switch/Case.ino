@@ -130,7 +130,8 @@ void loop()
     delay(200); break;
  default: break;
   
-
+ }
+}
 //codigo de teste da entrada das condiçoes de switch
 /***********
   #include <iostream>
