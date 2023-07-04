@@ -122,7 +122,10 @@ void loop()
       mot1_hor(j);
       mot2_anti(j);
     }
-    delay(200);
+    delay(300);
+    mot1_anti(j);
+    mot2_hor(j);
+    delay(100);
   }
   else if ((leitura == 0b0100) /*| (leitura == 0b1000)*/) // Condição 5
   {
@@ -144,7 +147,10 @@ void loop()
       mot1_anti(j);
       mot2_hor(j);
     }
-    delay(200);
+    delay(300);
+    mot1_hor(j);
+    mot2_anti(j);
+    delay(100);
   } else if (leitura == 0b1111)
   {
     mot1_hor(j);
