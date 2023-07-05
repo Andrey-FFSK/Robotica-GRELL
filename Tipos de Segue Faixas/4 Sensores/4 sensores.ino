@@ -7,7 +7,7 @@
 #define s_nordeste 11 // preto, OUT3                                 
 #define s_leste 10    // azul, OUT5
 
-// Motor 1 = esquerda; Motor 2 = direita
+// Motor 2 = esquerda; Motor 1 = direita
 #define mot_in1 3 // amarelo, direita, tras
 #define mot_in2 5 // branco, direita, frente
 #define mot_in3 6 // laranja, esquerda, frente
@@ -30,33 +30,33 @@ void setup()
 }
 
 // Inicio das funções, para cada caso, totalizando 6 funções diferente
-void mot1_anti(int velo) // Função para o motor da esquerda girar no sentido anti horario com a velocidade variavel
+void mot2_anti(int velo) // Função para o motor da esquerda girar no sentido anti horario com a velocidade variavel
 {
   analogWrite(mot_in4, velo);
   analogWrite(mot_in3, 0);
 }
-void mot1_hor(int velo) // Função para o motor da esquerda girar no sentido horario com a velocidade variavel
+void mot2_hor(int velo) // Função para o motor da esquerda girar no sentido horario com a velocidade variavel
 {
   analogWrite(mot_in4, 0);
   analogWrite(mot_in3, velo);
 }
-void mot1_par() // Função para o motor da esquerda ficar parado
+void mot2_par() // Função para o motor da esquerda ficar parado
 {
   analogWrite(mot_in4, 0);
   analogWrite(mot_in3, 0);
 }
 
-void mot2_anti(int velo) // Função para o motor da direita girar no sentido anti horario com a velocidade variavel
+void mot1_anti(int velo) // Função para o motor da direita girar no sentido anti horario com a velocidade variavel
 {
   analogWrite(mot_in2, 0);
   analogWrite(mot_in1, velo);
 }
-void mot2_hor(int velo) // Função para o motor da direita girar no sentido horario com a velocidade variavel
+void mot1_hor(int velo) // Função para o motor da direita girar no sentido horario com a velocidade variavel
 {
   analogWrite(mot_in2, velo);
   analogWrite(mot_in1, 0);
 }
-void mot2_par() // Função para o motor da direita ficar parado
+void mot1_par() // Função para o motor da direita ficar parado
 {
   analogWrite(mot_in1, 0);
   analogWrite(mot_in2, 0);
@@ -117,23 +117,23 @@ void loop()
   {
     mot1_hor(j);
     mot2_hor(j);
-    delay(300);
+    delay(200);
     while(digitalRead(s_norte) == 1){
       mot1_hor(j);
       mot2_anti(j);
     }
-    delay(200);
+    delay(100);
   }
   else if ((leitura == 0b0100) /*| (leitura == 0b1000)*/) // Condição 5
   {
     mot1_anti(j);
     mot2_hor(j); 
   }
-  else if (leitura == 0b0110 | leitura == 0b1001) // Condição 6
+  else if ((leitura == 0b0110) | (leitura == 0b1001)) // Condição 6
   {
     mot1_par();
     mot2_par();
-    delay(200);
+    delay(100);
   }
   else if (leitura == 0b1100) // Condição 7
   {
@@ -144,12 +144,12 @@ void loop()
       mot1_anti(j);
       mot2_hor(j);
     }
-    delay(200);
+    delay(100);
   } else if (leitura == 0b1111)
   {
     mot1_hor(j);
     mot2_hor(j);
-    delay(300);
+    delay(200);
   }
   /*
   LEMBRAR DAS VARIAVEIS COM ENCRUZILHADA
