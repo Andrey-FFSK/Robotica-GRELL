@@ -8,10 +8,10 @@
 #define s_leste 10    // marrom, OUT5
 
 // Motor 1 = esquerda; Motor 2 = direita
-#define mot_in1 3  // preto, esquerda, tras
-#define mot_in2 5  // laranja, esquerda, frente
-#define mot_in3 6  // branco, direita, frente
-#define mot_in4 9 // amarelo, direita, tras
+#define mot_in1 3 // amarelo, direita, tras
+#define mot_in2 5 // branco, direita, frente
+#define mot_in3 6 // laranja, esquerda, frente
+#define mot_in4 9 // preto, esquerda, tras
 
 // Usando array para colocar todos os pinos, coloquei os sensores em uma certa posição por causa do BitSwift em baixo
 const int pinos[] = {10, 11, 13, 8, 12, 9, 6, 3, 5};
@@ -78,57 +78,34 @@ void loop()
 // Inicio das funções, para cada caso, totalizando 6 funções diferente
 void mot1_anti(int velo) // Função para o motor da esquerda girar no sentido anti horario com a velocidade variavel
 {
-  analogWrite(mot_in1, velo);
-  analogWrite(mot_in2, 0);
+  analogWrite(mot_in4, velo);
+  analogWrite(mot_in3, 0);
 }
 void mot1_hor(int velo) // Função para o motor da esquerda girar no sentido horario com a velocidade variavel
 {
-  analogWrite(mot_in1, 0);
-  analogWrite(mot_in2, velo);
+  analogWrite(mot_in4, 0);
+  analogWrite(mot_in3, velo);
 }
 void mot1_par() // Função para o motor da esquerda ficar parado
 {
-  analogWrite(mot_in1, 0);
-  analogWrite(mot_in2, 0);
+  analogWrite(mot_in4, 0);
+  analogWrite(mot_in3, 0);
 }
 
 void mot2_anti(int velo) // Função para o motor da direita girar no sentido anti horario com a velocidade variavel
 {
-  analogWrite(mot_in3, 0);
-  analogWrite(mot_in4, velo);
+  analogWrite(mot_in2, 0);
+  analogWrite(mot_in1, velo);
 }
 void mot2_hor(int velo) // Função para o motor da direita girar no sentido horario com a velocidade variavel
 {
-  analogWrite(mot_in3, velo);
-  analogWrite(mot_in4, 0);
+  analogWrite(mot_in2, velo);
+  analogWrite(mot_in1, 0);
 }
 void mot2_par() // Função para o motor da direita ficar parado
 {
-  analogWrite(mot_in3, 0);
-  analogWrite(mot_in4, 0);
-}
-void desv_d(int velo) // Função para o robo desviar pela direita o obstaculo
-{
-  mot1_par();
-  mot2_par();
-  delay(200);
-  mot1_hor(velo);
-  mot2_anti(velo);
-  delay(800);
-  //while(digitalRead(s_norte) == 1){
-  mot1_hor(velo);
-  mot2_hor(velo);
-  delay(2100);
-  mot1_anti(velo);
-  mot2_hor(velo);
-  delay(800);
-  mot1_hor(velo);
-  mot2_hor(velo);
-  delay(2000);
-  mot1_anti(velo);
-  mot2_hor(velo);
-  delay(800);
-  //}
+  analogWrite(mot_in1, 0);
+  analogWrite(mot_in2, 0);
 }
 
 //codigo de teste da entrada das condiçoes de switch
