@@ -152,34 +152,34 @@ void loop()
 // Inicio das funções, para cada caso, totalizando 6 funções diferente
 void mot1_anti(int velo) // Função para o motor da esquerda girar no sentido anti horario com a velocidade variavel
 {
-  analogWrite(mot_in1, velo);
-  analogWrite(mot_in2, 0);
+  analogWrite(mot_in4, velo);
+  analogWrite(mot_in3, 0);
 }
 void mot1_hor(int velo) // Função para o motor da esquerda girar no sentido horario com a velocidade variavel
 {
-  analogWrite(mot_in1, 0);
-  analogWrite(mot_in2, velo);
+  analogWrite(mot_in4, 0);
+  analogWrite(mot_in3, velo);
 }
 void mot1_par() // Função para o motor da esquerda ficar parado
 {
-  analogWrite(mot_in1, 0);
-  analogWrite(mot_in2, 0);
+  analogWrite(mot_in4, 0);
+  analogWrite(mot_in3, 0);
 }
 
 void mot2_anti(int velo) // Função para o motor da direita girar no sentido anti horario com a velocidade variavel
 {
-  analogWrite(mot_in3, 0);
-  analogWrite(mot_in4, velo);
+  analogWrite(mot_in2, 0);
+  analogWrite(mot_in1, velo);
 }
 void mot2_hor(int velo) // Função para o motor da direita girar no sentido horario com a velocidade variavel
 {
-  analogWrite(mot_in3, velo);
-  analogWrite(mot_in4, 0);
+  analogWrite(mot_in2, velo);
+  analogWrite(mot_in1, 0);
 }
 void mot2_par() // Função para o motor da direita ficar parado
 {
-  analogWrite(mot_in3, 0);
-  analogWrite(mot_in4, 0);
+  analogWrite(mot_in1, 0);
+  analogWrite(mot_in2, 0);
 }
 void desv_d(int velo) // Função para o robo desviar pela direita o obstaculo
 {
