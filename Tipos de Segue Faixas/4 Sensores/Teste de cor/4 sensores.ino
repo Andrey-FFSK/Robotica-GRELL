@@ -8,10 +8,10 @@
 #define s_leste 10    // azul, OUT5
 
 // Motor 1 = esquerda; Motor 2 = direita
-#define mot_in1 3 // preto, esquerda, tras
-#define mot_in2 5 // laranja, esquerda, frente
-#define mot_in3 6 // branco, direita, frente
-#define mot_in4 9 // amarelo, direita, tras
+#define mot_in1 3 // amarelo, direita, tras
+#define mot_in2 5 // branco, direita, frente
+#define mot_in3 6 // laranja, esquerda, frente
+#define mot_in4 9 // preto, esquerda, tras
 
 #define s_cor_esq A1
 #define s_cor_dir A2
