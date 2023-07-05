@@ -8,10 +8,10 @@
 #define s_leste 10    // marrom, OUT5
 
 // Motor 1 = esquerda; Motor 2 = direita
-#define mot_in1 3  // preto, esquerda, tras
-#define mot_in2 5  // laranja, esquerda, frente
-#define mot_in3 6  // branco, direita, frente
-#define mot_in4 9 // amarelo, direita, tras
+#define mot_in1 3 // amarelo, direita, tras
+#define mot_in2 5 // branco, direita, frente
+#define mot_in3 6 // laranja, esquerda, frente
+#define mot_in4 9 // preto, esquerda, tras
 
 // Usando array para colocar todos os pinos, coloquei os sensores em uma certa posição por causa do BitSwift em baixo
 const int pinos[] = {11, 12, 13, 8, 13, 9, 6, 3, 5};
@@ -33,34 +33,34 @@ void setup()
 // Inicio das funções, para cada caso, totalizando 6 funções diferente
 void mot1_anti(int velo) // Função para o motor da esquerda girar no sentido anti horario com a velocidade variavel
 {
-  analogWrite(mot_in1, velo);
-  analogWrite(mot_in2, 0);
+  analogWrite(mot_in4, velo);
+  analogWrite(mot_in3, 0);
 }
 void mot1_hor(int velo) // Função para o motor da esquerda girar no sentido horario com a velocidade variavel
 {
-  analogWrite(mot_in1, 0);
-  analogWrite(mot_in2, velo);
+  analogWrite(mot_in4, 0);
+  analogWrite(mot_in3, velo);
 }
 void mot1_par() // Função para o motor da esquerda ficar parado
 {
-  analogWrite(mot_in1, 0);
-  analogWrite(mot_in2, 0);
+  analogWrite(mot_in4, 0);
+  analogWrite(mot_in3, 0);
 }
 
 void mot2_anti(int velo) // Função para o motor da direita girar no sentido anti horario com a velocidade variavel
 {
-  analogWrite(mot_in3, 0);
-  analogWrite(mot_in4, velo);
+  analogWrite(mot_in2, 0);
+  analogWrite(mot_in1, velo);
 }
 void mot2_hor(int velo) // Função para o motor da direita girar no sentido horario com a velocidade variavel
 {
-  analogWrite(mot_in3, velo);
-  analogWrite(mot_in4, 0);
+  analogWrite(mot_in2, velo);
+  analogWrite(mot_in1, 0);
 }
 void mot2_par() // Função para o motor da direita ficar parado
 {
-  analogWrite(mot_in3, 0);
-  analogWrite(mot_in4, 0);
+  analogWrite(mot_in1, 0);
+  analogWrite(mot_in2, 0);
 }
 void desv_d(int velo) // Função para o robo desviar pela direita o obstaculo
 { 
