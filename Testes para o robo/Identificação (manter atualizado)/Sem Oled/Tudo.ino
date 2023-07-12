@@ -16,7 +16,6 @@
 // Usando array para colocar todos os pinos, coloquei os sensores invertido por causa do BitSwift em baixo
 int pinos[] = {8, 13, 12, 11, 10, 5, 3, 6, 9};
 Ultrasonic sensor(7, 4);
- // cu
 // Definindo variaveis
 int temp = 500;
 int ant = 0;
