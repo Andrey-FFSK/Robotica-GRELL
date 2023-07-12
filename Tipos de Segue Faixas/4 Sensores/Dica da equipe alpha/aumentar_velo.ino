@@ -29,36 +29,36 @@ void setup()
 }
 
 // Inicio das funções, para cada caso, totalizando 6 funções diferente
-void mot2_anti(int velo) // Função para o motor da esquerda girar no sentido anti horario com a velocidade variavel
+void mot1_anti(int velo) // Função para o motor da esquerda girar no sentido anti horario com a velocidade variavel
 {
-    analogWrite(mot_in4, velo);
-    analogWrite(mot_in3, 0);
+  analogWrite(mot_in4, 0);
+  analogWrite(mot_in3, velo);
 }
-void mot2_hor(int velo) // Função para o motor da esquerda girar no sentido horario com a velocidade variavel
+void mot1_hor(int velo) // Função para o motor da esquerda girar no sentido horario com a velocidade variavel
 {
-    analogWrite(mot_in4, 0);
-    analogWrite(mot_in3, velo);
+  analogWrite(mot_in4, velo);
+  analogWrite(mot_in3, 0);
 }
-void mot2_par() // Função para o motor da esquerda ficar parado
+void mot1_par() // Função para o motor da esquerda ficar parado
 {
-    analogWrite(mot_in4, 0);
-    analogWrite(mot_in3, 0);
+  analogWrite(mot_in4, 0);
+  analogWrite(mot_in3, 0);
 }
 
-void mot1_anti(int velo) // Função para o motor da direita girar no sentido anti horario com a velocidade variavel
+void mot2_anti(int velo) // Função para o motor da direita girar no sentido anti horario com a velocidade variavel
 {
-    analogWrite(mot_in2, 0);
-    analogWrite(mot_in1, velo);
+  analogWrite(mot_in2, 0);
+  analogWrite(mot_in1, velo);
 }
-void mot1_hor(int velo) // Função para o motor da direita girar no sentido horario com a velocidade variavel
+void mot2_hor(int velo) // Função para o motor da direita girar no sentido horario com a velocidade variavel
 {
-    analogWrite(mot_in2, velo);
-    analogWrite(mot_in1, 0);
+  analogWrite(mot_in2, velo);
+  analogWrite(mot_in1, 0);
 }
-void mot1_par() // Função para o motor da direita ficar parado
+void mot2_par() // Função para o motor da direita ficar parado
 {
-    analogWrite(mot_in1, 0);
-    analogWrite(mot_in2, 0);
+  analogWrite(mot_in1, 0);
+  analogWrite(mot_in2, 0);
 }
 void desv_d(int velo) // Função para o robo desviar pela direita o obstaculo
 {
@@ -86,8 +86,8 @@ void desv_d(int velo) // Função para o robo desviar pela direita o obstaculo
 
 void loop()
 {
-    int e = 180;
-    int d = 180;
+    int e = 100;
+    int d = 100;
 
     // Essa parte é o bitSwift, criar uma variavel leitura do tipo byte, porem a gente so usa os bits dessa varaivel, a quantidade de bits depende de quantos sensores estao usando
     byte leitura = 0; // Definir sempre 0 quando definir algo como o for abaixo
@@ -113,7 +113,8 @@ void loop()
     }
     else if ((leitura == 0b0010) /*| (leitura == 0b0001)*/) // Condição 2
     {
-        d += 30 mot1_hor(d);
+        d = 255;
+        mot1_hor(d);
         mot2_hor(e);
     }
     else if (leitura == 0b0011) // Condição 4
@@ -121,7 +122,8 @@ void loop()
         mot1_hor(d);
         mot2_hor(e);
         delay(200);
-        d += 30 while (digitalRead(s_norte) == 1)
+        d = 255;
+        while (digitalRead(s_norte) == 1)
         {
             mot1_hor(d);
             mot2_hor(e);
@@ -130,7 +132,8 @@ void loop()
     }
     else if ((leitura == 0b0100) /*| (leitura == 0b1000)*/) // Condição 5
     {
-        e += 30 mot1_hor(d);
+        e = 255;
+        mot1_hor(d);
         mot2_hor(e);
     }
     else if ((leitura == 0b0110) | (leitura == 0b1001)) // Condição 6
@@ -144,7 +147,8 @@ void loop()
         mot1_hor(d);
         mot2_hor(e);
         delay(200);
-        e += 30 while (digitalRead(s_norte) == 1)
+        e = 255;
+        while (digitalRead(s_norte) == 1)
         {
             mot1_hor(d);
             mot2_hor(e);
