@@ -118,6 +118,10 @@ void loop()
   }
   else if (leitura == 0b1111)
   {
+    mot1_par();
+    mot2_par();
+    delay(1000);
+
     if ((analogRead(s_cor_esq) <= 200) & (analogRead(s_cor_esq) >= 100))
     {
       mot1_hor(j);

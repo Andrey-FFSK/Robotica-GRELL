@@ -3,8 +3,8 @@
 #include <Adafruit_SSD1306.h>
 
 #define led_r A2
-#define led_g A1
-#define led_b 8
+#define led_g 2
+#define led_b A1
 #define esq A3
 #define dir A0
 
@@ -23,13 +23,16 @@ Serial.begin(9600);
 }
 
 void loop(){
- //digitalWrite(led_r, 1);
- //digitalWrite(led_g, 1);
- //digitalWrite(led_b, 1);
+  //digitalWrite(led_r, 1);
+  digitalWrite(led_g, 1);
+  //digitalWrite(led_b, 1);
+ int c_esq = constrain(analogRead(esq), 800, 1023);
+ int m_esq = map(c_esq, 800, 1023, 0, 1023);
 Serial.print("Esq: ");
-Serial.print(analogRead(esq));
-Serial.print(" | Dir: ");
-Serial.println(analogRead(dir));
+Serial.print(m_esq);
+Serial.println(" | Dir: ");
+/*
+Serial.println();
 delay(100);
 
 if(analogRead(esq) > 980){
@@ -51,7 +54,7 @@ else if (analogRead(dir) < 910){
 }
 else{
     Serial.println(" Dir = Verde");
-}
+}*/
 
 display.clearDisplay();
 display.setCursor(0, 0);
