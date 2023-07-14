@@ -3,8 +3,8 @@
 #include <Adafruit_SSD1306.h>
 
 #define led_r A2
-#define led_g 8
-#define led_b A2
+#define led_g A1
+#define led_b 8
 #define esq A3
 #define dir A0
 
