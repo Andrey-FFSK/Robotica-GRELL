@@ -30,6 +30,28 @@ Serial.print("Esq: ");
 Serial.print(analogRead(esq));
 Serial.print(" | Dir: ");
 Serial.println(analogRead(dir));
+delay(100);
+
+if(analogRead(esq) > 980){
+    Serial.print("Esq = Preto");
+}
+else if (analogRead(esq) < 910){
+    Serial.print("Esq = Branco");
+}
+else{
+    Serial.print("Esq = Verde");
+}
+
+
+if(analogRead(dir) > 980){
+    Serial.println(" Dir = Preto");
+}
+else if (analogRead(dir) < 910){
+    Serial.println(" Dir = Branco");
+}
+else{
+    Serial.println(" Dir = Verde");
+}
 
 display.clearDisplay();
 display.setCursor(0, 0);
