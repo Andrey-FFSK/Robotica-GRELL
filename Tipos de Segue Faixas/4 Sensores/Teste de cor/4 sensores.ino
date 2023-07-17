@@ -23,6 +23,10 @@ const int pinos[] = {10, 11, 13, 8, 12, A0, A1, 2, 9, 6, 3, 5};
 const int j = 180;       // PWM usado para a velocidade, min == 0 e max == 255
 Ultrasonic sensor(7, 4); // trig == 7; echo == 4 | trig = amarel e ech = marrm
 
+const int branco = 620 //VALR DEPENDE DE CADA LDR
+const int verde = 700
+const int preto = 780
+
 void setup()
 {
   // Colocando os sensores como INPUT, e o resto como OUTPUT, tudo isso pelo array
@@ -70,7 +74,7 @@ void loop()
     mot1_par();
     mot2_par();
     delay(1000);
-    if ((m_esq <= 200) & (m_dir >= 100))
+    if ((m_dir >= branco) & (m_dir <= preto))
     {
       mot1_hor(j);
       mot2_hor(j);
@@ -103,7 +107,7 @@ void loop()
     mot1_par();
     mot2_par();
     delay(1000);
-    if ((m_esq <= 200) & (m_dir >= 100))
+    if ((m_esq >= branco) & (m_esq <= preto))
     {
       mot1_hor(j);
       mot2_hor(j);
@@ -125,7 +129,7 @@ void loop()
     mot1_par();
     mot2_par();
     delay(1000);
-    if ((m_esq <= 200) & (m_dir >= 100))
+    if (((m_esq >= branco) & (m_esq <= preto)) & (m_dir <= branco+30))
     {
       mot1_hor(j);
       mot2_hor(j);
@@ -134,7 +138,7 @@ void loop()
       mot2_hor(j);
       delay(150);
     }
-    else if ((m_esq <= 200) & (m_dir >= 100))
+    else if ((m_esq <= branco+30) & ((m_dir >= branco) & (m_dir <= preto)))
     {
       mot1_hor(j);
       mot2_hor(j);
@@ -143,7 +147,7 @@ void loop()
       mot2_anti(j);
       delay(150);
     }
-    else if((m_esq >= 200) & (m_dir >= 100))
+    else if(((m_esq >= branco) & (m_esq <= preto)) & ((m_dir >= branco) & (m_dir <= preto)) )
     {
       mot1_hor(j);
       mot2_anti(j);
