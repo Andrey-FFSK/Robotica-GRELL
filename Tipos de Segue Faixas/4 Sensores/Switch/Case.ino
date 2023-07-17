@@ -76,6 +76,38 @@ void loop()
     default: break;
     }
 }
+/* NA TA USAND WHILE
+switch (leitura) {
+    case 0b0000: mot1_hor(j); mot2_hor(j); break;
+    case 0b0010: mot1_hor(j); mot2_anti(j); break;
+    case 0b0011:
+      mot1_hor(j);
+      mot2_hor(j);
+      delay(200);
+      while (digitalRead(s_norte) == 1)
+      {
+        mot1_hor(j);
+        mot2_anti(j);
+      }
+      delay(100);
+      break;
+    case 0b0100: mot1_anti(j); mot2_hor(j); break;
+    case 0b0110:
+    case 0b1001: mot1_par(); mot2_par(); delay(100); break;
+    case 0b1100:
+      mot1_hor(j);
+      mot2_hor(j);
+      delay(200);
+      while (digitalRead(s_norte) == 1)
+      {
+        mot1_anti(j);
+        mot2_hor(j);
+      }
+      delay(100);
+      break;
+    case 0b1111: mot1_hor(j); mot2_hor(j); delay(300);
+    default: break;
+    } */
 
 // Inicio das funções, para cada caso, totalizando 6 funções diferente
 void mot1_anti(int velo) // Função para o motor da esquerda girar no sentido anti horario com a velocidade variavel
