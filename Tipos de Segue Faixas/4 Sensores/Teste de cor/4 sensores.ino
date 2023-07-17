@@ -4,49 +4,53 @@
 #define s_oeste 8     // cinza, OUT1
 #define s_noroeste 13 // branco, OUT2
 #define s_norte 12    // verde, OUT4
-#define s_nordeste 11 // preto, OUT3
-#define s_leste 10    // azul, OUT5
+#define s_nordeste 11 // roxo, OUT3
+#define s_leste 10    // verde, OUT5
 
-// Motor 1 = esquerda; Motor 2 = direita
+// Motor 2 = esquerda; Motor 1 = direita
 #define mot_in1 3 // amarelo, direita, tras
 #define mot_in2 5 // branco, direita, frente
 #define mot_in3 6 // laranja, esquerda, frente
 #define mot_in4 9 // preto, esquerda, tras
 
-#define s_cor_esq A1
-#define s_cor_dir A2
+//Pin 2 é o led
+#define esq A0
+#define dir A1
 
 // Usando array para colocar todos os pinos, coloquei os sensores em uma certa posição por causa do BitSwift em baixo
-const int pinos[] = {10, 11, 13, 8, 12, 9, 6, 3, 5};
+const int pinos[] = {10, 11, 13, 8, 12, A0, A1, 2, 9, 6, 3, 5};
 
 const int j = 180;       // PWM usado para a velocidade, min == 0 e max == 255
-Ultrasonic sensor(7, 4); // trig == 7; echo == 4
+Ultrasonic sensor(7, 4); // trig == 7; echo == 4 | trig = amarel e ech = marrm
 
 void setup()
 {
   // Colocando os sensores como INPUT, e o resto como OUTPUT, tudo isso pelo array
-  for (int i = 0; i < 5; i++)
+  for (int i = 0; i < 7; i++)
     pinMode(pinos[i], INPUT);
-  for (int i = 5; i < 9; i++)
+  for (int i = 7; i < 12; i++)
     pinMode(pinos[i], OUTPUT);
   Serial.begin(9600);
 }
 void loop()
 {
+  int c_esq = constrain(analogRead(esq), 800, 1023);
+  int m_esq = map(c_esq, 800, 1023, 0, 1023);
+
+  int c_dir = constrain(analogRead(dir), 800, 1023);
+  int m_dir = map(c_dir, 800, 1023, 0, 1023);
   // Essa parte é o bitSwift, criar uma variavel leitura do tipo byte, porem a gente so usa os bits dessa varaivel, a quantidade de bits depende de quantos sensores estao usando
   byte leitura = 0; // Definir sempre 0 quando definir algo como o for abaixo
   for (int i = 0; i < 4; i++)
     leitura |= digitalRead(pinos[i]) << i; // Colocando as entrada da tabela da verdade usando um bitshift automatico, o valor do i depende dos sensores
   leitura = (~leitura) & (0b00001111);     // Colocando um inversor para que funcione com a tabela da verdade, pq o sensor dectectar no branco, AND uma mascara para ir so os bits que eu quero
+  digitalWrite(2, 0);
   Serial.print(leitura, BIN);
   Serial.print(" sens: ");
   Serial.println(sensor.read());
 
-  if (sensor.read() <= 18)
-  { // Se o sensor dectar que esta 18cm de distancia ativa a função de desviar
-    // desv_d(j);
-  }
-
+  if (sensor.read() <= 18) // desv_d(j); // Se o sensor dectar que esta distancia ativa a função de desviar
+  
   // Condições que usa a melhor situação dos sensores, o bit mais da direita é o s_leste e o bit mais na esquerda é o s_oeste
   // Algumas tem if com OR por conta que eles fazem a mesma coisa na condição.
   // Condição de 0011 ou 1100: é o algoritimo de 90 graus, pensando que so vai ativar no 90
@@ -62,20 +66,18 @@ void loop()
   }
   else if (leitura == 0b0011) // Condição 4
   {
-    if ((analogRead(s_cor_dir) <= 200) & (analogRead(s_cor_dir) >= 100))
+    digitalWrite(2, 1);
+    mot1_par();
+    mot2_par();
+    delay(1000);
+    if ((m_esq <= 200) & (m_dir >= 100))
     {
       mot1_hor(j);
       mot2_hor(j);
       delay(300);
       mot1_hor(j);
-      mot2_hor(j);
+      mot2_anti(j);
       delay(300);
-      while (digitalRead(s_norte) == 1)
-      {
-        mot1_hor(j);
-        mot2_anti(j);
-      }
-      delay(200);
     }
     else
     {
@@ -97,17 +99,18 @@ void loop()
   }
   else if (leitura == 0b1100) // Condição 7
   {
-    if ((analogRead(s_cor_esq) <= 200) & (analogRead(s_cor_esq) >= 100))
+    digitalWrite(2, 1);
+    mot1_par();
+    mot2_par();
+    delay(1000);
+    if ((m_esq <= 200) & (m_dir >= 100))
     {
       mot1_hor(j);
       mot2_hor(j);
       delay(300);
-      while (digitalRead(s_norte) == 1)
-      {
-        mot1_anti(j);
-        mot2_hor(j);
-      }
-      delay(200);
+      mot1_anti(j);
+      mot2_hor(j);
+      delay(300);
     }
     else
     {
@@ -118,11 +121,11 @@ void loop()
   }
   else if (leitura == 0b1111)
   {
+    digitalWrite(2, 1);
     mot1_par();
     mot2_par();
     delay(1000);
-
-    if ((analogRead(s_cor_esq) <= 200) & (analogRead(s_cor_esq) >= 100))
+    if ((m_esq <= 200) & (m_dir >= 100))
     {
       mot1_hor(j);
       mot2_hor(j);
@@ -131,7 +134,7 @@ void loop()
       mot2_hor(j);
       delay(150);
     }
-    else if ((analogRead(s_cor_dir) <= 200) & (analogRead(s_cor_dir) >= 100))
+    else if ((m_esq <= 200) & (m_dir >= 100))
     {
       mot1_hor(j);
       mot2_hor(j);
@@ -139,6 +142,12 @@ void loop()
       mot1_hor(j);
       mot2_anti(j);
       delay(150);
+    }
+    else if((m_esq >= 200) & (m_dir >= 100))
+    {
+      mot1_hor(j);
+      mot2_anti(j);
+      delay(1000);
     }
     else
     {

@@ -4,8 +4,8 @@
 #define s_oeste 8     // cinza, OUT1
 #define s_noroeste 13 // branco, OUT2
 #define s_norte 12    // verde, OUT4
-#define s_nordeste 11 // preto, OUT3
-#define s_leste 10    // azul, OUT5
+#define s_nordeste 11 // roxo, OUT3
+#define s_leste 10    // verde, OUT5
 
 // Motor 2 = esquerda; Motor 1 = direita
 #define mot_in1 3 // amarelo, direita, tras
@@ -17,7 +17,7 @@
 const int pinos[] = {10, 11, 13, 8, 12, 9, 6, 3, 5};
 
 const int j = 180;       // PWM usado para a velocidade, min == 0 e max == 255
-Ultrasonic sensor(7, 4); // trig == 7; echo == 4
+Ultrasonic sensor(7, 4); // trig == 7; echo == 4 | trig = amarel e ech = marrm
 
 void setup()
 {

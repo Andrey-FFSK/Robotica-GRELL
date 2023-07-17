@@ -1,11 +1,11 @@
 #include <Ultrasonic.h> //Incluindo a biblioteca do ultrasonic de erik simoes
 
 // Definindo as portas dos sensores e da portas H
-#define s_oeste 8     // rosa, OUT1
-#define s_noroeste 13 // amarelo, OUT2
-#define s_norte 12    // azul, OUT4
-#define s_nordeste 11 // vermelho, OUT3
-#define s_leste 10    // marrom, OUT5
+#define s_oeste 8     // cinza, OUT1
+#define s_noroeste 13 // branco, OUT2
+#define s_norte 12    // verde, OUT4
+#define s_nordeste 11 // roxo, OUT3
+#define s_leste 10    // verde, OUT5
 
 // Motor 1 = esquerda; Motor 2 = direita
 #define mot_in1 3 // amarelo, direita, tras
@@ -17,7 +17,7 @@
 const int pinos[] = {10, 11, 13, 8, 12, 9, 6, 3, 5};
 
 const int j = 130;       // PWM usado para a velocidade, min == 0 e max == 255
-Ultrasonic sensor(7, 4); // trig == 7; echo == 4
+Ultrasonic sensor(7, 4); // trig == 7; echo == 4 | trig = amarel e ech = marrm
 
 void setup()
 {
@@ -39,13 +39,12 @@ void loop()
   Serial.print(" sens: ");
   Serial.println(sensor.read());
 
-  if (sensor.read() <= 7) // desv_d(j); // Se o sensor dectar que esta 18cm de distancia ativa a função de desviar
-                           
+  if (sensor.read() <= 7) // desv_d(j); // Se o sensor dectar que esta distancia ativa a função de desviar
+
     // Condições que usa a melhor situação dos sensores, o bit mais da direita é o s_leste e o bit mais na esquerda é o s_oeste
     // Algumas tem if com OR por conta que eles fazem a mesma coisa na condição.
     // Condição de 0011 ou 1100: é o algoritimo de 90 graus, pensando que so vai ativar no 90
-    switch (leitura)
-    {
+  switch (leitura) {
     case 0b0000: mot1_hor(j); mot2_hor(j); break;
     case 0b0010: mot1_hor(j); mot2_anti(j); break;
     case 0b0011:
@@ -109,6 +108,30 @@ void mot2_par() // Função para o motor da direita ficar parado
 {
   analogWrite(mot_in1, 0);
   analogWrite(mot_in2, 0);
+}
+
+void desv_d(int velo) // Função para o robo desviar pela direita o obstaculo
+{
+  mot1_par();
+  mot2_par();
+  delay(200);
+  mot1_hor(velo);
+  mot2_anti(velo);
+  delay(800);
+  // while(digitalRead(s_norte) == 1){
+  mot1_hor(velo);
+  mot2_hor(velo);
+  delay(2100);
+  mot1_anti(velo);
+  mot2_hor(velo);
+  delay(800);
+  mot1_hor(velo);
+  mot2_hor(velo);
+  delay(2000);
+  mot1_anti(velo);
+  mot2_hor(velo);
+  delay(800);
+  //}
 }
 
 // codigo de teste da entrada das condiçoes de switch
