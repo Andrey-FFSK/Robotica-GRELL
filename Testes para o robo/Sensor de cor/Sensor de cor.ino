@@ -1,36 +1,44 @@
+/*
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
-
-#define led_r A2
+*/
 #define led_g 2
-#define led_b A1
-#define esq A3
-#define dir A0
-
-Adafruit_SSD1306 display(128, 64, &Wire, -1);
-int pin[] = {A2, 8, A3, A0, A3};
+#define esq A0
+#define dir A1
+/*
+Adafruit_SSD1306 display(128, 64, &Wire, -1);*/
+int pin[] = {2, A0, A1};
 
 void setup(){
-
+/*
 display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
 display.clearDisplay();
 display.setTextColor(WHITE);
-
-for(int i = 0; i < 3; i++) pinMode(pin[i], OUTPUT);
-for(int i = 3; i < 5; i++) pinMode(pin[i], INPUT);
+*/
+for(int i = 0; i < 1; i++) pinMode(pin[i], OUTPUT);
+for(int i = 1; i < 3; i++) pinMode(pin[i], INPUT);
 Serial.begin(9600);
 }
 
 void loop(){
-  //digitalWrite(led_r, 1);
   digitalWrite(led_g, 1);
-  //digitalWrite(led_b, 1);
- int c_esq = constrain(analogRead(esq), 800, 1023);
- int m_esq = map(c_esq, 800, 1023, 0, 1023);
+  
+  Serial.print("Esq: ");
+  Serial.print(analogRead(esq));
+  Serial.print(" Dir: ");
+  Serial.println(analogRead(dir));
+  
+  /*
+ int c_esq = constrain(analogRead(esq), 20, 950);
+ int m_esq = map(c_esq, 20, 950, 0, 1023);
+ int c_dir = constrain(analogRead(dir), 10, 890);
+ int m_dir = map(c_dir, 10, 890, 0, 1023);
 Serial.print("Esq: ");
 Serial.print(m_esq);
-Serial.println(" | Dir: ");
+Serial.print(" | Dir: "); 
+Serial.println(m_dir);*/
+
 /*
 Serial.println();
 delay(100);
@@ -56,6 +64,7 @@ else{
     Serial.println(" Dir = Verde");
 }*/
 
+/*
 display.clearDisplay();
 display.setCursor(0, 0);
 display.print("Esq: ");
@@ -63,8 +72,6 @@ display.print(analogRead(esq));
 display.print(" | Dir: ");
 display.print(analogRead(dir));
 display.display();
-
+*/
 
 }
-//AZUL RILHANDO QUANDO LIGA
-//LEMRAR DO CAO DO US E DA ATERIA, USAR ATERIA
