@@ -61,6 +61,7 @@ void mot2_par() // Função para o motor da direita ficar parado
   analogWrite(mot_in1, 0);
   analogWrite(mot_in2, 0);
 }
+
 void desv_d(int velo) // Função para o robo desviar pela direita o obstaculo
 {
   mot1_par();
@@ -69,7 +70,7 @@ void desv_d(int velo) // Função para o robo desviar pela direita o obstaculo
   mot1_hor(velo);
   mot2_anti(velo);
   delay(800);
-  //while(digitalRead(s_norte) == 1){
+  // while(digitalRead(s_norte) == 1){
   mot1_hor(velo);
   mot2_hor(velo);
   delay(2100);
@@ -82,6 +83,7 @@ void desv_d(int velo) // Função para o robo desviar pela direita o obstaculo
   mot1_anti(velo);
   mot2_hor(velo);
   delay(800);
+}
   /*
   byte p = 0;
   mot1_par();
@@ -101,7 +103,7 @@ void desv_d(int velo) // Função para o robo desviar pela direita o obstaculo
   mot1_hor(velo-50);
   mot2_hor(velo);
   }*/
-}
+
 
 void loop()
 {

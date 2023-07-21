@@ -198,6 +198,7 @@ void mot2_par() // Função para o motor da direita ficar parado
   analogWrite(mot_in1, 0);
   analogWrite(mot_in2, 0);
 }
+
 void desv_d(int velo) // Função para o robo desviar pela direita o obstaculo
 {
   mot1_par();

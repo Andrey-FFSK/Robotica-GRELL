@@ -62,15 +62,16 @@ void mot2_par() // Função para o motor da direita ficar parado
   analogWrite(mot_in1, 0);
   analogWrite(mot_in2, 0);
 }
+
 void desv_d(int velo) // Função para o robo desviar pela direita o obstaculo
-{ 
+{
   mot1_par();
   mot2_par();
   delay(200);
   mot1_hor(velo);
   mot2_anti(velo);
   delay(800);
-  //while(digitalRead(s_norte) == 1){
+  // while(digitalRead(s_norte) == 1){
   mot1_hor(velo);
   mot2_hor(velo);
   delay(2100);
@@ -84,26 +85,6 @@ void desv_d(int velo) // Função para o robo desviar pela direita o obstaculo
   mot2_hor(velo);
   delay(800);
   //}
-  /*
-  byte p = 0;
-  mot1_par();
-  mot2_par();
-  delay(200);
-  mot1_hor(velo);
-  mot2_anti(velo);
-  delay(500);
-  for (int i = 0; i < 3; i++)
-    p |= digitalRead(pinos[i]) << i; // Colocando as entrada da tabela da verdade usando um bitshift automatico
-  p = (~p) & (0b00000111);
-  byte u = p;
-  while(u == p){
-  for (int i = 0; i < 3; i++)
-    p |= digitalRead(pinos[i]) << i; // Colocando as entrada da tabela da verdade usando um bitshift automatico
-  p = (~p) & (0b00000111); // Colocando um inversor para que funcione com a tabela da verdade, AND uma mascara para ir so os bits que eu quero
-  mot1_hor(velo-50);
-  mot2_hor(velo);
-  }
-  */
 }
 
 void loop()
