@@ -38,11 +38,9 @@ void setup()
 }
 void loop()
 {
-  int c_esq = constrain(analogRead(esq), 800, 1023);
-  int m_esq = map(c_esq, 800, 1023, 0, 1023);
-
-  int c_dir = constrain(analogRead(dir), 800, 1023);
-  int m_dir = map(c_dir, 800, 1023, 0, 1023);
+  int m_esq = map(constrain(analogRead(esq), 30, 150), 30, 150, 0, 1023);
+  int m_dir = map(constrain(analogRead(dir), 30, 300), 30, 300, 0, 1023);
+  
   // Essa parte é o bitSwift, criar uma variavel leitura do tipo byte, porem a gente so usa os bits dessa varaivel, a quantidade de bits depende de quantos sensores estao usando
   byte leitura = 0; // Definir sempre 0 quando definir algo como o for abaixo
   for (int i = 0; i < 4; i++)
