@@ -24,14 +24,15 @@ Serial.begin(9600);
 void loop(){
   digitalWrite(led_g, 1);
   
+  /* 
   Serial.print("Esq: ");
   Serial.println(analogRead(esq));
   Serial.println();
   /*Serial.print(" Dir: ");
   Serial.println(analogRead(dir));*/
   
- int m_esq = map(constrain(analogRead(esq), 30, 180), 30, 180, 0, 1023);
- int m_dir = map(constrain(analogRead(dir), 30, 300), 30, 300, 0, 1023);
+ int m_esq = map(constrain(analogRead(esq), 90, 200), 90, 200, 0, 1023);
+ int m_dir = map(constrain(analogRead(dir), 50, 120), 50, 120, 0, 1023);
 Serial.print("Esq: ");
 Serial.print(m_esq);
 Serial.print(" | Dir: "); 
@@ -75,6 +76,4 @@ display.print(m_esq);
 display.print(" | Dir: "); 
 display.print(m_dir);
 display.display();
-
-
 }
