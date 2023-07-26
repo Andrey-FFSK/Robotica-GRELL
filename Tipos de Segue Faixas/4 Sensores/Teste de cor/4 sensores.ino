@@ -20,10 +20,10 @@
 // Usando array para colocar todos os pinos, coloquei os sensores em uma certa posição por causa do BitSwift em baixo
 const int pinos[] = {10, 11, 13, 8, 12, A0, A1, 2, 9, 6, 3, 5};
 
-const int j = 110;       // PWM usado para a velocidade, min == 0 e max == 255
+const int j = 180;       // PWM usado para a velocidade, min == 0 e max == 255
 Ultrasonic sensor(7, 4); // trig == 7; echo == 4 | trig = amarel e ech = marrm
 
-const int branco = 900; //VALR DEPENDE DE CADA LDR
+const int branco = 800; //VALR DEPENDE DE CADA LDR
 //const int verde = 700
 const int preto = 110;
 
@@ -39,27 +39,15 @@ void setup()
 void loop()
 {
   //Funções do sensor de cor ficar mais amplo, SEMPRE MUDAR
-  int m_esq = map(constrain(analogRead(esq), 73, 185), 73, 185, 0, 1023);
-  int m_dir = map(constrain(analogRead(dir), 27, 102), 27, 102, 0, 1023);
-  
+
   // Essa parte é o bitSwift, criar uma variavel leitura do tipo byte, porem a gente so usa os bits dessa varaivel, a quantidade de bits depende de quantos sensores estao usando
   byte leitura = 0; // Definir sempre 0 quando definir algo como o for abaixo
   for (int i = 0; i < 4; i++)
     leitura |= digitalRead(pinos[i]) << i; // Colocando as entrada da tabela da verdade usando um bitshift automatico, o valor do i depende dos sensores
   leitura = (~leitura) & (0b00001111);     // Colocando um inversor para que funcione com a tabela da verdade, pq o sensor dectectar no branco, AND uma mascara para ir so os bits que eu quero
   digitalWrite(2, 0);
-  Serial.print(leitura, BIN);
-  Serial.print(" sens: ");
-  Serial.print(sensor.read());
-  Serial.print("cm / Esq: ");
-  Serial.print(m_esq);
-  Serial.print("(");
-  Serial.print(analogRead(esq));
-  Serial.print(") / Dir: ");
-  Serial.print(m_dir);
-  Serial.print("(");
-  Serial.print(analogRead(dir));
-  Serial.println(")");
+  //Serial.print(leitura, BIN);
+  //Serial.print(" sens: ");
 
   //if (sensor.read() <= 18) desv_d(j); // Se o sensor dectar que esta distancia ativa a função de desviar
   
@@ -78,13 +66,24 @@ void loop()
   }
   else if (leitura == 0b0011) // Condição 4
   {
-    digitalWrite(2, 1);
     mot1_anti(j);
     mot2_anti(j);
-    delay(100);
+    delay(50);
+    digitalWrite(2, 1);
     mot1_par();
     mot2_par();
-    delay(5000);
+    delay(3000);
+    int m_esq = map(constrain(analogRead(esq), 73, 185), 73, 185, 0, 1023);
+    int m_dir = map(constrain(analogRead(dir), 27, 102), 27, 102, 0, 1023);
+  Serial.print("Esq: ");
+  Serial.print(m_esq);
+  Serial.print("(");
+  Serial.print(analogRead(esq));
+  Serial.print(") / Dir: ");
+  Serial.print(m_dir);
+  Serial.print("(");
+  Serial.print(analogRead(dir));
+  Serial.println(")");
     if ((m_dir <= branco) & (m_dir >= preto))
     {
       mot1_hor(j);
@@ -114,13 +113,24 @@ void loop()
   }
   else if (leitura == 0b1100) // Condição 7
   {
-    digitalWrite(2, 1);
     mot1_anti(j);
     mot2_anti(j);
-    delay(100);
+    delay(50);
+    digitalWrite(2, 1);
     mot1_par();
     mot2_par();
     delay(5000);
+    int m_esq = map(constrain(analogRead(esq), 73, 185), 73, 185, 0, 1023);
+    int m_dir = map(constrain(analogRead(dir), 27, 102), 27, 102, 0, 1023);
+    Serial.print("Esq: ");
+  Serial.print(m_esq);
+  Serial.print("(");
+  Serial.print(analogRead(esq));
+  Serial.print(") / Dir: ");
+  Serial.print(m_dir);
+  Serial.print("(");
+  Serial.print(analogRead(dir));
+  Serial.println(")");
     if ((m_esq <= branco) & (m_esq >= preto))
     {
       mot1_hor(j);
@@ -139,13 +149,24 @@ void loop()
   }
   else if (leitura == 0b1111) //ENCRUZILHADA
   {
-    digitalWrite(2, 1);
     mot1_anti(j);
     mot2_anti(j);
-    delay(100);
+    delay(50);
+    digitalWrite(2, 1);
     mot1_par();
     mot2_par();
     delay(5000);
+    int m_esq = map(constrain(analogRead(esq), 73, 185), 73, 185, 0, 1023);
+    int m_dir = map(constrain(analogRead(dir), 27, 102), 27, 102, 0, 1023);
+    Serial.print("Esq: ");
+  Serial.print(m_esq);
+  Serial.print("(");
+  Serial.print(analogRead(esq));
+  Serial.print(") / Dir: ");
+  Serial.print(m_dir);
+  Serial.print("(");
+  Serial.print(analogRead(dir));
+  Serial.println(")");
     if (((m_esq <= branco) & (m_esq >= preto)) & (m_dir >= preto+30)) // Tem 1 quadrado verde na esquerda
     {
       mot1_hor(j);
