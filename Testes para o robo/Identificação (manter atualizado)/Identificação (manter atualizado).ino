@@ -24,11 +24,11 @@ const unsigned char aeiapeqena[] PROGMEM = {
     0x79, 0x88, 0x7b, 0x90, 0x7b, 0x98, 0x3f, 0x98, 0x17, 0x10, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00};
 
 // Definindo as portas dos sensores e da portas H
-#define s_oeste 8     // cinza, OUT1
-#define s_noroeste 10 // branco, OUT2
-#define s_norte 11    // verde, OUT4
-#define s_nordeste 12 // preto, OUT3
-#define s_leste 13    // azul, OUT5
+#define s_oeste 8     // amarelo, OUT1
+#define s_noroeste 13 // branco, OUT2
+#define s_norte 12    // verde, OUT4
+#define s_nordeste 11 // roxo, OUT3
+#define s_leste 10    // verde, OUT5
 
 // Definindo Sensor de cor e led acoplado a ele
 #define led_g 2
@@ -49,7 +49,7 @@ Ultrasonic sensor(7, 4);
 int temp = 500;
 int ant = 0;
 
-int o = 150;
+int o = 180;
 float tensaoA0;
 
 int n;
@@ -87,8 +87,8 @@ void loop()
   leitura = (~leitura) & 0b00011111;
   tensaoA0 = (div(A0) * 5) / 1024.0;
   tensaoA0 *= 8.4;
-  int m_esq = map(constrain(analogRead(esq), 90, 200), 90, 200, 0, 1023);
-  int m_dir = map(constrain(analogRead(dir), 50, 120), 50, 120, 0, 1023);
+  int m_esq = map(constrain(analogRead(esq), 73, 185), 73, 185, 0, 1023);
+  int m_dir = map(constrain(analogRead(dir), 27, 102), 27, 102, 0, 1023);
 
 
   display.setCursor(0, lh * 2);
