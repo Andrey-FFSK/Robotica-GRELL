@@ -7,6 +7,11 @@
 #define s_nordeste 12 // preto, OUT3
 #define s_leste 13    // azul, OUT5
 
+// Definindo Sensor de cor e led acoplado a ele
+#define led_g 2
+#define esq A1
+#define dir A0
+
 // Motor 1 = esquerda; Motor 2 = direita
 #define mot_in1 3 // amarelo, direita, tras
 #define mot_in2 5 // branco, direita, frente
@@ -14,7 +19,7 @@
 #define mot_in4 9 // preto, esquerda, tras
 
 // Usando array para colocar todos os pinos, coloquei os sensores invertido por causa do BitSwift em baixo
-int pinos[] = {8, 13, 12, 11, 10, 5, 3, 6, 9};
+int pinos[] = {8, 13, 12, 11, 10, A1, A0, 5, 3, 6, 9, 2};
 Ultrasonic sensor(7, 4);
 // Definindo variaveis
 int temp = 500;
@@ -26,14 +31,17 @@ float tensaoA0;
 void setup()
 {
   Serial.begin(9600);
-  for (int i; i < 5; i++)
+  for (int i; i < 7; i++)
     pinMode(pinos[i], INPUT);
-  for (int i = 5; i < 9; i++)
+  for (int i = 7; i < 12; i++)
     pinMode(pinos[i], OUTPUT);
 }
 
 void loop()
 {
+  digitalWrite(led_g, 1);
+
+
   //analogWrite(mot_in4, o);
   // mot1_hor(o);
   // mot2_hor(o);
@@ -47,14 +55,24 @@ void loop()
   leitura = (~leitura) & 0b00011111;
   tensaoA0 = (div(A0) * 5) / 1024.0;
   tensaoA0 *= 8.4;
+  int m_esq = map(constrain(analogRead(esq), 90, 200), 90, 200, 0, 1023);
+  int m_dir = map(constrain(analogRead(dir), 50, 120), 50, 120, 0, 1023);
 
   Serial.print("Leitura: ");
   Serial.print(leitura, BIN);
   Serial.print("Bits / Tensão: ");
   Serial.print(tensaoA0);
-  Serial.print("V / ");
+  Serial.print("V / Olho:");
   Serial.print(sensor.read());
-  Serial.println("cm");
+  Serial.print("cm / Esq: ");
+  Serial.print(m_esq);
+  Serial.print("(");
+  Serial.print(analogRead(esq));
+  Serial.print(") / Dir: ");
+  Serial.print(m_dir);
+  Serial.print("(");
+  Serial.print(analogRead(dir));
+  Serial.println(")");
 }
 
 float div(uint8_t A0)
