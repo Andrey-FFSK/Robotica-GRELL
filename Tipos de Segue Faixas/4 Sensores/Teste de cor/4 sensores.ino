@@ -13,9 +13,9 @@
 #define mot_in3 6 // laranja, esquerda, frente
 #define mot_in4 9 // preto, esquerda, tras
 
-//Pin 2 é o led
-#define esq A0
-#define dir A1
+// Definindo portas para o sensor de cor, o pin 2 e o led
+#define esq A1
+#define dir A0
 
 // Usando array para colocar todos os pinos, coloquei os sensores em uma certa posição por causa do BitSwift em baixo
 const int pinos[] = {10, 11, 13, 8, 12, A0, A1, 2, 9, 6, 3, 5};
@@ -23,9 +23,9 @@ const int pinos[] = {10, 11, 13, 8, 12, A0, A1, 2, 9, 6, 3, 5};
 const int j = 180;       // PWM usado para a velocidade, min == 0 e max == 255
 Ultrasonic sensor(7, 4); // trig == 7; echo == 4 | trig = amarel e ech = marrm
 
-const int branco = 620 //VALR DEPENDE DE CADA LDR
-const int verde = 700
-const int preto = 780
+const int branco = 1000 //VALR DEPENDE DE CADA LDR
+//const int verde = 700
+const int preto = 100
 
 void setup()
 {
@@ -38,8 +38,9 @@ void setup()
 }
 void loop()
 {
-  int m_esq = map(constrain(analogRead(esq), 30, 150), 30, 150, 0, 1023);
-  int m_dir = map(constrain(analogRead(dir), 30, 300), 30, 300, 0, 1023);
+  //Funções do sensor de cor ficar mais amplo, SEMPRE MUDAR
+  int m_esq = map(constrain(analogRead(esq), 90, 200), 90, 200, 0, 1023);
+  int m_dir = map(constrain(analogRead(dir), 50, 120), 50, 120, 0, 1023);
   
   // Essa parte é o bitSwift, criar uma variavel leitura do tipo byte, porem a gente so usa os bits dessa varaivel, a quantidade de bits depende de quantos sensores estao usando
   byte leitura = 0; // Definir sempre 0 quando definir algo como o for abaixo
@@ -71,8 +72,8 @@ void loop()
     digitalWrite(2, 1);
     mot1_par();
     mot2_par();
-    delay(1000);
-    if ((m_dir >= branco) & (m_dir <= preto))
+    delay(3000);
+    if ((m_dir <= branco) & (m_dir >= preto))
     {
       mot1_hor(j);
       mot2_hor(j);
@@ -104,8 +105,8 @@ void loop()
     digitalWrite(2, 1);
     mot1_par();
     mot2_par();
-    delay(1000);
-    if ((m_esq >= branco) & (m_esq <= preto))
+    delay(3000);
+    if ((m_esq <= branco) & (m_esq >= preto))
     {
       mot1_hor(j);
       mot2_hor(j);
@@ -121,13 +122,13 @@ void loop()
       delay(300);
     }
   }
-  else if (leitura == 0b1111)
+  else if (leitura == 0b1111) //ENCRUZILHADA
   {
     digitalWrite(2, 1);
     mot1_par();
     mot2_par();
-    delay(1000);
-    if (((m_esq >= branco) & (m_esq <= preto)) & (m_dir <= branco+30))
+    delay(3000);
+    if (((m_esq <= branco) & (m_esq >= preto)) & (m_dir >= preto+30)) // Tem 1 quadrado verde na esquerda
     {
       mot1_hor(j);
       mot2_hor(j);
@@ -136,7 +137,7 @@ void loop()
       mot2_hor(j);
       delay(150);
     }
-    else if ((m_esq <= branco+30) & ((m_dir >= branco) & (m_dir <= preto)))
+    else if ((m_esq >= preto+30) & ((m_dir <= branco) & (m_dir >= preto))) // Tem 1 quadrado verde na direita
     {
       mot1_hor(j);
       mot2_hor(j);
@@ -145,13 +146,13 @@ void loop()
       mot2_anti(j);
       delay(150);
     }
-    else if(((m_esq >= branco) & (m_esq <= preto)) & ((m_dir >= branco) & (m_dir <= preto)) )
+    else if(((m_esq <= branco) & (m_esq >= preto)) & ((m_dir <= branco) & (m_dir >= preto)) ) //Tem 2 quadrado verde
     {
       mot1_hor(j);
       mot2_anti(j);
       delay(1000);
     }
-    else
+    else //Nao tem quadrado verde
     {
       mot1_hor(j);
       mot2_hor(j);
@@ -160,6 +161,7 @@ void loop()
   }
   /*
   LEMBRAR DAS VARIAVEIS COM ENCRUZILHADA
+  nao esta usando while
   COMO ELE VAI PARAR?
   */
 }
