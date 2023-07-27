@@ -73,8 +73,8 @@ void loop()
     mot1_par();
     mot2_par();
     delay(3000);
-    int m_esq = map(constrain(analogRead(esq), 73, 185), 73, 185, 0, 1023);
-    int m_dir = map(constrain(analogRead(dir), 27, 102), 27, 102, 0, 1023);
+    int m_esq = map(constrain(analogRead(esq), 73, 210), 73, 210, 0, 1023);
+  int m_dir = map(constrain(analogRead(dir), 27, 120), 27, 120, 0, 1023);
   Serial.print("Esq: ");
   Serial.print(m_esq);
   Serial.print("(");
@@ -120,8 +120,8 @@ void loop()
     mot1_par();
     mot2_par();
     delay(5000);
-    int m_esq = map(constrain(analogRead(esq), 73, 185), 73, 185, 0, 1023);
-    int m_dir = map(constrain(analogRead(dir), 27, 102), 27, 102, 0, 1023);
+    int m_esq = map(constrain(analogRead(esq), 73, 210), 73, 210, 0, 1023);
+  int m_dir = map(constrain(analogRead(dir), 27, 120), 27, 120, 0, 1023);
     Serial.print("Esq: ");
   Serial.print(m_esq);
   Serial.print("(");
@@ -156,8 +156,8 @@ void loop()
     mot1_par();
     mot2_par();
     delay(5000);
-    int m_esq = map(constrain(analogRead(esq), 73, 185), 73, 185, 0, 1023);
-    int m_dir = map(constrain(analogRead(dir), 27, 102), 27, 102, 0, 1023);
+    int m_esq = map(constrain(analogRead(esq), 73, 210), 73, 210, 0, 1023);
+  int m_dir = map(constrain(analogRead(dir), 27, 120), 27, 120, 0, 1023);
     Serial.print("Esq: ");
   Serial.print(m_esq);
   Serial.print("(");
