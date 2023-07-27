@@ -25,9 +25,10 @@ const int pinos[] = {10, 11, 13, 8, 12, A0, A1, 2, 9, 6, 3, 5};
 const int j = 180;       // PWM usado para a velocidade, min == 0 e max == 255
 Ultrasonic sensor(7, 4); // trig == 7; echo == 4 | trig = amarel e ech = marrm
 
-const int branco = 800; //VALR DEPENDE DE CADA LDR
-//const int verde = 700
-const int preto = 110;
+const int esq_preto = 120;
+const int esq_branco = 600;
+const int dir_preto = 120;
+const int dir_branco = 600;
 
 Adafruit_SSD1306 display(128, 64, &Wire, -1);
 
@@ -82,7 +83,7 @@ void loop()
     mot2_par();
     delay(3000);
     int m_esq = map(constrain(analogRead(esq), 73, 210), 73, 210, 0, 1023);
-  int m_dir = map(constrain(analogRead(dir), 27, 120), 27, 120, 0, 1023);
+    int m_dir = map(constrain(analogRead(dir), 27, 120), 27, 120, 0, 1023);
 
   display.clearDisplay();
   display.setCursor(0, 0);
@@ -108,6 +109,39 @@ void loop()
   Serial.print("(");
   Serial.print(analogRead(dir));
   Serial.println(")");
+
+  if ((m_esq <= esq_branco) & (m_dir >= dir_branco)) // Tem 1 quadrado verde na esquerda
+    {
+      mot1_hor(j);
+      mot2_hor(j);
+      delay(300);
+      mot1_anti(j);
+      mot2_hor(j);
+      delay(700);
+    }
+    else if ((m_esq >= esq_branco) & (m_dir <= dir_branco)) // Tem 1 quadrado verde na direita
+    {
+      mot1_hor(j);
+      mot2_hor(j);
+      delay(300);
+      mot1_hor(j);
+      mot2_anti(j);
+      delay(700);
+    }
+    else if((m_esq >= esq_branco) & (m_dir >= dir_branco)) // Nao tem quadrado verde
+    {
+      mot1_hor(j);
+      mot2_hor(j);
+      delay(300);
+    }
+    else //Tem 2 quadrado verde
+    {
+      mot1_hor(j);
+      mot2_anti(j);
+      delay(1000);
+    }
+
+  /*
     if ((m_dir <= branco) & (m_dir >= preto))
     {
       mot1_hor(j);
@@ -122,7 +156,7 @@ void loop()
       mot1_hor(j);
       mot2_hor(j);
       delay(300);
-    }
+    }*/
   }
   else if ((leitura == 0b0100) /*| (leitura == 0b1000)*/) // Condição 5
   {
@@ -171,6 +205,39 @@ void loop()
   Serial.print("(");
   Serial.print(analogRead(dir));
   Serial.println(")");
+
+  if ((m_esq <= esq_branco) & (m_dir >= dir_branco)) // Tem 1 quadrado verde na esquerda
+    {
+      mot1_hor(j);
+      mot2_hor(j);
+      delay(300);
+      mot1_anti(j);
+      mot2_hor(j);
+      delay(700);
+    }
+    else if ((m_esq >= esq_branco) & (m_dir <= dir_branco)) // Tem 1 quadrado verde na direita
+    {
+      mot1_hor(j);
+      mot2_hor(j);
+      delay(300);
+      mot1_hor(j);
+      mot2_anti(j);
+      delay(700);
+    }
+    else if((m_esq >= esq_branco) & (m_dir >= dir_branco)) // Nao tem quadrado verde
+    {
+      mot1_hor(j);
+      mot2_hor(j);
+      delay(300);
+    }
+    else //Tem 2 quadrado verde
+    {
+      mot1_hor(j);
+      mot2_anti(j);
+      delay(1000);
+    }
+
+  /*
     if ((m_esq <= branco) & (m_esq >= preto))
     {
       mot1_hor(j);
@@ -185,7 +252,7 @@ void loop()
       mot1_hor(j);
       mot2_hor(j);
       delay(300);
-    }
+    }*/
   }
   else if (leitura == 0b1111) //ENCRUZILHADA
   {
@@ -223,7 +290,7 @@ void loop()
   Serial.print("(");
   Serial.print(analogRead(dir));
   Serial.println(")");
-    if (((m_esq <= branco) & (m_esq >= preto)) & (m_dir >= preto+30)) // Tem 1 quadrado verde na esquerda
+    if ((m_esq <= esq_branco) & (m_dir >= dir_branco)) // Tem 1 quadrado verde na esquerda
     {
       mot1_hor(j);
       mot2_hor(j);
@@ -232,7 +299,7 @@ void loop()
       mot2_hor(j);
       delay(700);
     }
-    else if ((m_esq >= preto+30) & ((m_dir <= branco) & (m_dir >= preto))) // Tem 1 quadrado verde na direita
+    else if ((m_esq >= esq_branco) & (m_dir <= dir_branco)) // Tem 1 quadrado verde na direita
     {
       mot1_hor(j);
       mot2_hor(j);
@@ -241,26 +308,24 @@ void loop()
       mot2_anti(j);
       delay(700);
     }
-    else if(((m_esq <= branco) & (m_esq >= preto)) & ((m_dir <= branco) & (m_dir >= preto)) ) //Tem 2 quadrado verde
-    {
-      mot1_hor(j);
-      mot2_anti(j);
-      delay(1000);
-    }
-    else //Nao tem quadrado verde
+    else if((m_esq >= esq_branco) & (m_dir >= dir_branco)) // Nao tem quadrado verde
     {
       mot1_hor(j);
       mot2_hor(j);
       delay(300);
+    }
+    else //Tem 2 quadrado verde
+    {
+      mot1_hor(j);
+      mot2_anti(j);
+      delay(1000);
     }
   }
   /*
   LEMBRAR DAS VARIAVEIS COM ENCRUZILHADA
   nao esta usando while
   COMO ELE VAI PARAR?
-  11 sens: 0cm / Esq: 401(121) / Dir: 0(23)
-  11 sens: 0cm / Esq: 566(130) / Dir: 0(22)
-  
+  esquerda alta e direita baixa
   */
 }
 
