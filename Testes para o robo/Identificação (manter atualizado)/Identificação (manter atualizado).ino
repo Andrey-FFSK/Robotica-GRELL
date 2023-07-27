@@ -42,7 +42,7 @@ const unsigned char aeiapeqena[] PROGMEM = {
 #define mot_in4 9 // amarelo, direita, tras
 
 // Usando array para colocar todos os pinos, coloquei os sensores invertido por causa do BitSwift em baixo
-int pinos[] = {8, 13, 12, 11, 10, A1, A0, 5, 3, 6, 9, 2};
+const int pinos[] = {8, 13, 12, 11, 10, A1, A0, 5, 3, 6, 9, 2};
 Ultrasonic sensor(7, 4);
 
 // Definindo variaveis

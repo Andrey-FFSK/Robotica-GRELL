@@ -31,8 +31,8 @@ void loop(){
   /*Serial.print(" Dir: ");
   Serial.println(analogRead(dir));*/
   
- int m_esq = map(constrain(analogRead(esq), 90, 200), 90, 200, 0, 1023);
- int m_dir = map(constrain(analogRead(dir), 50, 120), 50, 120, 0, 1023);
+ int m_esq = map(constrain(analogRead(esq), 73, 210), 73, 210, 0, 1023);
+ int m_dir = map(constrain(analogRead(dir), 27, 120), 27, 120, 0, 1023);
 Serial.print("Esq: ");
 Serial.print(m_esq);
 Serial.print(" | Dir: "); 

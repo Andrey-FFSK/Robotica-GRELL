@@ -55,8 +55,8 @@ void loop()
   leitura = (~leitura) & 0b00011111;
   tensaoA0 = (div(A0) * 5) / 1024.0;
   tensaoA0 *= 8.4;
-  int m_esq = map(constrain(analogRead(esq), 90, 200), 90, 200, 0, 1023);
-  int m_dir = map(constrain(analogRead(dir), 50, 120), 50, 120, 0, 1023);
+  int m_esq = map(constrain(analogRead(esq), 73, 210), 73, 210, 0, 1023);
+  int m_dir = map(constrain(analogRead(dir), 27, 120), 27, 120, 0, 1023);
 
   Serial.print("Leitura: ");
   Serial.print(leitura, BIN);
