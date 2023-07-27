@@ -1,4 +1,6 @@
 #include <Ultrasonic.h> //Incluindo a biblioteca do ultrasonic de erik simoes
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
 
 // Definindo as portas dos sensores e da portas H
 #define s_oeste 8     // cinza, OUT1
@@ -27,8 +29,13 @@ const int branco = 800; //VALR DEPENDE DE CADA LDR
 //const int verde = 700
 const int preto = 110;
 
+Adafruit_SSD1306 display(128, 64, &Wire, -1);
+
 void setup()
 {
+  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+  display.setTextColor(WHITE);
+  display.clearDisplay();
   // Colocando os sensores como INPUT, e o resto como OUTPUT, tudo isso pelo array
   for (int i = 0; i < 7; i++)
     pinMode(pinos[i], INPUT);
@@ -38,6 +45,7 @@ void setup()
 }
 void loop()
 {
+  
   //Funções do sensor de cor ficar mais amplo, SEMPRE MUDAR
 
   // Essa parte é o bitSwift, criar uma variavel leitura do tipo byte, porem a gente so usa os bits dessa varaivel, a quantidade de bits depende de quantos sensores estao usando
@@ -75,6 +83,22 @@ void loop()
     delay(3000);
     int m_esq = map(constrain(analogRead(esq), 73, 210), 73, 210, 0, 1023);
   int m_dir = map(constrain(analogRead(dir), 27, 120), 27, 120, 0, 1023);
+
+  display.clearDisplay();
+  display.setCursor(0, 0);
+  display.print("Esq: ");
+  display.print(m_esq);
+  display.print("(");
+  display.print(analogRead(esq));
+  display.println(")");
+
+  display.print("Dir: ");
+  display.print(m_dir);
+  display.print("(");
+  display.print(analogRead(dir));
+  display.println(")");
+  display.display();
+
   Serial.print("Esq: ");
   Serial.print(m_esq);
   Serial.print("(");
@@ -122,6 +146,22 @@ void loop()
     delay(5000);
     int m_esq = map(constrain(analogRead(esq), 73, 210), 73, 210, 0, 1023);
   int m_dir = map(constrain(analogRead(dir), 27, 120), 27, 120, 0, 1023);
+
+  display.clearDisplay();
+  display.setCursor(0, 0);
+  display.print("Esq: ");
+  display.print(m_esq);
+  display.print("(");
+  display.print(analogRead(esq));
+  display.println(")");
+
+  display.print("Dir: ");
+  display.print(m_dir);
+  display.print("(");
+  display.print(analogRead(dir));
+  display.println(")");
+  display.display();
+
     Serial.print("Esq: ");
   Serial.print(m_esq);
   Serial.print("(");
@@ -158,6 +198,22 @@ void loop()
     delay(5000);
     int m_esq = map(constrain(analogRead(esq), 73, 210), 73, 210, 0, 1023);
   int m_dir = map(constrain(analogRead(dir), 27, 120), 27, 120, 0, 1023);
+
+  display.clearDisplay();
+  display.setCursor(0, 0);
+  display.print("Esq: ");
+  display.print(m_esq);
+  display.print("(");
+  display.print(analogRead(esq));
+  display.println(")");
+
+  display.print("Dir: ");
+  display.print(m_dir);
+  display.print("(");
+  display.print(analogRead(dir));
+  display.println(")");
+  display.display();
+
     Serial.print("Esq: ");
   Serial.print(m_esq);
   Serial.print("(");
