@@ -129,7 +129,7 @@ void loop()
       }
 
       enc_ant = enc.read();
-      while (enc_ant - enc.read() >= 627)
+      while (enc_ant - enc.read() <= 627)
       {
         mot1_hor(j);
         mot2_anti(j);
@@ -147,14 +147,14 @@ void loop()
       if (digitalRead(s_norte) == 1)
       {
         enc_ant = enc.read();
-        while (enc_ant - enc.read() >= 200)
+        while (enc_ant - enc.read() <= 200)
         {
           mot1_anti(j);
           mot2_anti(j);
         }
 
         enc_ant = enc.read();
-        while (enc_ant - enc.read() >= 627)
+        while (enc_ant - enc.read() <= 627)
         {
           mot1_hor(j);
           mot2_anti(j);
@@ -254,7 +254,7 @@ void loop()
       if (digitalRead(s_norte) == 1)
       {
         enc_ant = enc.read();
-        while (enc_ant - enc.read() >= 200)
+        while (enc_ant - enc.read() <= 200)
         {
           mot1_anti(j);
           mot2_anti(j);
@@ -347,7 +347,7 @@ void loop()
       }
 
       enc_ant = enc.read();
-      while (enc.read() - enc_ant <= 627)
+      while (enc_ant - enc.read() <= 627)
       {
         mot1_hor(j);
         mot2_anti(j);
@@ -365,7 +365,7 @@ void loop()
     else // Tem 2 quadrado verde
     {
       enc_ant = enc.read();
-      while (enc.read() - enc_ant <= 1200)
+      while (enc_ant - enc.read() <= 1200)
       {
         mot1_hor(j);
         mot2_anti(j);
