@@ -288,7 +288,7 @@ void loop()
       if (digitalRead(s_norte) == 1)
       {
         enc_ant = enc.read();
-        while (enc.read() - enc_ant <= enc_peq)
+        while (enc_ant - enc.read() <= enc_peq)
         {
           mot1_anti(j);
           mot2_hor(j);
