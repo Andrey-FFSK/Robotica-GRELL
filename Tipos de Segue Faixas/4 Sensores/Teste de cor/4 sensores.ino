@@ -28,6 +28,8 @@ const int pinos[] = {s_leste, s_nordeste, s_noroeste, s_oeste, s_norte, esq, dir
 
 const int j = 110; // PWM usado para a velocidade, min == 0 e max == 255
 int enc_ant = 0;
+const int enc_fre = 450;
+const int enc_90 = 420;
 Ultrasonic sensor(A2, A3); // trig == 7; echo == 4 | trig = amarel e ech = marrm
 Encoder enc(3, 2);
 
@@ -133,24 +135,26 @@ void loop()
     {
       Serial.println("leitura == 0011; Tem verde");
       enc_ant = enc.read();
-      while (enc.read() - enc_ant <= 300)
+      while (enc.read() - enc_ant <= enc_fre)
       {
         mot1_hor(j);
         mot2_hor(j);
       }
 
       enc_ant = enc.read();
-      while (enc.read() - enc_ant <= 627)
+      while (enc.read() - enc_ant <= enc_90)
       {
         mot1_hor(j);
         mot2_anti(j);
+        Serial.print("virando para direita");
+          Serial.println(enc.read());
       }
     }
     else // Nao tem quadrado verde
     {
       Serial.println("Leitura == 0011; nao tem verde");
       enc_ant = enc.read();
-      while (enc.read() - enc_ant <= 500)
+      while (enc.read() - enc_ant <= enc_fre)
       {
         mot1_hor(j);
         mot2_hor(j);
@@ -159,7 +163,7 @@ void loop()
       if (digitalRead(s_norte) == 1)
       {
         enc_ant = enc.read();
-        while (enc.read() - enc_ant <= 450)
+        while (enc.read() - enc_ant <= enc_90)
         {
           mot1_hor(j);
           mot2_anti(j);
@@ -247,24 +251,26 @@ void loop()
     {
       Serial.println("leitura == 1100; tem verde");
       enc_ant = enc.read();
-      while (enc.read() - enc_ant <= 300)
+      while (enc.read() - enc_ant <= enc_fre)
       {
         mot1_hor(j);
         mot2_hor(j);
       }
 
       enc_ant = enc.read();
-      while (enc_ant - enc.read() <= 627)
+      while (enc_ant - enc.read() <= enc_90)
       {
         mot1_anti(j);
         mot2_hor(j);
+        Serial.print("virando pra esquerda");
+          Serial.println(enc.read());
       }
     }
     else // Nao tem quadrado verde
     {
       Serial.println("leitura == 1100; nao tem verde");
       enc_ant = enc.read();
-      while (enc.read() - enc_ant <= 500)
+      while (enc.read() - enc_ant <= enc_fre)
       {
         mot1_hor(j);
         mot2_hor(j);
@@ -273,7 +279,7 @@ void loop()
       if (digitalRead(s_norte) == 1)
       {
         enc_ant = enc.read();
-        while (enc.read() - enc_ant <= 450)
+        while (enc.read() - enc_ant <= enc_90)
         {
           mot1_anti(j);
           mot2_hor(j);
@@ -347,14 +353,14 @@ void loop()
     {
       Serial.println("Encruzilhada; Verde na esquerda");
       enc_ant = enc.read();
-      while (enc.read() - enc_ant <= 300)
+      while (enc.read() - enc_ant <= enc_fre)
       {
         mot1_hor(j);
         mot2_hor(j);
       }
 
       enc_ant = enc.read();
-      while (enc.read() - enc_ant <= 620)
+      while (enc.read() - enc_ant <= enc_90)
       {
         mot1_anti(j);
         mot2_hor(j);
@@ -372,14 +378,14 @@ void loop()
     {
       Serial.println("Encruzilhada; Verde na direita");
       enc_ant = enc.read();
-      while (enc.read() - enc_ant <= 300)
+      while (enc.read() - enc_ant <= enc_fre)
       {
         mot1_hor(j);
         mot2_hor(j);
       }
 
       enc_ant = enc.read();
-      while (enc.read() - enc_ant <= 620)
+      while (enc.read() - enc_ant <= enc_90)
       {
         mot1_hor(j);
         mot2_anti(j);
@@ -397,7 +403,7 @@ void loop()
     {
       Serial.println("Encruzilhada; Nao tem verde");
       enc_ant = enc.read();
-      while (enc.read() - enc_ant <= 300)
+      while (enc.read() - enc_ant <= enc_fre)
       {
         mot1_hor(j);
         mot2_hor(j);
