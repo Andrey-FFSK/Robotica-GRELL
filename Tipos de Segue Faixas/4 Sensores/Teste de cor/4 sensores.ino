@@ -1,6 +1,7 @@
 #include <Ultrasonic.h> //Incluindo a biblioteca do ultrasonic de erik simoes
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
+#inlcude <Enconder.h>
 
 // Definindo as portas dos sensores e da portas H
 #define s_oeste 4     // amarelo, OUT1
@@ -23,7 +24,10 @@
 const int pinos[] = {s_leste, s_nordeste, s_noroeste, s_oeste, s_norte, esq, dir, 7, mot_in1, mot_in2, mot_in3, mot_in4};
 
 const int j = 180;         // PWM usado para a velocidade, min == 0 e max == 255
+int enc_ant = 0;
 Ultrasonic sensor(A2, A3); // trig == 7; echo == 4 | trig = amarel e ech = marrm
+Encoder enc(3, 2);
+
 
 const int esq_preto = 120;
 const int esq_branco = 600;
@@ -136,10 +140,14 @@ void loop()
     }
     else // Tem 2 quadrado verde
     {
+      enc_ant = enc.read();
+      while(enc.read() - enc_ant <= 1200){
       mot1_hor(j);
       mot2_anti(j);
-      delay(1000);
+      }
     }
+
+    if(digitalRead(s_norte) == )
 
     /*
       if ((m_dir <= branco) & (m_dir >= preto))
@@ -232,9 +240,11 @@ void loop()
     }
     else // Tem 2 quadrado verde
     {
+      enc_ant = enc.read();
+      while(enc.read() - enc_ant <= 1200){
       mot1_hor(j);
       mot2_anti(j);
-      delay(1000);
+      }
     }
 
     /*
@@ -316,9 +326,11 @@ void loop()
     }
     else // Tem 2 quadrado verde
     {
+      enc_ant = enc.read();
+      while(enc.read() - enc_ant <= 1200){
       mot1_hor(j);
       mot2_anti(j);
-      delay(1000);
+      }
     }
   }
   /*

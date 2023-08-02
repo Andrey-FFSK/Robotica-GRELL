@@ -195,7 +195,7 @@ void mot2_par() // Função para o motor da direita ficar parado
 char *binString(unsigned short n)
 {
   static char bin[17];
-  int x;
+  int x;/
 
   for (x = 0; x < 16; x++)
   {
