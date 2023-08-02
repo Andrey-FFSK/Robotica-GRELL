@@ -100,8 +100,8 @@ void loop()
     mot1_par();
     mot2_par();
     delay(1000);
-    m_esq = map(constrain(analogRead(esq), 370, 540), 370, 540, 0, 1023);
-    m_dir = map(constrain(analogRead(dir), 225, 350), 225, 350, 0, 1023);
+    m_esq = map(constrain(analogRead(esq), 34, 152), 34, 152, 0, 1023);
+    m_dir = map(constrain(analogRead(dir), 27, 133), 27, 133, 0, 1023);
     digitalWrite(7, 0);
     /*
     display.clearDisplay();
@@ -222,8 +222,8 @@ void loop()
     mot1_par();
     mot2_par();
     delay(1000);
-    m_esq = map(constrain(analogRead(esq), 370, 540), 370, 540, 0, 1023);
-    m_dir = map(constrain(analogRead(dir), 225, 350), 225, 350, 0, 1023);
+    m_esq = map(constrain(analogRead(esq), 34, 152), 34, 152, 0, 1023);
+    m_dir = map(constrain(analogRead(dir), 27, 133), 27, 133, 0, 1023);
     digitalWrite(7, 0);
 /*
     display.clearDisplay();
@@ -330,8 +330,8 @@ void loop()
     mot1_par();
     mot2_par();
     delay(1000);
-    m_esq = map(constrain(analogRead(esq), 370, 540), 370, 540, 0, 1023);
-    m_dir = map(constrain(analogRead(dir), 225, 350), 225, 350, 0, 1023);
+    m_esq = map(constrain(analogRead(esq), 34, 152), 34, 152, 0, 1023);
+    m_dir = map(constrain(analogRead(dir), 27, 133), 27, 133, 0, 1023);
     digitalWrite(7, 0);
 /*
     display.clearDisplay();
