@@ -113,23 +113,7 @@ void loop()
     Serial.print(analogRead(dir));
     Serial.println(")");
 
-    if ((m_esq <= esq_branco) & (m_dir >= dir_branco)) // Tem 1 quadrado verde na esquerda
-    {
-      enc_ant = enc.read();
-      while (enc.read() - enc_ant <= 200)
-      {
-        mot1_hor(j);
-        mot2_hor(j);
-      }
-      
-      enc_ant = enc.read();
-      while (enc.read() - enc_ant <= 627)
-      {
-        mot1_anti(j);
-        mot2_hor(j);
-      }
-    }
-    else if ((m_esq >= esq_branco) & (m_dir <= dir_branco)) // Tem 1 quadrado verde na direita
+    if ((m_esq >= esq_branco) & (m_dir <= dir_branco)) // Tem 1 quadrado verde na direita
     {
       enc_ant = enc.read();
       while (enc.read() - enc_ant <= 200)
@@ -144,7 +128,7 @@ void loop()
         mot1_hor(j);
         mot2_anti(j);
       }
-      else if ((m_esq >= esq_branco) & (m_dir >= dir_branco)) // Nao tem quadrado verde
+      else // Nao tem quadrado verde
       {
         enc_ant = enc.read();
         while (enc.read() - enc_ant <= 200)
@@ -152,14 +136,29 @@ void loop()
           mot1_hor(j);
           mot2_hor(j);
         }
-      }
-      else // Tem 2 quadrado verde
-      {
-        enc_ant = enc.read();
-        while (enc.read() - enc_ant <= 1200)
+
+        if (digitalRead(s_norte) == 1)
         {
-          mot1_hor(j);
-          mot2_anti(j);
+          enc_ant = enc.read();
+          while (enc.read() - enc_ant <= 200)
+          {
+            mot1_anti(j);
+            mot2_anti(j);
+          }
+
+          enc_ant = enc.read();
+          while (enc.read() - enc_ant <= 200)
+          {
+            mot1_hor(j);
+            mot2_hor(j);
+          }
+
+          enc_ant = enc.read();
+          while (enc.read() - enc_ant <= 627)
+          {
+            mot1_hor(j);
+            mot2_anti(j);
+          }
         }
       }
 
@@ -232,113 +231,21 @@ void loop()
 
       if ((m_esq <= esq_branco) & (m_dir >= dir_branco)) // Tem 1 quadrado verde na esquerda
       {
-        mot1_hor(j);
-        mot2_hor(j);
-        delay(300);
-        mot1_anti(j);
-        mot2_hor(j);
-        delay(700);
-      }
-      else if ((m_esq >= esq_branco) & (m_dir <= dir_branco)) // Tem 1 quadrado verde na direita
-      {
-        mot1_hor(j);
-        mot2_hor(j);
-        delay(300);
-        mot1_hor(j);
-        mot2_anti(j);
-        delay(700);
-      }
-      else if ((m_esq >= esq_branco) & (m_dir >= dir_branco)) // Nao tem quadrado verde
-      {
         enc_ant = enc.read();
         while (enc.read() - enc_ant <= 200)
         {
           mot1_hor(j);
           mot2_hor(j);
         }
-      }
-      else // Tem 2 quadrado verde
-      {
-        enc_ant = enc.read();
-        while (enc.read() - enc_ant <= 1200)
-        {
-          mot1_hor(j);
-          mot2_anti(j);
-        }
-      }
 
-      /*
-        if ((m_esq <= branco) & (m_esq >= preto))
+        enc_ant = enc.read();
+        while (enc.read() - enc_ant <= 627)
         {
-          mot1_hor(j);
-          mot2_hor(j);
-          delay(300);
           mot1_anti(j);
           mot2_hor(j);
-          delay(700);
         }
-        else
-        {
-          mot1_hor(j);
-          mot2_hor(j);
-          delay(300);
-        }*/
-    }
-    else if (leitura == 0b1111) // ENCRUZILHADA
-    {
-      mot1_anti(j);
-      mot2_anti(j);
-      delay(50);
-      digitalWrite(7, 1);
-      mot1_par();
-      mot2_par();
-      delay(5000);
-      int m_esq = map(constrain(analogRead(esq), 73, 210), 73, 210, 0, 1023);
-      int m_dir = map(constrain(analogRead(dir), 27, 120), 27, 120, 0, 1023);
-
-      display.clearDisplay();
-      display.setCursor(0, 0);
-      display.print("Esq: ");
-      display.print(m_esq);
-      display.print("(");
-      display.print(analogRead(esq));
-      display.println(")");
-
-      display.print("Dir: ");
-      display.print(m_dir);
-      display.print("(");
-      display.print(analogRead(dir));
-      display.println(")");
-      display.display();
-
-      Serial.print("Esq: ");
-      Serial.print(m_esq);
-      Serial.print("(");
-      Serial.print(analogRead(esq));
-      Serial.print(") / Dir: ");
-      Serial.print(m_dir);
-      Serial.print("(");
-      Serial.print(analogRead(dir));
-      Serial.println(")");
-      if ((m_esq <= esq_branco) & (m_dir >= dir_branco)) // Tem 1 quadrado verde na esquerda
-      {
-        mot1_hor(j);
-        mot2_hor(j);
-        delay(300);
-        mot1_anti(j);
-        mot2_hor(j);
-        delay(700);
       }
-      else if ((m_esq >= esq_branco) & (m_dir <= dir_branco)) // Tem 1 quadrado verde na direita
-      {
-        mot1_hor(j);
-        mot2_hor(j);
-        delay(300);
-        mot1_hor(j);
-        mot2_anti(j);
-        delay(700);
-      }
-      else if ((m_esq >= esq_branco) & (m_dir >= dir_branco)) // Nao tem quadrado verde
+      else // Nao tem quadrado verde
       {
         enc_ant = enc.read();
         while (enc.read() - enc_ant <= 200)
@@ -346,78 +253,195 @@ void loop()
           mot1_hor(j);
           mot2_hor(j);
         }
-      }
-      else // Tem 2 quadrado verde
-      {
-        enc_ant = enc.read();
-        while (enc.read() - enc_ant <= 1200)
+
+        if (digitalRead(s_norte) == 1)
         {
-          mot1_hor(j);
-          mot2_anti(j);
+          enc_ant = enc.read();
+          while (enc.read() - enc_ant <= 200)
+          {
+            mot1_anti(j);
+            mot2_anti(j);
+          }
+          enc_ant = enc.read();
+          while (enc.read() - enc_ant <= 200)
+          {
+            mot1_hor(j);
+            mot2_hor(j);
+          }
+
+          enc_ant = enc.read();
+          while (enc.read() - enc_ant <= 627)
+          {
+            mot1_anti(j);
+            mot2_hor(j);
+          }
         }
       }
-    }
-    /*
-    LEMBRAR DAS VARIAVEIS COM ENCRUZILHADA
-    nao esta usando while
-    COMO ELE VAI PARAR?
-    esquerda alta e direita baixa
-    */
-  }
 
-  // Inicio das funções, para cada caso, totalizando 6 funções diferente
-  void mot1_anti(int velo) // Função para o motor da esquerda girar no sentido anti horario com a velocidade variavel
-  {
-    analogWrite(mot_in4, velo);
-    analogWrite(mot_in3, 0);
-  }
-  void mot1_hor(int velo) // Função para o motor da esquerda girar no sentido horario com a velocidade variavel
-  {
-    analogWrite(mot_in4, 0);
-    analogWrite(mot_in3, velo);
-  }
-  void mot1_par() // Função para o motor da esquerda ficar parado
-  {
-    analogWrite(mot_in4, 0);
-    analogWrite(mot_in3, 0);
-  }
+        /*
+          if ((m_esq <= branco) & (m_esq >= preto))
+          {
+            mot1_hor(j);
+            mot2_hor(j);
+            delay(300);
+            mot1_anti(j);
+            mot2_hor(j);
+            delay(700);
+          }
+          else
+          {
+            mot1_hor(j);
+            mot2_hor(j);
+            delay(300);
+          }*/
+      }
+      else if (leitura == 0b1111) // ENCRUZILHADA
+      {
+        mot1_anti(j);
+        mot2_anti(j);
+        delay(50);
+        digitalWrite(7, 1);
+        mot1_par();
+        mot2_par();
+        delay(5000);
+        int m_esq = map(constrain(analogRead(esq), 73, 210), 73, 210, 0, 1023);
+        int m_dir = map(constrain(analogRead(dir), 27, 120), 27, 120, 0, 1023);
 
-  void mot2_anti(int velo) // Função para o motor da direita girar no sentido anti horario com a velocidade variavel
-  {
-    analogWrite(mot_in2, 0);
-    analogWrite(mot_in1, velo);
-  }
-  void mot2_hor(int velo) // Função para o motor da direita girar no sentido horario com a velocidade variavel
-  {
-    analogWrite(mot_in2, velo);
-    analogWrite(mot_in1, 0);
-  }
-  void mot2_par() // Função para o motor da direita ficar parado
-  {
-    analogWrite(mot_in1, 0);
-    analogWrite(mot_in2, 0);
-  }
+        display.clearDisplay();
+        display.setCursor(0, 0);
+        display.print("Esq: ");
+        display.print(m_esq);
+        display.print("(");
+        display.print(analogRead(esq));
+        display.println(")");
 
-  void desv_d(int velo) // Função para o robo desviar pela direita o obstaculo
-  {
-    mot1_par();
-    mot2_par();
-    delay(200);
-    mot1_hor(velo);
-    mot2_anti(velo);
-    delay(800);
-    // while(digitalRead(s_norte) == 1){
-    mot1_hor(velo);
-    mot2_hor(velo);
-    delay(2100);
-    mot1_anti(velo);
-    mot2_hor(velo);
-    delay(800);
-    mot1_hor(velo);
-    mot2_hor(velo);
-    delay(2000);
-    mot1_anti(velo);
-    mot2_hor(velo);
-    delay(800);
-    //}
-  }
+        display.print("Dir: ");
+        display.print(m_dir);
+        display.print("(");
+        display.print(analogRead(dir));
+        display.println(")");
+        display.display();
+
+        Serial.print("Esq: ");
+        Serial.print(m_esq);
+        Serial.print("(");
+        Serial.print(analogRead(esq));
+        Serial.print(") / Dir: ");
+        Serial.print(m_dir);
+        Serial.print("(");
+        Serial.print(analogRead(dir));
+        Serial.println(")");
+        if ((m_esq <= esq_branco) & (m_dir >= dir_branco)) // Tem 1 quadrado verde na esquerda
+        {
+          enc_ant = enc.read();
+          while (enc.read() - enc_ant <= 200)
+          {
+            mot1_hor(j);
+            mot2_hor(j);
+          }
+
+          enc_ant = enc.read();
+          while (enc.read() - enc_ant <= 627)
+          {
+            mot1_anti(j);
+            mot2_hor(j);
+          }
+          else if ((m_esq >= esq_branco) & (m_dir <= dir_branco)) // Tem 1 quadrado verde na direita
+          {
+            enc_ant = enc.read();
+            while (enc.read() - enc_ant <= 200)
+            {
+              mot1_hor(j);
+              mot2_hor(j);
+            }
+
+            enc_ant = enc.read();
+            while (enc.read() - enc_ant <= 627)
+            {
+              mot1_hor(j);
+              mot2_anti(j);
+            }
+
+            else if ((m_esq >= esq_branco) & (m_dir >= dir_branco)) // Nao tem quadrado verde
+            {
+              enc_ant = enc.read();
+              while (enc.read() - enc_ant <= 200)
+              {
+                mot1_hor(j);
+                mot2_hor(j);
+              }
+            }
+            else // Tem 2 quadrado verde
+            {
+              enc_ant = enc.read();
+              while (enc.read() - enc_ant <= 1200)
+              {
+                mot1_hor(j);
+                mot2_anti(j);
+              }
+            }
+          }
+          /*
+          LEMBRAR DAS VARIAVEIS COM ENCRUZILHADA
+          nao esta usando while
+          COMO ELE VAI PARAR?
+          esquerda alta e direita baixa
+          */
+        }
+
+        // Inicio das funções, para cada caso, totalizando 6 funções diferente
+        void mot1_anti(int velo) // Função para o motor da esquerda girar no sentido anti horario com a velocidade variavel
+        {
+          analogWrite(mot_in4, velo);
+          analogWrite(mot_in3, 0);
+        }
+        void mot1_hor(int velo) // Função para o motor da esquerda girar no sentido horario com a velocidade variavel
+        {
+          analogWrite(mot_in4, 0);
+          analogWrite(mot_in3, velo);
+        }
+        void mot1_par() // Função para o motor da esquerda ficar parado
+        {
+          analogWrite(mot_in4, 0);
+          analogWrite(mot_in3, 0);
+        }
+
+        void mot2_anti(int velo) // Função para o motor da direita girar no sentido anti horario com a velocidade variavel
+        {
+          analogWrite(mot_in2, 0);
+          analogWrite(mot_in1, velo);
+        }
+        void mot2_hor(int velo) // Função para o motor da direita girar no sentido horario com a velocidade variavel
+        {
+          analogWrite(mot_in2, velo);
+          analogWrite(mot_in1, 0);
+        }
+        void mot2_par() // Função para o motor da direita ficar parado
+        {
+          analogWrite(mot_in1, 0);
+          analogWrite(mot_in2, 0);
+        }
+
+        void desv_d(int velo) // Função para o robo desviar pela direita o obstaculo
+        {
+          mot1_par();
+          mot2_par();
+          delay(200);
+          mot1_hor(velo);
+          mot2_anti(velo);
+          delay(800);
+          // while(digitalRead(s_norte) == 1){
+          mot1_hor(velo);
+          mot2_hor(velo);
+          delay(2100);
+          mot1_anti(velo);
+          mot2_hor(velo);
+          delay(800);
+          mot1_hor(velo);
+          mot2_hor(velo);
+          delay(2000);
+          mot1_anti(velo);
+          mot2_hor(velo);
+          delay(800);
+          //}
+        }
