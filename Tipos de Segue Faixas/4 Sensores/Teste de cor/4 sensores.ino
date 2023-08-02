@@ -9,11 +9,11 @@
 #define s_nordeste 12 // roxo, OUT4
 #define s_leste 13    // verde, OUT5
 
-// Motor 1 = esquerda; Motor 2 = direita
-#define mot_in1 10 // preto, esquerda, tras
-#define mot_in2 5  // laranja, esquerda, frente
-#define mot_in3 6  // branco, direita, frente
-#define mot_in4 9  // amarelo, direita, tras
+// Motor 1 = Direita; Motor 2 = Esquerda
+#define mot_in1 10 // amarelo, direita, tras
+#define mot_in2 5 // marrom, direita, frente
+#define mot_in3 6 // azul, esquerda, frente
+#define mot_in4 9 // verde e amarelo, esquerda, tras
 
 // Definindo portas para o sensor de cor, o pin 2 e o led
 #define esq A1
