@@ -10,7 +10,7 @@
 #define s_nordeste 12 // roxo, OUT4
 #define s_leste 13    // verde, OUT5
 
-// Motor 1 = Direita; Motor 2 = Esquerda
+// Motor 1 = Esquerda; Motor 2 = Direita; Esquerda que tem encoder
 #define mot_in1 10 // amarelo, direita, tras
 #define mot_in2 5  // marrom, direita, frente
 #define mot_in3 6  // azul, esquerda, frente
@@ -129,7 +129,7 @@ void loop()
       }
 
       enc_ant = enc.read();
-      while (enc.read() - enc_ant <= 627)
+      while (enc_ant - enc.read() >= 627)
       {
         mot1_hor(j);
         mot2_anti(j);
@@ -154,7 +154,7 @@ void loop()
         }
 
         enc_ant = enc.read();
-        while (enc.read() - enc_ant <= 627)
+        while (enc_ant - enc.read() >= 627)
         {
           mot1_hor(j);
           mot2_anti(j);
