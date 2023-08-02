@@ -92,7 +92,6 @@ void loop()
   }
   else if (leitura == 0b0011) // Condição 4
   {
-    Serial.println("AAAA");
     mot1_anti(j);
     mot2_anti(j);
     delay(50);
