@@ -8,22 +8,27 @@
 
   Encoder enc(3,2);
   const int j = 180;
-  int enc_ant = 0;
+  int enc_ant = 4000;
 
   void setup() {
-
     Serial.begin(9600);
   }
 
   void loop() {
-        while(enc.read() - enc_ant <= 200){
-        mot1_hor(j);
-        mot2_hor(j);
-        Serial.println(enc.read());
+    mot1_hor(j);
+    mot2_hor(j);
+    delay(1000);
+        enc_ant = enc.read();
+        while (enc_ant - enc.read() <= 627)
+        {
+          mot1_hor(j);
+          mot2_anti(j);
+          Serial.println(enc.read());
         }
+      Serial.println(enc.read());
         mot1_par();
         mot2_par();
-
+        delay(3000);
     /*
     while(enc.read() <= 627){
       mot1_anti(j);
@@ -34,7 +39,6 @@
       mot2_anti(j);
       mot1_hor();
     }*/
-    Serial.println(enc.read());
   }
 
   // Inicio das funções, para cada caso, totalizando 6 funções diferente
@@ -69,3 +73,4 @@
     analogWrite(mot_in3, 0);
     analogWrite(mot_in4, 0);
   }
+  //void gir_d(int velo)
