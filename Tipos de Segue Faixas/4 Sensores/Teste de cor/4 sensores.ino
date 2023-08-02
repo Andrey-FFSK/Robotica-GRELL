@@ -3,27 +3,27 @@
 #include <Adafruit_SSD1306.h>
 
 // Definindo as portas dos sensores e da portas H
-#define s_oeste 8     // cinza, OUT1
-#define s_noroeste 13 // branco, OUT2
-#define s_norte 12    // verde, OUT4
-#define s_nordeste 11 // roxo, OUT3
-#define s_leste 10    // verde, OUT5
+#define s_oeste 4     // amarelo, OUT1
+#define s_noroeste 8  // branco, OUT2
+#define s_norte 11    // verde, OUT3
+#define s_nordeste 12 // roxo, OUT4
+#define s_leste 13    // verde, OUT5
 
-// Motor 2 = esquerda; Motor 1 = direita
-#define mot_in1 3 // amarelo, direita, tras
-#define mot_in2 5 // branco, direita, frente
-#define mot_in3 6 // laranja, esquerda, frente
-#define mot_in4 9 // preto, esquerda, tras
+// Motor 1 = esquerda; Motor 2 = direita
+#define mot_in1 10 // preto, esquerda, tras
+#define mot_in2 5  // laranja, esquerda, frente
+#define mot_in3 6  // branco, direita, frente
+#define mot_in4 9  // amarelo, direita, tras
 
 // Definindo portas para o sensor de cor, o pin 2 e o led
 #define esq A1
 #define dir A0
 
 // Usando array para colocar todos os pinos, coloquei os sensores em uma certa posição por causa do BitSwift em baixo
-const int pinos[] = {10, 11, 13, 8, 12, A0, A1, 2, 9, 6, 3, 5};
+const int pinos[] = {s_leste, s_nordeste, s_noroeste, s_oeste, s_norte, esq, dir, 7, mot_in1, mot_in2, mot_in3, mot_in4};
 
-const int j = 180;       // PWM usado para a velocidade, min == 0 e max == 255
-Ultrasonic sensor(7, 4); // trig == 7; echo == 4 | trig = amarel e ech = marrm
+const int j = 180;         // PWM usado para a velocidade, min == 0 e max == 255
+Ultrasonic sensor(A2, A3); // trig == 7; echo == 4 | trig = amarel e ech = marrm
 
 const int esq_preto = 120;
 const int esq_branco = 600;
@@ -46,20 +46,20 @@ void setup()
 }
 void loop()
 {
-  
-  //Funções do sensor de cor ficar mais amplo, SEMPRE MUDAR
+
+  // Funções do sensor de cor ficar mais amplo, SEMPRE MUDAR
 
   // Essa parte é o bitSwift, criar uma variavel leitura do tipo byte, porem a gente so usa os bits dessa varaivel, a quantidade de bits depende de quantos sensores estao usando
   byte leitura = 0; // Definir sempre 0 quando definir algo como o for abaixo
   for (int i = 0; i < 4; i++)
     leitura |= digitalRead(pinos[i]) << i; // Colocando as entrada da tabela da verdade usando um bitshift automatico, o valor do i depende dos sensores
   leitura = (~leitura) & (0b00001111);     // Colocando um inversor para que funcione com a tabela da verdade, pq o sensor dectectar no branco, AND uma mascara para ir so os bits que eu quero
-  digitalWrite(2, 0);
-  //Serial.print(leitura, BIN);
-  //Serial.print(" sens: ");
+  digitalWrite(7, 0);
+  // Serial.print(leitura, BIN);
+  // Serial.print(" sens: ");
 
-  //if (sensor.read() <= 18) desv_d(j); // Se o sensor dectar que esta distancia ativa a função de desviar
-  
+  // if (sensor.read() <= 18) desv_d(j); // Se o sensor dectar que esta distancia ativa a função de desviar
+
   // Condições que usa a melhor situação dos sensores, o bit mais da direita é o s_leste e o bit mais na esquerda é o s_oeste
   // Algumas tem if com OR por conta que eles fazem a mesma coisa na condição.
   // Condição de 0011 ou 1100: é o algoritimo de 90 graus, pensando que so vai ativar no 90
@@ -78,218 +78,38 @@ void loop()
     mot1_anti(j);
     mot2_anti(j);
     delay(50);
-    digitalWrite(2, 1);
+    digitalWrite(7, 1);
     mot1_par();
     mot2_par();
     delay(3000);
     int m_esq = map(constrain(analogRead(esq), 73, 210), 73, 210, 0, 1023);
     int m_dir = map(constrain(analogRead(dir), 27, 120), 27, 120, 0, 1023);
 
-  display.clearDisplay();
-  display.setCursor(0, 0);
-  display.print("Esq: ");
-  display.print(m_esq);
-  display.print("(");
-  display.print(analogRead(esq));
-  display.println(")");
+    display.clearDisplay();
+    display.setCursor(0, 0);
+    display.print("Esq: ");
+    display.print(m_esq);
+    display.print("(");
+    display.print(analogRead(esq));
+    display.println(")");
 
-  display.print("Dir: ");
-  display.print(m_dir);
-  display.print("(");
-  display.print(analogRead(dir));
-  display.println(")");
-  display.display();
-
-  Serial.print("Esq: ");
-  Serial.print(m_esq);
-  Serial.print("(");
-  Serial.print(analogRead(esq));
-  Serial.print(") / Dir: ");
-  Serial.print(m_dir);
-  Serial.print("(");
-  Serial.print(analogRead(dir));
-  Serial.println(")");
-
-  if ((m_esq <= esq_branco) & (m_dir >= dir_branco)) // Tem 1 quadrado verde na esquerda
-    {
-      mot1_hor(j);
-      mot2_hor(j);
-      delay(300);
-      mot1_anti(j);
-      mot2_hor(j);
-      delay(700);
-    }
-    else if ((m_esq >= esq_branco) & (m_dir <= dir_branco)) // Tem 1 quadrado verde na direita
-    {
-      mot1_hor(j);
-      mot2_hor(j);
-      delay(300);
-      mot1_hor(j);
-      mot2_anti(j);
-      delay(700);
-    }
-    else if((m_esq >= esq_branco) & (m_dir >= dir_branco)) // Nao tem quadrado verde
-    {
-      mot1_hor(j);
-      mot2_hor(j);
-      delay(300);
-    }
-    else //Tem 2 quadrado verde
-    {
-      mot1_hor(j);
-      mot2_anti(j);
-      delay(1000);
-    }
-
-  /*
-    if ((m_dir <= branco) & (m_dir >= preto))
-    {
-      mot1_hor(j);
-      mot2_hor(j);
-      delay(300);
-      mot1_hor(j);
-      mot2_anti(j);
-      delay(700);
-    }
-    else
-    {
-      mot1_hor(j);
-      mot2_hor(j);
-      delay(300);
-    }*/
-  }
-  else if ((leitura == 0b0100) /*| (leitura == 0b1000)*/) // Condição 5
-  {
-    mot1_anti(j);
-    mot2_hor(j);
-  }
-  else if ((leitura == 0b0110) | (leitura == 0b1001)) // Condição 6
-  {
-    mot1_par();
-    mot2_par();
-    delay(200);
-  }
-  else if (leitura == 0b1100) // Condição 7
-  {
-    mot1_anti(j);
-    mot2_anti(j);
-    delay(50);
-    digitalWrite(2, 1);
-    mot1_par();
-    mot2_par();
-    delay(5000);
-    int m_esq = map(constrain(analogRead(esq), 73, 210), 73, 210, 0, 1023);
-  int m_dir = map(constrain(analogRead(dir), 27, 120), 27, 120, 0, 1023);
-
-  display.clearDisplay();
-  display.setCursor(0, 0);
-  display.print("Esq: ");
-  display.print(m_esq);
-  display.print("(");
-  display.print(analogRead(esq));
-  display.println(")");
-
-  display.print("Dir: ");
-  display.print(m_dir);
-  display.print("(");
-  display.print(analogRead(dir));
-  display.println(")");
-  display.display();
+    display.print("Dir: ");
+    display.print(m_dir);
+    display.print("(");
+    display.print(analogRead(dir));
+    display.println(")");
+    display.display();
 
     Serial.print("Esq: ");
-  Serial.print(m_esq);
-  Serial.print("(");
-  Serial.print(analogRead(esq));
-  Serial.print(") / Dir: ");
-  Serial.print(m_dir);
-  Serial.print("(");
-  Serial.print(analogRead(dir));
-  Serial.println(")");
+    Serial.print(m_esq);
+    Serial.print("(");
+    Serial.print(analogRead(esq));
+    Serial.print(") / Dir: ");
+    Serial.print(m_dir);
+    Serial.print("(");
+    Serial.print(analogRead(dir));
+    Serial.println(")");
 
-  if ((m_esq <= esq_branco) & (m_dir >= dir_branco)) // Tem 1 quadrado verde na esquerda
-    {
-      mot1_hor(j);
-      mot2_hor(j);
-      delay(300);
-      mot1_anti(j);
-      mot2_hor(j);
-      delay(700);
-    }
-    else if ((m_esq >= esq_branco) & (m_dir <= dir_branco)) // Tem 1 quadrado verde na direita
-    {
-      mot1_hor(j);
-      mot2_hor(j);
-      delay(300);
-      mot1_hor(j);
-      mot2_anti(j);
-      delay(700);
-    }
-    else if((m_esq >= esq_branco) & (m_dir >= dir_branco)) // Nao tem quadrado verde
-    {
-      mot1_hor(j);
-      mot2_hor(j);
-      delay(300);
-    }
-    else //Tem 2 quadrado verde
-    {
-      mot1_hor(j);
-      mot2_anti(j);
-      delay(1000);
-    }
-
-  /*
-    if ((m_esq <= branco) & (m_esq >= preto))
-    {
-      mot1_hor(j);
-      mot2_hor(j);
-      delay(300);
-      mot1_anti(j);
-      mot2_hor(j);
-      delay(700);
-    }
-    else
-    {
-      mot1_hor(j);
-      mot2_hor(j);
-      delay(300);
-    }*/
-  }
-  else if (leitura == 0b1111) //ENCRUZILHADA
-  {
-    mot1_anti(j);
-    mot2_anti(j);
-    delay(50);
-    digitalWrite(2, 1);
-    mot1_par();
-    mot2_par();
-    delay(5000);
-    int m_esq = map(constrain(analogRead(esq), 73, 210), 73, 210, 0, 1023);
-  int m_dir = map(constrain(analogRead(dir), 27, 120), 27, 120, 0, 1023);
-
-  display.clearDisplay();
-  display.setCursor(0, 0);
-  display.print("Esq: ");
-  display.print(m_esq);
-  display.print("(");
-  display.print(analogRead(esq));
-  display.println(")");
-
-  display.print("Dir: ");
-  display.print(m_dir);
-  display.print("(");
-  display.print(analogRead(dir));
-  display.println(")");
-  display.display();
-
-    Serial.print("Esq: ");
-  Serial.print(m_esq);
-  Serial.print("(");
-  Serial.print(analogRead(esq));
-  Serial.print(") / Dir: ");
-  Serial.print(m_dir);
-  Serial.print("(");
-  Serial.print(analogRead(dir));
-  Serial.println(")");
     if ((m_esq <= esq_branco) & (m_dir >= dir_branco)) // Tem 1 quadrado verde na esquerda
     {
       mot1_hor(j);
@@ -308,13 +128,193 @@ void loop()
       mot2_anti(j);
       delay(700);
     }
-    else if((m_esq >= esq_branco) & (m_dir >= dir_branco)) // Nao tem quadrado verde
+    else if ((m_esq >= esq_branco) & (m_dir >= dir_branco)) // Nao tem quadrado verde
     {
       mot1_hor(j);
       mot2_hor(j);
       delay(300);
     }
-    else //Tem 2 quadrado verde
+    else // Tem 2 quadrado verde
+    {
+      mot1_hor(j);
+      mot2_anti(j);
+      delay(1000);
+    }
+
+    /*
+      if ((m_dir <= branco) & (m_dir >= preto))
+      {
+        mot1_hor(j);
+        mot2_hor(j);
+        delay(300);
+        mot1_hor(j);
+        mot2_anti(j);
+        delay(700);
+      }
+      else
+      {
+        mot1_hor(j);
+        mot2_hor(j);
+        delay(300);
+      }*/
+  }
+  else if ((leitura == 0b0100) /*| (leitura == 0b1000)*/) // Condição 5
+  {
+    mot1_anti(j);
+    mot2_hor(j);
+  }
+  else if ((leitura == 0b0110) | (leitura == 0b1001)) // Condição 6
+  {
+    mot1_par();
+    mot2_par();
+    delay(200);
+  }
+  else if (leitura == 0b1100) // Condição 7
+  {
+    mot1_anti(j);
+    mot2_anti(j);
+    delay(50);
+    digitalWrite(7, 1);
+    mot1_par();
+    mot2_par();
+    delay(5000);
+    int m_esq = map(constrain(analogRead(esq), 73, 210), 73, 210, 0, 1023);
+    int m_dir = map(constrain(analogRead(dir), 27, 120), 27, 120, 0, 1023);
+
+    display.clearDisplay();
+    display.setCursor(0, 0);
+    display.print("Esq: ");
+    display.print(m_esq);
+    display.print("(");
+    display.print(analogRead(esq));
+    display.println(")");
+
+    display.print("Dir: ");
+    display.print(m_dir);
+    display.print("(");
+    display.print(analogRead(dir));
+    display.println(")");
+    display.display();
+
+    Serial.print("Esq: ");
+    Serial.print(m_esq);
+    Serial.print("(");
+    Serial.print(analogRead(esq));
+    Serial.print(") / Dir: ");
+    Serial.print(m_dir);
+    Serial.print("(");
+    Serial.print(analogRead(dir));
+    Serial.println(")");
+
+    if ((m_esq <= esq_branco) & (m_dir >= dir_branco)) // Tem 1 quadrado verde na esquerda
+    {
+      mot1_hor(j);
+      mot2_hor(j);
+      delay(300);
+      mot1_anti(j);
+      mot2_hor(j);
+      delay(700);
+    }
+    else if ((m_esq >= esq_branco) & (m_dir <= dir_branco)) // Tem 1 quadrado verde na direita
+    {
+      mot1_hor(j);
+      mot2_hor(j);
+      delay(300);
+      mot1_hor(j);
+      mot2_anti(j);
+      delay(700);
+    }
+    else if ((m_esq >= esq_branco) & (m_dir >= dir_branco)) // Nao tem quadrado verde
+    {
+      mot1_hor(j);
+      mot2_hor(j);
+      delay(300);
+    }
+    else // Tem 2 quadrado verde
+    {
+      mot1_hor(j);
+      mot2_anti(j);
+      delay(1000);
+    }
+
+    /*
+      if ((m_esq <= branco) & (m_esq >= preto))
+      {
+        mot1_hor(j);
+        mot2_hor(j);
+        delay(300);
+        mot1_anti(j);
+        mot2_hor(j);
+        delay(700);
+      }
+      else
+      {
+        mot1_hor(j);
+        mot2_hor(j);
+        delay(300);
+      }*/
+  }
+  else if (leitura == 0b1111) // ENCRUZILHADA
+  {
+    mot1_anti(j);
+    mot2_anti(j);
+    delay(50);
+    digitalWrite(7, 1);
+    mot1_par();
+    mot2_par();
+    delay(5000);
+    int m_esq = map(constrain(analogRead(esq), 73, 210), 73, 210, 0, 1023);
+    int m_dir = map(constrain(analogRead(dir), 27, 120), 27, 120, 0, 1023);
+
+    display.clearDisplay();
+    display.setCursor(0, 0);
+    display.print("Esq: ");
+    display.print(m_esq);
+    display.print("(");
+    display.print(analogRead(esq));
+    display.println(")");
+
+    display.print("Dir: ");
+    display.print(m_dir);
+    display.print("(");
+    display.print(analogRead(dir));
+    display.println(")");
+    display.display();
+
+    Serial.print("Esq: ");
+    Serial.print(m_esq);
+    Serial.print("(");
+    Serial.print(analogRead(esq));
+    Serial.print(") / Dir: ");
+    Serial.print(m_dir);
+    Serial.print("(");
+    Serial.print(analogRead(dir));
+    Serial.println(")");
+    if ((m_esq <= esq_branco) & (m_dir >= dir_branco)) // Tem 1 quadrado verde na esquerda
+    {
+      mot1_hor(j);
+      mot2_hor(j);
+      delay(300);
+      mot1_anti(j);
+      mot2_hor(j);
+      delay(700);
+    }
+    else if ((m_esq >= esq_branco) & (m_dir <= dir_branco)) // Tem 1 quadrado verde na direita
+    {
+      mot1_hor(j);
+      mot2_hor(j);
+      delay(300);
+      mot1_hor(j);
+      mot2_anti(j);
+      delay(700);
+    }
+    else if ((m_esq >= esq_branco) & (m_dir >= dir_branco)) // Nao tem quadrado verde
+    {
+      mot1_hor(j);
+      mot2_hor(j);
+      delay(300);
+    }
+    else // Tem 2 quadrado verde
     {
       mot1_hor(j);
       mot2_anti(j);

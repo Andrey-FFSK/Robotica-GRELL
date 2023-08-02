@@ -24,26 +24,26 @@ const unsigned char aeiapeqena[] PROGMEM = {
     0x79, 0x88, 0x7b, 0x90, 0x7b, 0x98, 0x3f, 0x98, 0x17, 0x10, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00};
 
 // Definindo as portas dos sensores e da portas H
-#define s_oeste 8     // amarelo, OUT1
-#define s_noroeste 13 // branco, OUT2
-#define s_norte 12    // verde, OUT4
-#define s_nordeste 11 // roxo, OUT3
-#define s_leste 10    // verde, OUT5
+#define s_oeste 4     // amarelo, OUT1
+#define s_noroeste 8 // branco, OUT2
+#define s_norte 11    // verde, OUT3
+#define s_nordeste 12 // roxo, OUT4
+#define s_leste 13    // verde, OUT5
 
 // Definindo Sensor de cor e led acoplado a ele
-#define led_g 2
+#define led_g 7
 #define esq A1
 #define dir A0
 
 // Motor 1 = esquerda; Motor 2 = direita
-#define mot_in1 3 // preto, esquerda, tras
+#define mot_in1 10 // preto, esquerda, tras
 #define mot_in2 5 // laranja, esquerda, frente
 #define mot_in3 6 // branco, direita, frente
 #define mot_in4 9 // amarelo, direita, tras
 
 // Usando array para colocar todos os pinos, coloquei os sensores invertido por causa do BitSwift em baixo
-const int pinos[] = {8, 13, 12, 11, 10, A1, A0, 5, 3, 6, 9, 2};
-Ultrasonic sensor(7, 4);
+const int pinos[] = {s_oeste, s_noroeste, s_norte, s_nordeste, s_leste, esq, dir, led_g, mot_in1, mot_in2, mot_in3, mot_in4};
+Ultrasonic sensor(A2, A3);
 
 // Definindo variaveis
 int temp = 500;
