@@ -134,9 +134,11 @@ void loop()
     }
     else if ((m_esq >= esq_branco) & (m_dir >= dir_branco)) // Nao tem quadrado verde
     {
+      enc_ant = enc.read();
+      while(enc.read() - enc_ant <= 200){
       mot1_hor(j);
       mot2_hor(j);
-      delay(300);
+      }
     }
     else // Tem 2 quadrado verde
     {
@@ -234,9 +236,11 @@ void loop()
     }
     else if ((m_esq >= esq_branco) & (m_dir >= dir_branco)) // Nao tem quadrado verde
     {
+      enc_ant = enc.read();
+      while(enc.read() - enc_ant <= 200){
       mot1_hor(j);
       mot2_hor(j);
-      delay(300);
+      }
     }
     else // Tem 2 quadrado verde
     {
@@ -320,9 +324,11 @@ void loop()
     }
     else if ((m_esq >= esq_branco) & (m_dir >= dir_branco)) // Nao tem quadrado verde
     {
+      enc_ant = enc.read();
+      while(enc.read() - enc_ant <= 200){
       mot1_hor(j);
       mot2_hor(j);
-      delay(300);
+      }
     }
     else // Tem 2 quadrado verde
     {
