@@ -10,7 +10,7 @@
 #define s_nordeste 12 // roxo, OUT4
 #define s_leste 13    // verde, OUT5
 
-// Motor 1 = Esquerda; Motor 2 = Direita; Esquerda que tem encoder
+// Motor 1 = Esquerda; Motor 2 = Direita; mot1 que tem encoder
 #define mot_in1 10 // amarelo, direita, tras
 #define mot_in2 5  // marrom, direita, frente
 #define mot_in3 6  // azul, esquerda, frente
@@ -129,7 +129,7 @@ void loop()
       }
 
       enc_ant = enc.read();
-      while (enc_ant - enc.read() <= 627)
+      while (enc.read()- enc_ant <= 627)
       {
         mot1_hor(j);
         mot2_anti(j);
@@ -154,7 +154,7 @@ void loop()
         }
 
         enc_ant = enc.read();
-        while (enc_ant - enc.read() <= 627)
+        while (enc.read() - enc_ant <= 627)
         {
           mot1_hor(j);
           mot2_anti(j);
@@ -236,7 +236,7 @@ void loop()
       }
 
       enc_ant = enc.read();
-      while (enc.read() - enc_ant <= 627)
+      while (enc_ant - enc.read() <= 627)
       {
         mot1_anti(j);
         mot2_hor(j);
@@ -261,7 +261,7 @@ void loop()
         }
 
         enc_ant = enc.read();
-        while (enc.read() - enc_ant <= 627)
+        while (enc_ant - enc.read() <= 627)
         {
           mot1_anti(j);
           mot2_hor(j);
@@ -331,7 +331,7 @@ void loop()
       }
 
       enc_ant = enc.read();
-      while (enc.read() - enc_ant <= 627)
+      while (enc_ant - enc.read() <= 627)
       {
         mot1_anti(j);
         mot2_hor(j);
@@ -365,7 +365,7 @@ void loop()
     else // Tem 2 quadrado verde
     {
       enc_ant = enc.read();
-      while (enc_ant - enc.read() <= 1200)
+      while (enc.read() - enc_ant <= 1200)
       {
         mot1_hor(j);
         mot2_anti(j);
