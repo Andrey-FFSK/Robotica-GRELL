@@ -19,6 +19,10 @@
 // Definindo portas para o sensor de cor, o pin 2 e o led
 #define esq A1
 #define dir A0
+int m_esq = 0;
+int m_dir = 0;
+int ant_m_esq = 0;
+int ant_m_dir = 0;
 
 // Usando array para colocar todos os pinos, coloquei os sensores em uma certa posição por causa do BitSwift em baixo
 const int pinos[] = {s_leste, s_nordeste, s_noroeste, s_oeste, s_norte, esq, dir, 7, mot_in1, mot_in2, mot_in3, mot_in4};
@@ -49,6 +53,7 @@ void setup()
 }
 void loop()
 {
+  display.clearDisplay();
 
   // Funções do sensor de cor ficar mais amplo, SEMPRE MUDAR
 
@@ -58,6 +63,7 @@ void loop()
     leitura |= digitalRead(pinos[i]) << i; // Colocando as entrada da tabela da verdade usando um bitshift automatico, o valor do i depende dos sensores
   leitura = (~leitura) & (0b00001111);     // Colocando um inversor para que funcione com a tabela da verdade, pq o sensor dectectar no branco, AND uma mascara para ir so os bits que eu quero
   digitalWrite(7, 0);
+
   // Serial.print(leitura, BIN);
   // Serial.print(" sens: ");
 
@@ -85,19 +91,19 @@ void loop()
     mot1_par();
     mot2_par();
     delay(3000);
-    int m_esq = map(constrain(analogRead(esq), 73, 210), 73, 210, 0, 1023);
-    int m_dir = map(constrain(analogRead(dir), 27, 120), 27, 120, 0, 1023);
+     m_esq = map(constrain(analogRead(esq), 73, 210), 73, 210, 0, 1023);
+     m_dir = map(constrain(analogRead(dir), 27, 120), 27, 120, 0, 1023);
 
     display.clearDisplay();
     display.setCursor(0, 0);
     display.print("Esq: ");
-    display.print(m_esq);
+    display.print(ant_m_esq);
     display.print("(");
     display.print(analogRead(esq));
     display.println(")");
 
     display.print("Dir: ");
-    display.print(m_dir);
+    display.print(ant_m_dir);
     display.print("(");
     display.print(analogRead(dir));
     display.println(")");
@@ -141,7 +147,7 @@ void loop()
       if (digitalRead(s_norte) == 1)
       {
         enc_ant = enc.read();
-        while (enc.read() - enc_ant <= 200)
+        while (enc_ant - enc.read() >= 200)
         {
           mot1_anti(j);
           mot2_anti(j);
@@ -193,19 +199,18 @@ void loop()
     mot1_par();
     mot2_par();
     delay(5000);
-    int m_esq = map(constrain(analogRead(esq), 73, 210), 73, 210, 0, 1023);
-    int m_dir = map(constrain(analogRead(dir), 27, 120), 27, 120, 0, 1023);
-
-    display.clearDisplay();
+     m_esq = map(constrain(analogRead(esq), 73, 210), 73, 210, 0, 1023);
+    m_dir = map(constrain(analogRead(dir), 27, 120), 27, 120, 0, 1023);
+     display.clearDisplay();
     display.setCursor(0, 0);
     display.print("Esq: ");
-    display.print(m_esq);
+    display.print(ant_m_esq);
     display.print("(");
     display.print(analogRead(esq));
     display.println(")");
 
     display.print("Dir: ");
-    display.print(m_dir);
+    display.print(ant_m_dir);
     display.print("(");
     display.print(analogRead(dir));
     display.println(")");
@@ -249,7 +254,7 @@ void loop()
       if (digitalRead(s_norte) == 1)
       {
         enc_ant = enc.read();
-        while (enc.read() - enc_ant <= 200)
+        while (enc_ant - enc.read() >= 200)
         {
           mot1_anti(j);
           mot2_anti(j);
@@ -290,19 +295,18 @@ void loop()
     mot1_par();
     mot2_par();
     delay(5000);
-    int m_esq = map(constrain(analogRead(esq), 73, 210), 73, 210, 0, 1023);
-    int m_dir = map(constrain(analogRead(dir), 27, 120), 27, 120, 0, 1023);
-
-    display.clearDisplay();
+     m_esq = map(constrain(analogRead(esq), 73, 210), 73, 210, 0, 1023);
+     m_dir = map(constrain(analogRead(dir), 27, 120), 27, 120, 0, 1023);
+      display.clearDisplay();
     display.setCursor(0, 0);
     display.print("Esq: ");
-    display.print(m_esq);
+    display.print(ant_m_esq);
     display.print("(");
     display.print(analogRead(esq));
     display.println(")");
 
     display.print("Dir: ");
-    display.print(m_dir);
+    display.print(ant_m_dir);
     display.print("(");
     display.print(analogRead(dir));
     display.println(")");
