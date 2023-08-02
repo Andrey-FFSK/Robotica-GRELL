@@ -35,11 +35,11 @@ const unsigned char aeiapeqena[] PROGMEM = {
 #define esq A1
 #define dir A0
 
-// Motor 1 = esquerda; Motor 2 = direita
-#define mot_in1 10 // preto, esquerda, tras
-#define mot_in2 5 // laranja, esquerda, frente
-#define mot_in3 6 // branco, direita, frente
-#define mot_in4 9 // amarelo, direita, tras
+// Motor 1 = Direita; Motor 2 = Esquerda
+#define mot_in1 10 // amarelo, direita, tras
+#define mot_in2 5 // marrom, direita, frente
+#define mot_in3 6 // azul, esquerda, frente
+#define mot_in4 9 // verde e amarelo, esquerda, tras
 
 // Usando array para colocar todos os pinos, coloquei os sensores invertido por causa do BitSwift em baixo
 const int pinos[] = {s_oeste, s_noroeste, s_norte, s_nordeste, s_leste, esq, dir, led_g, mot_in1, mot_in2, mot_in3, mot_in4};
@@ -75,8 +75,10 @@ void loop()
 
   digitalWrite(led_g, 1);
 
-  // mot1_hor(o);
-  // mot2_hor(o);
+  //analogWrite(mot_in2, o);
+
+  //mot1_hor(o);
+  //mot2_hor(o);
 
   // mot1_anti(o);
   // mot2_anti(o);
