@@ -30,6 +30,7 @@ const int j = 110; // PWM usado para a velocidade, min == 0 e max == 255
 int enc_ant = 0;
 const int enc_fre = 450;
 const int enc_90 = 420;
+const int enc_peq = 150;
 Ultrasonic sensor(A2, A3); // trig == 7; echo == 4 | trig = amarel e ech = marrm
 Encoder enc(3, 2);
 
@@ -141,12 +142,17 @@ void loop()
       }
 
       enc_ant = enc.read();
-      while (enc.read() - enc_ant <= enc_90)
+      while (enc.read() - enc_ant <= enc_peq)
       {
         mot1_hor(j);
         mot2_anti(j);
         Serial.print("virando para direita");
           Serial.println(enc.read());
+      }
+      while(digitalRead(s_norte) == 1){
+        mot1_hor(j);
+        mot2_anti(j);
+        Serial.print("virando para direita");
       }
     }
     else // Nao tem quadrado verde
@@ -162,19 +168,18 @@ void loop()
       if (digitalRead(s_norte) == 1)
       {
         enc_ant = enc.read();
-        while (enc.read() - enc_ant <= enc_90)
+        while (enc.read() - enc_ant <= enc_peq)
         {
           mot1_hor(j);
           mot2_anti(j);
           Serial.print("virando para direita");
           Serial.println(enc.read());
-        }/*
+        }
         while (digitalRead(s_norte) == 1)
         {
           mot1_hor(j);
           mot2_anti(j);
         }
-        delay(100);*/
       }
     }
   }
@@ -257,12 +262,17 @@ void loop()
       }
 
       enc_ant = enc.read();
-      while (enc_ant - enc.read() <= enc_90)
+      while (enc_ant - enc.read() <= enc_peq)
       {
         mot1_anti(j);
         mot2_hor(j);
         Serial.print("virando pra esquerda");
           Serial.println(enc.read());
+      }
+      while(digitalRead(s_norte) == 1){
+        mot1_anti(j);
+        mot2_hor(j);
+        Serial.print("virando pra esquerda");
       }
     }
     else // Nao tem quadrado verde
@@ -278,19 +288,19 @@ void loop()
       if (digitalRead(s_norte) == 1)
       {
         enc_ant = enc.read();
-        while (enc.read() - enc_ant <= enc_90)
+        while (enc.read() - enc_ant <= enc_peq)
         {
           mot1_anti(j);
           mot2_hor(j);
           Serial.print("virando pra esquerda");
           Serial.println(enc.read());
-        }/*
+        }
         while (digitalRead(s_norte) == 1)
         {
           mot1_anti(j);
           mot2_hor(j);
+          Serial.print("virando pra esquerda");
         }
-        delay(100);*/
       }
     }
 
@@ -359,19 +369,18 @@ void loop()
       }
 
       enc_ant = enc.read();
-      while (enc.read() - enc_ant <= enc_90)
+      while (enc.read() - enc_ant <= enc_peq)
       {
         mot1_anti(j);
         mot2_hor(j);
         Serial.print("virando para esquerda");
         Serial.println(enc.read());
-      }/*
+      }
       while (digitalRead(s_norte) == 1)
       {
         mot1_anti(j);
         mot2_hor(j);
       }
-      delay(100);*/
     }
     else if ((m_esq >= esq_branco) & (m_dir <= dir_branco)) // Tem 1 quadrado verde na direita
     {
@@ -384,19 +393,18 @@ void loop()
       }
 
       enc_ant = enc.read();
-      while (enc.read() - enc_ant <= enc_90)
+      while (enc.read() - enc_ant <= enc_peq)
       {
         mot1_hor(j);
         mot2_anti(j);
         Serial.print("Virando para direita");
         Serial.println(enc.read());
-      }/*
+      }
       while (digitalRead(s_norte) == 1)
       {
         mot1_hor(j);
         mot2_anti(j);
       }
-      delay(100);*/
     }
     else if ((m_esq >= esq_branco) & (m_dir >= dir_branco)) // Nao tem quadrado verde
     {
@@ -412,7 +420,7 @@ void loop()
     {
       Serial.println("Encruzilhada; 2 verdes");
       enc_ant = enc.read();
-      while (enc.read() - enc_ant <= 1200)
+      while (enc.read() - enc_ant <= 800)
       {
         mot1_hor(j);
         mot2_anti(j);
