@@ -1,7 +1,7 @@
 #include <Ultrasonic.h> //Incluindo a biblioteca do ultrasonic de erik simoes
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
-#inlcude < Enconder.h>
+#inlcude <Encoder.h>
 
 // Definindo as portas dos sensores e da portas H
 #define s_oeste 4     // amarelo, OUT1
@@ -445,3 +445,4 @@ void loop()
           delay(800);
           //}
         }
+      }
