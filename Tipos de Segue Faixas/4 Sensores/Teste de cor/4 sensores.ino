@@ -123,7 +123,7 @@ void loop()
       }
       
       enc_ant = enc.read();
-      while (enc.read() <= 627)
+      while (enc.read() - enc_ant <= 627)
       {
         mot1_anti(j);
         mot2_hor(j);
@@ -139,7 +139,7 @@ void loop()
       }
 
       enc_ant = enc.read();
-      while (enc.read() <= 627)
+      while (enc.read() - enc_ant <= 627)
       {
         mot1_hor(j);
         mot2_anti(j);
