@@ -486,7 +486,7 @@ void desv_d(int velo) // Função para o robo desviar pela direita o obstaculo
       }
   // while(digitalRead(s_norte) == 1){
   enc_ant = enc.read();
-      while (enc.read() - enc_ant <= 1200)
+      while (enc.read() - enc_ant <= 1300)
       {
         mot1_hor(velo);
         mot2_hor(velo);
@@ -502,7 +502,7 @@ void desv_d(int velo) // Função para o robo desviar pela direita o obstaculo
         Serial.println(enc.read());
       }
   enc_ant = enc.read();
-      while (enc.read() - enc_ant <= 1200)
+      while (enc.read() - enc_ant <= 1300)
       {
         mot1_hor(velo);
         mot2_hor(velo);
@@ -515,6 +515,14 @@ void desv_d(int velo) // Função para o robo desviar pela direita o obstaculo
         mot1_anti(velo);
         mot2_hor(velo);
         Serial.print("girando 90 para esquerda");
+        Serial.println(enc.read());
+      }
+  enc_ant = enc.read();
+      while (enc.read() - enc_ant <= enc_fre)
+      {
+        mot1_hor(velo);
+        mot2_hor(velo);
+        Serial.print("andando na frente");
         Serial.println(enc.read());
       }
   //}
