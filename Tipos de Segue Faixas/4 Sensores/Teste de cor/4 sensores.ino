@@ -100,8 +100,8 @@ void loop()
     mot1_par();
     mot2_par();
     delay(1000);
-    m_esq = map(constrain(analogRead(esq), 34, 152), 34, 152, 0, 1023);
-    m_dir = map(constrain(analogRead(dir), 27, 133), 27, 133, 0, 1023);
+    m_esq = map(constrain(analogRead(esq), 58, 186), 58, 186, 0, 1023);
+    m_dir = map(constrain(analogRead(dir), 183, 300), 183, 300, 0, 1023);
     digitalWrite(7, 0);
     /*
     display.clearDisplay();
@@ -222,8 +222,8 @@ void loop()
     mot1_par();
     mot2_par();
     delay(1000);
-    m_esq = map(constrain(analogRead(esq), 34, 152), 34, 152, 0, 1023);
-    m_dir = map(constrain(analogRead(dir), 27, 133), 27, 133, 0, 1023);
+    m_esq = map(constrain(analogRead(esq), 58, 186), 58, 186, 0, 1023);
+    m_dir = map(constrain(analogRead(dir), 183, 300), 183, 300, 0, 1023);
     digitalWrite(7, 0);
 /*
     display.clearDisplay();
@@ -330,8 +330,8 @@ void loop()
     mot1_par();
     mot2_par();
     delay(1000);
-    m_esq = map(constrain(analogRead(esq), 34, 152), 34, 152, 0, 1023);
-    m_dir = map(constrain(analogRead(dir), 27, 133), 27, 133, 0, 1023);
+    m_esq = map(constrain(analogRead(esq), 58, 186), 58, 186, 0, 1023);
+    m_dir = map(constrain(analogRead(dir), 183, 300), 183, 300, 0, 1023);
     digitalWrite(7, 0);
 /*
     display.clearDisplay();
@@ -476,21 +476,46 @@ void desv_d(int velo) // Função para o robo desviar pela direita o obstaculo
   mot1_par();
   mot2_par();
   delay(200);
-  mot1_hor(velo);
-  mot2_anti(velo);
-  delay(800);
+  enc_ant = enc.read();
+      while (enc.read() - enc_ant <= enc_90)
+      {
+        mot1_hor(velo);
+        mot2_anti(velo);
+        Serial.print("girando 90");
+        Serial.println(enc.read());
+      }
   // while(digitalRead(s_norte) == 1){
-  mot1_hor(velo);
-  mot2_hor(velo);
-  delay(2100);
-  mot1_anti(velo);
-  mot2_hor(velo);
-  delay(800);
-  mot1_hor(velo);
-  mot2_hor(velo);
-  delay(2000);
-  mot1_anti(velo);
-  mot2_hor(velo);
-  delay(800);
+  enc_ant = enc.read();
+      while (enc.read() - enc_ant <= 1200)
+      {
+        mot1_hor(velo);
+        mot2_hor(velo);
+        Serial.print("andando na frente");
+        Serial.println(enc.read());
+      }
+  enc_ant = enc.read();
+      while (enc_ant - enc.read() <= enc_90)
+      {
+        mot1_anti(velo);
+        mot2_hor(velo);
+        Serial.print("girando 90 para esquerda");
+        Serial.println(enc.read());
+      }
+  enc_ant = enc.read();
+      while (enc.read() - enc_ant <= 1200)
+      {
+        mot1_hor(velo);
+        mot2_hor(velo);
+        Serial.print("andando na frente");
+        Serial.println(enc.read());
+      }
+ enc_ant = enc.read();
+      while (enc_ant - enc.read() <= enc_90)
+      {
+        mot1_anti(velo);
+        mot2_hor(velo);
+        Serial.print("girando 90 para esquerda");
+        Serial.println(enc.read());
+      }
   //}
 }
