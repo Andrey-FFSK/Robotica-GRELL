@@ -48,10 +48,10 @@ void loop() {
     case 3:
       display.fillRect(16, 48, 5, 6, WHITE);
       display.fillTriangle(14,54, 22,54, 18,58, WHITE);
-      n = 0;
+      //n = 0;
       break;
   }
-  delay(50);
-  n++;
+  delay(150);
+  n=(n>3)?0:n+1;
   display.display();
 }
