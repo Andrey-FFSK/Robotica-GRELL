@@ -61,13 +61,33 @@ void loop()
   for (int i = 0; i < 4; i++)
     leitura |= digitalRead(pinos[i]) << i; // Colocando as entrada da tabela da verdade usando um bitshift automatico, o valor do i depende dos sensores
   leitura = (~leitura) & (0b00001111);     // Colocando um inversor para que funcione com a tabela da verdade, pq o sensor dectectar no branco, AND uma mascara para ir so os bits que eu quero
-  digitalWrite(7, 0);
+  digitalWrite(7, 1);
+  m_esq = map(constrain(analogRead(esq), 34, 182), 34, 182, 0, 1023);
+  m_dir = map(constrain(analogRead(dir), 178, 313), 178, 313, 0, 1023);
 
   // Serial.print(leitura, BIN);
   // Serial.print(" sens: ");
 
   // if (sensor.read() <= 18) desv_d(j); // Se o sensor dectar que esta distancia ativa a função de desviar
-
+  if(m_esq <= esq_branco){
+    mot1_hor(j);
+    mot2_anti(j);
+    Serial.print("ajustando para direita: ");
+    Serial.print(m_esq);
+    Serial.print("(");
+    Serial.println(analogRead(esq));
+  }
+  else if(m_dir <= dir_branco){
+    mot1_anti(j);
+    mot2_hor(j);
+    Serial.print("ajustndo para esquerda: ");
+    Serial.print(m_dir);
+    Serial.print("(");
+    Serial.println(analogRead(dir));
+  }
+  else{
+    Serial.println("centralizado");
+  }
   // Condições que usa a melhor situação dos sensores, o bit mais da direita é o s_leste e o bit mais na esquerda é o s_oeste
   // Algumas tem if com OR por conta que eles fazem a mesma coisa na condição.
   // Condição de 0011 ou 1100: é o algoritimo de 90 graus, pensando que so vai ativar no 90
