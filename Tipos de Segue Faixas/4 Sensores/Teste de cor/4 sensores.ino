@@ -22,14 +22,14 @@
   int m_esq = 0;
   int m_dir = 0;
 
-  #define esq_branco 700
+  #define esq_branco 700 
   #define dir_branco 700
 
-  #define esq_cinza 1022
-  #define dir_cinza 900
+  #define esq_cinza 920 //900 DEU CERTO O VERDE
+  #define dir_cinza 920 //900 DEU CERTO O VERDE
 
-  #define esq_verde 900
-  #define dir_verde 800
+  #define esq_verde 880 //880 DEU CERTO O VERDE
+  #define dir_verde 880 // 880 DEU CERTO O VERDE
 
   // Usando array para colocar todos os pinos, coloquei os sensores em uma certa posição por causa do BitSwift em baixo
   const int pinos[] = {s_leste, s_nordeste, s_noroeste, s_oeste, s_norte, esq, dir, 7, mot_in1, mot_in2, mot_in3, mot_in4};
