@@ -36,7 +36,7 @@
 
   #define j 110 // PWM usado para a velocidade, min == 0 e max == 255
   int enc_ant = 0;
-  #define enc_fre 450
+  #define enc_fre 300
   #define enc_90 420
   #define enc_peq 150
   Ultrasonic sensor(A2, A3); // trig == 7; echo == 4 | trig = amarel e ech = marrm
