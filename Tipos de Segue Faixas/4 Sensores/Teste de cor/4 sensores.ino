@@ -62,8 +62,8 @@ void loop()
     leitura |= digitalRead(pinos[i]) << i; // Colocando as entrada da tabela da verdade usando um bitshift automatico, o valor do i depende dos sensores
   leitura = (~leitura) & (0b00001111);     // Colocando um inversor para que funcione com a tabela da verdade, pq o sensor dectectar no branco, AND uma mascara para ir so os bits que eu quero
   digitalWrite(7, 1);
-  m_esq = map(constrain(analogRead(esq), 34, 182), 34, 182, 0, 1023);
-  m_dir = map(constrain(analogRead(dir), 178, 313), 178, 313, 0, 1023);
+  m_esq = map(constrain(analogRead(esq), 350, 540), 350, 540, 0, 1023);
+  m_dir = map(constrain(analogRead(dir), 182, 300), 182, 300, 0, 1023);
 
   // Serial.print(leitura, BIN);
   // Serial.print(" sens: ");
@@ -118,8 +118,8 @@ void loop()
     mot1_par();
     mot2_par();
     delay(1000);
-    m_esq = map(constrain(analogRead(esq), 58, 186), 58, 186, 0, 1023);
-    m_dir = map(constrain(analogRead(dir), 183, 300), 183, 300, 0, 1023);
+    m_esq = map(constrain(analogRead(esq), 350, 540), 350, 540, 0, 1023);
+  m_dir = map(constrain(analogRead(dir), 182, 300), 182, 300, 0, 1023);
     digitalWrite(7, 0);
     /*
     display.clearDisplay();
@@ -189,8 +189,8 @@ void loop()
     mot1_par();
     mot2_par();
     delay(1000);
-    m_esq = map(constrain(analogRead(esq), 58, 186), 58, 186, 0, 1023);
-    m_dir = map(constrain(analogRead(dir), 183, 300), 183, 300, 0, 1023);
+    m_esq = map(constrain(analogRead(esq), 350, 540), 350, 540, 0, 1023);
+  m_dir = map(constrain(analogRead(dir), 182, 300), 182, 300, 0, 1023);
     digitalWrite(7, 0);
     /*
         display.clearDisplay();
@@ -247,8 +247,8 @@ void loop()
     mot1_par();
     mot2_par();
     delay(1000);
-    m_esq = map(constrain(analogRead(esq), 58, 186), 58, 186, 0, 1023);
-    m_dir = map(constrain(analogRead(dir), 183, 300), 183, 300, 0, 1023);
+    mm_esq = map(constrain(analogRead(esq), 350, 540), 350, 540, 0, 1023);
+  m_dir = map(constrain(analogRead(dir), 182, 300), 182, 300, 0, 1023);
     digitalWrite(7, 0);
     /*
         display.clearDisplay();
