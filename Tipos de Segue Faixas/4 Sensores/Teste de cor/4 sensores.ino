@@ -1,6 +1,6 @@
 #include <Ultrasonic.h> //Incluindo a biblioteca do ultrasonic de erik simoes
-//#include <Adafruit_GFX.h>
-//#include <Adafruit_SSD1306.h>
+// #include <Adafruit_GFX.h>
+// #include <Adafruit_SSD1306.h>
 #include <Encoder.h>
 
 // Definindo as portas dos sensores e da portas H
@@ -22,7 +22,6 @@
 int m_esq = 0;
 int m_dir = 0;
 
-
 // Usando array para colocar todos os pinos, coloquei os sensores em uma certa posição por causa do BitSwift em baixo
 const int pinos[] = {s_leste, s_nordeste, s_noroeste, s_oeste, s_norte, esq, dir, 7, mot_in1, mot_in2, mot_in3, mot_in4};
 
@@ -37,7 +36,7 @@ Encoder enc(3, 2);
 const int esq_branco = 600;
 const int dir_branco = 600;
 
-//Adafruit_SSD1306 display(128, 64, &Wire, -1);
+// Adafruit_SSD1306 display(128, 64, &Wire, -1);
 
 void setup()
 {
@@ -54,7 +53,6 @@ void setup()
 }
 void loop()
 {
-  
 
   // Funções do sensor de cor ficar mais amplo, SEMPRE MUDAR
 
@@ -77,18 +75,18 @@ void loop()
   {
     mot1_hor(j);
     mot2_hor(j);
-    //display.clearDisplay();
-    //display.setCursor(0, 0);
-    //display.print("leitura == 0000");
+    // display.clearDisplay();
+    // display.setCursor(0, 0);
+    // display.print("leitura == 0000");
     Serial.println("leitura = 0000");
   }
   else if ((leitura == 0b0010) /*| (leitura == 0b0001)*/) // Condição 2
   {
     mot1_hor(j);
     mot2_anti(j);
-    //display.clearDisplay();
-    //display.setCursor(0, 0);
-    //display.print("leitura == 0010");
+    // display.clearDisplay();
+    // display.setCursor(0, 0);
+    // display.print("leitura == 0010");
     Serial.println("leitura == 0010");
   }
   else if (leitura == 0b0011) // Condição 4
@@ -111,15 +109,14 @@ void loop()
     display.print("(");
     display.print(analogRead(esq));
     display.println(")");
-   
-  
+
+
     display.print("Dir: ");
     display.print(m_dir);
     display.print("(");
     display.print(analogRead(dir));
     display.println(")");
     display.display();*/
-
 
     Serial.print("Esq: ");
     Serial.print(m_esq);
@@ -131,58 +128,7 @@ void loop()
     Serial.print(analogRead(dir));
     Serial.println(")");
 
-    if ((m_esq >= esq_branco) & (m_dir <= dir_branco)) // Tem 1 quadrado verde na direita
-    {
-      Serial.println("leitura == 0011; Tem verde");
-      enc_ant = enc.read();
-      while (enc.read() - enc_ant <= enc_fre)
-      {
-        mot1_hor(j);
-        mot2_hor(j);
-      }
-
-      enc_ant = enc.read();
-      while (enc.read() - enc_ant <= enc_peq)
-      {
-        mot1_hor(j);
-        mot2_anti(j);
-        Serial.print("virando para direita");
-          Serial.println(enc.read());
-      }
-      while(digitalRead(s_norte) == 1){
-        mot1_hor(j);
-        mot2_anti(j);
-        Serial.print("virando para direita");
-      }
-    }
-    else // Nao tem quadrado verde
-    {
-      Serial.println("Leitura == 0011; nao tem verde");
-      enc_ant = enc.read();
-      while (enc.read() - enc_ant <= enc_fre)
-      {
-        mot1_hor(j);
-        mot2_hor(j);
-      }
-
-      if (digitalRead(s_norte) == 1)
-      {
-        enc_ant = enc.read();
-        while (enc.read() - enc_ant <= enc_peq)
-        {
-          mot1_hor(j);
-          mot2_anti(j);
-          Serial.print("virando para direita");
-          Serial.println(enc.read());
-        }
-        while (digitalRead(s_norte) == 1)
-        {
-          mot1_hor(j);
-          mot2_anti(j);
-        }
-        delay(100);
-      }
-    }
+    dir_90();
   }
   /*
     if ((m_dir <= branco) & (m_dir >= preto))
@@ -226,22 +172,22 @@ void loop()
     m_esq = map(constrain(analogRead(esq), 58, 186), 58, 186, 0, 1023);
     m_dir = map(constrain(analogRead(dir), 183, 300), 183, 300, 0, 1023);
     digitalWrite(7, 0);
-/*
-    display.clearDisplay();
-    display.setCursor(0, 0);
-    display.print("Esq: ");
-    display.print(m_esq);
-    display.print("(");
-    display.print(analogRead(esq));
-    display.println(")");
+    /*
+        display.clearDisplay();
+        display.setCursor(0, 0);
+        display.print("Esq: ");
+        display.print(m_esq);
+        display.print("(");
+        display.print(analogRead(esq));
+        display.println(")");
 
-    display.print("Dir: ");
-    display.print(m_dir);
-    display.print("(");
-    display.print(analogRead(dir));
-    display.println(")");
-    display.display();
-*/
+        display.print("Dir: ");
+        display.print(m_dir);
+        display.print("(");
+        display.print(analogRead(dir));
+        display.println(")");
+        display.display();
+    */
     Serial.print("Esq: ");
     Serial.print(m_esq);
     Serial.print("(");
@@ -252,78 +198,26 @@ void loop()
     Serial.print(analogRead(dir));
     Serial.println(")");
 
-    if ((m_esq <= esq_branco) & (m_dir >= dir_branco)) // Tem 1 quadrado verde na esquerda
-    {
-      Serial.println("leitura == 1100; tem verde");
-      enc_ant = enc.read();
-      while (enc.read() - enc_ant <= enc_fre)
-      {
-        mot1_hor(j);
-        mot2_hor(j);
-      }
-
-      enc_ant = enc.read();
-      while (enc_ant - enc.read() <= enc_peq)
-      {
-        mot1_anti(j);
-        mot2_hor(j);
-        Serial.print("virando pra esquerda");
-          Serial.println(enc.read());
-      }
-      while(digitalRead(s_norte) == 1){
-        mot1_anti(j);
-        mot2_hor(j);
-        Serial.print("virando pra esquerda");
-      }
-      delay(100);
-    }
-    else // Nao tem quadrado verde
-    {
-      Serial.println("leitura == 1100; nao tem verde");
-      enc_ant = enc.read();
-      while (enc.read() - enc_ant <= enc_fre)
-      {
-        mot1_hor(j);
-        mot2_hor(j);
-      }
-
-      if (digitalRead(s_norte) == 1)
-      {
-        enc_ant = enc.read();
-        while (enc_ant - enc.read() <= enc_peq)
-        {
-          mot1_anti(j);
-          mot2_hor(j);
-          Serial.print("virando pra esquerda");
-          Serial.println(enc.read());
-        }
-        while (digitalRead(s_norte) == 1)
-        {
-          mot1_anti(j);
-          mot2_hor(j);
-          Serial.print("virando pra esquerda");
-        }
-        delay(100);
-      }
-    }
-
-    /*
-      if ((m_esq <= branco) & (m_esq >= preto))
-      {
-        mot1_hor(j);
-        mot2_hor(j);
-        delay(300);
-        mot1_anti(j);
-        mot2_hor(j);
-        delay(700);
-      }
-      else
-      {
-        mot1_hor(j);
-        mot2_hor(j);
-        delay(300);
-      }*/
+    esq_90();
   }
+
+  /*
+    if ((m_esq <= branco) & (m_esq >= preto))
+    {
+      mot1_hor(j);
+      mot2_hor(j);
+      delay(300);
+      mot1_anti(j);
+      mot2_hor(j);
+      delay(700);
+    }
+    else
+    {
+      mot1_hor(j);
+      mot2_hor(j);
+      delay(300);
+    }*/
+
   else if (leitura == 0b1111) // ENCRUZILHADA
   {
     mot1_anti(j);
@@ -336,22 +230,22 @@ void loop()
     m_esq = map(constrain(analogRead(esq), 58, 186), 58, 186, 0, 1023);
     m_dir = map(constrain(analogRead(dir), 183, 300), 183, 300, 0, 1023);
     digitalWrite(7, 0);
-/*
-    display.clearDisplay();
-    display.setCursor(0, 0);
-    display.print("Esq: ");
-    display.print(m_esq);
-    display.print("(");
-    display.print(analogRead(esq));
-    display.println(")");
+    /*
+        display.clearDisplay();
+        display.setCursor(0, 0);
+        display.print("Esq: ");
+        display.print(m_esq);
+        display.print("(");
+        display.print(analogRead(esq));
+        display.println(")");
 
-    display.print("Dir: ");
-    display.print(m_dir);
-    display.print("(");
-    display.print(analogRead(dir));
-    display.println(")");
-    display.display();
-*/
+        display.print("Dir: ");
+        display.print(m_dir);
+        display.print("(");
+        display.print(analogRead(dir));
+        display.println(")");
+        display.display();
+    */
     Serial.print("Esq: ");
     Serial.print(m_esq);
     Serial.print("(");
@@ -361,81 +255,10 @@ void loop()
     Serial.print("(");
     Serial.print(analogRead(dir));
     Serial.println(")");
-    if ((m_esq <= esq_branco) & (m_dir >= dir_branco)) // Tem 1 quadrado verde na esquerda
-    {
-      Serial.println("Encruzilhada; Verde na esquerda");
-      enc_ant = enc.read();
-      while (enc.read() - enc_ant <= enc_fre)
-      {
-        mot1_hor(j);
-        mot2_hor(j);
-      }
 
-      enc_ant = enc.read();
-      while (enc_ant - enc.read() <= enc_peq)
-      {
-        mot1_anti(j);
-        mot2_hor(j);
-        Serial.print("virando para esquerda");
-        Serial.println(enc.read());
-      }
-      while (digitalRead(s_norte) == 1)
-      {
-        mot1_anti(j);
-        mot2_hor(j);
-      }
-      delay(100);
-    }
-    else if ((m_esq >= esq_branco) & (m_dir <= dir_branco)) // Tem 1 quadrado verde na direita
-    {
-      Serial.println("Encruzilhada; Verde na direita");
-      enc_ant = enc.read();
-      while (enc.read() - enc_ant <= enc_fre)
-      {
-        mot1_hor(j);
-        mot2_hor(j);
-      }
-
-      enc_ant = enc.read();
-      while (enc.read() - enc_ant <= enc_peq)
-      {
-        mot1_hor(j);
-        mot2_anti(j);
-        Serial.print("Virando para direita");
-        Serial.println(enc.read());
-      }
-      while (digitalRead(s_norte) == 1)
-      {
-        mot1_hor(j);
-        mot2_anti(j);
-      }
-      delay(100);
-    }
-    else if ((m_esq >= esq_branco) & (m_dir >= dir_branco)) // Nao tem quadrado verde
-    {
-      Serial.println("Encruzilhada; Nao tem verde");
-      enc_ant = enc.read();
-      while (enc.read() - enc_ant <= enc_fre)
-      {
-        mot1_hor(j);
-        mot2_hor(j);
-      }
-    }
-    else // Tem 2 quadrado verde
-    {
-      Serial.println("Encruzilhada; 2 verdes");
-      enc_ant = enc.read();
-      while (enc.read() - enc_ant <= 800)
-      {
-        mot1_hor(j);
-        mot2_anti(j);
-        Serial.print("dando 180");
-        Serial.println(enc.read());
-      }
-    }
+    encruzilhada();
   }
 }
-
 /*
 LEMBRAR DAS VARIAVEIS COM ENCRUZILHADA
 nao esta usando while
@@ -482,53 +305,245 @@ void desv_d(int velo) // Função para o robo desviar pela direita o obstaculo
   mot2_par();
   delay(200);
   enc_ant = enc.read();
-      while (enc.read() - enc_ant <= enc_90)
-      {
-        mot1_hor(velo);
-        mot2_anti(velo);
-        Serial.print("girando 90");
-        Serial.println(enc.read());
-      }
+  while (enc.read() - enc_ant <= enc_90)
+  {
+    mot1_hor(velo);
+    mot2_anti(velo);
+    Serial.print("girando 90");
+    Serial.println(enc.read());
+  }
   // while(digitalRead(s_norte) == 1){
   enc_ant = enc.read();
-      while (enc.read() - enc_ant <= 1200)
-      {
-        mot1_hor(velo);
-        mot2_hor(velo);
-        Serial.print("andando na frente");
-        Serial.println(enc.read());
-      }
+  while (enc.read() - enc_ant <= 1200)
+  {
+    mot1_hor(velo);
+    mot2_hor(velo);
+    Serial.print("andando na frente");
+    Serial.println(enc.read());
+  }
   enc_ant = enc.read();
-      while (enc_ant - enc.read() <= enc_90)
-      {
-        mot1_anti(velo);
-        mot2_hor(velo);
-        Serial.print("girando 90 para esquerda");
-        Serial.println(enc.read());
-      }
+  while (enc_ant - enc.read() <= enc_90)
+  {
+    mot1_anti(velo);
+    mot2_hor(velo);
+    Serial.print("girando 90 para esquerda");
+    Serial.println(enc.read());
+  }
   enc_ant = enc.read();
-      while (enc.read() - enc_ant <= 1200)
-      {
-        mot1_hor(velo);
-        mot2_hor(velo);
-        Serial.print("andando na frente");
-        Serial.println(enc.read());
-      }
- enc_ant = enc.read();
-      while (enc_ant - enc.read() <= enc_90)
-      {
-        mot1_anti(velo);
-        mot2_hor(velo);
-        Serial.print("girando 90 para esquerda");
-        Serial.println(enc.read());
-      }
-      enc_ant = enc.read();
-      while (enc.read() - enc_ant <= enc_fre)
-      {
-        mot1_hor(velo);
-        mot2_hor(velo);
-        Serial.print("andando na frente");
-        Serial.println(enc.read());
-      }
+  while (enc.read() - enc_ant <= 1200)
+  {
+    mot1_hor(velo);
+    mot2_hor(velo);
+    Serial.print("andando na frente");
+    Serial.println(enc.read());
+  }
+  enc_ant = enc.read();
+  while (enc_ant - enc.read() <= enc_90)
+  {
+    mot1_anti(velo);
+    mot2_hor(velo);
+    Serial.print("girando 90 para esquerda");
+    Serial.println(enc.read());
+  }
+  enc_ant = enc.read();
+  while (enc.read() - enc_ant <= enc_fre)
+  {
+    mot1_hor(velo);
+    mot2_hor(velo);
+    Serial.print("andando na frente");
+    Serial.println(enc.read());
+  }
   //}
+}
+
+void encruzilhada()
+{
+  if ((m_esq <= esq_branco) & (m_dir >= dir_branco)) // Tem 1 quadrado verde na esquerda
+  {
+    Serial.println("Encruzilhada; Verde na esquerda");
+    enc_ant = enc.read();
+    while (enc.read() - enc_ant <= enc_fre)
+    {
+      mot1_hor(j);
+      mot2_hor(j);
+    }
+
+    enc_ant = enc.read();
+    while (enc_ant - enc.read() <= enc_peq)
+    {
+      mot1_anti(j);
+      mot2_hor(j);
+      Serial.print("virando para esquerda");
+      Serial.println(enc.read());
+    }
+    while (digitalRead(s_norte) == 1)
+    {
+      mot1_anti(j);
+      mot2_hor(j);
+    }
+    delay(100);
+  }
+  else if ((m_esq >= esq_branco) & (m_dir <= dir_branco)) // Tem 1 quadrado verde na direita
+  {
+    Serial.println("Encruzilhada; Verde na direita");
+    enc_ant = enc.read();
+    while (enc.read() - enc_ant <= enc_fre)
+    {
+      mot1_hor(j);
+      mot2_hor(j);
+    }
+
+    enc_ant = enc.read();
+    while (enc.read() - enc_ant <= enc_peq)
+    {
+      mot1_hor(j);
+      mot2_anti(j);
+      Serial.print("Virando para direita");
+      Serial.println(enc.read());
+    }
+    while (digitalRead(s_norte) == 1)
+    {
+      mot1_hor(j);
+      mot2_anti(j);
+    }
+    delay(100);
+  }
+  else if ((m_esq >= esq_branco) & (m_dir >= dir_branco)) // Nao tem quadrado verde
+  {
+    Serial.println("Encruzilhada; Nao tem verde");
+    enc_ant = enc.read();
+    while (enc.read() - enc_ant <= enc_fre)
+    {
+      mot1_hor(j);
+      mot2_hor(j);
+    }
+  }
+  else // Tem 2 quadrado verde
+  {
+    Serial.println("Encruzilhada; 2 verdes");
+    enc_ant = enc.read();
+    while (enc.read() - enc_ant <= 800)
+    {
+      mot1_hor(j);
+      mot2_anti(j);
+      Serial.print("dando 180");
+      Serial.println(enc.read());
+    }
+  }
+}
+
+void esq_90()
+{
+  if ((m_esq <= esq_branco) & (m_dir >= dir_branco)) // Tem 1 quadrado verde na esquerda
+  {
+    Serial.println("leitura == 1100; tem verde");
+    enc_ant = enc.read();
+    while (enc.read() - enc_ant <= enc_fre)
+    {
+      mot1_hor(j);
+      mot2_hor(j);
+    }
+
+    enc_ant = enc.read();
+    while (enc_ant - enc.read() <= enc_peq)
+    {
+      mot1_anti(j);
+      mot2_hor(j);
+      Serial.print("virando pra esquerda");
+      Serial.println(enc.read());
+    }
+    while (digitalRead(s_norte) == 1)
+    {
+      mot1_anti(j);
+      mot2_hor(j);
+      Serial.print("virando pra esquerda");
+    }
+    delay(100);
+  }
+  else // Nao tem quadrado verde
+  {
+    Serial.println("leitura == 1100; nao tem verde");
+    enc_ant = enc.read();
+    while (enc.read() - enc_ant <= enc_fre)
+    {
+      mot1_hor(j);
+      mot2_hor(j);
+    }
+
+    if (digitalRead(s_norte) == 1)
+    {
+      enc_ant = enc.read();
+      while (enc_ant - enc.read() <= enc_peq)
+      {
+        mot1_anti(j);
+        mot2_hor(j);
+        Serial.print("virando pra esquerda");
+        Serial.println(enc.read());
+      }
+      while (digitalRead(s_norte) == 1)
+      {
+        mot1_anti(j);
+        mot2_hor(j);
+        Serial.print("virando pra esquerda");
+      }
+      delay(100);
+    }
+  }
+}
+
+void dir_90()
+{
+  if ((m_esq >= esq_branco) & (m_dir <= dir_branco)) // Tem 1 quadrado verde na direita
+  {
+    Serial.println("leitura == 0011; Tem verde");
+    enc_ant = enc.read();
+    while (enc.read() - enc_ant <= enc_fre)
+    {
+      mot1_hor(j);
+      mot2_hor(j);
+    }
+
+    enc_ant = enc.read();
+    while (enc.read() - enc_ant <= enc_peq)
+    {
+      mot1_hor(j);
+      mot2_anti(j);
+      Serial.print("virando para direita");
+      Serial.println(enc.read());
+    }
+    while (digitalRead(s_norte) == 1)
+    {
+      mot1_hor(j);
+      mot2_anti(j);
+      Serial.print("virando para direita");
+    }
+  }
+  else // Nao tem quadrado verde
+  {
+    Serial.println("Leitura == 0011; nao tem verde");
+    enc_ant = enc.read();
+    while (enc.read() - enc_ant <= enc_fre)
+    {
+      mot1_hor(j);
+      mot2_hor(j);
+    }
+
+    if (digitalRead(s_norte) == 1)
+    {
+      enc_ant = enc.read();
+      while (enc.read() - enc_ant <= enc_peq)
+      {
+        mot1_hor(j);
+        mot2_anti(j);
+        Serial.print("virando para direita");
+        Serial.println(enc.read());
+      }
+      while (digitalRead(s_norte) == 1)
+      {
+        mot1_hor(j);
+        mot2_anti(j);
+      }
+      delay(100);
+    }
+  }
 }
