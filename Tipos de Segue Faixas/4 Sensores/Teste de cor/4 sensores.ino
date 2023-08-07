@@ -1,7 +1,9 @@
+//#include "C:\\Users\\Professor\\Desktop\\BKP\\Robotica-GRELL\\Testes para o robo\\include\\Funções e Variaveis.h"
 #include "Include.h"
 // Usando array para colocar todos os pinos, coloquei os sensores em uma certa posição por causa do BitSwift em baixo
 const int pinos[] = {s_leste, s_nordeste, s_noroeste, s_oeste, s_norte, esq, dir, 7, mot_in1, mot_in2, mot_in3, mot_in4};
 
+// Adafruit_SSD1306 display(128, 64, &Wire, -1);
 
 void setup()
 {
@@ -26,7 +28,7 @@ void loop()
   for (int i = 0; i < 4; i++)
     leitura |= digitalRead(pinos[i]) << i; // Colocando as entrada da tabela da verdade usando um bitshift automatico, o valor do i depende dos sensores
   leitura = (~leitura) & (0b00001111);     // Colocando um inversor para que funcione com a tabela da verdade, pq o sensor dectectar no branco, AND uma mascara para ir so os bits que eu quero
-  digitalWrite(led_g, 1);
+  digitalWrite(7, 1);
   m_esq = map(constrain(analogRead(esq), 350, 518), 350, 518, 0, 1023);
   m_dir = map(constrain(analogRead(dir), 169, 300), 169, 300, 0, 1023);
 
@@ -36,8 +38,8 @@ void loop()
   // if (sensor.read() <= 18) desv_d(j); // Se o sensor dectar que esta distancia ativa a função de desviar
   /*(if (m_esq <= esq_branco)
   {
-    mot1_anti(j);
-    mot2_hor(j);
+    mot1_anti(vel_esq);
+    mot2_hor(vel_dir);
     Serial.print("ajustando para direita: ");
     Serial.print(m_esq);
     Serial.print("(");
@@ -45,8 +47,8 @@ void loop()
   }
   else if (m_dir <= dir_branco)
   {
-    mot1_hor(j);
-    mot2_anti(j);
+    mot1_hor(vel_esq);
+    mot2_anti(vel_dir);
     Serial.print("ajustndo para esquerda: ");
     Serial.print(m_dir);
     Serial.print("(");
@@ -58,8 +60,8 @@ void loop()
   // Condição de 0011 ou 1100: é o algoritimo de 90 graus, pensando que so vai ativar no 90
   if ((m_dir <= dir_cinza && m_dir >= dir_verde) /*| (leitura == 0b0001)*/) // Condição 2
   {
-    mot1_hor(j);
-    mot2_anti(j);
+    mot1_hor(vel_esq);
+    mot2_anti(vel_dir);
     /*
     Serial.println("oi");
     display.clearDisplay();
@@ -86,8 +88,8 @@ void loop()
   }
   else if ((m_esq <= esq_cinza && m_esq >= esq_verde) /*| (leitura == 0b1000)*/) // Condição 5
   {
-    mot1_anti(j);
-    mot2_hor(j);
+    mot1_anti(vel_esq);
+    mot2_hor(vel_dir);
     /*
     display.clearDisplay();
     display.setCursor(0, 0);
@@ -112,8 +114,8 @@ void loop()
   }
   else if (leitura == 0b0000) // Condição 1
   {
-    mot1_hor(j);
-    mot2_hor(j);
+    mot1_hor(vel_esq);
+    mot2_hor(vel_dir);
     // display.clearDisplay();
     // display.setCursor(0, 0);
     // display.print("leitura == 0000");
@@ -121,16 +123,16 @@ void loop()
   }
   else if (leitura == 0b0011) // Condição 4
   {
-    mot1_anti(j);
-    mot2_anti(j);
+    mot1_anti(vel_esq);
+    mot2_anti(vel_dir);
     delay(50);
-    digitalWrite(led_g, 1);
+    digitalWrite(7, 1);
     mot1_par();
     mot2_par();
     delay(1000);
     m_esq = map(constrain(analogRead(esq), 350, 518), 350, 518, 0, 1023);
   m_dir = map(constrain(analogRead(dir), 169, 300), 169, 300, 0, 1023);
-    digitalWrite(led_g, 0);
+    digitalWrite(7, 0);
     /*
     display.clearDisplay();
     display.setCursor(0, 0);
@@ -163,17 +165,17 @@ void loop()
   /*
     if ((m_dir <= branco) & (m_dir >= preto))
     {
-      mot1_hor(j);
-      mot2_hor(j);
+      mot1_hor(vel_esq);
+      mot2_hor(vel_dir);
       delay(300);
-      mot1_hor(j);
-      mot2_anti(j);
+      mot1_hor(vel_esq);
+      mot2_anti(vel_dir);
       delay(700);
     }
     else
     {
-      mot1_hor(j);
-      mot2_hor(j);
+      mot1_hor(vel_esq);
+      mot2_hor(vel_dir);
       delay(300);
     }*/
   else if ((leitura == 0b0110) | (leitura == 0b1001)) // Condição 6
@@ -185,16 +187,16 @@ void loop()
   }
   else if (leitura == 0b1100) // Condição 7
   {
-    mot1_anti(j);
-    mot2_anti(j);
+    mot1_anti(vel_esq);
+    mot2_anti(vel_dir);
     delay(50);
-    digitalWrite(led_g, 1);
+    digitalWrite(7, 1);
     mot1_par();
     mot2_par();
     delay(1000);
     m_esq = map(constrain(analogRead(esq), 350, 518), 350, 518, 0, 1023);
   m_dir = map(constrain(analogRead(dir), 169, 300), 169, 300, 0, 1023);
-    digitalWrite(led_g, 0);
+    digitalWrite(7, 0);
     /*
         display.clearDisplay();
         display.setCursor(0, 0);
@@ -227,32 +229,32 @@ void loop()
   /*
     if ((m_esq <= branco) & (m_esq >= preto))
     {
-      mot1_hor(j);
-      mot2_hor(j);
+      mot1_hor(vel_esq);
+      mot2_hor(vel_dir);
       delay(300);
-      mot1_anti(j);
-      mot2_hor(j);
+      mot1_anti(vel_esq);
+      mot2_hor(vel_dir);
       delay(700);
     }
     else
     {
-      mot1_hor(j);
-      mot2_hor(j);
+      mot1_hor(vel_esq);
+      mot2_hor(vel_dir);
       delay(300);
     }*/
 
   else if (leitura == 0b1111) // ENCRUZILHADA
   {
-    mot1_anti(j);
-    mot2_anti(j);
+    mot1_anti(vel_esq);
+    mot2_anti(vel_dir);
     delay(50);
-    digitalWrite(led_g, 1);
+    digitalWrite(7, 1);
     mot1_par();
     mot2_par();
     delay(1000);
     m_esq = map(constrain(analogRead(esq), 350, 518), 350, 518, 0, 1023);
   m_dir = map(constrain(analogRead(dir), 169, 300), 169, 300, 0, 1023);
-    digitalWrite(led_g, 0);
+    digitalWrite(7, 0);
     /*
         display.clearDisplay();
         display.setCursor(0, 0);

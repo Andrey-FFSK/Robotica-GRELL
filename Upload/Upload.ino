@@ -1,143 +1,377 @@
-#include "Oled.h"
 #include "Include.h"
-
-const unsigned char aeia[] PROGMEM = {
-    // 'bfcaab3c7ed1666ef086e690ec778ad0, 32x32px
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x90, 0x00, 0x00, 0x01, 0xb0,
-    0x00, 0x00, 0x00, 0x30, 0x01, 0x00, 0x01, 0xbc, 0x08, 0x20, 0x44, 0x34, 0x00, 0x40, 0x08, 0x28,
-    0x00, 0x03, 0x10, 0x20, 0x05, 0xff, 0x80, 0x30, 0x07, 0xfe, 0x20, 0xa0, 0x0f, 0xdf, 0xee, 0x80,
-    0x0f, 0xb9, 0x3d, 0x70, 0x1f, 0xe3, 0x73, 0xc0, 0x1d, 0xe0, 0xe3, 0xc0, 0x1f, 0xe0, 0x00, 0xc0,
-    0x1f, 0x63, 0xa0, 0x40, 0x1f, 0x67, 0xc1, 0xc0, 0x1f, 0x47, 0x21, 0x40, 0x1b, 0x47, 0xe3, 0xc0,
-    0x1f, 0x47, 0xc3, 0xc0, 0x1f, 0x47, 0xc3, 0xc0, 0x0e, 0x5f, 0xdb, 0x80, 0x1b, 0xdf, 0x83, 0xe0,
-    0x03, 0x78, 0x00, 0x80, 0x00, 0x3f, 0xce, 0x00, 0x00, 0x6b, 0xf8, 0x00, 0x00, 0x00, 0x20, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
-
-const unsigned char aeiapeqena[] PROGMEM = {
-    // 'bfcaab3c7ed1666ef086e690ec778ad0, 16x16px
-    0x00, 0x00, 0x00, 0x04, 0x00, 0x20, 0x04, 0x2a, 0x2f, 0xc8, 0x3d, 0xc0, 0x3e, 0xec, 0x74, 0x88,
-    0x79, 0x88, 0x7b, 0x90, 0x7b, 0x98, 0x3f, 0x98, 0x17, 0x10, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00};
-
-// Usando array para colocar todos os pinos, coloquei os sensores invertido por causa do BitSwift em baixo
-const int pinos[] = {s_oeste, s_noroeste, s_norte, s_nordeste, s_leste, esq, dir, led_g, mot_in1, mot_in2, mot_in3, mot_in4};
-
-float tensaoA0;
-
-int n;
+// Usando array para colocar todos os pinos, coloquei os sensores em uma certa posição por causa do BitSwift em baixo
+const int pinos[] = {s_leste, s_nordeste, s_noroeste, s_oeste, s_norte, esq, dir, 7, mot_in1, mot_in2, mot_in3, mot_in4};
 
 void setup()
 {
+  /*
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
   display.setTextColor(WHITE);
-  display.setCursor(0, 0);
-  Serial.begin(9600);
-  for (int i; i < 7; i++)
+  display.clearDisplay();*/
+  // Colocando os sensores como INPUT, e o resto como OUTPUT, tudo isso pelo array
+  for (int i = 0; i < 7; i++)
     pinMode(pinos[i], INPUT);
   for (int i = 7; i < 12; i++)
     pinMode(pinos[i], OUTPUT);
-  n = 0;
+  Serial.begin(9600);
 }
-
 void loop()
 {
-  display.clearDisplay();
 
-  digitalWrite(led_g, 1);
+  // Funções do sensor de cor ficar mais amplo, SEMPRE MUDAR
 
-  //analogWrite(mot_in2, o);
+  // Essa parte é o bitSwift, criar uma variavel leitura do tipo byte, porem a gente so usa os bits dessa varaivel, a quantidade de bits depende de quantos sensores estao usando
+  byte leitura = 0; // Definir sempre 0 quando definir algo como o for abaixo
+  for (int i = 0; i < 4; i++)
+    leitura |= digitalRead(pinos[i]) << i; // Colocando as entrada da tabela da verdade usando um bitshift automatico, o valor do i depende dos sensores
+  leitura = (~leitura) & (0b00001111);     // Colocando um inversor para que funcione com a tabela da verdade, pq o sensor dectectar no branco, AND uma mascara para ir so os bits que eu quero
+  digitalWrite(7, 0);
+  bool frente = false;
+  bool direita = false;
+  bool esquerda = false;
 
-  //mot1_hor(j);
-  //mot2_hor(j);
+  // Serial.print(leitura, BIN);
+  // Serial.print(" sens: ");
 
-  // mot1_anti(j);
-  // mot2_anti(j);
+  // if (sensor.read() <= 18) desv_d(j); // Se o sensor dectar que esta distancia ativa a função de desviar
 
-  byte leitura = 0;
-  for (int i = 0; i < 5; i++)
-    leitura |= digitalRead(pinos[i]) << i;
-  leitura = (~leitura) & 0b00011111;
-  tensaoA0 = (div(A0) * 5) / 1024.0;
-  tensaoA0 *= 8.4;
-  m_esq = map(constrain(analogRead(esq), 350, 518), 350, 518, 0, 1023);
-    m_dir = map(constrain(analogRead(dir), 169, 300), 169, 300, 0, 1023);
-
-
-  display.setCursor(0, lh * 2);
-  display.print("Leitura: ");
-  for (int i = 11; i <= 15; i++)
-    display.print(binString(leitura)[i]);
-  display.print(" Bits");
-
-  display.setCursor(0, lh * 3);
-  display.print("Tensao: ");
-  display.print(tensaoA0);
-  display.print(" V");
-
-  display.setCursor(0, lh * 4);
-  display.print("Olho: ");
-  display.print(sensor.read());
-  display.print(" cm");
-
-  display.setCursor(0, lh * 5);
-  display.print("Esq: ");
-  display.print(m_esq);
-  display.print("(");
-  display.print(analogRead(esq));
-  display.print(")");
-
-  display.setCursor(0, lh * 6);
-  display.print("Dir: ");
-  display.print(m_dir);
-  display.print("(");
-  display.print(analogRead(dir));
-  display.print(")");
-
-  display.drawBitmap(W - 32, H - 32 + sin(n * PI / 180) * 3, aeia, 32, 32, WHITE);
-  display.drawBitmap(W - 16, -sin(n * PI / 180) * 1.5, aeiapeqena, 16, 16, WHITE);
-  display.display();
-  n = (n < 360) ? n + 36 : 0;
-
-  display.display();
-
-  Serial.print("Leitura: ");
-  Serial.print(leitura, BIN);
-  Serial.print("Bits / Tensão: ");
-  Serial.print(tensaoA0);
-  Serial.print("V / Olho:");
-  Serial.print(sensor.read());
-  Serial.print("cm / Esq: ");
-  Serial.print(m_esq);
-  Serial.print("(");
-  Serial.print(analogRead(esq));
-  Serial.print(") / Dir: ");
-  Serial.print(m_dir);
-  Serial.print("(");
-  Serial.print(analogRead(dir));
-  Serial.println(")");
-
-}
-
-float div(uint8_t A0)
-{
-  float total = 0;
-  for (int i = 0; i < 12; i++)
+  // Condições que usa a melhor situação dos sensores, o bit mais da direita é o s_leste e o bit mais na esquerda é o s_oeste
+  // Algumas tem if com OR por conta que eles fazem a mesma coisa na condição.
+  // Condição de 0011 ou 1100: é o algoritimo de 90 graus, pensando que so vai ativar no 90
+  if (leitura == 0b0000) // Condição 1
   {
-    total += 1.0 * analogRead(A0);
-    delay(5);
+    mot1_hor(j);
+    mot2_hor(j);
+    // display.clearDisplay();
+    // display.setCursor(0, 0);
+    // display.print("leitura == 0000");
+    Serial.println("leitura = 0000");
   }
-  return total / (float)12;
-}
-
-char *binString(unsigned short n)
-{
-  static char bin[17];
-  int x;
-
-  for (x = 0; x < 16; x++)
+  else if ((leitura == 0b0010) /*| (leitura == 0b0001)*/) // Condição 2
   {
-    bin[x] = n & 0x8000 ? '1' : '0';
-    n <<= 1;
+    mot1_hor(j);
+    mot2_anti(j);
+    // display.clearDisplay();
+    // display.setCursor(0, 0);
+    // display.print("leitura == 0010");
+    Serial.println("leitura == 0010");
   }
-  bin[16] = '\0';
+  else if (leitura == 0b0011) // Condição 4
+  {
+    mot1_anti(j);
+    mot2_anti(j);
+    delay(50);
+    digitalWrite(7, 1);
+    mot1_par();
+    mot2_par();
+    delay(1000);
+    m_esq = map(constrain(analogRead(esq), 58, 186), 58, 186, 0, 1023);
+    m_dir = map(constrain(analogRead(dir), 183, 300), 183, 300, 0, 1023);
+    digitalWrite(7, 0);
+    /*
+    display.clearDisplay();
+    display.setCursor(0, 0);
+    display.print("Esq: ");
+    display.print(m_esq);
+    display.print("(");
+    display.print(analogRead(esq));
+    display.println(")");
 
-  return (bin);
+
+    display.print("Dir: ");
+    display.print(m_dir);
+    display.print("(");
+    display.print(analogRead(dir));
+    display.println(")");
+    display.display();*/
+
+    Serial.print("Esq: ");
+    Serial.print(m_esq);
+    Serial.print("(");
+    Serial.print(analogRead(esq));
+    Serial.print(") / Dir: ");
+    Serial.print(m_dir);
+    Serial.print("(");
+    Serial.print(analogRead(dir));
+    Serial.println(")");
+
+    enc_ant = enc.read();
+    while (enc.read() - enc_ant <= enc_fre)
+    {
+      mot1_hor(j);
+      mot2_hor(j);
+    }
+
+    mot1_par();
+    mot2_par();
+    delay(1000);
+    if (digitalRead(s_norte) == 0)
+      frente = true;
+    Serial.print("valor do frente: ");
+    Serial.println(frente);
+    delay(2000);
+
+    enc_ant = enc.read();
+    while (enc.read() - enc_ant <= enc_fre)
+    {
+      mot1_hor(j);
+      mot2_anti(j);
+      if(digitalRead(s_leste) == 0){
+        direita = true;
+        enc_ant = 0;
+      }
+      Serial.print("dando 90");
+      Serial.println(enc.read());
+    } //IR PARA DIREITA UM POUCO, E CASO JA TER VISTO O PRETO IR DIRETO PARA ESQUERDA, EM BASE DE QUANTO ELE FOI PELA DIREITA
+    
+    mot1_par();
+    mot2_par();
+    Serial.print("valor do direita: ");
+    Serial.println(direita);
+    delay(2000);
+
+    enc_ant = enc.read();
+    while (enc.read() - enc_ant <= enc_90)
+    {
+      mot1_hor(j);
+      mot2_anti(j);
+      Serial.print("dando 180");
+      Serial.println(enc.read());
+    }
+
+    enc_ant = enc.read();
+    while (enc.read() - enc_ant <= enc_90)
+    {
+      mot1_hor(j);
+      mot2_anti(j);
+      if (digitalRead(s_leste) == 0)
+        esquerda = true;
+      Serial.print("dando 180");
+      Serial.println(enc.read());
+    }
+
+    mot1_par();
+    mot2_par();
+    Serial.print("valor do esquerda: ");
+    Serial.println(esquerda);
+    delay(2000);
+
+    enc_ant = enc.read();
+    while (enc.read() - enc_ant <= enc_90)
+    {
+      mot1_hor(j);
+      mot2_anti(j);
+      Serial.print("Virando para direita");
+      Serial.println(enc.read());
+    }
+
+    identif();
+  }
+  /*
+    if ((m_dir <= branco) & (m_dir >= preto))
+    {
+      mot1_hor(j);
+      mot2_hor(j);
+      delay(300);
+      mot1_hor(j);
+      mot2_anti(j);
+      delay(700);
+    }
+    else
+    {
+      mot1_hor(j);
+      mot2_hor(j);
+      delay(300);
+    }*/
+
+  else if ((leitura == 0b0100) /*| (leitura == 0b1000)*/) // Condição 5
+  {
+    mot1_anti(j);
+    mot2_hor(j);
+    Serial.println("leitura == 0100");
+  }
+  else if ((leitura == 0b0110) | (leitura == 0b1001)) // Condição 6
+  {
+    mot1_par();
+    mot2_par();
+    delay(200);
+    Serial.println("situação de pane");
+  }
+  else if (leitura == 0b1100) // Condição 7
+  {
+    mot1_anti(j);
+    mot2_anti(j);
+    delay(50);
+    digitalWrite(7, 1);
+    mot1_par();
+    mot2_par();
+    delay(1000);
+    m_esq = map(constrain(analogRead(esq), 58, 186), 58, 186, 0, 1023);
+    m_dir = map(constrain(analogRead(dir), 183, 300), 183, 300, 0, 1023);
+    digitalWrite(7, 0);
+    /*
+        display.clearDisplay();
+        display.setCursor(0, 0);
+        display.print("Esq: ");
+        display.print(m_esq);
+        display.print("(");
+        display.print(analogRead(esq));
+        display.println(")");
+
+        display.print("Dir: ");
+        display.print(m_dir);
+        display.print("(");
+        display.print(analogRead(dir));
+        display.println(")");
+        display.display();
+    */
+    Serial.print("Esq: ");
+    Serial.print(m_esq);
+    Serial.print("(");
+    Serial.print(analogRead(esq));
+    Serial.print(") / Dir: ");
+    Serial.print(m_dir);
+    Serial.print("(");
+    Serial.print(analogRead(dir));
+    Serial.println(")");
+
+    enc_ant = enc.read();
+    while (enc.read() - enc_ant <= enc_fre)
+    {
+      mot1_hor(j);
+      mot2_hor(j);
+    }
+    if (digitalRead(s_norte) == 0)
+      frente = true;
+    enc_ant = enc.read();
+    while (enc.read() - enc_ant <= enc_90)
+    {
+      mot1_hor(j);
+      mot2_anti(j);
+      Serial.print("Virando para direita");
+      Serial.println(enc.read());
+    }
+    if (digitalRead(s_norte) == 0)
+      direita = true;
+    enc_ant = enc.read();
+    while (enc.read() - enc_ant <= 800)
+    {
+      mot1_hor(j);
+      mot2_anti(j);
+      Serial.print("dando 180");
+      Serial.println(enc.read());
+    }
+    if (digitalRead == 0)
+      esquerda = true;
+    // voltando
+    while (enc.read() - enc_ant <= enc_90)
+    {
+      mot1_hor(j);
+      mot2_anti(j);
+      Serial.print("Virando para direita");
+      Serial.println(enc.read());
+    }
+
+    identif();
+
+    /*
+      if ((m_esq <= branco) & (m_esq >= preto))
+      {
+        mot1_hor(j);
+        mot2_hor(j);
+        delay(300);
+        mot1_anti(j);
+        mot2_hor(j);
+        delay(700);
+      }
+      else
+      {
+        mot1_hor(j);
+        mot2_hor(j);
+        delay(300);
+      }*/
+  }
+  else if (leitura == 0b1111) // ENCRUZILHADA
+  {
+    mot1_anti(j);
+    mot2_anti(j);
+    delay(50);
+    digitalWrite(7, 1);
+    mot1_par();
+    mot2_par();
+    delay(1000);
+    m_esq = map(constrain(analogRead(esq), 58, 186), 58, 186, 0, 1023);
+    m_dir = map(constrain(analogRead(dir), 183, 300), 183, 300, 0, 1023);
+    digitalWrite(7, 0);
+    /*
+        display.clearDisplay();
+        display.setCursor(0, 0);
+        display.print("Esq: ");
+        display.print(m_esq);
+        display.print("(");
+        display.print(analogRead(esq));
+        display.println(")");
+
+        display.print("Dir: ");
+        display.print(m_dir);
+        display.print("(");
+        display.print(analogRead(dir));
+        display.println(")");
+        display.display();
+    */
+    Serial.print("Esq: ");
+    Serial.print(m_esq);
+    Serial.print("(");
+    Serial.print(analogRead(esq));
+    Serial.print(") / Dir: ");
+    Serial.print(m_dir);
+    Serial.print("(");
+    Serial.print(analogRead(dir));
+    Serial.println(")");
+
+    enc_ant = enc.read();
+    while (enc.read() - enc_ant <= enc_fre)
+    {
+      mot1_hor(j);
+      mot2_hor(j);
+    }
+    if (digitalRead(s_norte) == 0)
+      frente = true;
+    enc_ant = enc.read();
+    while (enc.read() - enc_ant <= enc_90)
+    {
+      mot1_hor(j);
+      mot2_anti(j);
+      Serial.print("Virando para direita");
+      Serial.println(enc.read());
+    }
+    if (digitalRead(s_norte) == 0)
+      direita = true;
+    enc_ant = enc.read();
+    while (enc.read() - enc_ant <= 800)
+    {
+      mot1_hor(j);
+      mot2_anti(j);
+      Serial.print("dando 180");
+      Serial.println(enc.read());
+    }
+    if (digitalRead == 0)
+      esquerda = true;
+    // voltando
+    while (enc.read() - enc_ant <= enc_90)
+    {
+      mot1_hor(j);
+      mot2_anti(j);
+      Serial.print("Virando para direita");
+      Serial.println(enc.read());
+    }
+
+    identif();
+  }
 }
+/*
+LEMBRAR DAS VARIAVEIS COM ENCRUZILHADA
+nao esta usando while
+COMO ELE VAI PARAR?
+esquerda alta e direita baixa
+*/

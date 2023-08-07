@@ -35,12 +35,17 @@ int m_dir = 0;
 #define esq_verde 880 // 880 DEU CERTO O VERDE
 #define dir_verde 880 // 880 DEU CERTO O VERDE
 
-#define j 110 // PWM usado para a velocidade, min == 0 e max == 255
+#define vel_esq 110 // PWM usado para a velocidade, min == 0 e max == 255
+#define vel_dir 110
 int enc_ant = 0;
 #define enc_fre 500
 #define enc_90 420
 #define enc_peq 250
 #define enc_pas 50
+
+bool frente = false;
+bool direita = false;
+bool esquerda = false; 
 
 Ultrasonic sensor(A2, A3); // trig == 7; echo == 4 | trig = amarel e ech = marrm
 Encoder enc(3, 2);

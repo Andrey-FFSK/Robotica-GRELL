@@ -40,8 +40,8 @@ void loop()
   // Condição de 0011 ou 1100: é o algoritimo de 90 graus, pensando que so vai ativar no 90
   if (leitura == 0b0000) // Condição 1
   {
-    mot1_hor(j);
-    mot2_hor(j);
+    mot1_hor(vel_esq);
+    mot2_hor(vel_dir);
     // display.clearDisplay();
     // display.setCursor(0, 0);
     // display.print("leitura == 0000");
@@ -49,8 +49,8 @@ void loop()
   }
   else if ((leitura == 0b0010) /*| (leitura == 0b0001)*/) // Condição 2
   {
-    mot1_hor(j);
-    mot2_anti(j);
+    mot1_hor(vel_esq);
+    mot2_anti(vel_dir);
     // display.clearDisplay();
     // display.setCursor(0, 0);
     // display.print("leitura == 0010");
@@ -58,8 +58,8 @@ void loop()
   }
   else if (leitura == 0b0011) // Condição 4
   {
-    mot1_anti(j);
-    mot2_anti(j);
+    mot1_anti(vel_esq);
+    mot2_anti(vel_dir);
     delay(50);
     digitalWrite(7, 1);
     mot1_par();
@@ -98,8 +98,8 @@ void loop()
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_fre)
     {
-      mot1_hor(j);
-      mot2_hor(j);
+      mot1_hor(vel_esq);
+      mot2_hor(vel_dir);
     }
 
     mot1_par();
@@ -114,8 +114,8 @@ void loop()
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_fre)
     {
-      mot1_hor(j);
-      mot2_anti(j);
+      mot1_hor(vel_esq);
+      mot2_anti(vel_dir);
       if(digitalRead(s_leste) == 0){
         direita = true;
         enc_ant = 0;
@@ -133,8 +133,8 @@ void loop()
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_90)
     {
-      mot1_hor(j);
-      mot2_anti(j);
+      mot1_hor(vel_esq);
+      mot2_anti(vel_dir);
       Serial.print("dando 180");
       Serial.println(enc.read());
     }
@@ -142,8 +142,8 @@ void loop()
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_90)
     {
-      mot1_hor(j);
-      mot2_anti(j);
+      mot1_hor(vel_esq);
+      mot2_anti(vel_dir);
       if (digitalRead(s_leste) == 0)
         esquerda = true;
       Serial.print("dando 180");
@@ -159,8 +159,8 @@ void loop()
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_90)
     {
-      mot1_hor(j);
-      mot2_anti(j);
+      mot1_hor(vel_dir);
+      mot2_anti(vel_dir);
       Serial.print("Virando para direita");
       Serial.println(enc.read());
     }
@@ -170,24 +170,24 @@ void loop()
   /*
     if ((m_dir <= branco) & (m_dir >= preto))
     {
-      mot1_hor(j);
-      mot2_hor(j);
+      mot1_hor(vel_esq);
+      mot2_hor(vel_dir);
       delay(300);
-      mot1_hor(j);
-      mot2_anti(j);
+      mot1_hor(vel_esq);
+      mot2_anti(vel_dir);
       delay(700);
     }
     else
     {
-      mot1_hor(j);
-      mot2_hor(j);
+      mot1_hor(vel_esq);
+      mot2_hor(vel_dir);
       delay(300);
     }*/
 
   else if ((leitura == 0b0100) /*| (leitura == 0b1000)*/) // Condição 5
   {
-    mot1_anti(j);
-    mot2_hor(j);
+    mot1_anti(vel_esq);
+    mot2_hor(vel_dir);
     Serial.println("leitura == 0100");
   }
   else if ((leitura == 0b0110) | (leitura == 0b1001)) // Condição 6
@@ -199,8 +199,8 @@ void loop()
   }
   else if (leitura == 0b1100) // Condição 7
   {
-    mot1_anti(j);
-    mot2_anti(j);
+    mot1_anti(vel_esq);
+    mot2_anti(vel_dir);
     delay(50);
     digitalWrite(7, 1);
     mot1_par();
@@ -238,16 +238,16 @@ void loop()
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_fre)
     {
-      mot1_hor(j);
-      mot2_hor(j);
+      mot1_hor(vel_esq);
+      mot2_hor(vel_dir);
     }
     if (digitalRead(s_norte) == 0)
       frente = true;
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_90)
     {
-      mot1_hor(j);
-      mot2_anti(j);
+      mot1_hor(vel_esq);
+      mot2_anti(vel_dir);
       Serial.print("Virando para direita");
       Serial.println(enc.read());
     }
@@ -256,8 +256,8 @@ void loop()
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= 800)
     {
-      mot1_hor(j);
-      mot2_anti(j);
+      mot1_hor(vel_esq);
+      mot2_anti(vel_dir);
       Serial.print("dando 180");
       Serial.println(enc.read());
     }
@@ -266,8 +266,8 @@ void loop()
     // voltando
     while (enc.read() - enc_ant <= enc_90)
     {
-      mot1_hor(j);
-      mot2_anti(j);
+      mot1_hor(vel_esq);
+      mot2_anti(vel_dir);
       Serial.print("Virando para direita");
       Serial.println(enc.read());
     }
@@ -277,24 +277,24 @@ void loop()
     /*
       if ((m_esq <= branco) & (m_esq >= preto))
       {
-        mot1_hor(j);
-        mot2_hor(j);
+        mot1_hor(vel_esq);
+        mot2_hor(vel_dir);
         delay(300);
-        mot1_anti(j);
-        mot2_hor(j);
+        mot1_anti(vel_esq);
+        mot2_hor(vel_dir);
         delay(700);
       }
       else
       {
-        mot1_hor(j);
-        mot2_hor(j);
+        mot1_hor(vel_esq);
+        mot2_hor(vel_dir);
         delay(300);
       }*/
   }
   else if (leitura == 0b1111) // ENCRUZILHADA
   {
-    mot1_anti(j);
-    mot2_anti(j);
+    mot1_anti(vel_esq);
+    mot2_anti(vel_dir);
     delay(50);
     digitalWrite(7, 1);
     mot1_par();
@@ -332,16 +332,16 @@ void loop()
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_fre)
     {
-      mot1_hor(j);
-      mot2_hor(j);
+      mot1_hor(vel_esq);
+      mot2_hor(vel_dir);
     }
     if (digitalRead(s_norte) == 0)
       frente = true;
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_90)
     {
-      mot1_hor(j);
-      mot2_anti(j);
+      mot1_hor(vel_esq);
+      mot2_anti(vel_dir);
       Serial.print("Virando para direita");
       Serial.println(enc.read());
     }
@@ -350,8 +350,8 @@ void loop()
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= 800)
     {
-      mot1_hor(j);
-      mot2_anti(j);
+      mot1_hor(vel_esq);
+      mot2_anti(vel_dir);
       Serial.print("dando 180");
       Serial.println(enc.read());
     }
@@ -360,8 +360,8 @@ void loop()
     // voltando
     while (enc.read() - enc_ant <= enc_90)
     {
-      mot1_hor(j);
-      mot2_anti(j);
+      mot1_hor(vel_esq);
+      mot2_anti(vel_dir);
       Serial.print("Virando para direita");
       Serial.println(enc.read());
     }
