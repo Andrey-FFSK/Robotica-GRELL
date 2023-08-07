@@ -106,7 +106,7 @@ void loop()
       mot2_anti(vel_dir);
       delay(700);
     }
-    else
+    elsem
     {
       mot1_hor(vel_esq);
       mot2_hor(vel_dir);
