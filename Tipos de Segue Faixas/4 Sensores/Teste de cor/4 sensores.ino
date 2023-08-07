@@ -1,9 +1,7 @@
-//#include "C:\\Users\\Professor\\Desktop\\BKP\\Robotica-GRELL\\Testes para o robo\\include\\Funções e Variaveis.h"
 #include "Include.h"
 // Usando array para colocar todos os pinos, coloquei os sensores em uma certa posição por causa do BitSwift em baixo
 const int pinos[] = {s_leste, s_nordeste, s_noroeste, s_oeste, s_norte, esq, dir, 7, mot_in1, mot_in2, mot_in3, mot_in4};
 
-// Adafruit_SSD1306 display(128, 64, &Wire, -1);
 
 void setup()
 {
@@ -28,7 +26,7 @@ void loop()
   for (int i = 0; i < 4; i++)
     leitura |= digitalRead(pinos[i]) << i; // Colocando as entrada da tabela da verdade usando um bitshift automatico, o valor do i depende dos sensores
   leitura = (~leitura) & (0b00001111);     // Colocando um inversor para que funcione com a tabela da verdade, pq o sensor dectectar no branco, AND uma mascara para ir so os bits que eu quero
-  digitalWrite(7, 1);
+  digitalWrite(led_g, 1);
   m_esq = map(constrain(analogRead(esq), 350, 518), 350, 518, 0, 1023);
   m_dir = map(constrain(analogRead(dir), 169, 300), 169, 300, 0, 1023);
 
@@ -126,13 +124,13 @@ void loop()
     mot1_anti(j);
     mot2_anti(j);
     delay(50);
-    digitalWrite(7, 1);
+    digitalWrite(led_g, 1);
     mot1_par();
     mot2_par();
     delay(1000);
     m_esq = map(constrain(analogRead(esq), 350, 518), 350, 518, 0, 1023);
   m_dir = map(constrain(analogRead(dir), 169, 300), 169, 300, 0, 1023);
-    digitalWrite(7, 0);
+    digitalWrite(led_g, 0);
     /*
     display.clearDisplay();
     display.setCursor(0, 0);
@@ -190,13 +188,13 @@ void loop()
     mot1_anti(j);
     mot2_anti(j);
     delay(50);
-    digitalWrite(7, 1);
+    digitalWrite(led_g, 1);
     mot1_par();
     mot2_par();
     delay(1000);
     m_esq = map(constrain(analogRead(esq), 350, 518), 350, 518, 0, 1023);
   m_dir = map(constrain(analogRead(dir), 169, 300), 169, 300, 0, 1023);
-    digitalWrite(7, 0);
+    digitalWrite(led_g, 0);
     /*
         display.clearDisplay();
         display.setCursor(0, 0);
@@ -248,13 +246,13 @@ void loop()
     mot1_anti(j);
     mot2_anti(j);
     delay(50);
-    digitalWrite(7, 1);
+    digitalWrite(led_g, 1);
     mot1_par();
     mot2_par();
     delay(1000);
     m_esq = map(constrain(analogRead(esq), 350, 518), 350, 518, 0, 1023);
   m_dir = map(constrain(analogRead(dir), 169, 300), 169, 300, 0, 1023);
-    digitalWrite(7, 0);
+    digitalWrite(led_g, 0);
     /*
         display.clearDisplay();
         display.setCursor(0, 0);
