@@ -389,6 +389,41 @@ void dir_90()
 
 
 void identif(){
+  enc_ant = enc.read();
+    while (enc.read() - enc_ant <= enc_90)
+    {
+      mot1_hor(vel_esq);
+      mot2_anti(vel_dir);
+      Serial.print("dando 180");
+      Serial.println(enc.read());
+    }
+
+    enc_ant = enc.read();
+    while (enc.read() - enc_ant <= enc_90)
+    {
+      mot1_hor(vel_esq);
+      mot2_anti(vel_dir);
+      if (digitalRead(s_leste) == 0)
+        esquerda = true;
+      Serial.print("dando 180");
+      Serial.println(enc.read());
+    }
+
+    mot1_par();
+    mot2_par();
+    Serial.print("valor do esquerda: ");
+    Serial.println(esquerda);
+    delay(2000);
+
+    enc_ant = enc.read();
+    while (enc.read() - enc_ant <= enc_90)
+    {
+      mot1_hor(vel_dir);
+      mot2_anti(vel_dir);
+      Serial.print("Virando para direita");
+      Serial.println(enc.read());
+    }
+
   if ((frente == true & esquerda == true & direita == false) || (frente == false & esquerda == true & direita == false))
     {
 
