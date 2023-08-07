@@ -1,5 +1,5 @@
 //#include "C:\\Users\\Professor\\Desktop\\BKP\\Robotica-GRELL\\Testes para o robo\\include\\Funções e Variaveis.h"
-#include "../OLED.h"
+#include "Include.h"
 // Usando array para colocar todos os pinos, coloquei os sensores em uma certa posição por causa do BitSwift em baixo
 const int pinos[] = {s_leste, s_nordeste, s_noroeste, s_oeste, s_norte, esq, dir, 7, mot_in1, mot_in2, mot_in3, mot_in4};
 
