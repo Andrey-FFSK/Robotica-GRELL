@@ -35,8 +35,9 @@ int m_dir = 0;
 #define esq_verde 880 // 880 DEU CERTO O VERDE
 #define dir_verde 880 // 880 DEU CERTO O VERDE
 
-#define vel_esq 120 // PWM usado para a velocidade, min == 0 e max == 255
+#define vel_esq 130 // PWM usado para a velocidade, min == 0 e max == 255
 #define vel_dir 110
+
 int enc_ant = 0;
 #define enc_fre 500
 #define enc_90 420
