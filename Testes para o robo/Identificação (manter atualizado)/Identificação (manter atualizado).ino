@@ -92,8 +92,8 @@ void loop()
   leitura = (~leitura) & 0b00011111;
   tensaoA0 = (div(A0) * 5) / 1024.0;
   tensaoA0 *= 8.4;
-  m_esq = map(constrain(analogRead(esq), 350, 540), 350, 540, 0, 1023);
-  m_dir = map(constrain(analogRead(dir), 182, 300), 182, 300, 0, 1023);
+  m_esq = map(constrain(analogRead(esq), 350, 518), 350, 518, 0, 1023);
+    m_dir = map(constrain(analogRead(dir), 169, 300), 169, 300, 0, 1023);
 
 
   display.setCursor(0, lh * 2);
