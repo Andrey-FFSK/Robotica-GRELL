@@ -148,29 +148,29 @@ void encruzilhada()
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_fre)
     {
-      mot1_hor(j);
-      mot2_hor(j);
+      mot1_hor(vel_esq);
+      mot2_hor(vel_dir);
     }
 
     enc_ant = enc.read();
     while (enc_ant - enc.read() <= enc_peq)
     {
-      mot1_anti(j);
-      mot2_hor(j);
+      mot1_anti(vel_esq);
+      mot2_hor(vel_dir);
       Serial.print("virando para esquerda");
       Serial.println(enc.read());
     }
     while (digitalRead(s_norte) == 1)
     {
-      mot1_anti(j);
-      mot2_hor(j);
+      mot1_anti(vel_esq);
+      mot2_hor(vel_dir);
     }
     delay(100);
     enc_ant = enc.read();
     while (enc_ant - enc.read() <= enc_pas)
     {
-      mot1_anti(j);
-      mot2_hor(j);
+      mot1_anti(vel_esq);
+      mot2_hor(vel_dir);
       Serial.print("Indo para tras: ");
       Serial.println(enc.read());
     }
@@ -181,29 +181,29 @@ void encruzilhada()
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_fre)
     {
-      mot1_hor(j);
-      mot2_hor(j);
+      mot1_hor(vel_esq);
+      mot2_hor(vel_dir);
     }
 
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_peq)
     {
-      mot1_hor(j);
-      mot2_anti(j);
+      mot1_hor(vel_esq);
+      mot2_anti(vel_dir);
       Serial.print("Virando para direita");
       Serial.println(enc.read());
     }
     while (digitalRead(s_norte) == 1)
     {
-      mot1_hor(j);
-      mot2_anti(j);
+      mot1_hor(vel_esq);
+      mot2_anti(vel_dir);
     }
     delay(100);
     enc_ant = enc.read();
     while (enc_ant - enc.read() <= enc_pas)
     {
-      mot1_anti(j);
-      mot2_hor(j);
+      mot1_anti(vel_esq);
+      mot2_hor(vel_dir);
       Serial.print("Indo para tras: ");
       Serial.println(enc.read());
     }
@@ -214,8 +214,8 @@ void encruzilhada()
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_fre)
     {
-      mot1_hor(j);
-      mot2_hor(j);
+      mot1_hor(vel_esq);
+      mot2_hor(vel_dir);
     }
   }
   else // Tem 2 quadrado verde
@@ -224,8 +224,8 @@ void encruzilhada()
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_90 * 2)
     {
-      mot1_hor(j);
-      mot2_anti(j);
+      mot1_hor(vel_esq);
+      mot2_anti(vel_dir);
       Serial.print("dando 180");
       Serial.println(enc.read());
     }
@@ -240,30 +240,30 @@ void esq_90()
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_fre)
     {
-      mot1_hor(j);
-      mot2_hor(j);
+      mot1_hor(vel_esq);
+      mot2_hor(vel_dir);
     }
 
     enc_ant = enc.read();
     while (enc_ant - enc.read() <= enc_peq)
     {
-      mot1_anti(j);
-      mot2_hor(j);
+      mot1_anti(vel_esq);
+      mot2_hor(vel_dir);
       Serial.print("virando pra esquerda");
       Serial.println(enc.read());
     }
     while (digitalRead(s_norte) == 1)
     {
-      mot1_anti(j);
-      mot2_hor(j);
+      mot1_anti(vel_esq);
+      mot2_hor(vel_dir);
       Serial.print("virando pra esquerda");
     }
     delay(100);
     enc_ant = enc.read();
     while (enc_ant - enc.read() <= enc_pas)
     {
-      mot1_anti(j);
-      mot2_hor(j);
+      mot1_anti(vel_esq);
+      mot2_hor(vel_dir);
       Serial.print("Indo para tras: ");
       Serial.println(enc.read());
     }
@@ -274,8 +274,8 @@ void esq_90()
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_fre)
     {
-      mot1_hor(j);
-      mot2_hor(j);
+      mot1_hor(vel_esq);
+      mot2_hor(vel_dir);
     }
 
     if (digitalRead(s_norte) == 1)
@@ -283,23 +283,23 @@ void esq_90()
       enc_ant = enc.read();
       while (enc_ant - enc.read() <= enc_peq)
       {
-        mot1_anti(j);
-        mot2_hor(j);
+        mot1_anti(vel_esq);
+        mot2_hor(vel_dir);
         Serial.print("virando pra esquerda");
         Serial.println(enc.read());
       }
       while (digitalRead(s_norte) == 1)
       {
-        mot1_anti(j);
-        mot2_hor(j);
+        mot1_anti(vel_esq);
+        mot2_hor(vel_dir);
         Serial.print("virando pra esquerda");
       }
       delay(100);
       enc_ant = enc.read();
       while (enc_ant - enc.read() <= enc_pas)
       {
-        mot1_anti(j);
-        mot2_hor(j);
+        mot1_anti(vel_esq);
+        mot2_hor(vel_dir);
         Serial.print("Indo para tras: ");
         Serial.println(enc.read());
       }
@@ -316,29 +316,29 @@ void dir_90()
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_fre)
     {
-      mot1_hor(j);
-      mot2_hor(j);
+      mot1_hor(vel_esq);
+      mot2_hor(vel_dir);
     }
 
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_peq)
     {
-      mot1_hor(j);
-      mot2_anti(j);
+      mot1_hor(vel_esq);
+      mot2_anti(vel_dir);
       Serial.print("virando para direita");
       Serial.println(enc.read());
     }
     while (digitalRead(s_norte) == 1)
     {
-      mot1_hor(j);
-      mot2_anti(j);
+      mot1_hor(vel_esq);
+      mot2_anti(vel_dir);
       Serial.print("virando para direita");
     }
     enc_ant = enc.read();
     while (enc_ant - enc.read() <= enc_pas)
     {
-      mot1_anti(j);
-      mot2_hor(j);
+      mot1_anti(vel_esq);
+      mot2_hor(vel_dir);
       Serial.print("Indo para tras: ");
       Serial.println(enc.read());
     }
@@ -349,8 +349,8 @@ void dir_90()
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_fre)
     {
-      mot1_hor(j);
-      mot2_hor(j);
+      mot1_hor(vel_esq);
+      mot2_hor(vel_dir);
     }
 
     if (digitalRead(s_norte) == 1)
@@ -358,22 +358,22 @@ void dir_90()
       enc_ant = enc.read();
       while (enc.read() - enc_ant <= enc_peq)
       {
-        mot1_hor(j);
-        mot2_anti(j);
+        mot1_hor(vel_esq);
+        mot2_anti(vel_dir);
         Serial.print("virando para direita");
         Serial.println(enc.read());
       }
       while (digitalRead(s_norte) == 1)
       {
-        mot1_hor(j);
-        mot2_anti(j);
+        mot1_hor(vel_esq);
+        mot2_anti(vel_dir);
       }
       delay(100);
       enc_ant = enc.read();
       while (enc_ant - enc.read() <= enc_pas)
       {
-        mot1_anti(j);
-        mot2_hor(j);
+        mot1_anti(vel_esq);
+        mot2_hor(vel_dir);
         Serial.print("Indo para tras: ");
         Serial.println(enc.read());
       }
@@ -392,22 +392,22 @@ void identif(){
         enc_ant = enc.read();
         while (enc.read() - enc_ant <= enc_fre)
         {
-          mot1_hor(j);
-          mot2_hor(j);
+          mot1_hor(vel_esq);
+          mot2_hor(vel_dir);
         }
 
         enc_ant = enc.read();
         while (enc_ant - enc.read() <= enc_peq)
         {
-          mot1_anti(j);
-          mot2_hor(j);
+          mot1_anti(vel_esq);
+          mot2_hor(vel_dir);
           Serial.print("virando pra esquerda");
           Serial.println(enc.read());
         }
         while (digitalRead(s_norte) == 1)
         {
-          mot1_anti(j);
-          mot2_hor(j);
+          mot1_anti(vel_esq);
+          mot2_hor(vel_dir);
           Serial.print("virando pra esquerda");
         }
         delay(100);
@@ -418,8 +418,8 @@ void identif(){
         enc_ant = enc.read();
         while (enc.read() - enc_ant <= enc_fre)
         {
-          mot1_hor(j);
-          mot2_hor(j);
+          mot1_hor(vel_esq);
+          mot2_hor(vel_dir);
         }
 
         if (digitalRead(s_norte) == 1)
@@ -427,15 +427,15 @@ void identif(){
           enc_ant = enc.read();
           while (enc_ant - enc.read() <= enc_peq)
           {
-            mot1_anti(j);
-            mot2_hor(j);
+            mot1_anti(vel_esq);
+            mot2_hor(vel_dir);
             Serial.print("virando pra esquerda");
             Serial.println(enc.read());
           }
           while (digitalRead(s_norte) == 1)
           {
-            mot1_anti(j);
-            mot2_hor(j);
+            mot1_anti(vel_esq);
+            mot2_hor(vel_dir);
             Serial.print("virando pra esquerda");
           }
           delay(100);
@@ -450,22 +450,22 @@ void identif(){
         enc_ant = enc.read();
         while (enc.read() - enc_ant <= enc_fre)
         {
-          mot1_hor(j);
-          mot2_hor(j);
+          mot1_hor(vel_esq);
+          mot2_hor(vel_dir);
         }
 
         enc_ant = enc.read();
         while (enc.read() - enc_ant <= enc_peq)
         {
-          mot1_hor(j);
-          mot2_anti(j);
+          mot1_hor(vel_esq);
+          mot2_anti(vel_dir);
           Serial.print("virando para direita");
           Serial.println(enc.read());
         }
         while (digitalRead(s_norte) == 1)
         {
-          mot1_hor(j);
-          mot2_anti(j);
+          mot1_hor(vel_esq);
+          mot2_anti(vel_dir);
           Serial.print("virando para direita");
         }
       }
@@ -475,8 +475,8 @@ void identif(){
         enc_ant = enc.read();
         while (enc.read() - enc_ant <= enc_fre)
         {
-          mot1_hor(j);
-          mot2_hor(j);
+          mot1_hor(vel_esq);
+          mot2_hor(vel_dir);
         }
 
         if (digitalRead(s_norte) == 1)
@@ -484,15 +484,15 @@ void identif(){
           enc_ant = enc.read();
           while (enc.read() - enc_ant <= enc_peq)
           {
-            mot1_hor(j);
-            mot2_anti(j);
+            mot1_hor(vel_esq);
+            mot2_anti(vel_dir);
             Serial.print("virando para direita");
             Serial.println(enc.read());
           }
           while (digitalRead(s_norte) == 1)
           {
-            mot1_hor(j);
-            mot2_anti(j);
+            mot1_hor(vel_esq);
+            mot2_anti(vel_dir);
           }
           delay(100);
         }
@@ -506,22 +506,22 @@ void identif(){
         enc_ant = enc.read();
         while (enc.read() - enc_ant <= enc_fre)
         {
-          mot1_hor(j);
-          mot2_hor(j);
+          mot1_hor(vel_esq);
+          mot2_hor(vel_dir);
         }
 
         enc_ant = enc.read();
         while (enc_ant - enc.read() <= enc_peq)
         {
-          mot1_anti(j);
-          mot2_hor(j);
+          mot1_anti(vel_esq);
+          mot2_hor(vel_dir);
           Serial.print("virando para esquerda");
           Serial.println(enc.read());
         }
         while (digitalRead(s_norte) == 1)
         {
-          mot1_anti(j);
-          mot2_hor(j);
+          mot1_anti(vel_esq);
+          mot2_hor(vel_dir);
         }
         delay(100);
       }
@@ -531,22 +531,22 @@ void identif(){
         enc_ant = enc.read();
         while (enc.read() - enc_ant <= enc_fre)
         {
-          mot1_hor(j);
-          mot2_hor(j);
+          mot1_hor(vel_esq);
+          mot2_hor(vel_dir);
         }
 
         enc_ant = enc.read();
         while (enc.read() - enc_ant <= enc_peq)
         {
-          mot1_hor(j);
-          mot2_anti(j);
+          mot1_hor(vel_esq);
+          mot2_anti(vel_dir);
           Serial.print("Virando para direita");
           Serial.println(enc.read());
         }
         while (digitalRead(s_norte) == 1)
         {
-          mot1_hor(j);
-          mot2_anti(j);
+          mot1_hor(vel_esq);
+          mot2_anti(vel_dir);
         }
         delay(100);
       }
@@ -556,8 +556,8 @@ void identif(){
         enc_ant = enc.read();
         while (enc.read() - enc_ant <= enc_fre)
         {
-          mot1_hor(j);
-          mot2_hor(j);
+          mot1_hor(vel_esq);
+          mot2_hor(vel_dir);
         }
       }
       else // Tem 2 quadrado verde
@@ -566,8 +566,8 @@ void identif(){
         enc_ant = enc.read();
         while (enc.read() - enc_ant <= 800)
         {
-          mot1_hor(j);
-          mot2_anti(j);
+          mot1_hor(vel_esq);
+          mot2_anti(vel_dir);
           Serial.print("dando 180");
           Serial.println(enc.read());
         }
