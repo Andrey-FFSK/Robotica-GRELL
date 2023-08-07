@@ -375,4 +375,198 @@ void dir_90()
     }
   }
 }
+
+
+void identif(){
+  if ((frente == true & esquerda == true & direita == false) || (frente == false & esquerda == true & direita == false))
+    {
+
+      if ((m_esq <= esq_branco) & (m_dir >= dir_branco)) // Tem 1 quadrado verde na esquerda
+      {
+        Serial.println("leitura == 1100; tem verde");
+        enc_ant = enc.read();
+        while (enc.read() - enc_ant <= enc_fre)
+        {
+          mot1_hor(j);
+          mot2_hor(j);
+        }
+
+        enc_ant = enc.read();
+        while (enc_ant - enc.read() <= enc_peq)
+        {
+          mot1_anti(j);
+          mot2_hor(j);
+          Serial.print("virando pra esquerda");
+          Serial.println(enc.read());
+        }
+        while (digitalRead(s_norte) == 1)
+        {
+          mot1_anti(j);
+          mot2_hor(j);
+          Serial.print("virando pra esquerda");
+        }
+        delay(100);
+      }
+      else // Nao tem quadrado verde
+      {
+        Serial.println("leitura == 1100; nao tem verde");
+        enc_ant = enc.read();
+        while (enc.read() - enc_ant <= enc_fre)
+        {
+          mot1_hor(j);
+          mot2_hor(j);
+        }
+
+        if (digitalRead(s_norte) == 1)
+        {
+          enc_ant = enc.read();
+          while (enc_ant - enc.read() <= enc_peq)
+          {
+            mot1_anti(j);
+            mot2_hor(j);
+            Serial.print("virando pra esquerda");
+            Serial.println(enc.read());
+          }
+          while (digitalRead(s_norte) == 1)
+          {
+            mot1_anti(j);
+            mot2_hor(j);
+            Serial.print("virando pra esquerda");
+          }
+          delay(100);
+        }
+      }
+    }
+    else if ((frente == true & esquerda == false & direita == true) || (frente == false & esquerda == false & direita == true))
+    {
+      if ((m_esq >= esq_branco) & (m_dir <= dir_branco)) // Tem 1 quadrado verde na direita
+      {
+        Serial.println("leitura == 0011; Tem verde");
+        enc_ant = enc.read();
+        while (enc.read() - enc_ant <= enc_fre)
+        {
+          mot1_hor(j);
+          mot2_hor(j);
+        }
+
+        enc_ant = enc.read();
+        while (enc.read() - enc_ant <= enc_peq)
+        {
+          mot1_hor(j);
+          mot2_anti(j);
+          Serial.print("virando para direita");
+          Serial.println(enc.read());
+        }
+        while (digitalRead(s_norte) == 1)
+        {
+          mot1_hor(j);
+          mot2_anti(j);
+          Serial.print("virando para direita");
+        }
+      }
+      else // Nao tem quadrado verde
+      {
+        Serial.println("Leitura == 0011; nao tem verde");
+        enc_ant = enc.read();
+        while (enc.read() - enc_ant <= enc_fre)
+        {
+          mot1_hor(j);
+          mot2_hor(j);
+        }
+
+        if (digitalRead(s_norte) == 1)
+        {
+          enc_ant = enc.read();
+          while (enc.read() - enc_ant <= enc_peq)
+          {
+            mot1_hor(j);
+            mot2_anti(j);
+            Serial.print("virando para direita");
+            Serial.println(enc.read());
+          }
+          while (digitalRead(s_norte) == 1)
+          {
+            mot1_hor(j);
+            mot2_anti(j);
+          }
+          delay(100);
+        }
+      }
+    }
+    else
+    {
+      if ((m_esq <= esq_branco) & (m_dir >= dir_branco)) // Tem 1 quadrado verde na esquerda
+      {
+        Serial.println("Encruzilhada; Verde na esquerda");
+        enc_ant = enc.read();
+        while (enc.read() - enc_ant <= enc_fre)
+        {
+          mot1_hor(j);
+          mot2_hor(j);
+        }
+
+        enc_ant = enc.read();
+        while (enc_ant - enc.read() <= enc_peq)
+        {
+          mot1_anti(j);
+          mot2_hor(j);
+          Serial.print("virando para esquerda");
+          Serial.println(enc.read());
+        }
+        while (digitalRead(s_norte) == 1)
+        {
+          mot1_anti(j);
+          mot2_hor(j);
+        }
+        delay(100);
+      }
+      else if ((m_esq >= esq_branco) & (m_dir <= dir_branco)) // Tem 1 quadrado verde na direita
+      {
+        Serial.println("Encruzilhada; Verde na direita");
+        enc_ant = enc.read();
+        while (enc.read() - enc_ant <= enc_fre)
+        {
+          mot1_hor(j);
+          mot2_hor(j);
+        }
+
+        enc_ant = enc.read();
+        while (enc.read() - enc_ant <= enc_peq)
+        {
+          mot1_hor(j);
+          mot2_anti(j);
+          Serial.print("Virando para direita");
+          Serial.println(enc.read());
+        }
+        while (digitalRead(s_norte) == 1)
+        {
+          mot1_hor(j);
+          mot2_anti(j);
+        }
+        delay(100);
+      }
+      else if ((m_esq >= esq_branco) & (m_dir >= dir_branco)) // Nao tem quadrado verde
+      {
+        Serial.println("Encruzilhada; Nao tem verde");
+        enc_ant = enc.read();
+        while (enc.read() - enc_ant <= enc_fre)
+        {
+          mot1_hor(j);
+          mot2_hor(j);
+        }
+      }
+      else // Tem 2 quadrado verde
+      {
+        Serial.println("Encruzilhada; 2 verdes");
+        enc_ant = enc.read();
+        while (enc.read() - enc_ant <= 800)
+        {
+          mot1_hor(j);
+          mot2_anti(j);
+          Serial.print("dando 180");
+          Serial.println(enc.read());
+        }
+      }
+    }
+}
 #endif
