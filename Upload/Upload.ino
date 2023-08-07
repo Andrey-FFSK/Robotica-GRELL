@@ -1,230 +1,178 @@
+#include "Oled.h"
 #include "Include.h"
-// Usando array para colocar todos os pinos, coloquei os sensores em uma certa posição por causa do BitSwift em baixo
-const int pinos[] = {s_leste, s_nordeste, s_noroeste, s_oeste, s_norte, esq, dir, 7, mot_in1, mot_in2, mot_in3, mot_in4};
+
+const unsigned char aeia[] PROGMEM = {
+    // 'bfcaab3c7ed1666ef086e690ec778ad0, 32x32px
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x90, 0x00, 0x00, 0x01, 0xb0,
+    0x00, 0x00, 0x00, 0x30, 0x01, 0x00, 0x01, 0xbc, 0x08, 0x20, 0x44, 0x34, 0x00, 0x40, 0x08, 0x28,
+    0x00, 0x03, 0x10, 0x20, 0x05, 0xff, 0x80, 0x30, 0x07, 0xfe, 0x20, 0xa0, 0x0f, 0xdf, 0xee, 0x80,
+    0x0f, 0xb9, 0x3d, 0x70, 0x1f, 0xe3, 0x73, 0xc0, 0x1d, 0xe0, 0xe3, 0xc0, 0x1f, 0xe0, 0x00, 0xc0,
+    0x1f, 0x63, 0xa0, 0x40, 0x1f, 0x67, 0xc1, 0xc0, 0x1f, 0x47, 0x21, 0x40, 0x1b, 0x47, 0xe3, 0xc0,
+    0x1f, 0x47, 0xc3, 0xc0, 0x1f, 0x47, 0xc3, 0xc0, 0x0e, 0x5f, 0xdb, 0x80, 0x1b, 0xdf, 0x83, 0xe0,
+    0x03, 0x78, 0x00, 0x80, 0x00, 0x3f, 0xce, 0x00, 0x00, 0x6b, 0xf8, 0x00, 0x00, 0x00, 0x20, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+
+const unsigned char aeiapeqena[] PROGMEM = {
+    // 'bfcaab3c7ed1666ef086e690ec778ad0, 16x16px
+    0x00, 0x00, 0x00, 0x04, 0x00, 0x20, 0x04, 0x2a, 0x2f, 0xc8, 0x3d, 0xc0, 0x3e, 0xec, 0x74, 0x88,
+    0x79, 0x88, 0x7b, 0x90, 0x7b, 0x98, 0x3f, 0x98, 0x17, 0x10, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00};
+
+// Usando array para colocar todos os pinos, coloquei os sensores invertido por causa do BitSwift em baixo
+const int pinos[] = {s_oeste, s_noroeste, s_norte, s_nordeste, s_leste, esq, dir, led_g, mot_in1, mot_in2, mot_in3, mot_in4};
+
+
+int j = 110;
+float tensaoA0;
+
+int n;
 
 void setup()
 {
-  /*
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
   display.setTextColor(WHITE);
-  display.clearDisplay();*/
-  // Colocando os sensores como INPUT, e o resto como OUTPUT, tudo isso pelo array
-  for (int i = 0; i < 7; i++)
+  display.setCursor(0, 0);
+  Serial.begin(9600);
+  for (int i; i < 7; i++)
     pinMode(pinos[i], INPUT);
   for (int i = 7; i < 12; i++)
     pinMode(pinos[i], OUTPUT);
-  Serial.begin(9600);
+  n = 0;
 }
+
 void loop()
 {
+  display.clearDisplay();
 
-  // Funções do sensor de cor ficar mais amplo, SEMPRE MUDAR
+  digitalWrite(led_g, 1);
 
-  // Essa parte é o bitSwift, criar uma variavel leitura do tipo byte, porem a gente so usa os bits dessa varaivel, a quantidade de bits depende de quantos sensores estao usando
-  byte leitura = 0; // Definir sempre 0 quando definir algo como o for abaixo
-  for (int i = 0; i < 4; i++)
-    leitura |= digitalRead(pinos[i]) << i; // Colocando as entrada da tabela da verdade usando um bitshift automatico, o valor do i depende dos sensores
-  leitura = (~leitura) & (0b00001111);     // Colocando um inversor para que funcione com a tabela da verdade, pq o sensor dectectar no branco, AND uma mascara para ir so os bits que eu quero
-  digitalWrite(7, 0);
-  bool frente = false;
-  bool direita = false;
-  bool esquerda = false;
+  //analogWrite(mot_in2, o);
 
-  // Serial.print(leitura, BIN);
-  // Serial.print(" sens: ");
+  //mot1_hor(j);
+  //mot2_hor(j);
 
-  // if (sensor.read() <= 18) desv_d(j); // Se o sensor dectar que esta distancia ativa a função de desviar
+  // mot1_anti(j);
+  // mot2_anti(j);
 
-  // Condições que usa a melhor situação dos sensores, o bit mais da direita é o s_leste e o bit mais na esquerda é o s_oeste
-  // Algumas tem if com OR por conta que eles fazem a mesma coisa na condição.
-  // Condição de 0011 ou 1100: é o algoritimo de 90 graus, pensando que so vai ativar no 90
-  if (leitura == 0b0000) // Condição 1
-  {
-    mot1_hor(vel_esq);
-    mot2_hor(vel_dir);
-    // display.clearDisplay();
-    // display.setCursor(0, 0);
-    // display.print("leitura == 0000");
-    Serial.println("leitura = 0000");
-  }
-  else if ((leitura == 0b0010) /*| (leitura == 0b0001)*/) // Condição 2
-  {
-    mot1_hor(vel_esq);
-    mot2_anti(vel_dir);
-    // display.clearDisplay();
-    // display.setCursor(0, 0);
-    // display.print("leitura == 0010");
-    Serial.println("leitura == 0010");
-  }
-  else if (leitura == 0b0011) // Condição 4
-  {
-    mot1_anti(vel_esq);
-    mot2_anti(vel_dir);
-    delay(50);
-    digitalWrite(7, 1);
-    mot1_par();
-    mot2_par();
-    delay(1000);
-    sensi();
-    digitalWrite(7, 0);
-    /*
-    display.clearDisplay();
-    display.setCursor(0, 0);
-    display.print("Esq: ");
-    display.print(m_esq);
-    display.print("(");
-    display.print(analogRead(esq));
-    display.println(")");
+  byte leitura = 0;
+  for (int i = 0; i < 5; i++)
+    leitura |= digitalRead(pinos[i]) << i;
+  leitura = (~leitura) & 0b00011111;
+  tensaoA0 = (div(A0) * 5) / 1024.0;
+  tensaoA0 *= 8.4;
+  m_esq = map(constrain(analogRead(esq), 350, 518), 350, 518, 0, 1023);
+    m_dir = map(constrain(analogRead(dir), 169, 300), 169, 300, 0, 1023);
 
 
-    display.print("Dir: ");
-    display.print(m_dir);
-    display.print("(");
-    display.print(analogRead(dir));
-    display.println(")");
-    display.display();*/
+  display.setCursor(0, lh * 2);
+  display.print("Leitura: ");
+  for (int i = 11; i <= 15; i++)
+    display.print(binString(leitura)[i]);
+  display.print(" Bits");
 
-    Serial.print("Esq: ");
-    Serial.print(m_esq);
-    Serial.print("(");
-    Serial.print(analogRead(esq));
-    Serial.print(") / Dir: ");
-    Serial.print(m_dir);
-    Serial.print("(");
-    Serial.print(analogRead(dir));
-    Serial.println(")");
+  display.setCursor(0, lh * 3);
+  display.print("Tensao: ");
+  display.print(tensaoA0);
+  display.print(" V");
 
-    identif();
-  }
-  /*
-    if ((m_dir <= branco) & (m_dir >= preto))
-    {
-      mot1_hor(vel_esq);
-      mot2_hor(vel_dir);
-      delay(300);
-      mot1_hor(vel_esq);
-      mot2_anti(vel_dir);
-      delay(700);
-    }
-    elsem
-    {
-      mot1_hor(vel_esq);
-      mot2_hor(vel_dir);
-      delay(300);
-    }*/
+  display.setCursor(0, lh * 4);
+  display.print("Olho: ");
+  display.print(sensor.read());
+  display.print(" cm");
 
-  else if ((leitura == 0b0100) /*| (leitura == 0b1000)*/) // Condição 5
-  {
-    mot1_anti(vel_esq);
-    mot2_hor(vel_dir);
-    Serial.println("leitura == 0100");
-  }
-  else if ((leitura == 0b0110) | (leitura == 0b1001)) // Condição 6
-  {
-    mot1_par();
-    mot2_par();
-    delay(200);
-    Serial.println("situação de pane");
-  }
-  else if (leitura == 0b1100) // Condição 7
-  {
-    mot1_anti(vel_esq);
-    mot2_anti(vel_dir);
-    delay(50);
-    digitalWrite(7, 1);
-    mot1_par();
-    mot2_par();
-    delay(1000);
-    sensi();
-    digitalWrite(7, 0);
-    /*
-        display.clearDisplay();
-        display.setCursor(0, 0);
-        display.print("Esq: ");
-        display.print(m_esq);
-        display.print("(");
-        display.print(analogRead(esq));
-        display.println(")");
+  display.setCursor(0, lh * 5);
+  display.print("Esq: ");
+  display.print(m_esq);
+  display.print("(");
+  display.print(analogRead(esq));
+  display.print(")");
 
-        display.print("Dir: ");
-        display.print(m_dir);
-        display.print("(");
-        display.print(analogRead(dir));
-        display.println(")");
-        display.display();
-    */
-    Serial.print("Esq: ");
-    Serial.print(m_esq);
-    Serial.print("(");
-    Serial.print(analogRead(esq));
-    Serial.print(") / Dir: ");
-    Serial.print(m_dir);
-    Serial.print("(");
-    Serial.print(analogRead(dir));
-    Serial.println(")");
+  display.setCursor(0, lh * 6);
+  display.print("Dir: ");
+  display.print(m_dir);
+  display.print("(");
+  display.print(analogRead(dir));
+  display.print(")");
 
-    identif();
+  display.drawBitmap(W - 32, H - 32 + sin(n * PI / 180) * 3, aeia, 32, 32, WHITE);
+  display.drawBitmap(W - 16, -sin(n * PI / 180) * 1.5, aeiapeqena, 16, 16, WHITE);
+  display.display();
+  n = (n < 360) ? n + 36 : 0;
 
-    /*
-      if ((m_esq <= branco) & (m_esq >= preto))
-      {
-        mot1_hor(vel_esq);
-        mot2_hor(vel_dir);
-        delay(300);
-        mot1_anti(vel_esq);
-        mot2_hor(vel_dir);
-        delay(700);
-      }
-      else
-      {
-        mot1_hor(vel_esq);
-        mot2_hor(vel_dir);
-        delay(300);
-      }*/
-  }
-  else if (leitura == 0b1111) // ENCRUZILHADA
-  {
-    mot1_anti(vel_esq);
-    mot2_anti(vel_dir);
-    delay(50);
-    digitalWrite(7, 1);
-    mot1_par();
-    mot2_par();
-    delay(1000);
-    sensi();
-    digitalWrite(7, 0);
-    /*
-        display.clearDisplay();
-        display.setCursor(0, 0);
-        display.print("Esq: ");
-        display.print(m_esq);
-        display.print("(");
-        display.print(analogRead(esq));
-        display.println(")");
+  display.display();
 
-        display.print("Dir: ");
-        display.print(m_dir);
-        display.print("(");
-        display.print(analogRead(dir));
-        display.println(")");
-        display.display();
-    */
-    Serial.print("Esq: ");
-    Serial.print(m_esq);
-    Serial.print("(");
-    Serial.print(analogRead(esq));
-    Serial.print(") / Dir: ");
-    Serial.print(m_dir);
-    Serial.print("(");
-    Serial.print(analogRead(dir));
-    Serial.println(")");
+  Serial.print("Leitura: ");
+  Serial.print(leitura, BIN);
+  Serial.print("Bits / Tensão: ");
+  Serial.print(tensaoA0);
+  Serial.print("V / Olho:");
+  Serial.print(sensor.read());
+  Serial.print("cm / Esq: ");
+  Serial.print(m_esq);
+  Serial.print("(");
+  Serial.print(analogRead(esq));
+  Serial.print(") / Dir: ");
+  Serial.print(m_dir);
+  Serial.print("(");
+  Serial.print(analogRead(dir));
+  Serial.println(")");
 
-    identif();
-  }
 }
-/*
-LEMBRAR DAS VARIAVEIS COM ENCRUZILHADA
-nao esta usando while
-COMO ELE VAI PARAR?
-esquerda alta e direita baixa
-*/
+
+float div(uint8_t A0)
+{
+  float total = 0;
+  for (int i = 0; i < 12; i++)
+  {
+    total += 1.0 * analogRead(A0);
+    delay(5);
+  }
+  return total / (float)12;
+}
+
+// Inicio das funções, para cada caso, totalizando 6 funções diferente
+void mot1_anti(int velo) // Função para o motor da esquerda girar no sentido anti horario com a velocidade variavel
+{
+  analogWrite(mot_in1, velo);
+  analogWrite(mot_in2, 0);
+}
+void mot1_hor(int velo) // Função para o motor da esquerda girar no sentido horario com a velocidade variavel
+{
+  analogWrite(mot_in1, 0);
+  analogWrite(mot_in2, velo);
+}
+void mot1_par() // Função para o motor da esquerda ficar parado
+{
+  analogWrite(mot_in1, 0);
+  analogWrite(mot_in2, 0);
+}
+
+void mot2_anti(int velo) // Função para o motor da direita girar no sentido anti horario com a velocidade variavel
+{
+  analogWrite(mot_in3, 0);
+  analogWrite(mot_in4, velo);
+}
+void mot2_hor(int velo) // Função para o motor da direita girar no sentido horario com a velocidade variavel
+{
+  analogWrite(mot_in3, velo);
+  analogWrite(mot_in4, 0);
+}
+void mot2_par() // Função para o motor da direita ficar parado
+{
+  analogWrite(mot_in3, 0);
+  analogWrite(mot_in4, 0);
+}
+
+char *binString(unsigned short n)
+{
+  static char bin[17];
+  int x;
+
+  for (x = 0; x < 16; x++)
+  {
+    bin[x] = n & 0x8000 ? '1' : '0';
+    n <<= 1;
+  }
+  bin[16] = '\0';
+
+  return (bin);
+}

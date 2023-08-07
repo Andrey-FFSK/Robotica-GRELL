@@ -4,8 +4,6 @@
 #include <Ultrasonic.h> //Incluindo a biblioteca do ultrasonic de erik simoes
 #include <Encoder.h>
 
-
-
 // Definindo as portas dos sensores e da portas H
 #define s_oeste 4     // amarelo, OUT1
 #define s_noroeste 8  // branco, OUT2
@@ -40,13 +38,14 @@ int m_dir = 0;
 
 int enc_ant = 0;
 #define enc_fre 500
-#define enc_90 550
+#define enc_90 540
+#define enc_90_p 560
 #define enc_peq 250
 #define enc_pas 50
 
 bool frente = false;
 bool direita = false;
-bool esquerda = false; 
+bool esquerda = false;
 
 Ultrasonic sensor(A2, A3); // trig == 7; echo == 4 | trig = amarel e ech = marrm
 Encoder enc(3, 2);
@@ -84,7 +83,8 @@ void mot2_par() // Função para o motor da direita ficar parado
   analogWrite(mot_in2, 0);
 }
 
-void sensi(){
+void sensi()
+{
   m_esq = map(constrain(analogRead(esq), 350, 518), 350, 518, 0, 1023);
   m_dir = map(constrain(analogRead(dir), 169, 300), 169, 300, 0, 1023);
 }
@@ -313,7 +313,6 @@ void esq_90()
   }
 }
 
-
 void dir_90()
 {
   if ((m_esq >= esq_branco) & (m_dir <= dir_branco)) // Tem 1 quadrado verde na direita
@@ -387,106 +386,116 @@ void dir_90()
   }
 }
 
-
-void identif(){
+void identif()
+{
   enc_ant = enc.read();
-    while (enc.read() - enc_ant <= enc_fre)
-    {
-      mot1_hor(vel_esq);
-      mot2_hor(vel_dir);
-    }
+  while (enc.read() - enc_ant <= enc_fre)
+  {
+    mot1_hor(vel_esq);
+    mot2_hor(vel_dir);
+  }
 
-    mot1_par();
-    mot2_par();
-    delay(1000);
+  mot1_par();
+  mot2_par();
+  delay(1000);
 
-    if (digitalRead(s_norte) == 0)
-      frente = true;
-    Serial.print("valor do frente: ");
-    Serial.println(frente);
-    delay(2000);
-
-    enc_ant = enc.read();
-      while (enc.read() - enc_ant <= enc_90)
-    {
-      mot1_hor(vel_esq);
-      mot2_anti(vel_dir);
-      Serial.print("dando 90");
-      Serial.println(enc.read());
-      delay(10);
-      mot1_par();
-    mot2_par();
-    delay(10);
-
-    }
-
-    //enc_ant = enc.read();
-    while (enc.read() - enc_ant <= enc_90)
-    {
-      mot1_hor(vel_esq);
-      mot2_anti(vel_dir);
-      if(digitalRead(s_leste) == 0){
-        direita = true;
-
-      }
-      Serial.print("dando 90");
-      Serial.println(enc.read());
-    } //IR PARA DIREITA UM POUCO, E CASO JA TER VISTO O PRETO IR DIRETO PARA ESQUERDA, EM BASE DE QUANTO ELE FOI PELA DIREITA
-    
-    mot1_par();
-    mot2_par();
-    Serial.print("valor do direita: ");
-    Serial.println(direita);
-    delay(2000);
-
-    enc_ant = enc.read();
-    while (enc.read() - enc_ant <= enc_90)
-    {
-      mot1_hor(vel_esq);
-      mot2_anti(vel_dir);
-      Serial.print("dando 180");
-      Serial.println(enc.read());
-    }
-
-    enc_ant = enc.read();
-    while (enc.read() - enc_ant <= enc_90)
+  if (digitalRead(s_norte) == 0)
+    frente = true;
+  Serial.print("valor do frente: ");
+  Serial.println(frente);
+  delay(2000);
+  Serial.println(enc.read()); //532
+  enc_ant = enc.read();/*
+  while ((enc.read() - enc_ant >= enc_90) || (enc.read() - enc_ant <= enc_90_p))
+  {
+    if(enc.read() - enc_ant >= enc_90)
     {
       mot1_hor(vel_esq);
       mot2_anti(vel_dir);
       if (digitalRead(s_leste) == 0)
-        esquerda = true;
-      Serial.print("dando 180");
+      {
+        direita = true;
+      }
+      Serial.print("dando 90 ");
       Serial.println(enc.read());
     }
-
-    mot1_par();
-    mot2_par();
-    Serial.print("valor do esquerda: ");
-    Serial.println(esquerda);
-    delay(2000);
-
-    enc_ant = enc.read();
-    while (enc.read() - enc_ant <= enc_90)
+    else if(enc_ant - enc.read() <= enc_90_p)
     {
-      mot1_hor(vel_dir);
-      mot2_anti(vel_dir);
-      Serial.print("Virando para direita");
+      mot1_anti(vel_esq);
+      mot2_hor(vel_dir);
+      Serial.print("voltando 90 ");
       Serial.println(enc.read());
     }
+  }*/
 
+  while((enc.read() - enc_ant <= enc_90) || (enc.read() - enc_ant >= enc_90_p)){
+    if(enc.read() - enc_ant <= enc_90){
+      mot1_hor(vel_esq);
+      mot2_anti(vel_dir);
+      Serial.print("dando 90 ");
+      Serial.println(enc.read());
+    }
+    else if(enc.read() - enc_ant >= enc_90_p){
+      mot1_anti(vel_esq);
+      mot2_hor(vel_dir);
+      Serial.print("voltando 90 ");
+      Serial.println(enc.read());
+    }
+  }
+  // IR PARA DIREITA UM POUCO, E CASO JA TER VISTO O PRETO IR DIRETO PARA ESQUERDA, EM BASE DE QUANTO ELE FOI PELA DIREITA
+
+  mot1_par();
+  mot2_par();
+  Serial.print("valor do direita: ");
+  Serial.println(direita);
+  delay(2000);
+
+  enc_ant = enc.read();
+  while (enc.read() - enc_ant <= enc_90)
+  {
+    mot1_hor(vel_esq);
+    mot2_anti(vel_dir);
+    Serial.print("dando 180");
+    Serial.println(enc.read());
+  }
+
+  enc_ant = enc.read();
+  while (enc.read() - enc_ant <= enc_90)
+  {
+    mot1_hor(vel_esq);
+    mot2_anti(vel_dir);
+    if (digitalRead(s_leste) == 0)
+      esquerda = true;
+    Serial.print("dando 180");
+    Serial.println(enc.read());
+  }
+
+  mot1_par();
+  mot2_par();
+  Serial.print("valor do esquerda: ");
+  Serial.println(esquerda);
+  delay(2000);
+
+  enc_ant = enc.read();
+  while (enc.read() - enc_ant <= enc_90)
+  {
+    mot1_hor(vel_dir);
+    mot2_anti(vel_dir);
+    Serial.print("Virando para direita");
+    Serial.println(enc.read());
+  }
 
   if ((frente == true & esquerda == true & direita == false) || (frente == false & esquerda == true & direita == false))
-    {
-      esq_90();
-    }
-    else if ((frente == true & esquerda == false & direita == true) || (frente == false & esquerda == false & direita == true))
-    {
-      dir_90();
-    }
-    else
-    {
-      encruzilhada();
-    }
-
+  {
+    esq_90();
+  }
+  else if ((frente == true & esquerda == false & direita == true) || (frente == false & esquerda == false & direita == true))
+  {
+    dir_90();
+  }
+  else
+  {
+    encruzilhada();
+  }
 }
 #endif
