@@ -608,7 +608,7 @@
           mot1_hor(j);
           mot2_anti(j);
         }
-        delay(100);
+        delay(100); //h
       }
     }
   }
