@@ -3,6 +3,11 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 
+#define W 128
+#define H 64
+#define lw 6
+#define lh 8
+
 Adafruit_SSD1306 display(128, 64, &Wire, -1);
 
 /*

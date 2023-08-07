@@ -4,6 +4,8 @@
 #include <Ultrasonic.h> //Incluindo a biblioteca do ultrasonic de erik simoes
 #include <Encoder.h>
 
+
+
 // Definindo as portas dos sensores e da portas H
 #define s_oeste 4     // amarelo, OUT1
 #define s_noroeste 8  // branco, OUT2
@@ -17,7 +19,8 @@
 #define mot_in3 6  // azul, esquerda, frente
 #define mot_in4 9  // verde e amarelo, esquerda, tras
 
-// Definindo portas para o sensor de cor, o pin 2 e o led
+// Definindo portas para o sensor de cor, o pin 7 e o led
+#define led_g 7
 #define esq A1
 #define dir A0
 int m_esq = 0;

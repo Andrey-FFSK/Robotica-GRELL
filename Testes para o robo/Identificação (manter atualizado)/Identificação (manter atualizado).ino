@@ -1,11 +1,5 @@
-#include <Ultrasonic.h>
-#include <Adafruit_GFX.h>
-#include <Adafruit_SSD1306.h>
-
-#define W 128
-#define H 64
-#define lw 6
-#define lh 8
+#include " Oled.h"
+#include "Include.h"
 
 const unsigned char aeia[] PROGMEM = {
     // 'bfcaab3c7ed1666ef086e690ec778ad0, 32x32px
@@ -23,41 +17,14 @@ const unsigned char aeiapeqena[] PROGMEM = {
     0x00, 0x00, 0x00, 0x04, 0x00, 0x20, 0x04, 0x2a, 0x2f, 0xc8, 0x3d, 0xc0, 0x3e, 0xec, 0x74, 0x88,
     0x79, 0x88, 0x7b, 0x90, 0x7b, 0x98, 0x3f, 0x98, 0x17, 0x10, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00};
 
-// Definindo as portas dos sensores e da portas H
-#define s_oeste 4     // amarelo, OUT1
-#define s_noroeste 8 // branco, OUT2
-#define s_norte 11    // verde, OUT3
-#define s_nordeste 12 // roxo, OUT4
-#define s_leste 13    // verde, OUT5
-
-// Definindo Sensor de cor e led acoplado a ele
-#define led_g 7
-#define esq A1
-#define dir A0
-
-// Motor 1 = Direita; Motor 2 = Esquerda
-#define mot_in1 10 // amarelo, direita, tras
-#define mot_in2 5 // marrom, direita, frente
-#define mot_in3 6 // azul, esquerda, frente
-#define mot_in4 9 // verde e amarelo, esquerda, tras
-
 // Usando array para colocar todos os pinos, coloquei os sensores invertido por causa do BitSwift em baixo
 const int pinos[] = {s_oeste, s_noroeste, s_norte, s_nordeste, s_leste, esq, dir, led_g, mot_in1, mot_in2, mot_in3, mot_in4};
-Ultrasonic sensor(A2, A3);
 
-// Definindo variaveis
-int temp = 500;
-int ant = 0;
 
-int o = 180;
+int j = 110;
 float tensaoA0;
 
 int n;
-
-int m_esq = 0;
-int m_dir = 0;
-
-Adafruit_SSD1306 display(W, H, &Wire, -1);
 
 void setup()
 {
@@ -80,11 +47,11 @@ void loop()
 
   //analogWrite(mot_in2, o);
 
-  //mot1_hor(o);
-  //mot2_hor(o);
+  //mot1_hor(j);
+  //mot2_hor(j);
 
-  // mot1_anti(o);
-  // mot2_anti(o);
+  // mot1_anti(j);
+  // mot2_anti(j);
 
   byte leitura = 0;
   for (int i = 0; i < 5; i++)
