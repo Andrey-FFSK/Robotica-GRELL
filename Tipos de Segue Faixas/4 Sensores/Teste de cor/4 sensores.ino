@@ -25,8 +25,8 @@ int m_dir = 0;
 #define esq_branco 700
 #define dir_branco 700
 
-#define esq_cinza 920 // 900 DEU CERTO O VERDE
-#define dir_cinza 920 // 900 DEU CERTO O VERDE
+#define esq_cinza 900 // 900 DEU CERTO O VERDE
+#define dir_cinza 900 // 900 DEU CERTO O VERDE
 
 #define esq_verde 880 // 880 DEU CERTO O VERDE
 #define dir_verde 880 // 880 DEU CERTO O VERDE
@@ -36,9 +36,9 @@ const int pinos[] = {s_leste, s_nordeste, s_noroeste, s_oeste, s_norte, esq, dir
 
 #define j 110 // PWM usado para a velocidade, min == 0 e max == 255
 int enc_ant = 0;
-#define enc_fre 300
+#define enc_fre 500
 #define enc_90 420
-#define enc_peq 150
+#define enc_peq 250
 #define enc_pas 50
 Ultrasonic sensor(A2, A3); // trig == 7; echo == 4 | trig = amarel e ech = marrm
 
