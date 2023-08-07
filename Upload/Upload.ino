@@ -20,8 +20,6 @@ const unsigned char aeiapeqena[] PROGMEM = {
 // Usando array para colocar todos os pinos, coloquei os sensores invertido por causa do BitSwift em baixo
 const int pinos[] = {s_oeste, s_noroeste, s_norte, s_nordeste, s_leste, esq, dir, led_g, mot_in1, mot_in2, mot_in3, mot_in4};
 
-
-int j = 110;
 float tensaoA0;
 
 int n;
@@ -127,39 +125,6 @@ float div(uint8_t A0)
     delay(5);
   }
   return total / (float)12;
-}
-
-// Inicio das funções, para cada caso, totalizando 6 funções diferente
-void mot1_anti(int velo) // Função para o motor da esquerda girar no sentido anti horario com a velocidade variavel
-{
-  analogWrite(mot_in1, velo);
-  analogWrite(mot_in2, 0);
-}
-void mot1_hor(int velo) // Função para o motor da esquerda girar no sentido horario com a velocidade variavel
-{
-  analogWrite(mot_in1, 0);
-  analogWrite(mot_in2, velo);
-}
-void mot1_par() // Função para o motor da esquerda ficar parado
-{
-  analogWrite(mot_in1, 0);
-  analogWrite(mot_in2, 0);
-}
-
-void mot2_anti(int velo) // Função para o motor da direita girar no sentido anti horario com a velocidade variavel
-{
-  analogWrite(mot_in3, 0);
-  analogWrite(mot_in4, velo);
-}
-void mot2_hor(int velo) // Função para o motor da direita girar no sentido horario com a velocidade variavel
-{
-  analogWrite(mot_in3, velo);
-  analogWrite(mot_in4, 0);
-}
-void mot2_par() // Função para o motor da direita ficar parado
-{
-  analogWrite(mot_in3, 0);
-  analogWrite(mot_in4, 0);
 }
 
 char *binString(unsigned short n)
