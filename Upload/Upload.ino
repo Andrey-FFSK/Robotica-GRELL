@@ -45,8 +45,8 @@ void loop()
 
   //analogWrite(mot_in2, o);
 
-  //mot1_hor(vel_esq);
-  //mot2_hor(vel_dir);
+  mot1_hor(vel_esq);
+  mot2_hor(vel_dir);
 
   // mot1_anti(vel_esq);
   // mot2_anti(vel_dir);
@@ -57,10 +57,9 @@ void loop()
   leitura = (~leitura) & 0b00011111;
   tensaoA0 = (div(A0) * 5) / 1024.0;
   tensaoA0 *= 8.4;
-  m_esq = map(constrain(analogRead(esq), 350, 518), 350, 518, 0, 1023);
-    m_dir = map(constrain(analogRead(dir), 169, 300), 169, 300, 0, 1023);
+  sensi();
 
-
+  
   display.setCursor(0, lh * 2);
   display.print("Leitura: ");
   for (int i = 11; i <= 15; i++)

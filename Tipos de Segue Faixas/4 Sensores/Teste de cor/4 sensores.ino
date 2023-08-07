@@ -29,8 +29,7 @@ void loop()
     leitura |= digitalRead(pinos[i]) << i; // Colocando as entrada da tabela da verdade usando um bitshift automatico, o valor do i depende dos sensores
   leitura = (~leitura) & (0b00001111);     // Colocando um inversor para que funcione com a tabela da verdade, pq o sensor dectectar no branco, AND uma mascara para ir so os bits que eu quero
   digitalWrite(7, 1);
-  m_esq = map(constrain(analogRead(esq), 350, 518), 350, 518, 0, 1023);
-  m_dir = map(constrain(analogRead(dir), 169, 300), 169, 300, 0, 1023);
+  sensi();
 
   // Serial.print(leitura, BIN);
   // Serial.print(" sens: ");
@@ -130,8 +129,7 @@ void loop()
     mot1_par();
     mot2_par();
     delay(1000);
-    m_esq = map(constrain(analogRead(esq), 350, 518), 350, 518, 0, 1023);
-  m_dir = map(constrain(analogRead(dir), 169, 300), 169, 300, 0, 1023);
+    sensi();
     digitalWrite(7, 0);
     /*
     display.clearDisplay();
@@ -194,8 +192,7 @@ void loop()
     mot1_par();
     mot2_par();
     delay(1000);
-    m_esq = map(constrain(analogRead(esq), 350, 518), 350, 518, 0, 1023);
-  m_dir = map(constrain(analogRead(dir), 169, 300), 169, 300, 0, 1023);
+    sensi();
     digitalWrite(7, 0);
     /*
         display.clearDisplay();
@@ -252,8 +249,7 @@ void loop()
     mot1_par();
     mot2_par();
     delay(1000);
-    m_esq = map(constrain(analogRead(esq), 350, 518), 350, 518, 0, 1023);
-  m_dir = map(constrain(analogRead(dir), 169, 300), 169, 300, 0, 1023);
+    sensi();
     digitalWrite(7, 0);
     /*
         display.clearDisplay();

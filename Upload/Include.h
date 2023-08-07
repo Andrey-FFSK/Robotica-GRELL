@@ -35,7 +35,7 @@ int m_dir = 0;
 #define esq_verde 880 // 880 DEU CERTO O VERDE
 #define dir_verde 880 // 880 DEU CERTO O VERDE
 
-#define vel_esq 110 // PWM usado para a velocidade, min == 0 e max == 255
+#define vel_esq 120 // PWM usado para a velocidade, min == 0 e max == 255
 #define vel_dir 110
 int enc_ant = 0;
 #define enc_fre 500
@@ -81,6 +81,11 @@ void mot2_par() // Função para o motor da direita ficar parado
 {
   analogWrite(mot_in1, 0);
   analogWrite(mot_in2, 0);
+}
+
+void sensi(){
+  m_esq = map(constrain(analogRead(esq), 350, 518), 350, 518, 0, 1023);
+  m_dir = map(constrain(analogRead(dir), 169, 300), 169, 300, 0, 1023);
 }
 
 void desv_d(int velo) // Função para o robo desviar pela direita o obstaculo
