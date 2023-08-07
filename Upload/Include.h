@@ -89,6 +89,7 @@ void sensi()
   m_dir = map(constrain(analogRead(dir), 169, 300), 169, 300, 0, 1023);
 }
 
+
 void desv_d(int velo) // Função para o robo desviar pela direita o obstaculo
 {
   mot1_par();
