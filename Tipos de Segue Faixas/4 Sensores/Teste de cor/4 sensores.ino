@@ -1,4 +1,4 @@
-//#include "C:\\Users\\Professor\\Desktop\\BKP\\Robotica-GRELL\\Testes para o robo\\include\\Funções e Variaveis.h"
+
 #include "Include.h"
 // Usando array para colocar todos os pinos, coloquei os sensores em uma certa posição por causa do BitSwift em baixo
 const int pinos[] = {s_leste, s_nordeste, s_noroeste, s_oeste, s_norte, esq, dir, 7, mot_in1, mot_in2, mot_in3, mot_in4};
@@ -20,9 +20,6 @@ void setup()
 }
 void loop()
 {
-
-  // Funções do sensor de cor ficar mais amplo, SEMPRE MUDAR
-
   // Essa parte é o bitSwift, criar uma variavel leitura do tipo byte, porem a gente so usa os bits dessa varaivel, a quantidade de bits depende de quantos sensores estao usando
   byte leitura = 0; // Definir sempre 0 quando definir algo como o for abaixo
   for (int i = 0; i < 4; i++)
@@ -35,34 +32,15 @@ void loop()
   // Serial.print(" sens: ");
 
   // if (sensor.read() <= 18) desv_d(j); // Se o sensor dectar que esta distancia ativa a função de desviar
-  /*(if (m_esq <= esq_branco)
-  {
-    mot1_anti(vel_esq);
-    mot2_hor(vel_dir);
-    Serial.print("ajustando para direita: ");
-    Serial.print(m_esq);
-    Serial.print("(");
-    Serial.println(analogRead(esq));
-  }
-  else if (m_dir <= dir_branco)
-  {
-    mot1_hor(vel_esq);
-    mot2_anti(vel_dir);
-    Serial.print("ajustndo para esquerda: ");
-    Serial.print(m_dir);
-    Serial.print("(");
-    Serial.println(analogRead(dir));
-  }*/
-
+  
   // Condições que usa a melhor situação dos sensores, o bit mais da direita é o s_leste e o bit mais na esquerda é o s_oeste
   // Algumas tem if com OR por conta que eles fazem a mesma coisa na condição.
   // Condição de 0011 ou 1100: é o algoritimo de 90 graus, pensando que so vai ativar no 90
-  if ((m_dir <= dir_cinza && m_dir >= dir_verde) /*| (leitura == 0b0001)*/) // Condição 2
+  if ((analogRead(dir) <= dir_cinza && analogRead(dir) >= dir_verde) /*| (leitura == 0b0001)*/) // Condição 2
   {
     mot1_hor(vel_esq);
     mot2_anti(vel_dir);
     /*
-    Serial.println("oi");
     display.clearDisplay();
     display.setCursor(0, 0);
     display.print("Esq: ");
@@ -76,7 +54,6 @@ void loop()
     display.print("(");
     display.print(analogRead(dir));
     display.println(")");
-    Serial.println("oia");
     display.display();*/
 
     Serial.print("leitura == 0010 / ajustando para direita: ");
@@ -85,7 +62,7 @@ void loop()
     Serial.print(analogRead(dir));
     Serial.println(")");
   }
-  else if ((m_esq <= esq_cinza && m_esq >= esq_verde) /*| (leitura == 0b1000)*/) // Condição 5
+  else if ((analogRead(esq) <= esq_cinza && analogRead(esq) >= esq_verde) /*| (leitura == 0b1000)*/) // Condição 5
   {
     mot1_anti(vel_esq);
     mot2_hor(vel_dir);
@@ -158,7 +135,7 @@ void loop()
     Serial.print(analogRead(dir));
     Serial.println(")");
 
-    dir_90();
+    encruzilhada(); //virar a direita
   }
   /*
     if ((m_dir <= branco) & (m_dir >= preto))
@@ -220,7 +197,7 @@ void loop()
     Serial.print(analogRead(dir));
     Serial.println(")");
 
-    esq_90();
+    encruzilhada(); //virar a esquerda
   }
 
   /*
@@ -277,12 +254,9 @@ void loop()
     Serial.print(analogRead(dir));
     Serial.println(")");
 
-    encruzilhada();
+    encruzilhada(); //encruzilhada
   }
 }
 /*
-LEMBRAR DAS VARIAVEIS COM ENCRUZILHADA
-nao esta usando while
 COMO ELE VAI PARAR?
-esquerda alta e direita baixa
 */

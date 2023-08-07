@@ -27,11 +27,11 @@ int m_dir = 0;
 #define esq_branco 700
 #define dir_branco 700
 
-#define esq_cinza 900 // 900 DEU CERTO O VERDE
-#define dir_cinza 900 // 900 DEU CERTO O VERDE
+#define esq_cinza  // 900 DEU CERTO O VERDE
+#define dir_cinza 300 // 900 DEU CERTO O VERDE
 
-#define esq_verde 880 // 880 DEU CERTO O VERDE
-#define dir_verde 880 // 880 DEU CERTO O VERDE
+#define esq_verde 470 // 880 DEU CERTO O VERDE
+#define dir_verde 230 // 880 DEU CERTO O VERDE
 
 #define vel_esq 130 // PWM usado para a velocidade, min == 0 e max == 255
 #define vel_dir 110
@@ -41,7 +41,7 @@ int enc_ant = 0;
 #define enc_90 540
 #define enc_90_p 560
 #define enc_peq 250
-#define enc_pas 50
+#define enc_pas 100
 
 bool frente = false;
 bool direita = false;
