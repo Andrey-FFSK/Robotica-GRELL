@@ -390,6 +390,41 @@ void dir_90()
 
 void identif(){
   enc_ant = enc.read();
+    while (enc.read() - enc_ant <= enc_fre)
+    {
+      mot1_hor(vel_esq);
+      mot2_hor(vel_dir);
+    }
+
+    mot1_par();
+    mot2_par();
+    delay(1000);
+    if (digitalRead(s_norte) == 0)
+      frente = true;
+    Serial.print("valor do frente: ");
+    Serial.println(frente);
+    delay(2000);
+
+    enc_ant = enc.read();
+    while (enc.read() - enc_ant <= enc_fre)
+    {
+      mot1_hor(vel_esq);
+      mot2_anti(vel_dir);
+      if(digitalRead(s_leste) == 0){
+        direita = true;
+        enc_ant = 0;
+      }
+      Serial.print("dando 90");
+      Serial.println(enc.read());
+    } //IR PARA DIREITA UM POUCO, E CASO JA TER VISTO O PRETO IR DIRETO PARA ESQUERDA, EM BASE DE QUANTO ELE FOI PELA DIREITA
+    
+    mot1_par();
+    mot2_par();
+    Serial.print("valor do direita: ");
+    Serial.println(direita);
+    delay(2000);
+
+    enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_90)
     {
       mot1_hor(vel_esq);
@@ -423,6 +458,7 @@ void identif(){
       Serial.print("Virando para direita");
       Serial.println(enc.read());
     }
+
 
   if ((frente == true & esquerda == true & direita == false) || (frente == false & esquerda == true & direita == false))
     {
