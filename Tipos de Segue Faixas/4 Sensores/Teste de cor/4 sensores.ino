@@ -31,7 +31,7 @@ void loop()
   // Serial.print(leitura, BIN);
   // Serial.print(" sens: ");
 
-  // if (sensor.read() <= 18) desv_d(j); // Se o sensor dectar que esta distancia ativa a função de desviar
+  // if (ult_meio.read() <= 18) desv_d(j); // Se o sensor dectar que esta distancia ativa a função de desviar
   
   // Condições que usa a melhor situação dos sensores, o bit mais da direita é o s_leste e o bit mais na esquerda é o s_oeste
   // Algumas tem if com OR por conta que eles fazem a mesma coisa na condição.

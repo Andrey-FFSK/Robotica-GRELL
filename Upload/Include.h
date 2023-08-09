@@ -47,7 +47,7 @@ bool frente = false;
 bool direita = false;
 bool esquerda = false;
 
-Ultrasonic sensor(A2, A3); // trig == 7; echo == 4 | trig = amarel e ech = marrm
+Ultrasonic ult_meio(A2, A3); // trig == 7; echo == 4 | trig = amarel e ech = marrm
 Encoder enc(3, 2);
 
 // Inicio das funções, para cada caso, totalizando 6 funções diferente
