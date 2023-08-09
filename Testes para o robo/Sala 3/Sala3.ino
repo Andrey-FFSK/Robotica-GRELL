@@ -66,7 +66,7 @@ void loop()
             Serial.println(enc.read());
         }
     }
-    while (ult_meio.read()  >= perto) //preparativo para a sala3_pas
+    while (ult_meio.read() >= perto) //preparativo para a sala3_pas
     {
         mot1_hor(vel_esq);
         mot2_hor(vel_dir);
