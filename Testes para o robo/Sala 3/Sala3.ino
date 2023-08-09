@@ -2,17 +2,6 @@
 
 const int pinos[] = {s_leste, s_nordeste, s_noroeste, s_oeste, s_norte, esq, dir, led_g, mot_in1, mot_in2, mot_in3, mot_in4};
 
-#define perto 2
-#define perto_garra 10
-
-#define sensi_meio A3
-#define meio_branco 700
-
-#define vel_esq_p 100
-#define vel_esq_g 220
-#define vel_dir_p 80
-#define vel_dir_g 200
-
 int enc_atual = 0;
 bool pos_esq = false;
 bool pos_dir = false;
@@ -87,7 +76,7 @@ void loop()
 
     /*
     sala3_frente();
-    if (sensi_meio <= meio_branco) // chengando em uma parede na frente, podendo ser Area de resgate ou a parede mesmo
+    if (meio <= meio_branco) // chengando em uma parede na frente, podendo ser Area de resgate ou a parede mesmo
     {
         // Area de resgate
         if (pos_esq = true) // Esta no canto esquerdo

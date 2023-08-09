@@ -18,14 +18,16 @@
 #define mot_in4 9  // verde e amarelo, esquerda, tras
 
 // Definindo portas para o sensor de cor, o pin 7 e o led
-#define led_g 7
-#define esq A1
-#define dir A0
-int m_esq = 0;
+#define led_g 7 // Led para o sensor de cor
+#define esq A1 // Sensor que fica na esq
+#define dir A0 // Sensor que fica na dir
+#define meio A3 // sensor que fica apontado pra frente no meio
+int m_esq = 0; //Declarando o map e constrain do sensor
 int m_dir = 0;
 
-#define esq_branco 700
+#define esq_branco 700 //Valor para verificar se e branco ou nao
 #define dir_branco 700
+#define meio_branco 700
 
 #define esq_cinza 300 // 900 DEU CERTO O VERDE
 #define dir_cinza 300 // 900 DEU CERTO O VERDE
@@ -34,10 +36,14 @@ int m_dir = 0;
 #define dir_verde 230 // 880 DEU CERTO O VERDE
 
 #define vel_esq 130 // PWM usado para a velocidade, min == 0 e max == 255
-#define vel_dir 110
+#define vel_dir 110 // PWM da direita
+#define vel_esq_p 100 //
+#define vel_esq_g 220 // Valores para um sistema de ir so pra frente
+#define vel_dir_p 80  //
+#define vel_dir_g 200 // 
 
-int enc_ant = 0;
-#define enc_fre 500
+int enc_ant = 0; // Valor do encoder anterior
+#define enc_fre 500 // Valores de encoder
 #define enc_90 540
 #define enc_90_p 560
 #define enc_peq 250
@@ -48,6 +54,8 @@ bool direita = false;
 bool esquerda = false;
 
 Ultrasonic ult_meio(A2, A3); // trig == 7; echo == 4 | trig = amarel e ech = marrm
+#define perto 2 // Valor para ficar perto o suficente
+#define perto_garra 10 //Valor para caso a garra esteja aberta
 Encoder enc(3, 2);
 
 // Inicio das funções, para cada caso, totalizando 6 funções diferente

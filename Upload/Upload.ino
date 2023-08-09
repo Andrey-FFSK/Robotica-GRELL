@@ -1,7 +1,7 @@
 
 #include "Include.h"
 // Usando array para colocar todos os pinos, coloquei os sensores em uma certa posição por causa do BitSwift em baixo
-const int pinos[] = {s_leste, s_nordeste, s_noroeste, s_oeste, s_norte, esq, dir, 7, mot_in1, mot_in2, mot_in3, mot_in4};
+const int pinos[] = {s_leste, s_nordeste, s_noroeste, s_oeste, s_norte, esq, dir, led_g, mot_in1, mot_in2, mot_in3, mot_in4};
 
 // Adafruit_SSD1306 display(128, 64, &Wire, -1);
 
@@ -31,7 +31,7 @@ void loop()
   // Serial.print(leitura, BIN);
   // Serial.print(" sens: ");
 
-  // if (sens_meio.read() <= 18) desv_d(j); // Se o sensor dectar que esta distancia ativa a função de desviar
+  // if (ult_meio.read() <= 18) desv_d(j); // Se o sensor dectar que esta distancia ativa a função de desviar
   
   // Condições que usa a melhor situação dos sensores, o bit mais da direita é o s_leste e o bit mais na esquerda é o s_oeste
   // Algumas tem if com OR por conta que eles fazem a mesma coisa na condição.
