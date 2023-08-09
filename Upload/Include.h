@@ -27,7 +27,7 @@ int m_dir = 0;
 #define esq_branco 700
 #define dir_branco 700
 
-#define esq_cinza  // 900 DEU CERTO O VERDE
+#define esq_cinza 300 // 900 DEU CERTO O VERDE
 #define dir_cinza 300 // 900 DEU CERTO O VERDE
 
 #define esq_verde 470 // 880 DEU CERTO O VERDE

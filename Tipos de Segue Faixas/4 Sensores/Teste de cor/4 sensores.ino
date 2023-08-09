@@ -1,7 +1,7 @@
 
 #include "Include.h"
 // Usando array para colocar todos os pinos, coloquei os sensores em uma certa posição por causa do BitSwift em baixo
-const int pinos[] = {s_leste, s_nordeste, s_noroeste, s_oeste, s_norte, esq, dir, 7, mot_in1, mot_in2, mot_in3, mot_in4};
+const int pinos[] = {s_leste, s_nordeste, s_noroeste, s_oeste, s_norte, esq, dir, led_g, mot_in1, mot_in2, mot_in3, mot_in4};
 
 // Adafruit_SSD1306 display(128, 64, &Wire, -1);
 
@@ -62,7 +62,7 @@ void loop()
     Serial.print(analogRead(dir));
     Serial.println(")");
   }
-  else if (analogRead(esq) <= esq_cinza && analogRead(esq) >= esq_verde) // Condição 5
+  else if ((analogRead(esq) <= esq_cinza) & (analogRead(esq) >= esq_verde)) // Condição 5
   {
     mot1_anti(vel_esq);
     mot2_hor(vel_dir);

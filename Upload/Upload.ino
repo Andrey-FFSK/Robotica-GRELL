@@ -62,7 +62,7 @@ void loop()
     Serial.print(analogRead(dir));
     Serial.println(")");
   }
-  else if (analogRead(esq) <= esq_cinza && analogRead(esq) >= esq_verde) // Condição 5
+  else if ((analogRead(esq) <= esq_cinza) & (analogRead(esq) >= esq_verde)) // Condição 5
   {
     mot1_anti(vel_esq);
     mot2_hor(vel_dir);
