@@ -162,7 +162,7 @@ void sala3_frente(int dis, int temp)
                 mot2_hor(vel_dir_g);
             }
         }
-    else
+    else if (ult_esq.read() <= ult_dir.read())
         while (ult_meio.read() >= perto) // Ficar encostado na parede da direita
         {
             pos_dir = true;
@@ -173,6 +173,11 @@ void sala3_frente(int dis, int temp)
                 mot2_hor(vel_dir_p);
             }
         }
+    else
+    {
+        mot1_hor(vel_esq);
+        mot2_hor(vel_dir);
+    }
     mot1_par();
     mot2_par();
     delay(temp);
