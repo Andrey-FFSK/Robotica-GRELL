@@ -29,11 +29,11 @@ int m_dir = 0;
 #define dir_branco 700
 #define meio_branco 700
 
-#define esq_cinza 300 // 900 DEU CERTO O VERDE
-#define dir_cinza 300 // 900 DEU CERTO O VERDE
+#define esq_cinza 447 // 900 DEU CERTO O VERDE
+#define dir_cinza 230 // 900 DEU CERTO O VERDE
 
-#define esq_verde 470 // 880 DEU CERTO O VERDE
-#define dir_verde 230 // 880 DEU CERTO O VERDE
+#define esq_verde 400 // 880 DEU CERTO O VERDE
+#define dir_verde 190 // 880 DEU CERTO O VERDE
 
 #define vel_esq 130   // PWM usado para a velocidade, min == 0 e max == 255
 #define vel_dir 110   // PWM da direita
@@ -93,8 +93,8 @@ void mot2_par() // Função para o motor da direita ficar parado
 
 void sensi()
 {
-  m_esq = map(constrain(analogRead(esq), 350, 518), 350, 518, 0, 1023);
-  m_dir = map(constrain(analogRead(dir), 169, 300), 169, 300, 0, 1023);
+  m_esq = map(constrain(analogRead(esq), 300, 456), 300, 456, 0, 1023);
+  m_dir = map(constrain(analogRead(dir), 135, 246), 135, 246, 0, 1023);
 }
 
 void desv_d(int velo) // Função para o robo desviar pela direita o obstaculo
