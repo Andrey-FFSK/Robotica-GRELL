@@ -13,7 +13,7 @@ const int pinos[] = {s_leste, s_nordeste, s_noroeste, s_oeste, s_norte, esq, dir
 #define vel_dir_p 80
 #define vel_dir_g 200
 
-int enc_atual = 0; 
+int enc_atual = 0;
 bool pos_esq = false;
 bool pos_dir = false;
 bool pos;
@@ -39,11 +39,11 @@ void loop()
         mot2_hor(velo);
         Serial.print("andando na frente");
         Serial.println(enc.read());
-    } 
-    if (ult_esq.read() >= ult_dir.read()) //Vendo qual parte é mais perto dele
-        pos = true; //ta mais perto da direita
+    }
+    if (ult_esq.read() >= ult_dir.read()) // Vendo qual parte é mais perto dele
+        pos = true;                       // ta mais perto da direita
     else
-        pos = false; //ta mais perto da esquerda
+        pos = false; // ta mais perto da esquerda
     if (pos = false) // ajeitando para a função sala3_pas
     {
         enc_ant = enc.read();
@@ -66,33 +66,24 @@ void loop()
             Serial.println(enc.read());
         }
     }
-    while (ult_meio.read() >= perto) //preparativo para a sala3_pas
+    while (ult_meio.read() >= perto) // preparativo para a sala3_pas
     {
         mot1_hor(vel_esq);
         mot2_hor(vel_dir);
     }
     sala3_pas(); // ver função
-    while(ult_meio.read() >= perto_garra)
+    while (ult_meio.read() >= perto_garra)
     {
         mot1_hor(vel_esq);
         mot2_hor(vel_dir);
     }
-    //fechar garra
-    while (ult_meio.read()>= perto) //preparativo para a sala3_pas
+    // fechar garra
+    while (ult_meio.read() >= perto) // preparativo para a sala3_pas
     {
         mot1_hor(vel_esq);
         mot2_hor(vel_dir);
     }
     sala3_pas();
-
-
-
-
-
-
-
-
-
 
     /*
     sala3_frente();
@@ -160,24 +151,26 @@ void loop()
 
 void sala3_frente(int dis, int temp)
 {
-    if (ult_esq.read() >= ult_dir.read())       // Vendo qual lado da parede ele estar
-        while (ult_meio.read()>= perto) // Ficar encostado na parede da esquerda
+    if (ult_esq.read() >= ult_dir.read()) // Vendo qual lado da parede ele estar
+        while (ult_meio.read() >= perto)  // Ficar encostado na parede da esquerda
         {
             pos_esq = true;
             enc_ant = enc.read();
-            while(enc.read() - enc_ant <= dis){
-            mot1_hor(vel_esq_p);
-            mot2_hor(vel_dir_g);
+            while (enc.read() - enc_ant <= dis)
+            {
+                mot1_hor(vel_esq_p);
+                mot2_hor(vel_dir_g);
             }
         }
     else
-        while (ult_meio.read()>= perto) // Ficar encostado na parede da direita
+        while (ult_meio.read() >= perto) // Ficar encostado na parede da direita
         {
             pos_dir = true;
             enc_ant = enc.read();
-            while(enc.read() - enc_ant <= dis){
-            mot1_hor(vel_esq_g);
-            mot2_hor(vel_dir_p);
+            while (enc.read() - enc_ant <= dis)
+            {
+                mot1_hor(vel_esq_g);
+                mot2_hor(vel_dir_p);
             }
         }
     mot1_par();
@@ -197,7 +190,7 @@ void sala3_pas() // Pos = false é esq; Pos = true é dir;
             Serial.print("Virando para direita");
             Serial.println(enc.read());
         }
-        //Abrir garra
+        // Abrir garra
         sala3_frente(enc_peq, 1000);
         enc_ant = enc.read();
         while (enc.read() - enc_ant <= enc_90)
@@ -209,7 +202,8 @@ void sala3_pas() // Pos = false é esq; Pos = true é dir;
         }
         pos = true;
     }
-    else{
+    else
+    {
         enc_ant = enc.read();
         while (enc_ant - enc.read() <= enc_90)
         {
@@ -218,7 +212,7 @@ void sala3_pas() // Pos = false é esq; Pos = true é dir;
             Serial.print("Girando 90 para esquerda: ");
             Serial.println(enc.read());
         }
-        //Abrir garra
+        // Abrir garra
         sala3_frente(enc_peq, 1000);
         enc_ant = enc.read();
         while (enc_ant - enc.read() <= enc_90)
