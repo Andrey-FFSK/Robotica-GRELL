@@ -51,9 +51,32 @@ void loop()
             mot1_hor(vel_esq_g);
             mot2_hor(vel_dir_p);
         }
-    if (sensi_meio <= meio_branco)
+    if (sensi_meio <= meio_branco) // Area de resgate
     {
-        // Area de resgate
+        if (pos_esq = true) // Esta no canto esquerdo
+        {
+            enc_ant = enc.read();
+            while (enc.read() - enc_ant <= enc_peq)
+            {
+                mot1_hor(vel_esq);
+                mot2_anti(vel_dir);
+            }
+            while (ult_meio >= perto) // Ficar encostado na parede da esquerda
+            {
+                pos_esq = true;
+                mot1_hor(vel_esq_p);
+                mot2_hor(vel_dir_g);
+            }
+        }
+        else // Esta no canto direito
+        {
+            enc_ant = enc.read();
+            while (enc_ant - eenc.read() <= enc_peq)
+            {
+                mot1_anti(vel_esq);
+                mot2_hor(vel_dir);
+            }
+        }
     }
     else // Parede branca
     {
@@ -69,7 +92,7 @@ void loop()
                 Serial.println(enc.read());
             }
         }
-        else
+        else // Ele esta no canto da direita
         {
             enc_ant = enc.read();
             while (enc_ant - enc.read() <= enc_90)
