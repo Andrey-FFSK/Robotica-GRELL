@@ -174,24 +174,24 @@ void encruzilhada()
       Serial.print("virando para esquerda");
       Serial.println(enc.read());
     }
-    while (analogRead(esq) == esq_branco)
-      {
-        mot1_anti(vel_esq);
-        mot2_hor(vel_dir);
-        Serial.print("virando pra esquerda");
-        while (analogRead(esq) <= esq_branco)
-        {
-          mot1_anti(vel_esq);
-          mot2_hor(vel_dir);
-          Serial.print("virando pra esquerda");
-        }
-      }
+    while (analogRead(esq) >= esq_cinza)
+    {
+      mot1_anti(vel_esq);
+      mot2_hor(vel_dir);
+      Serial.print("virando pra esquerda");
+    }
+    while (analogRead(esq) <= esq_cinza)
+    {
+      mot1_anti(vel_esq);
+      mot2_hor(vel_dir);
+      Serial.print("virando pra esquerda");
+    }
     delay(100);
     enc_ant = enc.read();
     while (enc_ant - enc.read() <= enc_pas)
     {
       mot1_anti(vel_esq);
-      mot2_hor(vel_dir);
+      mot2_anti(vel_dir);
       Serial.print("Indo para tras: ");
       Serial.println(enc.read());
     }
@@ -214,24 +214,24 @@ void encruzilhada()
       Serial.print("Virando para direita");
       Serial.println(enc.read());
     }
-    while (analogRead(dir) >= dir_branco)
+    while (analogRead(dir) >= dir_cinza)
     {
       mot1_hor(vel_esq);
       mot2_anti(vel_dir);
       Serial.print("virando para direita");
-      while (analogRead(dir) <= dir_branco)
-      {
-        mot1_hor(vel_esq);
-        mot2_anti(vel_dir);
-        Serial.print("virando para direita");
-      }
+    }
+    while (analogRead(dir) <= dir_cinza)
+    {
+      mot1_hor(vel_esq);
+      mot2_anti(vel_dir);
+      Serial.print("virando para direita");
     }
     delay(100);
     enc_ant = enc.read();
     while (enc_ant - enc.read() <= enc_pas)
     {
       mot1_anti(vel_esq);
-      mot2_hor(vel_dir);
+      mot2_anti(vel_dir);
       Serial.print("Indo para tras: ");
       Serial.println(enc.read());
     }
@@ -280,24 +280,24 @@ void esq_90()
       Serial.print("virando pra esquerda");
       Serial.println(enc.read());
     }
-    while (analogRead(esq) >= esq_branco)
+    while (analogRead(esq) >= esq_cinza)
     {
       mot1_anti(vel_esq);
       mot2_hor(vel_dir);
       Serial.print("virando pra esquerda");
-      while (analogRead(esq) <= esq_branco)
-      {
-        mot1_anti(vel_esq);
-        mot2_hor(vel_dir);
-        Serial.print("virando pra esquerda");
-      }
+    }
+    while (analogRead(esq) <= esq_cinza)
+    {
+      mot1_anti(vel_esq);
+      mot2_hor(vel_dir);
+      Serial.print("virando pra esquerda");
     }
     delay(100);
     enc_ant = enc.read();
     while (enc_ant - enc.read() <= enc_pas)
     {
       mot1_anti(vel_esq);
-      mot2_hor(vel_dir);
+      mot2_anti(vel_dir);
       Serial.print("Indo para tras: ");
       Serial.println(enc.read());
     }
@@ -322,24 +322,24 @@ void esq_90()
         Serial.print("virando pra esquerda");
         Serial.println(enc.read());
       }
-      while (analogRead(esq) == esq_branco)
+      while (analogRead(esq) >= esq_cinza)
       {
         mot1_anti(vel_esq);
         mot2_hor(vel_dir);
         Serial.print("virando pra esquerda");
-        while (analogRead(esq) <= esq_branco)
-        {
-          mot1_anti(vel_esq);
-          mot2_hor(vel_dir);
-          Serial.print("virando pra esquerda");
-        }
+      }
+      while (analogRead(esq) <= esq_cinza)
+      {
+        mot1_anti(vel_esq);
+        mot2_hor(vel_dir);
+        Serial.print("virando pra esquerda");
       }
       delay(100);
       enc_ant = enc.read();
       while (enc_ant - enc.read() <= enc_pas)
       {
         mot1_anti(vel_esq);
-        mot2_hor(vel_dir);
+        mot2_anti(vel_dir);
         Serial.print("Indo para tras: ");
         Serial.println(enc.read());
       }
@@ -367,23 +367,23 @@ void dir_90()
       Serial.print("virando para direita");
       Serial.println(enc.read());
     }
-    while (analogRead(dir) >= dir_branco)
+    while (analogRead(dir) >= dir_cinza)
     {
       mot1_hor(vel_esq);
       mot2_anti(vel_dir);
       Serial.print("virando para direita");
-      while (analogRead(dir) <= dir_branco)
-      {
-        mot1_hor(vel_esq);
-        mot2_anti(vel_dir);
-        Serial.print("virando para direita");
-      }
+    }
+    while (analogRead(dir) <= dir_cinza)
+    {
+      mot1_hor(vel_esq);
+      mot2_anti(vel_dir);
+      Serial.print("virando para direita");
     }
     enc_ant = enc.read();
     while (enc_ant - enc.read() <= enc_pas)
     {
       mot1_anti(vel_esq);
-      mot2_hor(vel_dir);
+      mot2_anti(vel_dir);
       Serial.print("Indo para tras: ");
       Serial.println(enc.read());
     }
@@ -409,23 +409,23 @@ void dir_90()
         Serial.println(enc.read());
       }
       while (analogRead(dir) >= dir_branco)
-    {
-      mot1_hor(vel_esq);
-      mot2_anti(vel_dir);
-      Serial.print("virando para direita");
-      while (analogRead(dir) <= dir_branco)
       {
         mot1_hor(vel_esq);
         mot2_anti(vel_dir);
         Serial.print("virando para direita");
       }
-    }
+      while (analogRead(dir) <= dir_cinza)
+      {
+        mot1_hor(vel_esq);
+        mot2_anti(vel_dir);
+        Serial.print("virando para direita");
+      }
       delay(100);
       enc_ant = enc.read();
       while (enc_ant - enc.read() <= enc_pas)
       {
         mot1_anti(vel_esq);
-        mot2_hor(vel_dir);
+        mot2_anti(vel_dir);
         Serial.print("Indo para tras: ");
         Serial.println(enc.read());
       }
