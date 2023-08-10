@@ -19,8 +19,8 @@
 
 // Definindo portas para o sensor de cor, o pin 7 e o led
 #define led_g 7 // Led para o sensor de cor
-#define esq A1  // Sensor que fica na esq
-#define dir A0  // Sensor que fica na dir
+#define esq A0  // Sensor que fica na esq
+#define dir A1  // Sensor que fica na dir
 #define meio A3 // sensor que fica apontado pra frente no meio
 int m_esq = 0;  // Declarando o map e constrain do sensor
 int m_dir = 0;
