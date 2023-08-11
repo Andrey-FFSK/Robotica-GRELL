@@ -24,6 +24,7 @@
 #define meio A3 // sensor que fica apontado pra frente no meio
 int m_esq = 0;  // Declarando o map e constrain do sensor
 int m_dir = 0;
+int m_meio = 0;
 
 #define esq_branco 700 // Valor para verificar se e branco ou nao
 #define dir_branco 700
@@ -55,7 +56,9 @@ bool esquerda = false;
 
 Ultrasonic ult_meio(A2, A3); // trig == 7; echo == 4 | trig = amarel e ech = marrm
 #define perto 2              // Valor para ficar perto o suficente
-#define perto_garra 10       // Valor para caso a garra esteja aberta
+#define perto_garra 10 
+#define esq_switch 20
+#define dir_switch 21      // Valor para caso a garra esteja aberta
 Encoder enc(3, 2);
 
 // Inicio das funções, para cada caso, totalizando 6 funções diferente
@@ -95,6 +98,7 @@ void sensi()
 {
   m_esq = map(constrain(analogRead(esq), 300, 456), 300, 456, 0, 1023);
   m_dir = map(constrain(analogRead(dir), 135, 246), 135, 246, 0, 1023);
+  m_meio = map(constrain(analogRead(dir), 135, 246), 135, 246, 0, 1023);
 }
 
 void desv_d(int velo) // Função para o robo desviar pela direita o obstaculo
