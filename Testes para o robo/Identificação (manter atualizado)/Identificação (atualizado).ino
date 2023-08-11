@@ -73,7 +73,7 @@ void loop()
 
   display.setCursor(0, lh * 4);
   display.print("Olho: ");
-  display.print(sensor.read());
+  display.print(ult_meio.read());
   display.print(" cm");
 
   display.setCursor(0, lh * 5);
@@ -102,7 +102,7 @@ void loop()
   Serial.print("Bits / Tensão: ");
   Serial.print(tensaoA0);
   Serial.print("V / Olho:");
-  Serial.print(sensor.read());
+  Serial.print(ult_meio.read());
   Serial.print("cm / Esq: ");
   Serial.print(m_esq);
   Serial.print("(");
