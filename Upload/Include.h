@@ -30,11 +30,11 @@ int m_meio = 0;
 #define dir_branco 700
 #define meio_branco 700
 
-#define esq_cinza 430 // 900 DEU CERTO O VERDE
-#define dir_cinza 220 // 900 DEU CERTO O VERDE
+#define esq_cinza 443 // 900 DEU CERTO O VERDE; amtes = 430
+#define dir_cinza 225 // 900 DEU CERTO O VERDE; amtes = 220
 
-#define esq_verde 420 // 880 DEU CERTO O VERDE
-#define dir_verde 210 // 880 DEU CERTO O VERDE
+#define esq_verde 433 // 880 DEU CERTO O VERDE; amtes = cinza - 10
+#define dir_verde 215 // 880 DEU CERTO O VERDE; amtes = cinza - 10
 
 #define vel_esq 130   // PWM usado para a velocidade, min == 0 e max == 255
 #define vel_dir 110   // PWM da direita
