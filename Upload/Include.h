@@ -45,7 +45,7 @@ int m_meio = 0;
 
 int enc_ant = 0;    // Valor do encoder anterior
 #define enc_fre 500 // Valores de encoder
-#define enc_90 740
+#define enc_90 500
 #define enc_90_p 560
 #define enc_peq 250
 #define enc_pas 100
