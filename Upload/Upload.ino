@@ -135,7 +135,7 @@ void loop()
     Serial.print(analogRead(dir));
     Serial.println(")");
 
-    encruzilhada(); //virar a direita
+    dir_90(); //virar a direita; antes tava encruzilhada();
   }
   /*
     if ((m_dir <= branco) & (m_dir >= preto))
@@ -197,7 +197,7 @@ void loop()
     Serial.print(analogRead(dir));
     Serial.println(")");
 
-    encruzilhada(); //virar a esquerda
+    esq_90(); //virar a esquerda; antes era encruzilhada();
   }
 
   /*
