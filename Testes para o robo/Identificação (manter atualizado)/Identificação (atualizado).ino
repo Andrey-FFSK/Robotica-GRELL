@@ -42,11 +42,12 @@ void loop()
   display.clearDisplay();
 
   digitalWrite(led_g, 1);
+  digitalWrite(led_g_meio, 1);
 
   //analogWrite(mot_in2, o);
 
-  //mot1_hor(vel_esq);
-  //mot2_hor(vel_dir);
+  mot1_hor(vel_esq);
+  mot2_hor(vel_dir);
 
   // mot1_anti(vel_esq);
   // mot2_anti(vel_dir);
@@ -65,11 +66,11 @@ void loop()
   for (int i = 11; i <= 15; i++)
     display.print(binString(leitura)[i]);
   display.print(" Bits");
-
+  /*
   display.setCursor(0, lh * 3);
   display.print("Tensao: ");
   display.print(tensaoA0);
-  display.print(" V");
+  display.print(" V");*/
 
   display.setCursor(0, lh * 4);
   display.print("Olho: ");
@@ -99,9 +100,9 @@ void loop()
 
   Serial.print("Leitura: ");
   Serial.print(leitura, BIN);
-  Serial.print("Bits / Tensão: ");
-  Serial.print(tensaoA0);
-  Serial.print("V / Olho:");
+  Serial.print("Bits / Olho: ");
+  //Serial.print(tensaoA0);
+  //Serial.print("V / Olho:");
   Serial.print(ult_meio.read());
   Serial.print("cm / Esq: ");
   Serial.print(m_esq);
@@ -111,7 +112,14 @@ void loop()
   Serial.print(m_dir);
   Serial.print("(");
   Serial.print(analogRead(dir));
-  Serial.println(")");
+  Serial.print(") / Meio: ");
+  Serial.print(m_meio);
+  Serial.print("(");
+  Serial.print(analogRead(meio));
+  Serial.print(") / Enc: ");
+  Serial.print(enc.read());
+  Serial.println("pas / ");
+  
 
 }
 
