@@ -42,11 +42,12 @@ void loop()
   display.clearDisplay();
 
   digitalWrite(led_g, 1);
+  digitalWrite(led_g_meio, 1);
 
   //analogWrite(mot_in2, o);
 
-  //mot1_hor(vel_esq);
-  //mot2_hor(vel_dir);
+  mot1_hor(vel_esq);
+  mot2_hor(vel_dir);
 
   // mot1_anti(vel_esq);
   // mot2_anti(vel_dir);
@@ -111,6 +112,10 @@ void loop()
   Serial.print(m_dir);
   Serial.print("(");
   Serial.print(analogRead(dir));
+  Serial.print(") / Meio: ");
+  Serial.print(m_meio);
+  Serial.print("(");
+  Serial.print(analogRead(meio));
   Serial.print(") / Enc: ");
   Serial.print(enc.read());
   Serial.println("pas / ");
