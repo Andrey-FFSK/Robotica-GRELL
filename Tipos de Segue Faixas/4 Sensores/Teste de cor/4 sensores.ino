@@ -258,5 +258,5 @@ void loop()
   }
 }
 /*
-COMO ELE VAI PARAR?
+COMO ELE VAI PARAR? ele nao para.
 */

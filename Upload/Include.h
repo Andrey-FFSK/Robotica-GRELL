@@ -5,20 +5,20 @@
 #include <Encoder.h>
 
 // Definindo as portas dos sensores e da portas H
-#define s_oeste 4     // amarelo, OUT1
-#define s_noroeste 8  // branco, OUT2
-#define s_norte 11    // verde, OUT3
-#define s_nordeste 12 // roxo, OUT4
-#define s_leste 13    // verde, OUT5
+#define s_oeste 22     // amarelo, OUT1
+#define s_noroeste 23  // branco, OUT2
+#define s_norte 25    // verde, OUT3
+#define s_nordeste 24 // roxo, OUT4
+#define s_leste 27    // verde, OUT5
 
 // Motor 1 = Esquerda; Motor 2 = Direita; mot1 que tem encoder
-#define mot_in1 10 // amarelo, direita, tras
-#define mot_in2 5  // marrom, direita, frente
-#define mot_in3 6  // azul, esquerda, frente
-#define mot_in4 9  // verde e amarelo, esquerda, tras
+#define mot_in1 13 // amarelo, direita, tras
+#define mot_in2 12  // marrom, direita, frente
+#define mot_in3 11  // azul, esquerda, frente
+#define mot_in4 10  // verde e amarelo, esquerda, tras
 
 // Definindo portas para o sensor de cor, o pin 7 e o led
-#define led_g 7 // Led para o sensor de cor
+#define led_g 32 // Led para o sensor de cor
 #define esq A0  // Sensor que fica na esq
 #define dir A1  // Sensor que fica na dir
 #define meio A3 // sensor que fica apontado pra frente no meio
@@ -54,7 +54,7 @@ bool frente = false;
 bool direita = false;
 bool esquerda = false;
 
-Ultrasonic ult_meio(A2, A3); // trig == 7; echo == 4 | trig = amarel e ech = marrm
+Ultrasonic ult_meio(30, 31); // trig == 7; echo == 4 | trig = amarel e ech = marrm
 #define perto 2              // Valor para ficar perto o suficente
 #define perto_garra 10 
 #define esq_switch 20
