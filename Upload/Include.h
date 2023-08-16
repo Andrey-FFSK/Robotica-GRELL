@@ -7,9 +7,9 @@
 // Definindo as portas dos sensores e da portas H
 #define s_oeste 22     // amarelo, OUT1
 #define s_noroeste 23  // branco, OUT2
-#define s_norte 25    // verde, OUT3
-#define s_nordeste 24 // roxo, OUT4
-#define s_leste 27    // verde, OUT5
+#define s_norte 24    // verde, OUT3
+#define s_nordeste 25 // roxo, OUT4
+#define s_leste 26    // verde, OUT5
 
 // Motor 1 = Esquerda; Motor 2 = Direita; mot1 que tem encoder
 #define mot_in1 13 // amarelo, direita, tras
