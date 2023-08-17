@@ -19,7 +19,7 @@
 
 // Definindo portas para o sensor de cor, o pin 7 e o led
 #define led_g 32 // Led para o sensor de cor
-#define led_g_meio 33 // Led para o meio
+#define led_g_meio 32 // Led para o meio
 #define esq A0  // Sensor que fica na esq
 #define dir A1  // Sensor que fica na dir
 #define meio A2 // sensor que fica apontado pra frente no meio
@@ -477,10 +477,20 @@ void identif()
   }
 }
 
-void iantificar(){
-
-
-
+void identif_simpl()
+{
+  if((esquerda = true) && (direita = false))
+  {
+    esq_90();
+  }
+  else if((esquerda = false) && (direita = true))
+  {
+    dir_90();
+  }
+  else if((esquerda = true) && (direita = true))
+  {
+    encruzilhada();
+  }
 }
 #endif
 
