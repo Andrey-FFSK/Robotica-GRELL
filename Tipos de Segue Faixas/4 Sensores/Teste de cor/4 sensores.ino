@@ -25,7 +25,7 @@ void loop()
   for (int i = 0; i < 4; i++)
     leitura |= digitalRead(pinos[i]) << i; // Colocando as entrada da tabela da verdade usando um bitshift automatico, o valor do i depende dos sensores
   leitura = (~leitura) & (0b00001111);     // Colocando um inversor para que funcione com a tabela da verdade, pq o sensor dectectar no branco, AND uma mascara para ir so os bits que eu quero
-  digitalWrite(7, 1);
+  digitalWrite(led_g, 1);
   sensi();
 
   // Serial.print(leitura, BIN);
@@ -102,12 +102,12 @@ void loop()
     mot1_anti(vel_esq);
     mot2_anti(vel_dir);
     delay(50);
-    digitalWrite(7, 1);
+    digitalWrite(led_g, 1);
     mot1_par();
     mot2_par();
     delay(1000);
     sensi();
-    digitalWrite(7, 0);
+    digitalWrite(led_g, 0);
     /*
     display.clearDisplay();
     display.setCursor(0, 0);
@@ -165,12 +165,12 @@ void loop()
     mot1_anti(vel_esq);
     mot2_anti(vel_dir);
     delay(50);
-    digitalWrite(7, 1);
+    digitalWrite(led_g, 1);
     mot1_par();
     mot2_par();
     delay(1000);
     sensi();
-    digitalWrite(7, 0);
+    digitalWrite(led_g, 0);
     /*
         display.clearDisplay();
         display.setCursor(0, 0);
@@ -222,12 +222,12 @@ void loop()
     mot1_anti(vel_esq);
     mot2_anti(vel_dir);
     delay(50);
-    digitalWrite(7, 1);
+    digitalWrite(led_g, 1);
     mot1_par();
     mot2_par();
     delay(1000);
     sensi();
-    digitalWrite(7, 0);
+    digitalWrite(led_g, 0);
     /*
         display.clearDisplay();
         display.setCursor(0, 0);
