@@ -99,9 +99,14 @@ void loop()
   }
   else if (leitura == 0b0011) // Condição 4
   {
-    mot1_anti(vel_esq);
-    mot2_anti(vel_dir);
-    delay(50);
+    enc_ant = enc.read();
+      while (enc_ant - enc.read() <= enc_pas_p)
+      {
+        mot1_anti(vel_esq);
+        mot2_anti(vel_dir);
+        Serial.print("Indo para tras: ");
+        Serial.println(enc.read());
+      }
     digitalWrite(led_g, 1);
     mot1_par();
     mot2_par();
@@ -162,9 +167,14 @@ void loop()
   }
   else if (leitura == 0b1100) // Condição 7
   {
-    mot1_anti(vel_esq);
-    mot2_anti(vel_dir);
-    delay(50);
+    enc_ant = enc.read();
+      while (enc_ant - enc.read() <= enc_pas_p)
+      {
+        mot1_anti(vel_esq);
+        mot2_anti(vel_dir);
+        Serial.print("Indo para tras: ");
+        Serial.println(enc.read());
+      }
     digitalWrite(led_g, 1);
     mot1_par();
     mot2_par();
@@ -219,9 +229,14 @@ void loop()
 
   else if (leitura == 0b1111) // ENCRUZILHADA
   {
-    mot1_anti(vel_esq);
-    mot2_anti(vel_dir);
-    delay(50);
+    enc_ant = enc.read();
+      while (enc_ant - enc.read() <= enc_pas_p)
+      {
+        mot1_anti(vel_esq);
+        mot2_anti(vel_dir);
+        Serial.print("Indo para tras: ");
+        Serial.println(enc.read());
+      }
     digitalWrite(led_g, 1);
     mot1_par();
     mot2_par();

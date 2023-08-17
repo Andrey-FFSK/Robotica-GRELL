@@ -50,6 +50,7 @@ int enc_ant = 0;    // Valor do encoder anterior
 #define enc_90_p 560
 #define enc_peq 250
 #define enc_pas 100 // Valor que vai para atras
+#define enc_pas_p 10
 
 bool frente = false;
 bool direita = false;
@@ -474,6 +475,12 @@ void identif()
   {
     encruzilhada();
   }
+}
+
+void iantificar(){
+
+
+
 }
 #endif
 
