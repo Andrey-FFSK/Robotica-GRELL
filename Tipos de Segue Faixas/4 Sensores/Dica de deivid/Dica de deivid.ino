@@ -153,13 +153,14 @@ void loop()
       mot2_hor(vel_dir);
       delay(300);
     }*/
+    /*
   else if ((leitura == 0b0110) | (leitura == 0b1001)) // Condição 6
   {
     mot1_par();
     mot2_par();
     delay(200);
     Serial.println("situação de pane");
-  }
+  }*/
   else if (leitura == 0b1100) // Condição 7
   {
     mot1_anti(vel_esq);
