@@ -12,10 +12,10 @@
 #define s_leste 26    // verde, OUT5
 
 // Motor 1 = Esquerda; Motor 2 = Direita; mot1 que tem encoder
-#define mot_in1 13 // amarelo, direita, tras
-#define mot_in2 12  // marrom, direita, frente
-#define mot_in3 11  // azul, esquerda, frente
-#define mot_in4 10  // verde e amarelo, esquerda, tras
+#define mot_in1 12 // amarelo, direita, tras
+#define mot_in2 11  // marrom, direita, frente
+#define mot_in3 10  // azul, esquerda, frente
+#define mot_in4 9  // verde e amarelo, esquerda, tras
 
 // Definindo portas para o sensor de cor, o pin 7 e o led
 #define led_g 32 // Led para o sensor de cor
@@ -45,11 +45,11 @@ int m_meio = 0;
 #define vel_dir_g 200 //
 
 int enc_ant = 0;    // Valor do encoder anterior
-#define enc_fre 500 // Valores de encoder
-#define enc_90 500
+#define enc_fre 300 // Valores de encoder
+#define enc_90 900
 #define enc_90_p 560
 #define enc_peq 250
-#define enc_pas 100
+#define enc_pas 100 // Valor que vai para atras
 
 bool frente = false;
 bool direita = false;
@@ -202,7 +202,7 @@ void encruzilhada()
     {
       mot1_hor(vel_esq);
       mot2_anti(vel_dir);
-      Serial.print("Virando para direita");
+      Serial.print("Virando para direita: ");
       Serial.println(enc.read());
     }
     enc_ant = enc.read();
