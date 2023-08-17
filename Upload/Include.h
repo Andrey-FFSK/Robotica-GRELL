@@ -5,25 +5,27 @@
 #include <Encoder.h>
 
 // Definindo as portas dos sensores e da portas H
-#define s_oeste 22     // amarelo, OUT1
-#define s_noroeste 23  // branco, OUT2
+#define s_oeste 22    // amarelo, OUT1
+#define s_noroeste 23 // branco, OUT2
 #define s_norte 24    // verde, OUT3
 #define s_nordeste 25 // roxo, OUT4
 #define s_leste 26    // verde, OUT5
 
 // Motor 1 = Esquerda; Motor 2 = Direita; mot1 que tem encoder
 #define mot_in1 12 // amarelo, direita, tras
-#define mot_in2 11  // marrom, direita, frente
-#define mot_in3 10  // azul, esquerda, frente
+#define mot_in2 11 // marrom, direita, frente
+#define mot_in3 10 // azul, esquerda, frente
 #define mot_in4 9  // verde e amarelo, esquerda, tras
 
-// Definindo portas para o sensor de cor, o pin 7 e o led
-#define led_g 32 // Led para o sensor de cor
+// Definindo portas para o sensor de cor
+#define led_r 98      // Led vermelho para o sensor de coer
+#define led_g 32      // Led verde para o sensor de cor
+#define led_b 99      // Led azul para o sensor de cor
 #define led_g_meio 33 // Led para o meio
-#define esq A0  // Sensor que fica na esq
-#define dir A1  // Sensor que fica na dir
-#define meio A2 // sensor que fica apontado pra frente no meio
-int m_esq = 0;  // Declarando o map e constrain do sensor
+#define esq A0        // Sensor que fica na esq
+#define dir A1        // Sensor que fica na dir
+#define meio A2       // sensor que fica apontado pra frente no meio
+int m_esq = 0;        // Declarando o map e constrain do sensor
 int m_dir = 0;
 int m_meio = 0;
 
@@ -44,6 +46,8 @@ int m_meio = 0;
 #define vel_dir_p 80  //
 #define vel_dir_g 200 //
 
+// Valor para encoders
+Encoder enc(3, 2);
 int enc_ant = 0;    // Valor do encoder anterior
 #define enc_fre 300 // Valores de encoder
 #define enc_90 900
@@ -52,18 +56,20 @@ int enc_ant = 0;    // Valor do encoder anterior
 #define enc_pas 100 // Valor que vai para atras
 #define enc_pas_p 10
 
+// Variaveis tipo bool para indetif
 bool frente = false;
 bool direita = false;
 bool esquerda = false;
 
-Ultrasonic ult_meio(30, 31); // trig == 7; echo == 4 | trig = amarel e ech = marrm
-#define perto 2              // Valor para ficar perto o suficente
-#define perto_garra 10 
-#define esq_switch 20
-#define dir_switch 21      // Valor para caso a garra esteja aberta
-Encoder enc(3, 2);
+Ultrasonic ult_meio(30, 31); // trig == prim; echo == segun | trig = amarelo e ech = marrom
 
-// Inicio das funções, para cada caso, totalizando 6 funções diferente
+// Valores para a sala 3
+#define perto 2 // Valor para ficar perto o suficente
+#define perto_garra 10
+#define esq_switch 20
+#define dir_switch 21 // Valor para caso a garra esteja aberta
+
+// Inicio das funções, para cada caso
 void mot1_anti(int velo) // Função para o motor da esquerda girar no sentido anti horario com a velocidade variavel
 {
   analogWrite(mot_in4, velo);
@@ -172,11 +178,18 @@ void encruzilhada()
       mot2_hor(vel_dir);
     }
     enc_ant = enc.read();
-    while (enc_ant - enc.read() <= enc_90)
+    while (enc_ant - enc.read() <= enc_pas)
     {
       mot1_anti(vel_esq);
       mot2_hor(vel_dir);
-      Serial.print("virando para esquerda");
+      Serial.print("Virando para esquerda: ");
+      Serial.println(enc.read());
+    }
+    while (digitalRead(s_norte) == 1)
+    {
+      mot1_anti(vel_esq);
+      mot2_hor(vel_dir);
+      Serial.print("Virando para esquerda: ");
       Serial.println(enc.read());
     }
     enc_ant = enc.read();
@@ -199,13 +212,21 @@ void encruzilhada()
     }
 
     enc_ant = enc.read();
-    while (enc.read() - enc_ant <= enc_90)
+    while (enc.read() - enc_ant <= enc_pas)
     {
       mot1_hor(vel_esq);
       mot2_anti(vel_dir);
       Serial.print("Virando para direita: ");
       Serial.println(enc.read());
     }
+    while (digitalRead(s_norte) == 1)
+    {
+      mot1_hor(vel_esq);
+      mot2_anti(vel_dir);
+      Serial.print("Virando para direita: ");
+      Serial.println(enc.read());
+    }
+
     enc_ant = enc.read();
     while (enc_ant - enc.read() <= enc_pas)
     {
@@ -223,6 +244,8 @@ void encruzilhada()
     {
       mot1_hor(vel_esq);
       mot2_hor(vel_dir);
+      Serial.print("Indo para frente: ");
+      Serial.println(enc.read());
     }
   }
   else // Tem 2 quadrado verde
@@ -252,11 +275,18 @@ void esq_90()
     }
 
     enc_ant = enc.read();
-    while (enc_ant - enc.read() <= enc_90)
+    while (enc_ant - enc.read() <= enc_pas)
     {
       mot1_anti(vel_esq);
       mot2_hor(vel_dir);
-      Serial.print("virando pra esquerda");
+      Serial.print("Virando pra esquerda: ");
+      Serial.println(enc.read());
+    }
+    while (digitalRead(s_norte) == 1)
+    {
+      mot1_anti(vel_esq);
+      mot2_hor(vel_dir);
+      Serial.print("Virando pra esquerda: ");
       Serial.println(enc.read());
     }
     enc_ant = enc.read();
@@ -281,11 +311,18 @@ void esq_90()
     if (digitalRead(s_norte) == 1)
     {
       enc_ant = enc.read();
-      while (enc_ant - enc.read() <= enc_90)
+      while (enc_ant - enc.read() <= enc_pas)
       {
         mot1_anti(vel_esq);
         mot2_hor(vel_dir);
-        Serial.print("virando pra esquerda");
+        Serial.print("Virando pra esquerda: ");
+        Serial.println(enc.read());
+      }
+      while (digitalRead(s_norte) == 1)
+      {
+        mot1_anti(vel_esq);
+        mot2_hor(vel_dir);
+        Serial.print("Virando pra esquerda: ");
         Serial.println(enc.read());
       }
       enc_ant = enc.read();
@@ -313,11 +350,18 @@ void dir_90()
     }
 
     enc_ant = enc.read();
-    while (enc.read() - enc_ant <= enc_90)
+    while (enc.read() - enc_ant <= enc_pas)
     {
       mot1_hor(vel_esq);
       mot2_anti(vel_dir);
-      Serial.print("virando para direita");
+      Serial.print("Virando para direita: ");
+      Serial.println(enc.read());
+    }
+    while (digitalRead(s_norte) == 1)
+    {
+      mot1_hor(vel_esq);
+      mot2_anti(vel_dir);
+      Serial.print("Virando para direita: ");
       Serial.println(enc.read());
     }
     enc_ant = enc.read();
@@ -342,11 +386,18 @@ void dir_90()
     if (digitalRead(s_norte) == 1)
     {
       enc_ant = enc.read();
-      while (enc.read() - enc_ant <= enc_90)
+      while (enc.read() - enc_ant <= enc_pas)
       {
         mot1_hor(vel_esq);
         mot2_anti(vel_dir);
-        Serial.print("virando para direita");
+        Serial.print("Virando para direita: ");
+        Serial.println(enc.read());
+      }
+      while (digitalRead(s_norte) == 1)
+      {
+        mot1_hor(vel_esq);
+        mot2_anti(vel_dir);
+        Serial.print("Virando para direita: ");
         Serial.println(enc.read());
       }
       enc_ant = enc.read();
@@ -477,14 +528,12 @@ void identif()
   }
 }
 
-void iantificar(){
-
-
-
+void iantificar()
+{
 }
 #endif
 
-//Funções antigas
+// Funções antigas
 /*
 void encruzilhada()
 {
@@ -511,7 +560,7 @@ void encruzilhada()
       mot1_anti(vel_esq);
       mot2_hor(vel_dir);
       Serial.println("virando pra esquerda parte 1 " + String(analogRead(esq)));
-      
+
     }
     while (analogRead(esq) <= esq_cinza)
     {
@@ -520,7 +569,7 @@ void encruzilhada()
       Serial.println("virando pra esquerda parte 2 " + String(analogRead(esq)));
     }
     digitalWrite(led_g, 0);
-    
+
     //delay(100);
     enc_ant = enc.read();
     while (enc_ant - enc.read() <= enc_pas)
