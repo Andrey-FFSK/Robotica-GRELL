@@ -54,7 +54,7 @@ void loop()
         // display.clearDisplay();
         // display.setCursor(0, 0);
         // display.print("leitura == 0010");
-        Serial.println("leitura == 0010");
+        Serial.println("Leitura == 0010");
     }
     else if (leitura == 0b0011) // Condição 4
     {
