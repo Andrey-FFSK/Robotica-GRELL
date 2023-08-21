@@ -1,4 +1,4 @@
-
+// Dica de deivid
 #include "Include.h"
 // Usando array para colocar todos os pinos, coloquei os sensores em uma certa posição por causa do BitSwift em baixo
 const int pinos[] = {s_leste, s_nordeste, s_norte, s_noroeste, s_oeste, esq, dir, led_g, mot_in1, mot_in2, mot_in3, mot_in4};

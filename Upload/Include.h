@@ -39,8 +39,10 @@ int m_meio = 0;
 #define esq_verde 433 // 880 DEU CERTO O VERDE; amtes = cinza - 10
 #define dir_verde 215 // 880 DEU CERTO O VERDE; amtes = cinza - 10
 
+// Definindo velocidades e inclinação
 #define vel_esq 130   // PWM usado para a velocidade, min == 0 e max == 255
 #define vel_dir 110   // PWM da direita
+#define incli 52
 #define vel_esq_p 100 //
 #define vel_esq_g 220 // Valores para um sistema de ir so pra frente
 #define vel_dir_p 80  //
@@ -66,8 +68,8 @@ Ultrasonic ult_meio(30, 31); // trig == prim; echo == segun | trig = amarelo e e
 // Valores para a sala 3
 #define perto 2 // Valor para ficar perto o suficente
 #define perto_garra 10
-#define esq_switch 20
-#define dir_switch 21 // Valor para caso a garra esteja aberta
+#define esq_switch 51
+#define dir_switch 53 // Valor para caso a garra esteja aberta
 
 // Inicio das funções, para cada caso
 void mot1_anti(int velo) // Função para o motor da esquerda girar no sentido anti horario com a velocidade variavel

@@ -1,3 +1,4 @@
+// Identificação
 #include "Oled.h"
 #include "Include.h"
 
@@ -18,7 +19,7 @@ const unsigned char aeiapeqena[] PROGMEM = {
     0x79, 0x88, 0x7b, 0x90, 0x7b, 0x98, 0x3f, 0x98, 0x17, 0x10, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00};
 
 // Usando array para colocar todos os pinos, coloquei os sensores invertido por causa do BitSwift em baixo
-const int pinos[] = {s_oeste, s_noroeste, s_norte, s_nordeste, s_leste, esq, dir, led_g, mot_in1, mot_in2, mot_in3, mot_in4};
+const int pinos[] = {s_oeste, s_noroeste, s_norte, s_nordeste, s_leste, esq, dir, esq_switch, dir_switch, incli, led_g, mot_in1, mot_in2, mot_in3, mot_in4};
 
 float tensaoA0;
 
@@ -30,9 +31,9 @@ void setup()
   display.setTextColor(WHITE);
   display.setCursor(0, 0);
   Serial.begin(9600);
-  for (int i; i < 7; i++)
+  for (int i; i < 10; i++)
     pinMode(pinos[i], INPUT);
-  for (int i = 7; i < 12; i++)
+  for (int i = 10; i < 12; i++)
     pinMode(pinos[i], OUTPUT);
   n = 0;
 }
@@ -118,7 +119,13 @@ void loop()
   Serial.print(analogRead(meio));
   Serial.print(") / Enc: ");
   Serial.print(enc.read());
-  Serial.println("pas / ");
+  Serial.print("pas / esq_switch: ");
+  Serial.print(digitalRead(esq_switch));
+  Serial.print(" / dir_switch: ");
+  Serial.print(digitalRead(dir_switch));
+  Serial.print(" / Incli: ");
+  Serial.print(digitalRead(incli));
+  Serial.println(" / ");
   
 
 }

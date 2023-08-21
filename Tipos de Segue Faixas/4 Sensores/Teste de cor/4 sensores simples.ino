@@ -1,7 +1,7 @@
-// 4 Sensores / cor
+// 4 sensores simples / cor
 #include "Include.h"
 // Usando array para colocar todos os pinos, coloquei os sensores em uma certa posição por causa do BitSwift em baixo
-const int pinos[] = {s_leste, s_nordeste, s_noroeste, s_oeste, s_norte, esq, dir, led_g, mot_in1, mot_in2, mot_in3, mot_in4};
+const int pinos[] = {s_leste, s_nordeste, s_norte, s_noroeste, s_oeste, esq, dir, led_g, mot_in1, mot_in2, mot_in3, mot_in4};
 
 // Adafruit_SSD1306 display(128, 64, &Wire, -1);
 
@@ -25,7 +25,7 @@ void loop()
   for (int i = 0; i < 4; i++)
     leitura |= digitalRead(pinos[i]) << i; // Colocando as entrada da tabela da verdade usando um bitshift automatico, o valor do i depende dos sensores
   leitura = (~leitura) & (0b00001111);     // Colocando um inversor para que funcione com a tabela da verdade, pq o sensor dectectar no branco, AND uma mascara para ir so os bits que eu quero
-  digitalWrite(led_g, 1);
+  digitalWrite(led_g, 0);
   sensi();
 
   // Serial.print(leitura, BIN);
@@ -36,7 +36,7 @@ void loop()
   // Condições que usa a melhor situação dos sensores, o bit mais da direita é o s_leste e o bit mais na esquerda é o s_oeste
   // Algumas tem if com OR por conta que eles fazem a mesma coisa na condição.
   // Condição de 0011 ou 1100: é o algoritimo de 90 graus, pensando que so vai ativar no 90
-  if ((analogRead(dir) <= dir_cinza) && (analogRead(dir) >= dir_verde)) // Condição 2
+  if (leitura == 0b0010) // Condição 2
   {
     mot1_hor(vel_esq);
     mot2_anti(vel_dir);
@@ -62,7 +62,7 @@ void loop()
     Serial.print(analogRead(dir));
     Serial.println(")");
   }
-  else if ((analogRead(esq) <= esq_cinza) & (analogRead(esq) >= esq_verde)) // Condição 5
+  else if (leitura == 0b0100) // Condição 5
   {
     mot1_anti(vel_esq);
     mot2_hor(vel_dir);
@@ -158,13 +158,14 @@ void loop()
       mot2_hor(vel_dir);
       delay(300);
     }*/
+    /*
   else if ((leitura == 0b0110) | (leitura == 0b1001)) // Condição 6
   {
     mot1_par();
     mot2_par();
     delay(200);
     Serial.println("situação de pane");
-  }
+  }*/
   else if (leitura == 0b1100) // Condição 7
   {
     enc_ant = enc.read();
