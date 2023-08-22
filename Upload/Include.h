@@ -67,8 +67,8 @@ bool esquerda = false;
 Ultrasonic ult_meio(30, 31); // trig == prim; echo == segun | trig = amarelo e ech = marrom
 
 // Valores para a sala 3
-Servo servo1;
-servo1.attach(4);
+//Servo servo1;
+//servo1.attach(4);
 #define perto 2 // Valor para ficar perto o suficente
 #define perto_garra 10
 #define esq_switch 51
