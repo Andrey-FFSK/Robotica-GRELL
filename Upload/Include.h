@@ -19,9 +19,9 @@
 #define mot_in4 9  // verde e amarelo, esquerda, tras
 
 // Definindo portas para o sensor de cor
-#define led_r 46      // Led vermelho para o sensor de coer
+#define led_r 48      // Led vermelho para o sensor de coer
 #define led_g 47      // Led verde para o sensor de cor
-#define led_b 48      // Led azul para o sensor de cor
+#define led_b 46      // Led azul para o sensor de cor
 #define led_g_meio 33 // Led para o meio
 #define esq A0        // Sensor que fica na esq
 #define dir A1        // Sensor que fica na dir
