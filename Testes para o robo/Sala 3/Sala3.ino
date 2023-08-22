@@ -244,7 +244,7 @@ void sala3_pas() // Pos = false é esq; Pos = true é dir;
             Serial.println(enc.read());
         }
         // Abrir garra
-        sala3_frente(enc_peq, 1000);
+        sala3_frente(enc_peq, 1500);
         enc_ant = enc.read();
         while (enc_ant - enc.read() <= enc_90)
         {
@@ -262,7 +262,7 @@ void sala3_verifica() // Função para caso ele bater na area de resgate
     sensi();
     if (m_meio <= meio_branco)
     {
-        if (pos = true)
+        if (pos = true) // Esta invertido para ser mais facil
         {
             enc_ant = enc.read();
             while (enc_ant - enc.read() <= enc_pas)
