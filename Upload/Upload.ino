@@ -1,159 +1,266 @@
-// Identificação
-#include "Oled.h"
+// Sala 3
 #include "Include.h"
 
-const unsigned char aeia[] PROGMEM = {
-    // 'bfcaab3c7ed1666ef086e690ec778ad0, 32x32px
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x90, 0x00, 0x00, 0x01, 0xb0,
-    0x00, 0x00, 0x00, 0x30, 0x01, 0x00, 0x01, 0xbc, 0x08, 0x20, 0x44, 0x34, 0x00, 0x40, 0x08, 0x28,
-    0x00, 0x03, 0x10, 0x20, 0x05, 0xff, 0x80, 0x30, 0x07, 0xfe, 0x20, 0xa0, 0x0f, 0xdf, 0xee, 0x80,
-    0x0f, 0xb9, 0x3d, 0x70, 0x1f, 0xe3, 0x73, 0xc0, 0x1d, 0xe0, 0xe3, 0xc0, 0x1f, 0xe0, 0x00, 0xc0,
-    0x1f, 0x63, 0xa0, 0x40, 0x1f, 0x67, 0xc1, 0xc0, 0x1f, 0x47, 0x21, 0x40, 0x1b, 0x47, 0xe3, 0xc0,
-    0x1f, 0x47, 0xc3, 0xc0, 0x1f, 0x47, 0xc3, 0xc0, 0x0e, 0x5f, 0xdb, 0x80, 0x1b, 0xdf, 0x83, 0xe0,
-    0x03, 0x78, 0x00, 0x80, 0x00, 0x3f, 0xce, 0x00, 0x00, 0x6b, 0xf8, 0x00, 0x00, 0x00, 0x20, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+const int pinos[] = {s_leste, s_nordeste, s_noroeste, s_oeste, s_norte, esq, dir, led_g, mot_in1, mot_in2, mot_in3, mot_in4};
 
-const unsigned char aeiapeqena[] PROGMEM = {
-    // 'bfcaab3c7ed1666ef086e690ec778ad0, 16x16px
-    0x00, 0x00, 0x00, 0x04, 0x00, 0x20, 0x04, 0x2a, 0x2f, 0xc8, 0x3d, 0xc0, 0x3e, 0xec, 0x74, 0x88,
-    0x79, 0x88, 0x7b, 0x90, 0x7b, 0x98, 0x3f, 0x98, 0x17, 0x10, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00};
+int enc_atual = 0;
+bool pos_esq = false;
+bool pos_dir = false;
+bool pos;
 
-// Usando array para colocar todos os pinos, coloquei os sensores invertido por causa do BitSwift em baixo
-const int pinos[] = {s_oeste, s_noroeste, s_norte, s_nordeste, s_leste, esq, dir, esq_switch, dir_switch, incli, led_g, led_r, led_b, mot_in1, mot_in2, mot_in3, mot_in4};
-
-float tensaoA0;
-
-int n;
+Ultrasonic ult_dir(A2, A3);
+Ultrasonic ult_esq(A2, A3);
 
 void setup()
 {
-  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
-  display.setTextColor(WHITE);
-  display.setCursor(0, 0);
-  Serial.begin(9600);
-  for (int i; i < 10; i++)
-    pinMode(pinos[i], INPUT);
-  for (int i = 10; i < 17; i++)
-    pinMode(pinos[i], OUTPUT);
-  n = 0;
+    for (int i = 0; i < 7; i++)
+        pinMode(pinos[i], INPUT);
+    for (int i = 7; i < 12; i++)
+        pinMode(pinos[i], OUTPUT);
+    Serial.begin(9600);
 }
 
 void loop()
 {
-  display.clearDisplay();
+    enc_ant = enc.read(); // Andando um pouco pra frante para resetar
+    while (enc.read() - enc_ant <= enc_pas)
+    {
+        mot1_hor(velo);
+        mot2_hor(velo);
+        Serial.print("Andando na frente: ");
+        Serial.println(enc.read());
+    }
+    if (ult_esq.read() >= ult_dir.read()) // Vendo qual parte é mais perto dele
+        pos = true;                       // ta mais perto da direita
+    else
+        pos = false; // ta mais perto da esquerda
+    if (pos = false) // ajeitando para a função sala3_pas
+    {
+        enc_ant = enc.read();
+        while (enc_ant - enc.read() <= enc_90)
+        {
+            mot1_anti(vel_esq);
+            mot2_hor(vel_dir);
+            Serial.print("Girando 90 para esquerda: ");
+            Serial.println(enc.read());
+        }
+    }
+    else
+    {
+        enc_ant = enc.read();
+        while (enc.read() - enc_ant <= enc_90)
+        {
+            mot1_hor(vel_esq);
+            mot2_anti(vel_dir);
+            Serial.print("Girando 90 para direita: ");
+            Serial.println(enc.read());
+        }
+    }
+    while (ult_meio.read() >= perto) // preparativo para a sala3_pas
+    {
+        mot1_hor(vel_esq);
+        mot2_hor(vel_dir);
+        Serial.print("Andando na frente: ");
+        Serial.println(enc.read());
+    }
+    delay(300);  // delay para ele ficar encostado na parede
+    sala3_pas(); // ver função
+    while (ult_meio.read() >= perto_garra)
+    {
+        mot1_hor(vel_esq);
+        mot2_hor(vel_dir);
+    }
+    // fechar garra
+    while (ult_meio.read() >= perto) // preparativo para a sala3_pas
+    {
+        mot1_hor(vel_esq);
+        mot2_hor(vel_dir);
+        Serial.print("Andando na frente: ");
+        Serial.println(enc.read());
+    }
+    delay(300);
+    sala3_pas();
 
-  digitalWrite(led_r, 1);
-  //digitalWrite(led_g, 1);
-  //digitalWrite(led_b, 1);
-  //digitalWrite(led_g_meio, 1);
-
-  //analogWrite(mot_in2, o);
-
-  //mot1_hor(vel_esq);
-  //mot2_hor(vel_dir);
-
-  // mot1_anti(vel_esq);
-  // mot2_anti(vel_dir);
-
-  byte leitura = 0;
-  for (int i = 0; i < 5; i++)
-    leitura |= digitalRead(pinos[i]) << i;
-  leitura = (~leitura) & 0b00011111;
-  tensaoA0 = (div(A0) * 5) / 1024.0;
-  tensaoA0 *= 8.4;
-  sensi();
-
-
-  display.setCursor(0, lh * 2);
-  display.print("Leitura: ");
-  for (int i = 11; i <= 15; i++)
-    display.print(binString(leitura)[i]);
-  display.print(" Bits");
-  /*
-  display.setCursor(0, lh * 3);
-  display.print("Tensao: ");
-  display.print(tensaoA0);
-  display.print(" V");*/
-
-  display.setCursor(0, lh * 4);
-  display.print("Olho: ");
-  display.print(ult_meio.read());
-  display.print(" cm");
-
-  display.setCursor(0, lh * 5);
-  display.print("Esq: ");
-  display.print(m_esq);
-  display.print("(");
-  display.print(analogRead(esq));
-  display.print(")");
-
-  display.setCursor(0, lh * 6);
-  display.print("Dir: ");
-  display.print(m_dir);
-  display.print("(");
-  display.print(analogRead(dir));
-  display.print(")");
-
-  display.drawBitmap(W - 32, H - 32 + sin(n * PI / 180) * 3, aeia, 32, 32, WHITE);
-  display.drawBitmap(W - 16, -sin(n * PI / 180) * 1.5, aeiapeqena, 16, 16, WHITE);
-  display.display();
-  n = (n < 360) ? n + 36 : 0;
-
-  display.display();
-
-  Serial.print("Leitura: ");
-  Serial.print(leitura, BIN);
-  Serial.print("Bits / Olho: ");
-  //Serial.print(tensaoA0);
-  //Serial.print("V / Olho:");
-  Serial.print(ult_meio.read());
-  Serial.print("cm / Esq: ");
-  Serial.print(m_esq);
-  Serial.print("(");
-  Serial.print(analogRead(esq));
-  Serial.print(") / Dir: ");
-  Serial.print(m_dir);
-  Serial.print("(");
-  Serial.print(analogRead(dir));
-  Serial.print(") / Meio: ");
-  Serial.print(m_meio);
-  Serial.print("(");
-  Serial.print(analogRead(meio));
-  Serial.print(") / Enc: ");
-  Serial.print(enc.read());
-  Serial.print("pas / esq_switch: ");
-  Serial.print(digitalRead(esq_switch));
-  Serial.print(" / dir_switch: ");
-  Serial.print(digitalRead(dir_switch));
-  Serial.print(" / Incli: ");
-  Serial.print(digitalRead(incli));
-  Serial.println(" / ");
-  
-
+    /*
+    sala3_frente();
+    if (meio <= meio_branco) // chengando em uma parede na frente, podendo ser Area de resgate ou a parede mesmo
+    {
+        // Area de resgate
+        if (pos_esq = true) // Esta no canto esquerdo
+        {
+            enc_ant = enc.read(); // uma curvinha para direita, e nao bater na area de resgate
+            while (enc.read() - enc_ant <= enc_peq)
+            {
+                mot1_hor(vel_esq);
+                mot2_anti(vel_dir);
+            }
+            while (ult_meio.read()>= perto) // Ficar encostado na parede que fica mais perto da esquerda
+            {
+                pos_esq = true;
+                mot1_hor(vel_esq_p);
+                mot2_hor(vel_dir_g);
+            }
+        }
+        else // Esta no canto direito
+        {
+            enc_ant = enc.read(); // uma curvinha para esquerda, e nao bater na area de resgate
+            while (enc_ant - eenc.read() <= enc_peq)
+            {
+                mot1_anti(vel_esq);
+                mot2_hor(vel_dir);
+            }
+            while (ult_meio.read()>= perto) // Ficar encostado na parede que fica mais perto da direita
+            {
+                pos_esq = true;
+                mot1_hor(vel_esq_g);
+                mot2_hor(vel_dir_p);
+            }
+        }
+    }
+    else // Parede branca
+    {
+        // Fecha garra
+        if (pos_esq = true) // Ele esta no canto da esquerda
+        {
+            enc_ant = enc.read();
+            while (enc.read() - enc_ant <= enc_90)
+            {
+                mot1_hor(vel_esq);
+                mot2_anti(vel_dir);
+                Serial.print("Virando para direita");
+                Serial.println(enc.read());
+            }
+        }
+        else // Ele esta no canto da direita
+        {
+            enc_ant = enc.read();
+            while (enc_ant - enc.read() <= enc_90)
+            {
+                mot1_anti(vel_esq);
+                mot2_hor(vel_dir);
+                Serial.print("virando para esquerda");
+                Serial.println(enc.read());
+            }
+        }
+    }*/
 }
 
-float div(uint8_t A0)
+void sala3_frente(int dis, int temp)
 {
-  float total = 0;
-  for (int i = 0; i < 12; i++)
-  {
-    total += 1.0 * analogRead(A0);
-    delay(5);
-  }
-  return total / (float)12;
+    if (pos = false)
+    {                                    // Vendo qual lado da parede ele estar
+        while (ult_meio.read() >= perto) // Ficar encostado na parede da esquerda
+        {
+            // pos_esq = true;
+            enc_ant = enc.read();
+            while (enc.read() - enc_ant <= dis)
+            {
+                mot1_hor(vel_esq_p);
+                mot2_hor(vel_dir_g);
+                Serial.print("Andando par frente-esquerda: ");
+                Serial.println(enc.read());
+            }
+        }
+    }
+    else if (pos = true)
+    {
+        while (ult_meio.read() >= perto) // Ficar encostado na parede da direita
+        {
+            // pos_dir = true;
+            enc_ant = enc.read();
+            while (enc.read() - enc_ant <= dis)
+            {
+                mot1_hor(vel_esq_g);
+                mot2_hor(vel_dir_p);
+                Serial.print("Andando na frente-direita: ");
+                Serial.println(enc.read());
+            }
+        }
+    }
+    else
+    {
+        mot1_hor(vel_esq);
+        mot2_hor(vel_dir);
+    }
+    mot1_par();
+    mot2_par();
+    delay(temp);
 }
 
-char *binString(unsigned short n)
+void sala3_pas() // Pos = false é esq; Pos = true é dir;
 {
-  static char bin[17];
-  int x;
+    if (pos = false)
+    {
+        enc_ant = enc.read();
+        while (enc.read() - enc_ant <= enc_90)
+        {
+            mot1_hor(vel_esq);
+            mot2_anti(vel_dir);
+            Serial.print("Girando 90 para direita: ");
+            Serial.println(enc.read());
+        }
+        // Abrir garra
+        sala3_frente(enc_peq, 1000);
+        enc_ant = enc.read();
+        while (enc.read() - enc_ant <= enc_90)
+        {
+            mot1_hor(vel_esq);
+            mot2_anti(vel_dir);
+            Serial.print("Girando 90 para direita: ");
+            Serial.println(enc.read());
+        }
+        pos = true;
+    }
+    else
+    {
+        enc_ant = enc.read();
+        while (enc_ant - enc.read() <= enc_90)
+        {
+            mot1_anti(vel_esq);
+            mot2_hor(vel_dir);
+            Serial.print("Girando 90 para esquerda: ");
+            Serial.println(enc.read());
+        }
+        // Abrir garra
+        sala3_frente(enc_peq, 1000);
+        enc_ant = enc.read();
+        while (enc_ant - enc.read() <= enc_90)
+        {
+            mot1_anti(vel_esq);
+            mot2_hor(vel_dir);
+            Serial.print("Girando 90 para esquerda: ");
+            Serial.println(enc.read());
+        }
+        pos = false;
+    }
+}
 
-  for (x = 0; x < 16; x++)
-  {
-    bin[x] = n & 0x8000 ? '1' : '0';
-    n <<= 1;
-  }
-  bin[16] = '\0';
-
-  return (bin);
+void sala3_verifica() // Função para caso ele bater na area de resgate
+{
+    sensi();
+    if (m_meio <= meio_branco)
+    {
+        if (pos = false)
+        {
+            enc_ant = enc.read();
+            while (enc_ant - enc.read() <= enc_pas)
+            {
+                mot1_anti(vel_esq);
+                mot2_hor(vel_dir);
+                Serial.print("Virando para esquerda: ");
+                Serial.println(enc.read());
+            }
+        }
+        else if (pos = true)
+        {
+            enc_ant = enc.read();
+            while (enc.read() - enc_ant <= enc_pas)
+            {
+                mot1_hor(vel_esq);
+                mot2_anti(vel_dir);
+                Serial.print("Virando para direita: ");
+                Serial.println(enc.read());
+            }
+        }
+    }
 }

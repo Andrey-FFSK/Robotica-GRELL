@@ -1,3 +1,4 @@
+// Sala 3
 #include "Include.h"
 
 const int pinos[] = {s_leste, s_nordeste, s_noroeste, s_oeste, s_norte, esq, dir, led_g, mot_in1, mot_in2, mot_in3, mot_in4};
