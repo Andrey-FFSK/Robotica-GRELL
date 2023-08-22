@@ -3,6 +3,7 @@
 
 #include <Ultrasonic.h> //Incluindo a biblioteca do ultrasonic de erik simoes
 #include <Encoder.h>
+#include <Servo.h>
 
 // Definindo as portas dos sensores e da portas H
 #define s_oeste 22    // amarelo, OUT1
@@ -66,6 +67,8 @@ bool esquerda = false;
 Ultrasonic ult_meio(30, 31); // trig == prim; echo == segun | trig = amarelo e ech = marrom
 
 // Valores para a sala 3
+Servo servo_garra;
+servo_garra.attach(4);
 #define perto 2 // Valor para ficar perto o suficente
 #define perto_garra 10
 #define esq_switch 51

@@ -1,71 +1,28 @@
-// Motor 1 = esquerda; Motor 2 = direita
-#define mot_in1 3 // preto, esquerda, tras
-#define mot_in2 5 // laranja, esquerda, frente
-#define mot_in3 6 // branco, direita, frente
-#define mot_in4 9 // amarelo, direita, tras
+#include "Include.h"
 
-const int j = 180;
+const int pinos[] = {s_oeste, s_noroeste, s_norte, s_nordeste, s_leste, esq, dir, esq_switch, dir_switch, incli, led_g, led_r, led_b, mot_in1, mot_in2, mot_in3, mot_in4};
 
-int pinos[] = {10, 11, 3, 6, 9, 2};
+int pos = 0; 
 
 void setup() {
   Serial.begin(9600);
-for (int i = 0; i < 6; i++)
+for (int i; i < 10; i++)
+    pinMode(pinos[i], INPUT);
+  for (int i = 10; i < 17; i++)
     pinMode(pinos[i], OUTPUT);
 
 }
 
-void loop(){
-
-  Serial.println("jogando garra");
-analogWrite(mot_in4, 90);
-delay(1000);
-
-  Serial.println("esperando garra");
-analogWrite(mot_in4, 0);
-delay(3000);
-
-  Serial.println("Puxando garra");
-analogWrite(mot_in3, 130);
-delay(1400);
-
-  Serial.println("Esperando outra bola");
-analogWrite(mot_in3, 0);
-delay(5000);
-
-//é direita, in3 == puxa pra dentro, in4 == joga pra fora
-
-}
-
-// Inicio das funções, para cada caso, totalizando 6 funções diferente
-void mot1_anti(int velo) // Função para o motor da esquerda girar no sentido anti horario com a velocidade variavel
+void loop()
 {
-  analogWrite(mot_in1, velo);
-  analogWrite(mot_in2, 0);
-}
-void mot1_hor(int velo) // Função para o motor da esquerda girar no sentido horario com a velocidade variavel
-{
-  analogWrite(mot_in1, 0);
-  analogWrite(mot_in2, velo);
-}
-void mot1_par() // Função para o motor da esquerda ficar parado
-{
-  analogWrite(mot_in1, 0);
-  analogWrite(mot_in2, 0);
-}
+for (pos = 0; pos <= 180; pos += 1) { // goes from 0 degrees to 180 degrees
+    // in steps of 1 degree
+    servo_garra.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);                       // waits 15 ms for the servo to reach the position
+  }
+  for (pos = 180; pos >= 0; pos -= 1) { // goes from 180 degrees to 0 degrees
+    servo_garra.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);                       // waits 15 ms for the servo to reach the position
+  }
 
-void mot2_anti(int velo) // Função para o motor da direita girar no sentido anti horario com a velocidade variavel
-{
-  analogWrite(mot_in3, 0);
-  analogWrite(mot_in4, velo);
-}
-void mot2_hor(int velo) // Função para o motor da direita girar no sentido horario com a velocidade variavel
-{
-  analogWrite(mot_in3, velo);
-  analogWrite(mot_in4, 0);
-}
-void mot2_par() // Função para o motor da direita ficar parado
-{
-  analogWrite(mot_in3, 0);
-  analogWrite(mot_in4, 0);
 }
