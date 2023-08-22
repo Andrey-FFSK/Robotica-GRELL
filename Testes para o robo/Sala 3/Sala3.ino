@@ -174,7 +174,7 @@ void loop()
 
 void sala3_frente(int dis, int temp)
 {
-    if (pos = false)
+    if (pos = false) // Vendo qual lado da parede ele estar
     {
         enc_ant = enc.read();
         while (enc.read() - enc_ant <= dis)
@@ -183,31 +183,26 @@ void sala3_frente(int dis, int temp)
             mot2_hor(vel_dir_g);
             Serial.print("Andando par frente-esquerda: ");
             Serial.println(enc.read());
-        }                                // Vendo qual lado da parede ele estar
-        while (ult_meio.read() >= perto) // Ficar encostado na parede da esquerda
-        {
-            // pos_esq = true;
+            if (ult_meio.read() <= perto)
+            {
+                enc_ant = 0;
+            }
         }
     }
     else if (pos = true)
     {
-        while (ult_meio.read() >= perto) // Ficar encostado na parede da direita
+        enc_ant = enc.read();
+        while (enc.read() - enc_ant <= dis)
         {
-            // pos_dir = true;
-            enc_ant = enc.read();
-            while (enc.read() - enc_ant <= dis)
+            mot1_hor(vel_esq_g);
+            mot2_hor(vel_dir_p);
+            Serial.print("Andando na frente-direita: ");
+            Serial.println(enc.read());
+            if (ult_meio.read() <= perto)
             {
-                mot1_hor(vel_esq_g);
-                mot2_hor(vel_dir_p);
-                Serial.print("Andando na frente-direita: ");
-                Serial.println(enc.read());
+                enc_ant = 0;
             }
         }
-    }
-    else
-    {
-        mot1_hor(vel_esq);
-        mot2_hor(vel_dir);
     }
     mot1_par();
     mot2_par();
