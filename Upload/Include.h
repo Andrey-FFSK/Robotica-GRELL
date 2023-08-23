@@ -1,16 +1,16 @@
 #ifndef _FUNCOES_VARIAVEIS_H
 #define _FUNCOES_VARIAVEIS_H
-
 #include <Ultrasonic.h> //Incluindo a biblioteca do ultrasonic de erik simoes
+#include <Servo.h> 
 #include <Encoder.h>
-#include <Servo.h>
+
 
 // Definindo as portas dos sensores e da portas H
-#define s_oeste 22    // amarelo, OUT1
-#define s_noroeste 23 // branco, OUT2
-#define s_norte 24    // verde, OUT3
-#define s_nordeste 25 // roxo, OUT4
-#define s_leste 26    // verde, OUT5
+#define s_oeste 22    // , OUT1
+#define s_noroeste 23 // , OUT2
+#define s_norte 24    // , OUT3
+#define s_nordeste 25 // , OUT4
+#define s_leste 26    // , OUT5
 
 // Motor 1 = Esquerda; Motor 2 = Direita; mot1 que tem encoder
 #define mot_in1 12 // amarelo, direita, tras
@@ -19,13 +19,13 @@
 #define mot_in4 9  // verde e amarelo, esquerda, tras
 
 // Definindo portas para o sensor de cor
-#define led_r 48      // Led vermelho para o sensor de coer
-#define led_g 47      // Led verde para o sensor de cor
-#define led_b 46      // Led azul para o sensor de cor
-#define led_g_meio 33 // Led para o meio
+#define led_r 33      // Led vermelho para o sensor de coer
+#define led_g 32      // Led verde para o sensor de cor
+#define led_b 31      // Led azul para o sensor de cor
+#define led_g_meio 44 // Led para o meio
 #define esq A0        // Sensor que fica na esq
 #define dir A1        // Sensor que fica na dir
-#define meio A2       // sensor que fica apontado pra frente no meio
+#define meio A14      // sensor que fica apontado pra frente no meio
 int m_esq = 0;        // Declarando o map e constrain do sensor
 int m_dir = 0;
 int m_meio = 0;
@@ -64,7 +64,7 @@ bool frente = false;
 bool direita = false;
 bool esquerda = false;
 
-Ultrasonic ult_meio(30, 31); // trig == prim; echo == segun | trig = amarelo e ech = marrom
+Ultrasonic ult_meio(38, 39); // trig == prim; echo == segun | trig = amarelo e ech = marrom
 
 // Valores para a sala 3
 //Servo servo1;
@@ -110,7 +110,7 @@ void mot2_par() // Função para o motor da direita ficar parado
 void sensi()
 {
   m_esq = map(constrain(analogRead(esq), 293, 452), 293, 452, 0, 1023);
-  m_dir = map(constrain(analogRead(dir), 120, 243), 120, 243, 0, 1023);
+  m_dir = map(constrain(analogRead(dir), 406, 638), 406, 638, 0, 1023);
   m_meio = map(constrain(analogRead(dir), 135, 246), 135, 246, 0, 1023);
 }
 
