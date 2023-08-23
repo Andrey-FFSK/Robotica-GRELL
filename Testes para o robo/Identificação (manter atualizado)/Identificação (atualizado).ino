@@ -42,8 +42,8 @@ void loop()
 {
   display.clearDisplay();
 
-  digitalWrite(led_r, 1);
-  //digitalWrite(led_g, 1);
+  //digitalWrite(led_r, 1);
+  digitalWrite(led_g, 1);
   //digitalWrite(led_b, 1);
   //digitalWrite(led_g_meio, 1);
 
