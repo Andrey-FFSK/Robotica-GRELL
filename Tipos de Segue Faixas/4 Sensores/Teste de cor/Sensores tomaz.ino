@@ -88,7 +88,7 @@ void loop()
     // display.print("leitura == 0000");
     Serial.println("leitura = 0000; leitura == 0110");
   }
-  else if ((leitura == 0b0001) || /*(leitura == 0b0011) ||*/ (leitura == 0b0111)) // Condição 4
+  else if ((leitura == 0b1000) || /*(leitura == 0b1100) ||*/ (leitura == 0b1110)) // Condição 4
   {
     enc_ant = enc.read();
       while (enc_ant - enc.read() <= enc_pas_p)
@@ -149,7 +149,7 @@ void loop()
       mot2_hor(vel_dir);
       delay(300);
     }*/
-  else if ((leitura == 0b1000) || /*(leitura == 0b1100) ||*/ (leitura == 0b1110)) // Condição 7
+  else if ((leitura == 0b0001) || /*(leitura == 0b0011) ||*/ (leitura == 0b0111)) // Condição 7
   {
     enc_ant = enc.read();
       while (enc_ant - enc.read() <= enc_pas_p)
