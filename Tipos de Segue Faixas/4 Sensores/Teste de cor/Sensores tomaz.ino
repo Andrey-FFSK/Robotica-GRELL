@@ -35,7 +35,7 @@ void loop()
   // Condições que usa a melhor situação dos sensores, o bit mais da direita é o s_leste e o bit mais na esquerda é o s_oeste
   // Algumas tem if com OR por conta que eles fazem a mesma coisa na condição.
   // Condição de 0011 ou 1100: é o algoritimo de 90 graus, pensando que so vai ativar no 90
-  if (leitura == 0b0010) // Condição 2
+  if (leitura == 0b0100) // Condição 2
   {
     mot1_hor(vel_esq);
     mot2_anti(vel_dir);
@@ -55,13 +55,9 @@ void loop()
     display.println(")");
     display.display();*/
 
-    Serial.print("leitura == 0010 / ajustando para direita: ");
-    Serial.print(m_dir);
-    Serial.print("(");
-    Serial.print(analogRead(dir));
-    Serial.println(")");
+    Serial.println("leitura == 0010 / ajustando para direita: ");
   }
-  else if (leitura == 0b0100) // Condição 5
+  else if (leitura == 0b0010) // Condição 5
   {
     mot1_anti(vel_esq);
     mot2_hor(vel_dir);
@@ -81,7 +77,7 @@ void loop()
     display.println(")");
     display.display();*/
 
-    Serial.print("leitura == 0100 / ajustando para esquerda");
+    Serial.println("leitura == 0100 / ajustando para esquerda");
   }
   else if ((leitura == 0b0000) || (leitura == 0b0110)) // Condição 1
   {
