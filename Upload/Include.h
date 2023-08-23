@@ -19,9 +19,9 @@
 #define mot_in4 9  // verde e amarelo, esquerda, tras
 
 // Definindo portas para o sensor de cor
-#define led_r 33      // Led vermelho para o sensor de coer
-#define led_g 32      // Led verde para o sensor de cor
-#define led_b 31      // Led azul para o sensor de cor
+#define led_r 30      // Led vermelho para o sensor de coer
+#define led_g 28      // Led verde para o sensor de cor
+#define led_b 29      // Led azul para o sensor de cor
 #define led_g_meio 44 // Led para o meio
 #define esq A0        // Sensor que fica na esq
 #define dir A1        // Sensor que fica na dir
@@ -64,7 +64,7 @@ bool frente = false;
 bool direita = false;
 bool esquerda = false;
 
-Ultrasonic ult_meio(38, 39); // trig == prim; echo == segun | trig = amarelo e ech = marrom
+Ultrasonic ult_meio(32, 33); // trig == prim; echo == segun | trig = amarelo e ech = marrom
 
 // Valores para a sala 3
 //Servo servo1;
