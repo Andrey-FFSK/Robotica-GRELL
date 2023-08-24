@@ -25,7 +25,7 @@
 #define led_g_meio 44 // Led para o meio
 #define esq A0        // Sensor que fica na esq
 #define dir A1        // Sensor que fica na dir
-#define meio A14      // sensor que fica apontado pra frente no meio
+#define meio A8      // sensor que fica apontado pra frente no meio
 int m_esq = 0;        // Declarando o map e constrain do sensor
 int m_dir = 0;
 int m_meio = 0;
@@ -56,7 +56,7 @@ int enc_ant = 0;    // Valor do encoder anterior
 #define enc_90 900
 #define enc_90_p 560
 #define enc_peq 250
-#define enc_pas 100 // Valor que vai para atras
+#define enc_pas 80 // Valor que vai para atras
 #define enc_pas_p 10
 
 // Variaveis tipo bool para indetif
