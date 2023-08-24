@@ -3,8 +3,8 @@
 #include <Ultrasonic.h> //Incluindo a biblioteca do ultrasonic de erik simoes
 #include <Servo.h> 
 #include <Encoder.h>
-#include <Adafruit_GFX.h>
-#include <Adafruit_SSD1306.h>
+//#include <Adafruit_GFX.h>
+//#include <Adafruit_SSD1306.h>
 
 // Definindo as portas dos sensores e da portas H
 #define s_oeste 22    // , OUT1
@@ -53,7 +53,7 @@ int m_meio = 0;
 // Valor para encoders
 Encoder enc(3, 2);
 int enc_ant = 0;    // Valor do encoder anterior
-#define enc_fre 300 // Valores de encoder
+#define enc_fre 200 // Valores de encoder
 #define enc_90 900
 #define enc_90_p 560
 #define enc_peq 250
@@ -66,7 +66,7 @@ bool direita = false;
 bool esquerda = false;
 
 Ultrasonic ult_meio(32, 33); // trig == prim; echo == segun | trig = amarelo e ech = marrom
-Adafruit_SSD1306 display(128, 64, &Wire, -1);
+//Adafruit_SSD1306 display(128, 64, &Wire, -1);
 
 // Valores para a sala 3
 //Servo servo1;
@@ -176,8 +176,8 @@ void encruzilhada()
   if ((m_esq <= esq_branco) & (m_dir >= dir_branco)) // Tem 1 quadrado verde na esquerda
   {
     Serial.println("Encruzilhada; Verde na esquerda");
-    display.println("Encruzilhada; Verde na esquerda");
-    display.display();
+    //display.println("Encruzilhada; Verde na esquerda");
+    //display.display();
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_fre)
     {
@@ -211,8 +211,8 @@ void encruzilhada()
   else if ((m_esq >= esq_branco) & (m_dir <= dir_branco)) // Tem 1 quadrado verde na direita
   {
     Serial.println("Encruzilhada; Verde na direita");
-    display.println("Encruzilhada; Verde na direita");
-    display.display();
+    //display.println("Encruzilhada; Verde na direita");
+    //display.display();
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_fre)
     {
@@ -248,8 +248,8 @@ void encruzilhada()
   else if ((m_esq >= esq_branco) & (m_dir >= dir_branco)) // Nao tem quadrado verde
   {
     Serial.println("Encruzilhada; Nao tem verde");
-    display.println("Encruzilhada; Nao tem verde");
-    display.display();
+    //display.println("Encruzilhada; Nao tem verde");
+    //display.display();
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_fre)
     {
@@ -262,8 +262,8 @@ void encruzilhada()
   else // Tem 2 quadrado verde
   {
     Serial.println("Encruzilhada; 2 verdes");
-    display.println("Encruzilhada; 2 verdes");
-    display.display();
+    //display.println("Encruzilhada; 2 verdes");
+    //display.display();
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_90 * 2)
     {
@@ -280,8 +280,8 @@ void esq_90()
   if ((m_esq <= esq_branco) & (m_dir >= dir_branco)) // Tem 1 quadrado verde na esquerda
   {
     Serial.println("leitura == 1100; tem verde");
-    display.println("leitura == 1100; tem verde");
-    display.display();
+    //display.println("leitura == 1100; tem verde");
+    //display.display();
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_fre)
     {
@@ -316,8 +316,8 @@ void esq_90()
   else // Nao tem quadrado verde
   {
     Serial.println("leitura == 1100; nao tem verde");
-    display.println("leitura == 1100; nao tem verde");
-    display.display();
+    //display.println("leitura == 1100; nao tem verde");
+    //display.display();
     
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_fre)
@@ -360,8 +360,8 @@ void dir_90()
   if ((m_esq >= esq_branco) & (m_dir <= dir_branco)) // Tem 1 quadrado verde na direita
   {
     Serial.println("leitura == 0011; Tem verde");
-    display.println("leitura == 0011; Tem verde");
-    display.display();
+    //display.println("leitura == 0011; Tem verde");
+    //display.display();
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_fre)
     {
@@ -396,8 +396,8 @@ void dir_90()
   else // Nao tem quadrado verde
   {
     Serial.println("Leitura == 0011; nao tem verde");
-    display.println("Leitura == 0011; nao tem verde");
-    display.display();
+    //display.println("Leitura == 0011; nao tem verde");
+    //display.display();
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_fre)
     {
