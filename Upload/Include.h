@@ -127,7 +127,6 @@ void desv_d(int velo) // Função para o robo desviar pela direita o obstaculo
     Serial.print("girando 90");
     Serial.println(enc.read());
   }
-  // while(digitalRead(s_norte) == 1){
   enc_ant = enc.read();
   while (enc.read() - enc_ant <= 1200)
   {
@@ -168,7 +167,6 @@ void desv_d(int velo) // Função para o robo desviar pela direita o obstaculo
     Serial.print("andando na frente");
     Serial.println(enc.read());
   }
-  //}
 }
 
 void encruzilhada()
@@ -176,6 +174,8 @@ void encruzilhada()
   if ((m_esq <= esq_branco) & (m_dir >= dir_branco)) // Tem 1 quadrado verde na esquerda
   {
     Serial.println("Encruzilhada; Verde na esquerda");
+    display.println("Encruzilhada; Verde na esquerda");
+    display.display();
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_fre)
     {
@@ -209,6 +209,8 @@ void encruzilhada()
   else if ((m_esq >= esq_branco) & (m_dir <= dir_branco)) // Tem 1 quadrado verde na direita
   {
     Serial.println("Encruzilhada; Verde na direita");
+    display.println("Encruzilhada; Verde na direita");
+    display.display();
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_fre)
     {
@@ -244,6 +246,8 @@ void encruzilhada()
   else if ((m_esq >= esq_branco) & (m_dir >= dir_branco)) // Nao tem quadrado verde
   {
     Serial.println("Encruzilhada; Nao tem verde");
+    display.println("Encruzilhada; Nao tem verde");
+    display.display();
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_fre)
     {
@@ -256,6 +260,8 @@ void encruzilhada()
   else // Tem 2 quadrado verde
   {
     Serial.println("Encruzilhada; 2 verdes");
+    display.println("Encruzilhada; 2 verdes");
+    display.display();
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_90 * 2)
     {
@@ -272,6 +278,8 @@ void esq_90()
   if ((m_esq <= esq_branco) & (m_dir >= dir_branco)) // Tem 1 quadrado verde na esquerda
   {
     Serial.println("leitura == 1100; tem verde");
+    display.println("leitura == 1100; tem verde");
+    display.display();
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_fre)
     {
@@ -306,6 +314,9 @@ void esq_90()
   else // Nao tem quadrado verde
   {
     Serial.println("leitura == 1100; nao tem verde");
+    display.println("leitura == 1100; nao tem verde");
+    display.display();
+    
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_fre)
     {
@@ -347,6 +358,8 @@ void dir_90()
   if ((m_esq >= esq_branco) & (m_dir <= dir_branco)) // Tem 1 quadrado verde na direita
   {
     Serial.println("leitura == 0011; Tem verde");
+    display.println("leitura == 0011; Tem verde");
+    display.display();
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_fre)
     {
@@ -381,6 +394,8 @@ void dir_90()
   else // Nao tem quadrado verde
   {
     Serial.println("Leitura == 0011; nao tem verde");
+    display.println("Leitura == 0011; nao tem verde");
+    display.display();
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_fre)
     {
