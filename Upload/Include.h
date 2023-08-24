@@ -109,8 +109,8 @@ void mot2_par() // Função para o motor da direita ficar parado
 
 void sensi()
 {
-  m_esq = map(constrain(analogRead(esq), 293, 452), 293, 452, 0, 1023);
-  m_dir = map(constrain(analogRead(dir), 406, 638), 406, 638, 0, 1023);
+  m_esq = map(constrain(analogRead(esq), 552, 804), 552, 804, 0, 1023);
+  m_dir = map(constrain(analogRead(dir), 410, 634), 410, 634, 0, 1023);
   m_meio = map(constrain(analogRead(dir), 135, 246), 135, 246, 0, 1023);
 }
 
