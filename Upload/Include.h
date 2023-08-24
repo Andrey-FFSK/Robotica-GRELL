@@ -8,8 +8,8 @@
 
 // Definindo as portas dos sensores e da portas H
 #define s_oeste 22    // , OUT1
-#define s_noroeste 23 // , OUT2
-#define s_norte 24    // , OUT3
+#define s_noroeste 24 // , OUT2
+#define s_norte 27    // , OUT3
 #define s_nordeste 25 // , OUT4
 #define s_leste 26    // , OUT5
 
@@ -20,9 +20,9 @@
 #define mot_in4 9  // verde e amarelo, esquerda, tras
 
 // Definindo portas para o sensor de cor
-#define led_r 30      // Led vermelho para o sensor de coer
-#define led_g 28      // Led verde para o sensor de cor
-#define led_b 29      // Led azul para o sensor de cor
+#define led_r 36      // Led vermelho para o sensor de coer
+#define led_g 35      // Led verde para o sensor de cor
+#define led_b 37      // Led azul para o sensor de cor
 #define led_g_meio 44 // Led para o meio
 #define esq A0        // Sensor que fica na esq
 #define dir A1        // Sensor que fica na dir
@@ -65,7 +65,7 @@ bool frente = false;
 bool direita = false;
 bool esquerda = false;
 
-Ultrasonic ult_meio(32, 33); // trig == prim; echo == segun | trig = amarelo e ech = marrom
+Ultrasonic ult_meio(44, 45); // trig == prim; echo == segun | trig = amarelo e ech = marrom
 //Adafruit_SSD1306 display(128, 64, &Wire, -1);
 
 // Valores para a sala 3
