@@ -3,7 +3,8 @@
 #include <Ultrasonic.h> //Incluindo a biblioteca do ultrasonic de erik simoes
 #include <Servo.h> 
 #include <Encoder.h>
-
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
 
 // Definindo as portas dos sensores e da portas H
 #define s_oeste 22    // , OUT1
@@ -65,6 +66,7 @@ bool direita = false;
 bool esquerda = false;
 
 Ultrasonic ult_meio(32, 33); // trig == prim; echo == segun | trig = amarelo e ech = marrom
+Adafruit_SSD1306 display(128, 64, &Wire, -1);
 
 // Valores para a sala 3
 //Servo servo1;

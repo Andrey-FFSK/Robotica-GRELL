@@ -1,6 +1,6 @@
 // Sensores Tomaz
 #include "Include.h"
-#include "Oled.h"
+
 // Usando array para colocar todos os pinos, coloquei os sensores em uma certa posição por causa do BitSwift em baixo
 const int pinos[] = {s_leste, s_nordeste, s_noroeste, s_oeste, s_norte, esq, dir, led_g, mot_in1, mot_in2, mot_in3, mot_in4};
 
