@@ -116,7 +116,7 @@ void sensi()
   m_meio = map(constrain(analogRead(dir), 135, 246), 135, 246, 0, 1023);
 }
 
-void desv_d(int velo) // Função para o robo desviar pela direita o obstaculo
+void desv_d(int velo_esq, int velo_dir) // Função para o robo desviar pela direita o obstaculo
 {
   mot1_par();
   mot2_par();
@@ -124,48 +124,48 @@ void desv_d(int velo) // Função para o robo desviar pela direita o obstaculo
   enc_ant = enc.read();
   while (enc.read() - enc_ant <= enc_90)
   {
-    mot1_hor(velo);
-    mot2_anti(velo);
+    mot1_hor(velo_esq);
+    mot2_anti(velo_dir);
     Serial.print("girando 90");
     Serial.println(enc.read());
   }
   enc_ant = enc.read();
   while (enc.read() - enc_ant <= 1200)
   {
-    mot1_hor(velo);
-    mot2_hor(velo);
+    mot1_hor(velo_esq);
+    mot2_hor(velo_dir);
     Serial.print("andando na frente");
     Serial.println(enc.read());
   }
   enc_ant = enc.read();
   while (enc_ant - enc.read() <= enc_90)
   {
-    mot1_anti(velo);
-    mot2_hor(velo);
+    mot1_anti(velo_esq);
+    mot2_hor(velo_dir);
     Serial.print("girando 90 para esquerda");
     Serial.println(enc.read());
   }
   enc_ant = enc.read();
   while (enc.read() - enc_ant <= 1200)
   {
-    mot1_hor(velo);
-    mot2_hor(velo);
+    mot1_hor(velo_esq);
+    mot2_hor(velo_dir);
     Serial.print("andando na frente");
     Serial.println(enc.read());
   }
   enc_ant = enc.read();
   while (enc_ant - enc.read() <= enc_90)
   {
-    mot1_anti(velo);
-    mot2_hor(velo);
+    mot1_anti(velo_esq);
+    mot2_hor(velo_dir);
     Serial.print("girando 90 para esquerda");
     Serial.println(enc.read());
   }
   enc_ant = enc.read();
   while (enc.read() - enc_ant <= enc_fre)
   {
-    mot1_hor(velo);
-    mot2_hor(velo);
+    mot1_hor(velo_esq);
+    mot2_hor(velo_dir);
     Serial.print("andando na frente");
     Serial.println(enc.read());
   }
