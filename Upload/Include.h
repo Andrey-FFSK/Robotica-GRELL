@@ -50,7 +50,7 @@ int m_meio = 0;
 #define vel_dir_p 80  //
 #define vel_dir_g 200 //
 
-// Valor para encoders
+// Valor para encoders''
 Encoder enc(3, 2);
 int enc_ant = 0;    // Valor do encoder anterior
 #define enc_fre 200 // Valores de encoder
