@@ -37,7 +37,7 @@ void loop()
     mot2_anti(vel_dir);
 
     display.setCursor(0, 0);
-    display.println("leitura == 0010 / Direita");
+    display.println("lei == 0010 / Direita");
     display.display();
 
     Serial.println("leitura == 0010 / ajustando para direita: ");
@@ -48,7 +48,7 @@ void loop()
     mot2_hor(vel_dir);
 
     display.setCursor(0, 0);
-    display.println("leitura == 0100 / Esquerda");
+    display.println("lei == 0100 / Esquerda");
     display.display();
 
     Serial.println("leitura == 0100 / ajustando para esquerda");
@@ -59,7 +59,7 @@ void loop()
     mot2_hor(vel_dir);
 
     display.setCursor(0, 0);
-    display.println("leitura = 0000");
+    display.println("lei = 0000");
     display.display();
 
     Serial.println("leitura = 0000; leitura == 0110");
@@ -108,7 +108,7 @@ void loop()
     display.print(analogRead(dir));
     display.println(")");
 
-    display.println("leitura == 0b1000 / Esq_90");
+    display.println("lei == 0b1000 / Esq_90");
     display.display();
     delay(3000);
     esq_90(); // virar a direita; antes tava encruzilhada();
@@ -154,7 +154,7 @@ void loop()
     display.print(analogRead(dir));
     display.println(")");
 
-    display.println("leitura == 0001 / Dir_90");
+    display.println("lei == 0001 / Dir_90");
     display.display();
 
     delay(3000);
@@ -201,7 +201,7 @@ void loop()
     display.print(analogRead(dir));
     display.println(")");
 
-    display.println("leitura == 0b1111 / Encruzi");
+    display.println("lei == 0b1111 / Encruzi");
     display.display();
 
     delay(3000);
