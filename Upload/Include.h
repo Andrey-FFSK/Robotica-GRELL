@@ -52,11 +52,11 @@ int m_meio = 0;
 // Valor para encoders
 Encoder enc(3, 2);
 int enc_ant = 0;    // Valor do encoder anterior
-#define enc_fre 300 // Valores de encoder
+#define enc_fre 200 // Frente apos ver 90 ou encruzilhada / antes era 300
 #define enc_90 900
 #define enc_90_p 560
-#define enc_peq 250
-#define enc_pas 100 // Valor que vai para atras
+#define enc_peq 300 // Valor que vira para completar com while / antes tava 150 (acho)
+#define enc_pas 30 // Valor que vai para atras / antes tava 100
 #define enc_pas_p 10
 
 // Variaveis tipo bool para indetif
@@ -109,8 +109,8 @@ void mot2_par() // Função para o motor da direita ficar parado
 
 void sensi()
 {
-  m_esq = map(constrain(analogRead(esq), 293, 452), 293, 452, 0, 1023);
-  m_dir = map(constrain(analogRead(dir), 406, 638), 406, 638, 0, 1023);
+  m_esq = map(constrain(analogRead(esq), 578, 811), 578, 811, 0, 1023);
+  m_dir = map(constrain(analogRead(dir), 420, 646), 420, 646, 0, 1023);
   m_meio = map(constrain(analogRead(dir), 135, 246), 135, 246, 0, 1023);
 }
 
@@ -183,7 +183,7 @@ void encruzilhada()
       mot2_hor(vel_dir);
     }
     enc_ant = enc.read();
-    while (enc_ant - enc.read() <= enc_pas)
+    while (enc_ant - enc.read() <= enc_peq)
     {
       mot1_anti(vel_esq);
       mot2_hor(vel_dir);
@@ -217,7 +217,7 @@ void encruzilhada()
     }
 
     enc_ant = enc.read();
-    while (enc.read() - enc_ant <= enc_pas)
+    while (enc.read() - enc_ant <= enc_peq)
     {
       mot1_hor(vel_esq);
       mot2_anti(vel_dir);
@@ -280,7 +280,7 @@ void esq_90()
     }
 
     enc_ant = enc.read();
-    while (enc_ant - enc.read() <= enc_pas)
+    while (enc_ant - enc.read() <= enc_peq)
     {
       mot1_anti(vel_esq);
       mot2_hor(vel_dir);
@@ -316,7 +316,7 @@ void esq_90()
     if (digitalRead(s_norte) == 1)
     {
       enc_ant = enc.read();
-      while (enc_ant - enc.read() <= enc_pas)
+      while (enc_ant - enc.read() <= enc_peq)
       {
         mot1_anti(vel_esq);
         mot2_hor(vel_dir);
@@ -355,7 +355,7 @@ void dir_90()
     }
 
     enc_ant = enc.read();
-    while (enc.read() - enc_ant <= enc_pas)
+    while (enc.read() - enc_ant <= enc_peq)
     {
       mot1_hor(vel_esq);
       mot2_anti(vel_dir);
@@ -391,7 +391,7 @@ void dir_90()
     if (digitalRead(s_norte) == 1)
     {
       enc_ant = enc.read();
-      while (enc.read() - enc_ant <= enc_pas)
+      while (enc.read() - enc_ant <= enc_peq)
       {
         mot1_hor(vel_esq);
         mot2_anti(vel_dir);
