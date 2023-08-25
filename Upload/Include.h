@@ -120,6 +120,48 @@ void sensi()
   m_meio = map(constrain(analogRead(dir), 135, 246), 135, 246, 0, 1023);
 }
 
+void cacamba_abrir()
+{
+  for(pos = pos_ant; pos <= cacamba_aberta; pos++){
+    servo1.write(pos);
+    delay(10);
+    Serial.println("Caçamba - subindo");
+  }
+  pos_ant = pos;
+}
+
+void cacamba_fechar()
+{
+  for(pos = pos_ant; pos >= cacamba_fechada; pos--){
+    servo1.write(pos);
+    delay(10);
+    Serial.println("Caçamba - decendo");
+  }
+  pos_ant = pos;
+}
+
+void garra_subir()
+{
+  for(pos = pos_ant; pos <= garra_aberta; pos++)
+  {
+    servo2.write(pos);
+    delay(10);
+    Serial.println("Garra - subindo");
+  }
+  pos_ant = pos;
+}
+
+void garra_descer()
+{
+  for(pos = pos_ant; pos >= garra_fechada; pos--)
+  {
+    servo2.write(pos);
+    delay(10);
+    Serial.println("Garra - decendo");
+  }
+  pos_ant = pos;
+}
+
 void desv_d(int velo) // Função para o robo desviar pela direita o obstaculo
 {
   mot1_par();
