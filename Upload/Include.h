@@ -75,8 +75,8 @@ servo1.attach(4);
 #define dir_switch 53 // Valor para caso a garra esteja aberta
 int pos = 0;
 int pos_ant;
-#define garra_aberta 10
-#define garra_fechada 107
+#define garra_aberta 15
+#define garra_fechada 112
 #define cacamba_aberta 107
 #define cacamba_fechada 9 
 
