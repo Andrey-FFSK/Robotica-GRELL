@@ -68,11 +68,17 @@ Ultrasonic ult_meio(44, 45); // trig == prim; echo == segun | trig = amarelo e e
 
 // Valores para a sala 3
 //Servo servo1;
-//servo1.attach(4);
+servo1.attach(4);
 #define perto 2 // Valor para ficar perto o suficente
 #define perto_garra 10
 #define esq_switch 51
 #define dir_switch 53 // Valor para caso a garra esteja aberta
+int pos = 0;
+int pos_ant;
+#define garra_aberta 10
+#define garra_fechada 107
+#define cacamba_aberta 107
+#define cacamba_fechada 9 
 
 // Inicio das funções, para cada caso
 void mot1_anti(int velo) // Função para o motor da esquerda girar no sentido anti horario com a velocidade variavel
