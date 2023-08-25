@@ -7,8 +7,8 @@
 
 // Definindo as portas dos sensores e da portas H
 #define s_oeste 22    // , OUT1
-#define s_noroeste 23 // , OUT2
-#define s_norte 24    // , OUT3
+#define s_noroeste 24 // , OUT2
+#define s_norte 27    // , OUT3
 #define s_nordeste 25 // , OUT4
 #define s_leste 26    // , OUT5
 
