@@ -3,13 +3,12 @@
 #include <Ultrasonic.h> //Incluindo a biblioteca do ultrasonic de erik simoes
 #include <Servo.h> 
 #include <Encoder.h>
-//#include <Adafruit_GFX.h>
-//#include <Adafruit_SSD1306.h>
+
 
 // Definindo as portas dos sensores e da portas H
 #define s_oeste 22    // , OUT1
-#define s_noroeste 24 // , OUT2
-#define s_norte 27    // , OUT3
+#define s_noroeste 23 // , OUT2
+#define s_norte 24    // , OUT3
 #define s_nordeste 25 // , OUT4
 #define s_leste 26    // , OUT5
 
@@ -26,7 +25,7 @@
 #define led_g_meio 44 // Led para o meio
 #define esq A0        // Sensor que fica na esq
 #define dir A1        // Sensor que fica na dir
-#define meio A8      // sensor que fica apontado pra frente no meio
+#define meio A14      // sensor que fica apontado pra frente no meio
 int m_esq = 0;        // Declarando o map e constrain do sensor
 int m_dir = 0;
 int m_meio = 0;
@@ -50,14 +49,14 @@ int m_meio = 0;
 #define vel_dir_p 80  //
 #define vel_dir_g 200 //
 
-// Valor para encoders''
+// Valor para encoders
 Encoder enc(3, 2);
 int enc_ant = 0;    // Valor do encoder anterior
-#define enc_fre 200 // Valores de encoder
+#define enc_fre 300 // Valores de encoder
 #define enc_90 900
 #define enc_90_p 560
 #define enc_peq 250
-#define enc_pas 80 // Valor que vai para atras
+#define enc_pas 100 // Valor que vai para atras
 #define enc_pas_p 10
 
 // Variaveis tipo bool para indetif
@@ -66,7 +65,6 @@ bool direita = false;
 bool esquerda = false;
 
 Ultrasonic ult_meio(44, 45); // trig == prim; echo == segun | trig = amarelo e ech = marrom
-//Adafruit_SSD1306 display(128, 64, &Wire, -1);
 
 // Valores para a sala 3
 //Servo servo1;
@@ -111,12 +109,12 @@ void mot2_par() // Função para o motor da direita ficar parado
 
 void sensi()
 {
-  m_esq = map(constrain(analogRead(esq), 552, 804), 552, 804, 0, 1023);
-  m_dir = map(constrain(analogRead(dir), 410, 634), 410, 634, 0, 1023);
+  m_esq = map(constrain(analogRead(esq), 293, 452), 293, 452, 0, 1023);
+  m_dir = map(constrain(analogRead(dir), 406, 638), 406, 638, 0, 1023);
   m_meio = map(constrain(analogRead(dir), 135, 246), 135, 246, 0, 1023);
 }
 
-void desv_d(int velo_esq, int velo_dir) // Função para o robo desviar pela direita o obstaculo
+void desv_d(int velo) // Função para o robo desviar pela direita o obstaculo
 {
   mot1_par();
   mot2_par();
@@ -124,51 +122,53 @@ void desv_d(int velo_esq, int velo_dir) // Função para o robo desviar pela dir
   enc_ant = enc.read();
   while (enc.read() - enc_ant <= enc_90)
   {
-    mot1_hor(velo_esq);
-    mot2_anti(velo_dir);
+    mot1_hor(velo);
+    mot2_anti(velo);
     Serial.print("girando 90");
     Serial.println(enc.read());
   }
+  // while(digitalRead(s_norte) == 1){
   enc_ant = enc.read();
   while (enc.read() - enc_ant <= 1200)
   {
-    mot1_hor(velo_esq);
-    mot2_hor(velo_dir);
+    mot1_hor(velo);
+    mot2_hor(velo);
     Serial.print("andando na frente");
     Serial.println(enc.read());
   }
   enc_ant = enc.read();
   while (enc_ant - enc.read() <= enc_90)
   {
-    mot1_anti(velo_esq);
-    mot2_hor(velo_dir);
+    mot1_anti(velo);
+    mot2_hor(velo);
     Serial.print("girando 90 para esquerda");
     Serial.println(enc.read());
   }
   enc_ant = enc.read();
   while (enc.read() - enc_ant <= 1200)
   {
-    mot1_hor(velo_esq);
-    mot2_hor(velo_dir);
+    mot1_hor(velo);
+    mot2_hor(velo);
     Serial.print("andando na frente");
     Serial.println(enc.read());
   }
   enc_ant = enc.read();
   while (enc_ant - enc.read() <= enc_90)
   {
-    mot1_anti(velo_esq);
-    mot2_hor(velo_dir);
+    mot1_anti(velo);
+    mot2_hor(velo);
     Serial.print("girando 90 para esquerda");
     Serial.println(enc.read());
   }
   enc_ant = enc.read();
   while (enc.read() - enc_ant <= enc_fre)
   {
-    mot1_hor(velo_esq);
-    mot2_hor(velo_dir);
+    mot1_hor(velo);
+    mot2_hor(velo);
     Serial.print("andando na frente");
     Serial.println(enc.read());
   }
+  //}
 }
 
 void encruzilhada()
@@ -176,8 +176,6 @@ void encruzilhada()
   if ((m_esq <= esq_branco) & (m_dir >= dir_branco)) // Tem 1 quadrado verde na esquerda
   {
     Serial.println("Encruzilhada; Verde na esquerda");
-    //display.println("Encruzilhada; Verde na esquerda");
-    //display.display();
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_fre)
     {
@@ -211,8 +209,6 @@ void encruzilhada()
   else if ((m_esq >= esq_branco) & (m_dir <= dir_branco)) // Tem 1 quadrado verde na direita
   {
     Serial.println("Encruzilhada; Verde na direita");
-    //display.println("Encruzilhada; Verde na direita");
-    //display.display();
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_fre)
     {
@@ -248,8 +244,6 @@ void encruzilhada()
   else if ((m_esq >= esq_branco) & (m_dir >= dir_branco)) // Nao tem quadrado verde
   {
     Serial.println("Encruzilhada; Nao tem verde");
-    //display.println("Encruzilhada; Nao tem verde");
-    //display.display();
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_fre)
     {
@@ -262,8 +256,6 @@ void encruzilhada()
   else // Tem 2 quadrado verde
   {
     Serial.println("Encruzilhada; 2 verdes");
-    //display.println("Encruzilhada; 2 verdes");
-    //display.display();
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_90 * 2)
     {
@@ -280,8 +272,6 @@ void esq_90()
   if ((m_esq <= esq_branco) & (m_dir >= dir_branco)) // Tem 1 quadrado verde na esquerda
   {
     Serial.println("leitura == 1100; tem verde");
-    //display.println("leitura == 1100; tem verde");
-    //display.display();
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_fre)
     {
@@ -316,9 +306,6 @@ void esq_90()
   else // Nao tem quadrado verde
   {
     Serial.println("leitura == 1100; nao tem verde");
-    //display.println("leitura == 1100; nao tem verde");
-    //display.display();
-    
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_fre)
     {
@@ -360,8 +347,6 @@ void dir_90()
   if ((m_esq >= esq_branco) & (m_dir <= dir_branco)) // Tem 1 quadrado verde na direita
   {
     Serial.println("leitura == 0011; Tem verde");
-    //display.println("leitura == 0011; Tem verde");
-    //display.display();
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_fre)
     {
@@ -396,8 +381,6 @@ void dir_90()
   else // Nao tem quadrado verde
   {
     Serial.println("Leitura == 0011; nao tem verde");
-    //display.println("Leitura == 0011; nao tem verde");
-    //display.display();
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_fre)
     {
