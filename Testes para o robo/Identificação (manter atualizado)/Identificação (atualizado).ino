@@ -94,6 +94,22 @@ void loop()
   display.print(analogRead(dir));
   display.print(")");
 
+  display.setCursor(0, lh * 7);
+  display.print("Meio: ");
+  display.print(m_meio);
+  display.print("(");
+  display.print(analogRead(meio));
+  display.print(")");
+
+  display.setCursor(0, lh * 8);
+  display.print("Enc: ");
+  display.print(enc.read());
+  display.print(" pas");
+
+  display.setCursor(0, lh * 9);
+  display.print("Incli: ");
+  display.print(digitalRead(incli));
+
   display.drawBitmap(W - 32, H - 32 + sin(n * PI / 180) * 3, aeia, 32, 32, WHITE);
   display.drawBitmap(W - 16, -sin(n * PI / 180) * 1.5, aeiapeqena, 16, 16, WHITE);
   display.display();
