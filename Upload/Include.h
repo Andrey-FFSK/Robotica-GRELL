@@ -67,16 +67,18 @@ bool esquerda = false;
 Ultrasonic ult_meio(44, 45); // trig == prim; echo == segun | trig = amarelo e ech = marrom
 
 // Valores para a sala 3
-//Servo servo1;
-servo1.attach(4);
+Servo servo_cacamba;
+Servo servo_garra;
+servo_cacamba.attach(8);
+servo_garra.attach(7);
 #define perto 2 // Valor para ficar perto o suficente
 #define perto_garra 10
 #define esq_switch 51
 #define dir_switch 53 // Valor para caso a garra esteja aberta
 int pos = 0;
 int pos_ant;
-#define garra_aberta 15
-#define garra_fechada 112
+#define garra_cima 15 // talvez valores invertidos
+#define garra_baixo 112 // esse tbm
 #define cacamba_aberta 107
 #define cacamba_fechada 9 
 
@@ -123,7 +125,7 @@ void sensi()
 void cacamba_abrir()
 {
   for(pos = pos_ant; pos <= cacamba_aberta; pos++){
-    servo1.write(pos);
+    servo_cacamba.write(pos);
     delay(10);
     Serial.println("Caçamba - subindo");
   }
@@ -133,18 +135,26 @@ void cacamba_abrir()
 void cacamba_fechar()
 {
   for(pos = pos_ant; pos >= cacamba_fechada; pos--){
-    servo1.write(pos);
+    servo_cacamba.write(pos);
     delay(10);
     Serial.println("Caçamba - decendo");
   }
   pos_ant = pos;
 }
 
-void garra_subir()
+void garra_subir() // duas vezes para ter certeza que vai entrar na cacamba
 {
-  for(pos = pos_ant; pos <= garra_aberta; pos++)
+  for(pos = pos_ant; pos <= garra_cima; pos++)
   {
-    servo2.write(pos);
+    servo_garra.write(pos);
+    delay(10);
+    Serial.println("Garra - subindo");
+  }
+  pos_ant = pos;
+  garra_descer();
+  for(pos = pos_ant; pos <= garra_cima; pos++)
+  {
+    servo_garra.write(pos);
     delay(10);
     Serial.println("Garra - subindo");
   }
@@ -153,9 +163,9 @@ void garra_subir()
 
 void garra_descer()
 {
-  for(pos = pos_ant; pos >= garra_fechada; pos--)
+  for(pos = pos_ant; pos >= garra_baixo; pos--)
   {
-    servo2.write(pos);
+    servo_garra.write(pos);
     delay(10);
     Serial.println("Garra - decendo");
   }
