@@ -475,138 +475,6 @@ void dir_90()
     }
   }
 }
-
-void identif()
-{
-  enc_ant = enc.read();
-  while (enc.read() - enc_ant <= enc_fre)
-  {
-    mot1_hor(vel_esq);
-    mot2_hor(vel_dir);
-  }
-
-  mot1_par();
-  mot2_par();
-  delay(1000);
-
-  if (digitalRead(s_norte) == 0)
-    frente = true;
-  Serial.print("valor do frente: ");
-  Serial.println(frente);
-  delay(2000);
-  Serial.println(enc.read()); // 532
-  enc_ant = enc.read();       /*
-         while ((enc.read() - enc_ant >= enc_90) || (enc.read() - enc_ant <= enc_90_p))
-         {
-           if(enc.read() - enc_ant >= enc_90)
-           {
-             mot1_hor(vel_esq);
-             mot2_anti(vel_dir);
-             if (digitalRead(s_leste) == 0)
-             {
-               direita = true;
-             }
-             Serial.print("dando 90 ");
-             Serial.println(enc.read());
-           }
-           else if(enc_ant - enc.read() <= enc_90_p)
-           {
-             mot1_anti(vel_esq);
-             mot2_hor(vel_dir);
-             Serial.print("voltando 90 ");
-             Serial.println(enc.read());
-           }
-         }*/
-
-  while ((enc.read() - enc_ant <= enc_90) || (enc.read() - enc_ant >= enc_90_p))
-  {
-    if (enc.read() - enc_ant <= enc_90)
-    {
-      mot1_hor(vel_esq);
-      mot2_anti(vel_dir);
-      Serial.print("dando 90 ");
-      Serial.println(enc.read());
-    }
-    else if (enc.read() - enc_ant >= enc_90_p)
-    {
-      mot1_anti(vel_esq);
-      mot2_hor(vel_dir);
-      Serial.print("voltando 90 ");
-      Serial.println(enc.read());
-    }
-  }
-  // IR PARA DIREITA UM POUCO, E CASO JA TER VISTO O PRETO IR DIRETO PARA ESQUERDA, EM BASE DE QUANTO ELE FOI PELA DIREITA
-
-  mot1_par();
-  mot2_par();
-  Serial.print("valor do direita: ");
-  Serial.println(direita);
-  delay(2000);
-
-  enc_ant = enc.read();
-  while (enc.read() - enc_ant <= enc_90)
-  {
-    mot1_hor(vel_esq);
-    mot2_anti(vel_dir);
-    Serial.print("dando 180");
-    Serial.println(enc.read());
-  }
-
-  enc_ant = enc.read();
-  while (enc.read() - enc_ant <= enc_90)
-  {
-    mot1_hor(vel_esq);
-    mot2_anti(vel_dir);
-    if (digitalRead(s_leste) == 0)
-      esquerda = true;
-    Serial.print("dando 180");
-    Serial.println(enc.read());
-  }
-
-  mot1_par();
-  mot2_par();
-  Serial.print("valor do esquerda: ");
-  Serial.println(esquerda);
-  delay(2000);
-
-  enc_ant = enc.read();
-  while (enc.read() - enc_ant <= enc_90)
-  {
-    mot1_hor(vel_dir);
-    mot2_anti(vel_dir);
-    Serial.print("Virando para direita");
-    Serial.println(enc.read());
-  }
-
-  if ((frente == true & esquerda == true & direita == false) || (frente == false & esquerda == true & direita == false))
-  {
-    esq_90();
-  }
-  else if ((frente == true & esquerda == false & direita == true) || (frente == false & esquerda == false & direita == true))
-  {
-    dir_90();
-  }
-  else
-  {
-    encruzilhada();
-  }
-}
-
-void identif_simpl()
-{
-  if ((esquerda = true) && (direita = false))
-  {
-    esq_90();
-  }
-  else if ((esquerda = false) && (direita = true))
-  {
-    dir_90();
-  }
-  else if ((esquerda = true) && (direita = true))
-  {
-    encruzilhada();
-  }
-}
 #endif
 
 // Funções antigas
@@ -890,6 +758,137 @@ void dir_90()
         Serial.println(enc.read());
       }
     }
+  }
+}
+
+void identif_simpl()
+{
+  if ((esquerda = true) && (direita = false))
+  {
+    esq_90();
+  }
+  else if ((esquerda = false) && (direita = true))
+  {
+    dir_90();
+  }
+  else if ((esquerda = true) && (direita = true))
+  {
+    encruzilhada();
+  }
+
+  void identif()
+{
+  enc_ant = enc.read();
+  while (enc.read() - enc_ant <= enc_fre)
+  {
+    mot1_hor(vel_esq);
+    mot2_hor(vel_dir);
+  }
+
+  mot1_par();
+  mot2_par();
+  delay(1000);
+
+  if (digitalRead(s_norte) == 0)
+    frente = true;
+  Serial.print("valor do frente: ");
+  Serial.println(frente);
+  delay(2000);
+  Serial.println(enc.read()); // 532
+  enc_ant = enc.read();       /*
+         while ((enc.read() - enc_ant >= enc_90) || (enc.read() - enc_ant <= enc_90_p))
+         {
+           if(enc.read() - enc_ant >= enc_90)
+           {
+             mot1_hor(vel_esq);
+             mot2_anti(vel_dir);
+             if (digitalRead(s_leste) == 0)
+             {
+               direita = true;
+             }
+             Serial.print("dando 90 ");
+             Serial.println(enc.read());
+           }
+           else if(enc_ant - enc.read() <= enc_90_p)
+           {
+             mot1_anti(vel_esq);
+             mot2_hor(vel_dir);
+             Serial.print("voltando 90 ");
+             Serial.println(enc.read());
+           }
+         }
+
+  while ((enc.read() - enc_ant <= enc_90) || (enc.read() - enc_ant >= enc_90_p))
+  {
+    if (enc.read() - enc_ant <= enc_90)
+    {
+      mot1_hor(vel_esq);
+      mot2_anti(vel_dir);
+      Serial.print("dando 90 ");
+      Serial.println(enc.read());
+    }
+    else if (enc.read() - enc_ant >= enc_90_p)
+    {
+      mot1_anti(vel_esq);
+      mot2_hor(vel_dir);
+      Serial.print("voltando 90 ");
+      Serial.println(enc.read());
+    }
+  }
+  // IR PARA DIREITA UM POUCO, E CASO JA TER VISTO O PRETO IR DIRETO PARA ESQUERDA, EM BASE DE QUANTO ELE FOI PELA DIREITA
+
+  mot1_par();
+  mot2_par();
+  Serial.print("valor do direita: ");
+  Serial.println(direita);
+  delay(2000);
+
+  enc_ant = enc.read();
+  while (enc.read() - enc_ant <= enc_90)
+  {
+    mot1_hor(vel_esq);
+    mot2_anti(vel_dir);
+    Serial.print("dando 180");
+    Serial.println(enc.read());
+  }
+
+  enc_ant = enc.read();
+  while (enc.read() - enc_ant <= enc_90)
+  {
+    mot1_hor(vel_esq);
+    mot2_anti(vel_dir);
+    if (digitalRead(s_leste) == 0)
+      esquerda = true;
+    Serial.print("dando 180");
+    Serial.println(enc.read());
+  }
+
+  mot1_par();
+  mot2_par();
+  Serial.print("valor do esquerda: ");
+  Serial.println(esquerda);
+  delay(2000);
+
+  enc_ant = enc.read();
+  while (enc.read() - enc_ant <= enc_90)
+  {
+    mot1_hor(vel_dir);
+    mot2_anti(vel_dir);
+    Serial.print("Virando para direita");
+    Serial.println(enc.read());
+  }
+
+  if ((frente == true & esquerda == true & direita == false) || (frente == false & esquerda == true & direita == false))
+  {
+    esq_90();
+  }
+  else if ((frente == true & esquerda == false & direita == true) || (frente == false & esquerda == false & direita == true))
+  {
+    dir_90();
+  }
+  else
+  {
+    encruzilhada();
   }
 }
 *****/

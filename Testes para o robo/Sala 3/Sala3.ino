@@ -22,63 +22,25 @@ void setup()
   for (int i = 7; i < 12; i++)
     pinMode(pinos[i], OUTPUT);
   Serial.begin(9600);
+  bool sala3_ver = false;
 }
 
 void loop()
 {
   display.clearDisplay();
-  enc_ant = enc.read(); // Andando um pouco pra frante para resetar
-  while (enc.read() - enc_ant <= enc_pas)
+
+  if (sala3_ver == false)
   {
-    mot1_hor(vel_esq);
-    mot2_hor(vel_dir);
-    Serial.print("Andando na frente: ");
-    Serial.println(enc.read());
-  }
-  enc_ant = enc.read(); // Virando para esquerda para medir se a parede esta perto
-  while (enc_ant - enc.read() <= enc_90)
-  {
-    mot1_anti(vel_esq);
-    mot2_hor(vel_dir);
-    Serial.print("Girando 90 para esquerda: ");
-    Serial.println(enc.read());
-  }
-  ult_esq = ult_meio.read(); // guardando valor
-  display.print("Esq: ");
-  display.println(ult_esq);
-  display.display();
-  enc_ant = enc.read(); // Dando 180 para ver a distancia da parede da direita
-  while (enc.read() - enc_ant <= enc_90 * 2)
-  {
-    mot1_hor(vel_esq);
-    mot2_anti(vel_dir);
-    Serial.print("Girando 180 para direita: ");
-    Serial.println(enc.read());
-  }
-  ult_dir = ult_meio.read();
-  display.print("Dir: ");
-  display.println(ult_dir);
-  display.display();
-  enc_ant = enc.read(); // voltando para etapa inicial
-  while (enc_ant - enc.read() <= enc_90)
-  {
-    mot1_anti(vel_esq);
-    mot2_hor(vel_dir);
-    Serial.print("Girando 90 para esquerda: ");
-    Serial.println(enc.read());
-  }
-  if (ult_esq >= ult_dir) // Vendo qual parte é mais perto dele
-    pos = true;              // ta mais perto da direita
-  else
-    pos = false; // ta mais perto da esquerda
-  display.print("Pos: ");
-  display.print(pos);
-  display.display();
-  if (pos == false) // ajeitando para a função sala3_pas
-  {
-    display.print(" / Esquerda");
-    display.display();
-    enc_ant = enc.read();
+
+    enc_ant = enc.read(); // Andando um pouco pra frante para resetar
+    while (enc.read() - enc_ant <= enc_pas)
+    {
+      mot1_hor(vel_esq);
+      mot2_hor(vel_dir);
+      Serial.print("Andando na frente: ");
+      Serial.println(enc.read());
+    }
+    enc_ant = enc.read(); // Virando para esquerda para medir se a parede esta perto
     while (enc_ant - enc.read() <= enc_90)
     {
       mot1_anti(vel_esq);
@@ -86,50 +48,98 @@ void loop()
       Serial.print("Girando 90 para esquerda: ");
       Serial.println(enc.read());
     }
-  }
-  else
-  {
-    display.print(" / Direita");
+    ult_esq = ult_meio.read(); // guardando valor
+    display.print("Esq: ");
+    display.println(ult_esq);
     display.display();
-    enc_ant = enc.read();
-    while (enc.read() - enc_ant <= enc_90)
+    enc_ant = enc.read(); // Dando 180 para ver a distancia da parede da direita
+    while (enc.read() - enc_ant <= enc_90 * 2)
     {
       mot1_hor(vel_esq);
       mot2_anti(vel_dir);
-      Serial.print("Girando 90 para direita: ");
+      Serial.print("Girando 180 para direita: ");
       Serial.println(enc.read());
     }
-  }
-  while (ult_meio.read() >= perto) // preparativo para a sala3_pas
-  {
-    mot1_hor(vel_esq);
-    mot2_hor(vel_dir);
-    Serial.print("Andando na frente: ");
-    Serial.println(enc.read());
-    display.clearDisplay();
-    display.setCursor(0, 0);
-    display.print("Meio: ");
-    display.print(ult_meio.read());
+    ult_dir = ult_meio.read();
+    display.print("Dir: ");
+    display.println(ult_dir);
     display.display();
+    enc_ant = enc.read(); // voltando para etapa inicial
+    while (enc_ant - enc.read() <= enc_90)
+    {
+      mot1_anti(vel_esq);
+      mot2_hor(vel_dir);
+      Serial.print("Girando 90 para esquerda: ");
+      Serial.println(enc.read());
+    }
+    if (ult_esq >= ult_dir) // Vendo qual parte é mais perto dele
+      pos = true;           // ta mais perto da direita
+    else
+      pos = false; // ta mais perto da esquerda
+    display.print("Pos: ");
+    display.print(pos);
+    display.display();
+    if (pos == false) // ajeitando para a função sala3_pas
+    {
+      display.print(" / Esquerda");
+      display.display();
+      enc_ant = enc.read();
+      while (enc_ant - enc.read() <= enc_90)
+      {
+        mot1_anti(vel_esq);
+        mot2_hor(vel_dir);
+        Serial.print("Girando 90 para esquerda: ");
+        Serial.println(enc.read());
+      }
+    }
+    else
+    {
+      display.print(" / Direita");
+      display.display();
+      enc_ant = enc.read();
+      while (enc.read() - enc_ant <= enc_90)
+      {
+        mot1_hor(vel_esq);
+        mot2_anti(vel_dir);
+        Serial.print("Girando 90 para direita: ");
+        Serial.println(enc.read());
+      }
+    }
+    while (ult_meio.read() >= perto) // preparativo para a sala3_pas
+    {
+      mot1_hor(vel_esq);
+      mot2_hor(vel_dir);
+      Serial.print("Andando na frente: ");
+      Serial.println(enc.read());
+      display.clearDisplay();
+      display.setCursor(0, 0);
+      display.print("Meio: ");
+      display.print(ult_meio.read());
+      display.display();
+    }
+    delay(300); // delay para ele ficar encostado na parede
+    sala3_ver = true;
   }
-  delay(300);  // delay para ele ficar encostado na parede
-  sala3_pas(); // ver função
-  while (ult_meio.read() >= perto_garra)
+  else
   {
-    mot1_hor(vel_esq);
-    mot2_hor(vel_dir);
+    sala3_pas(); // ver função
+    while (ult_meio.read() >= perto_garra)
+    {
+      mot1_hor(vel_esq);
+      mot2_hor(vel_dir);
+    }
+    // fechar garra
+    while (ult_meio.read() >= perto) // preparativo para a sala3_pas
+    {
+      mot1_hor(vel_esq);
+      mot2_hor(vel_dir);
+      Serial.print("Andando na frente: ");
+      Serial.println(enc.read());
+    }
+    delay(300);
+    sala3_verifica();
+    sala3_pas();
   }
-  // fechar garra
-  while (ult_meio.read() >= perto) // preparativo para a sala3_pas
-  {
-    mot1_hor(vel_esq);
-    mot2_hor(vel_dir);
-    Serial.print("Andando na frente: ");
-    Serial.println(enc.read());
-  }
-  delay(300);
-  sala3_verifica();
-  sala3_pas();
 
   /*
   sala3_frente();
