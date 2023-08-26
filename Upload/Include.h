@@ -143,6 +143,39 @@ void cacamba_fechar()
   pos_ant = pos;
 }
 
+void depositar()
+{
+  while (enc.read() - enc_ant <= enc_90 * 2)
+    {
+      mot1_hor(vel_esq);
+      mot2_anti(vel_dir);
+      Serial.print("dando 180");
+      Serial.println(enc.read());
+    }
+  mot1_par();
+  mot2_par();
+  delay(500);
+  mot1_anti();
+  mot2_anti();
+  delay(1000);
+  mot1_par();
+  mot2_par();
+  delay(500);
+  cacamba_abrir();
+  delay(3000);
+  cacamba_fechar();
+  while (enc.read() - enc_ant <= enc_90 * 2)
+    {
+      mot1_hor(vel_esq);
+      mot2_anti(vel_dir);
+      Serial.print("dando 180");
+      Serial.println(enc.read());
+    }
+  mot1_hor();
+  mot2_hor();
+  delay(2000);
+}
+
 void garra_subir() // duas vezes para ter certeza que vai entrar na cacamba
 {
   for (pos = pos_ant; pos <= garra_cima; pos++)

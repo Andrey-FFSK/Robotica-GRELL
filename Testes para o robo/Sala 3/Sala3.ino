@@ -228,8 +228,9 @@ void sala3_pas() // Pos = false é esq; Pos = true é dir;
 void sala3_verifica() // Função para caso ele bater na area de resgate
 {
   sensi();
-  if (m_meio <= meio_branco)
+  if (m_meio <= meio_branco) // Aqui que ele tem que depositar
   {
+    depositar();
     if (pos = true) // Esta invertido para ser mais facil
     {
       enc_ant = enc.read();
