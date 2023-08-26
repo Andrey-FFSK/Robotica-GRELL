@@ -15,6 +15,7 @@ void setup()
   for (int i = 8; i < 12; i++)
     pinMode(pinos[i], OUTPUT);
   Serial.begin(9600);
+  servo_garra.write(garra_cima);
 }
 void loop()
 {
@@ -24,6 +25,11 @@ void loop()
   for (int i = 0; i < 4; i++)
     leitura |= digitalRead(pinos[i]) << i; // Colocando as entrada da tabela da verdade usando um bitshift automatico, o valor do i depende dos sensores
   leitura = (~leitura) & (0b00001111);     // Colocando um inversor para que funcione com a tabela da verdade, pq o sensor dectectar no branco, AND uma mascara para ir so os bits que eu quero
+
+  if(digitalRead(incli) == 1)
+  {
+    
+  }
 
   // if (ult_meio.read() <= 9) desv_d(vel_esq, vel_dir); // Se o sensor dectar que esta distancia ativa a função de desviar
 

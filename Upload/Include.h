@@ -40,8 +40,8 @@ int m_meio = 0;
 #define dir_verde 215 // 880 DEU CERTO O VERDE; amtes = cinza - 10
 
 // Definindo velocidades e inclinação
-#define vel_esq 130 // PWM usado para a velocidade, min == 0 e max == 255
-#define vel_dir 110 // PWM da direita
+int vel_esq = 130; // PWM usado para a velocidade, min == 0 e max == 255
+int vel_dir = 110; // PWM da direita
 #define incli 52
 #define vel_esq_p 100 //
 #define vel_esq_g 220 // Valores para um sistema de ir so pra frente

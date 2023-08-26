@@ -17,6 +17,7 @@ void setup()
     for (int i = 8; i < 12; i++)
         pinMode(pinos[i], OUTPUT);
     Serial.begin(9600);
+    servo_garra.write(garra_cima);
 }
 void loop()
 {
