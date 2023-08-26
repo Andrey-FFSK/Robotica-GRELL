@@ -31,7 +31,6 @@ void loop()
 
   if (sala3_ver == false)
   {
-
     enc_ant = enc.read(); // Andando um pouco pra frante para resetar
     while (enc.read() - enc_ant <= enc_pas)
     {
@@ -128,7 +127,7 @@ void loop()
       mot1_hor(vel_esq);
       mot2_hor(vel_dir);
     }
-    // fechar garra
+    garra_subir();
     while (ult_meio.read() >= perto) // preparativo para a sala3_pas
     {
       mot1_hor(vel_esq);
@@ -139,69 +138,6 @@ void loop()
     delay(300);
     sala3_verifica();
   }
-
-  /*
-  sala3_frente();
-  if (meio <= meio_branco) // chengando em uma parede na frente, podendo ser Area de resgate ou a parede mesmo
-  {
-      // Area de resgate
-      if (pos_esq = true) // Esta no canto esquerdo
-      {
-          enc_ant = enc.read(); // uma curvinha para direita, e nao bater na area de resgate
-          while (enc.read() - enc_ant <= enc_peq)
-          {
-              mot1_hor(vel_esq);
-              mot2_anti(vel_dir);
-          }
-          while (ult_meio.read()>= perto) // Ficar encostado na parede que fica mais perto da esquerda
-          {
-              pos_esq = true;
-              mot1_hor(vel_esq_p);
-              mot2_hor(vel_dir_g);
-          }
-      }
-      else // Esta no canto direito
-      {
-          enc_ant = enc.read(); // uma curvinha para esquerda, e nao bater na area de resgate
-          while (enc_ant - eenc.read() <= enc_peq)
-          {
-              mot1_anti(vel_esq);
-              mot2_hor(vel_dir);
-          }
-          while (ult_meio.read()>= perto) // Ficar encostado na parede que fica mais perto da direita
-          {
-              pos_esq = true;
-              mot1_hor(vel_esq_g);
-              mot2_hor(vel_dir_p);
-          }
-      }
-  }
-  else // Parede branca
-  {
-      // Fecha garra
-      if (pos_esq = true) // Ele esta no canto da esquerda
-      {
-          enc_ant = enc.read();
-          while (enc.read() - enc_ant <= enc_90)
-          {
-              mot1_hor(vel_esq);
-              mot2_anti(vel_dir);
-              Serial.print("Virando para direita");
-              Serial.println(enc.read());
-          }
-      }
-      else // Ele esta no canto da direita
-      {
-          enc_ant = enc.read();
-          while (enc_ant - enc.read() <= enc_90)
-          {
-              mot1_anti(vel_esq);
-              mot2_hor(vel_dir);
-              Serial.print("virando para esquerda");
-              Serial.println(enc.read());
-          }
-      }
-  }*/
 }
 
 void sala3_frente(int dis, int temp)

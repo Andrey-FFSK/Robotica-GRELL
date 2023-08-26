@@ -259,11 +259,15 @@ void loop()
     }
     else
     {
-        
-
-
+        if(sala3_ver == false)
+        {
+            // A parte de verificar a sala 3
+        }
+        else
+        {
+            // A parte que vai ficar loopando
+        }
     }
-
 }
 /*
 COMO ELE VAI PARAR? ele nao para.
