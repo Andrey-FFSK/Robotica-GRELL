@@ -28,7 +28,13 @@ void loop()
         leitura |= digitalRead(pinos[i]) << i; // Colocando as entrada da tabela da verdade usando um bitshift automatico, o valor do i depende dos sensores
     leitura = (~leitura) & (0b00001111);       // Colocando um inversor para que funcione com a tabela da verdade, pq o sensor dectectar no branco, AND uma mascara para ir so os bits que eu quero
 
-    // if (ult_meio.read() <= 9) desv_d(vel_esq, vel_dir); // Se o sensor dectar que esta distancia ativa a função de desviar
+    if (ult_meio.read() <= 9) // Se o sensor dectar que esta distancia ativa a função de desviar
+        {
+            desv_d(vel_esq, vel_dir);
+            display.setCursor(0, 0);
+            display.println("Desviando obsta");
+            display.display();
+        }
 
     // Condições que usa a melhor situação dos sensores, o bit mais da direita é o s_leste e o bit mais na esquerda é o s_oeste
     // Algumas tem if com OR por conta que eles fazem a mesma coisa na condição.

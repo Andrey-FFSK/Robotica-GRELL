@@ -18,6 +18,8 @@ void setup()
         pinMode(pinos[i], OUTPUT);
     Serial.begin(9600);
     servo_garra.write(garra_cima);
+    bool sala3 = false;
+    bool sala3_ver = false;
 }
 void loop()
 {
@@ -28,7 +30,52 @@ void loop()
         leitura |= digitalRead(pinos[i]) << i; // Colocando as entrada da tabela da verdade usando um bitshift automatico, o valor do i depende dos sensores
     leitura = (~leitura) & (0b00001111);       // Colocando um inversor para que funcione com a tabela da verdade, pq o sensor dectectar no branco, AND uma mascara para ir so os bits que eu quero
 
-    // if (ult_meio.read() <= 9) desv_d(vel_esq, vel_dir); // Se o sensor dectar que esta distancia ativa a função de desviar
+    if (digitalRead(incli) == 1)
+    {
+        vel_esq = 200;
+        vel_dir = 180;
+        while (digitalRead(incli) == 1) // ele tem que ir bem reto
+        {
+            mot1_hor(vel_esq);
+            mot2_hor(vel_dir);
+        }
+        digitalWrite(led_g, 1);
+        vel_esq = 130;
+        vel_dir = 110;
+        mot1_par();
+        mot2_par();
+        delay(1000);
+        sensi();
+        digitalWrite(led_g, 0);
+
+        If((m_esq <= esq_branco) && (m_dir <= dir_branco))
+        {
+            sala3 = true;
+        }
+        else
+        {
+            enc_ant = enc.read();
+            while (enc_ant - enc.read() <= enc_pas) // Da pra trocar o valor do encoder se achar melhor
+            {
+                mot1_anti(vel_esq);
+                mot2_anti(vel_dir);
+                Serial.print("Indo para tras: ");
+                Serial.println(enc.read());
+            }
+            If((m_esq <= esq_branco) && (m_dir <= dir_branco))
+            {
+                sala3 = true;
+            } // Da pra colocar aquela verificacao de ultrasonic aqui se precisar
+        }
+    }
+
+    if (ult_meio.read() <= 9) // Se o sensor dectar que esta distancia ativa a função de desviar
+        {
+            desv_d(vel_esq, vel_dir);
+            display.setCursor(0, 0);
+            display.println("Desviando obsta");
+            display.display();
+        }
 
     // Condições que usa a melhor situação dos sensores, o bit mais da direita é o s_leste e o bit mais na esquerda é o s_oeste
     // Algumas tem if com OR por conta que eles fazem a mesma coisa na condição.
