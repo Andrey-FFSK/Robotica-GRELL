@@ -189,7 +189,7 @@ void sala3_pas() // Pos = false é esq; Pos = true é dir;
       Serial.print("Girando 90 para direita: ");
       Serial.println(enc.read());
     }
-    // Abrir garra
+    garra_descer();
     sala3_frente(enc_peq, 1500);
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_90)
@@ -211,7 +211,7 @@ void sala3_pas() // Pos = false é esq; Pos = true é dir;
       Serial.print("Girando 90 para esquerda: ");
       Serial.println(enc.read());
     }
-    // Abrir garra
+    garra_descer();
     sala3_frente(enc_peq, 1500);
     enc_ant = enc.read();
     while (enc_ant - enc.read() <= enc_90)
