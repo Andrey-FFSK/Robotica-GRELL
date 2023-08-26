@@ -119,7 +119,7 @@ void loop()
     delay(300); // delay para ele ficar encostado na parede
     sala3_ver = true;
   }
-  else
+  else // Quando ele ja ter feito a verificada e ter pego valor de pos
   {
     sala3_pas(); // ver função
     while (ult_meio.read() >= perto_garra)
