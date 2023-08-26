@@ -1,9 +1,8 @@
 #ifndef _FUNCOES_VARIAVEIS_H
 #define _FUNCOES_VARIAVEIS_H
 #include <Ultrasonic.h> //Incluindo a biblioteca do ultrasonic de erik simoes
-#include <Servo.h> 
+#include <Servo.h>
 #include <Encoder.h>
-
 
 // Definindo as portas dos sensores e da portas H
 #define s_oeste 22    // , OUT1
@@ -41,8 +40,8 @@ int m_meio = 0;
 #define dir_verde 215 // 880 DEU CERTO O VERDE; amtes = cinza - 10
 
 // Definindo velocidades e inclinação
-#define vel_esq 130   // PWM usado para a velocidade, min == 0 e max == 255
-#define vel_dir 110   // PWM da direita
+#define vel_esq 130 // PWM usado para a velocidade, min == 0 e max == 255
+#define vel_dir 110 // PWM da direita
 #define incli 52
 #define vel_esq_p 100 //
 #define vel_esq_g 220 // Valores para um sistema de ir so pra frente
@@ -56,7 +55,7 @@ int enc_ant = 0;    // Valor do encoder anterior
 #define enc_90 900
 #define enc_90_p 560
 #define enc_peq 300 // Valor que vira para completar com while / antes tava 150 (acho)
-#define enc_pas 30 // Valor que vai para atras / antes tava 100
+#define enc_pas 30  // Valor que vai para atras / antes tava 100
 #define enc_pas_p 10
 
 // Variaveis tipo bool para indetif
@@ -71,16 +70,16 @@ Servo servo_cacamba;
 Servo servo_garra;
 servo_cacamba.attach(8);
 servo_garra.attach(7);
-#define perto 2 // Valor para ficar perto o suficente
-#define perto_garra 10
+#define perto 2        // Valor para ficar perto o suficente
+#define perto_garra 10 // Valor para caso a garra estiver decida
 #define esq_switch 51
-#define dir_switch 53 // Valor para caso a garra esteja aberta
+#define dir_switch 53
 int pos = 0;
 int pos_ant;
-#define garra_cima 15 // talvez valores invertidos
-#define garra_baixo 112 // esse tbm
+#define garra_cima 112   // talvez valores invertidos
+#define garra_baixo 15 // esse tbm
 #define cacamba_aberta 107
-#define cacamba_fechada 9 
+#define cacamba_fechada 9
 
 // Inicio das funções, para cada caso
 void mot1_anti(int velo) // Função para o motor da esquerda girar no sentido anti horario com a velocidade variavel
@@ -124,7 +123,8 @@ void sensi()
 
 void cacamba_abrir()
 {
-  for(pos = pos_ant; pos <= cacamba_aberta; pos++){
+  for (pos = pos_ant; pos <= cacamba_aberta; pos++)
+  {
     servo_cacamba.write(pos);
     delay(10);
     Serial.println("Caçamba - subindo");
@@ -134,7 +134,8 @@ void cacamba_abrir()
 
 void cacamba_fechar()
 {
-  for(pos = pos_ant; pos >= cacamba_fechada; pos--){
+  for (pos = pos_ant; pos >= cacamba_fechada; pos--)
+  {
     servo_cacamba.write(pos);
     delay(10);
     Serial.println("Caçamba - decendo");
@@ -144,7 +145,7 @@ void cacamba_fechar()
 
 void garra_subir() // duas vezes para ter certeza que vai entrar na cacamba
 {
-  for(pos = pos_ant; pos <= garra_cima; pos++)
+  for (pos = pos_ant; pos <= garra_cima; pos++)
   {
     servo_garra.write(pos);
     delay(10);
@@ -152,7 +153,7 @@ void garra_subir() // duas vezes para ter certeza que vai entrar na cacamba
   }
   pos_ant = pos;
   garra_descer();
-  for(pos = pos_ant; pos <= garra_cima; pos++)
+  for (pos = pos_ant; pos <= garra_cima; pos++)
   {
     servo_garra.write(pos);
     delay(10);
@@ -163,7 +164,7 @@ void garra_subir() // duas vezes para ter certeza que vai entrar na cacamba
 
 void garra_descer()
 {
-  for(pos = pos_ant; pos >= garra_baixo; pos--)
+  for (pos = pos_ant; pos >= garra_baixo; pos--)
   {
     servo_garra.write(pos);
     delay(10);
@@ -593,15 +594,15 @@ void identif()
 
 void identif_simpl()
 {
-  if((esquerda = true) && (direita = false))
+  if ((esquerda = true) && (direita = false))
   {
     esq_90();
   }
-  else if((esquerda = false) && (direita = true))
+  else if ((esquerda = false) && (direita = true))
   {
     dir_90();
   }
-  else if((esquerda = true) && (direita = true))
+  else if ((esquerda = true) && (direita = true))
   {
     encruzilhada();
   }
