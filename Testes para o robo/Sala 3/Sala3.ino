@@ -138,7 +138,6 @@ void loop()
     }
     delay(300);
     sala3_verifica();
-    sala3_pas();
   }
 
   /*
