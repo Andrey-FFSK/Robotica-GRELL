@@ -1,3 +1,4 @@
+//Garrinha
 #include "Include.h"
 
 const int pinos[] = {s_oeste, s_noroeste, s_norte, s_nordeste, s_leste, esq, dir, esq_switch, dir_switch, incli, led_g, led_r, led_b, mot_in1, mot_in2, mot_in3, mot_in4};
