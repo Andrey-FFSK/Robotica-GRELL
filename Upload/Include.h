@@ -475,6 +475,127 @@ void dir_90() {
     }
   }
 }
+
+
+void sala3_frente(int dis, int temp)
+{
+  if (pos == false) // Vendo qual lado da parede ele estar
+  {
+    enc_ant = enc.read();
+    while (enc.read() - enc_ant <= dis)
+    {
+      mot1_hor(vel_esq_p);
+      mot2_hor(vel_dir_g);
+      Serial.print("Andando par frente-esquerda: ");
+      Serial.println(enc.read());
+      if (ult_meio.read() <= perto)
+      {
+        enc_ant = 0;
+      }
+    }
+  }
+  else if (pos == true)
+  {
+    enc_ant = enc.read();
+    while (enc.read() - enc_ant <= dis)
+    {
+      mot1_hor(vel_esq_g);
+      mot2_hor(vel_dir_p);
+      Serial.print("Andando na frente-direita: ");
+      Serial.println(enc.read());
+      if (ult_meio.read() <= perto)
+      {
+        enc_ant = 0;
+      }
+    }
+  }
+  mot1_par();
+  mot2_par();
+  delay(temp);
+}
+
+void sala3_pas() // Pos = false é esq; Pos = true é dir;
+{
+  if (pos == false)
+  {display.println("virando direita: ");
+      display.display();
+    enc_ant = enc.read();
+    while (enc.read() - enc_ant <= enc_90)
+    {
+      mot1_hor(vel_esq);
+      mot2_anti(vel_dir);
+      Serial.print("Girando 90 para direita: ");
+      Serial.println(enc.read());
+      
+    }
+    garra_descer();
+    sala3_frente(enc_fre_sala3, 1500);
+    enc_ant = enc.read();
+    while (enc.read() - enc_ant <= enc_90)
+    {
+      mot1_hor(vel_esq);
+      mot2_anti(vel_dir);
+      Serial.print("Girando 90 para direita: ");
+      Serial.println(enc.read());
+    }
+    pos = true;
+  }
+  else if(pos == true)
+  {display.println("virando Esquerda: ");
+      display.display();
+    enc_ant = enc.read();
+    while (enc_ant - enc.read() <= enc_90)
+    {
+      mot1_anti(vel_esq);
+      mot2_hor(vel_dir);
+      Serial.print("Girando 90 para esquerda: ");
+      Serial.println(enc.read());
+      
+    }
+    garra_descer();
+    sala3_frente(enc_fre_sala3, 1500);
+    enc_ant = enc.read();
+    while (enc_ant - enc.read() <= enc_90)
+    {
+      mot1_anti(vel_esq);
+      mot2_hor(vel_dir);
+      Serial.print("Girando 90 para esquerda: ");
+      Serial.println(enc.read());
+    }
+    pos = false;
+  }
+}
+
+void sala3_verifica() // Função para caso ele bater na area de resgate
+{
+  sensi();
+  if (analogRead(meio) <= meio_branco) // Aqui que ele tem que depositar
+  {
+    depositar();
+    if (pos == true) // Esta invertido para ser mais facil
+    {
+      enc_ant = enc.read();
+      while (enc_ant - enc.read() <= enc_pas)
+      {
+        mot1_anti(vel_esq);
+        mot2_hor(vel_dir);
+        Serial.print("Virando para esquerda: ");
+        Serial.println(enc.read());
+      }
+    }
+    else if (pos == false)
+    {
+      enc_ant = enc.read();
+      while (enc.read() - enc_ant <= enc_pas)
+      {
+        mot1_hor(vel_esq);
+        mot2_anti(vel_dir);
+        Serial.print("Virando para direita: ");
+        Serial.println(enc.read());
+      }
+    }
+  }
+}
 #endif
 
 // Funções antigas
