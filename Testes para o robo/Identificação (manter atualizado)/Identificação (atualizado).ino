@@ -19,7 +19,7 @@ const unsigned char aeiapeqena[] PROGMEM = {
     0x79, 0x88, 0x7b, 0x90, 0x7b, 0x98, 0x3f, 0x98, 0x17, 0x10, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00};
 
 // Usando array para colocar todos os pinos, coloquei os sensores invertido por causa do BitSwift em baixo
-const int pinos[] = {s_oeste, s_noroeste, s_norte, s_nordeste, s_leste, esq, dir, esq_switch, dir_switch, led_g, led_r, led_b, mot_in1, mot_in2, mot_in3, mot_in4};
+const int pinos[] = {s_oeste, s_noroeste, s_norte, s_nordeste, s_leste, esq, dir, esq_switch, dir_switch, led_g, led_g_meio, led_r, led_b, mot_in1, mot_in2, mot_in3, mot_in4};
 
 float tensaoA0;
 
@@ -31,9 +31,9 @@ void setup()
   display.setTextColor(WHITE);
   display.setCursor(0, 0);
   Serial.begin(9600);
-  for (int i; i < 10; i++)
+  for (int i; i < 9; i++)
     pinMode(pinos[i], INPUT);
-  for (int i = 10; i < 17; i++)
+  for (int i = 9; i < 17; i++)
     pinMode(pinos[i], OUTPUT);
   pinMode(incli, INPUT_PULLUP);
   servo_garra.attach(7);
@@ -50,7 +50,7 @@ void loop()
   //digitalWrite(led_r, 1);
   digitalWrite(led_g, 1);
   //digitalWrite(led_b, 1);
-  //digitalWrite(led_g_meio, 1);
+  digitalWrite(led_g_meio, 1);
 
   //analogWrite(mot_in2, o);
 
