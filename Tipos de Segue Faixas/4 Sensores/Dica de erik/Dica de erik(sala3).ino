@@ -31,10 +31,12 @@ void loop()
         leitura |= digitalRead(pinos[i]) << i; // Colocando as entrada da tabela da verdade usando um bitshift automatico, o valor do i depende dos sensores
     leitura = (~leitura) & (0b00001111);       // Colocando um inversor para que funcione com a tabela da verdade, pq o sensor dectectar no branco, AND uma mascara para ir so os bits que eu quero
 
-    if (digitalRead(incli) == 0)
+    if ((incli_ant == 1) && (digitalRead(incli) == 0)) {
+    millis_ant = millis();
+    }
+    else if ((incli_ant == 0) && (digitalRead(incli) == 0)) {
     {
-        vel_esq = 200;
-        vel_dir = 180;
+        if (millis() - millis_ant >= tg) {
         while (digitalRead(incli) == 0) // ele tem que ir bem reto
         {
             mot1_hor(vel_esq);
@@ -67,6 +69,7 @@ void loop()
             {
                 sala3 = true;
             } // Da pra colocar aquela verificacao de ultrasonic aqui se precisar
+        }
         }
     }
     if (sala3 == false)
