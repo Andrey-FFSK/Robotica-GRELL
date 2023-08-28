@@ -54,8 +54,8 @@ void loop()
 
   //analogWrite(mot_in2, o);
 
-  mot1_hor(vel_esq);
-  mot2_hor(vel_dir);
+  //mot1_hor(vel_esq);
+  //mot2_hor(vel_dir);
 
   // mot1_anti(vel_esq);
   // mot2_anti(vel_dir);
