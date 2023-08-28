@@ -29,6 +29,14 @@ void loop() {
     leitura |= digitalRead(pinos[i]) << i;  // Colocando as entrada da tabela da verdade usando um bitshift automatico, o valor do i depende dos sensores
   leitura = (~leitura) & (0b00001111);      // Colocando um inversor para que funcione com a tabela da verdade, pq o sensor dectectar no branco, AND uma mascara para ir so os bits que eu quero
 
+  if (digitalRead(incli) == 0) {
+    vel_esq = 230;
+    vel_dir = 210;
+  } else {
+    int vel_esq = 190;  // PWM usado para a velocidade, min == 0 e max == 255
+    int vel_dir = 170;
+  }
+
   if (ult_meio.read() <= 9)  // Se o sensor dectar que esta distancia ativa a função de desviar
   {
     desv_d(vel_esq, vel_dir);
