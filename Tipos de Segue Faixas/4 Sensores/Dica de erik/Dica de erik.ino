@@ -33,8 +33,8 @@ void loop() {
     vel_esq = 240;
     vel_dir = 220;
   } else {
-    int vel_esq = 190;  // PWM usado para a velocidade, min == 0 e max == 255
-    int vel_dir = 170;
+    int vel_esq = 170;  // PWM usado para a velocidade, min == 0 e max == 255
+    int vel_dir = 150;
   }
 
   if (ult_meio.read() <= 9)  // Se o sensor dectar que esta distancia ativa a função de desviar
