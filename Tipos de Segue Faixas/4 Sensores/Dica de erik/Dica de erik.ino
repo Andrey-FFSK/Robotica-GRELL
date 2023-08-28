@@ -3,7 +3,7 @@
 #include "Oled.h"
 
 // Usando array para colocar todos os pinos, coloquei os sensores em uma certa posição por causa do BitSwift em baixo
-const int pinos[] = { s_oeste, s_noroeste, s_nordeste, s_leste, s_norte, esq, dir, led_g, mot_in1, mot_in2, mot_in3, mot_in4 };
+const int pinos[] = {s_oeste, s_noroeste, s_nordeste, s_leste, s_norte, esq, dir, led_g, mot_in1, mot_in2, mot_in3, mot_in4 };
 
 bool ver = false;
 
@@ -28,14 +28,14 @@ void loop() {
   for (int i = 0; i < 4; i++)
     leitura |= digitalRead(pinos[i]) << i;  // Colocando as entrada da tabela da verdade usando um bitshift automatico, o valor do i depende dos sensores
   leitura = (~leitura) & (0b00001111);      // Colocando um inversor para que funcione com a tabela da verdade, pq o sensor dectectar no branco, AND uma mascara para ir so os bits que eu quero
-
+  /*
   if (digitalRead(incli) == 0) {
     vel_esq = 240;
     vel_dir = 220;
   } else {
-    int vel_esq = 170;  // PWM usado para a velocidade, min == 0 e max == 255
-    int vel_dir = 150;
-  }
+    vel_esq = 170;  // PWM usado para a velocidade, min == 0 e max == 255
+    vel_dir = 150;
+  }*/
 
   if (ult_meio.read() <= 9)  // Se o sensor dectar que esta distancia ativa a função de desviar
   {
