@@ -19,6 +19,7 @@ void setup() {
   servo_garra.write(garra_cima);
   delay(1000);
 }
+
 void loop() {
   display.clearDisplay();
   // Essa parte é o bitSwift, criar uma variavel leitura do tipo byte, porem a gente so usa os bits dessa varaivel, a quantidade de bits depende de quantos sensores estao usando
@@ -29,15 +30,38 @@ void loop() {
 
   if ((incli_ant == 1) && (digitalRead(incli) == 0)) {
     millis_ant = millis();
-  } else if ((incli_antt == 0) && (digitalRead(incli) == 1)) {
-    if (millis() - millis_ant >= ) {
-      vel_esq = 170;  // PWM usado para a velocidade, min == 0 e max == 255
-      vel_dir = 150;
+  } else if ((incli_ant == 0) && (digitalRead(incli) == 0)) {
+    if (millis() - millis_ant >= tg) {
+      while (digitalRead(incli) == 0) {
+        display.setCursor(0, 0);
+        display.println("Inclinação");
+        display.display();
+        enc_ant = enc.read();
+        while (enc.read() - enc_ant <= enc_gang) {
+          mot1_hor(vel_esq);
+          mot2_hor(vel_dir);
+          Serial.print("andando na frente");
+          Serial.println(enc.read());
+        }
+        mot1_par();
+        mot2_par();
+        delay(1000);
+      } /* PARTE PARA A SALA 3
+      if(digitalRead(incli) == 0)
+      {
+        enc_ant = enc.read();
+        while (enc.read() - enc_ant <= enc_ramp) {
+          mot1_hor(vel_esq);
+          mot2_hor(vel_dir);
+          Serial.print("andando na frente");
+          Serial.println(enc.read());
+        }
+      }*/
     }
   }
   incli_ant = digitalRead(incli);
 
-  if (ult_meio.read() <= 9)  // Se o sensor dectar que esta distancia ativa a função de desviar
+  if (ult_meio.read() <= 4)  // Se o sensor dectar que esta distancia ativa a função de desviar
   {
     desv_d(vel_esq, vel_dir);
     display.setCursor(0, 0);
