@@ -13,14 +13,13 @@ void setup() {
   // Colocando os sensores como INPUT, e o resto como OUTPUT, tudo isso pelo array
   for (int i = 0; i < 7; i++)
     pinMode(pinos[i], INPUT);
-  for (int i = 8; i < 11; i++)
+  for (int i = 7; i < 12; i++)
     pinMode(pinos[i], OUTPUT);
   pinMode(incli, INPUT_PULLUP);
   Serial.begin(9600);
   servo_garra.attach(7);
   servo_garra.write(garra_cima);
   delay(1000);
-  bool ver = false;
 }
 void loop() {
   display.clearDisplay();
@@ -31,8 +30,8 @@ void loop() {
   leitura = (~leitura) & (0b00001111);      // Colocando um inversor para que funcione com a tabela da verdade, pq o sensor dectectar no branco, AND uma mascara para ir so os bits que eu quero
 
   if (digitalRead(incli) == 0) {
-    vel_esq = 230;
-    vel_dir = 210;
+    vel_esq = 240;
+    vel_dir = 220;
   } else {
     int vel_esq = 190;  // PWM usado para a velocidade, min == 0 e max == 255
     int vel_dir = 170;
