@@ -24,7 +24,7 @@
 #define led_g_meio 36  // Led para o meio
 #define esq A0         // Sensor que fica na esq
 #define dir A1         // Sensor que fica na dir
-#define meio A14  // sensor que fica apontado pra frente no meio
+#define meio A8  // sensor que fica apontado pra frente no meio
 bool ver = false;     
 int m_esq = 0;         // Declarando o map e constrain do sensor
 int m_dir = 0;
@@ -32,7 +32,7 @@ int m_meio = 0;
 
 #define esq_branco 700  // Valor para verificar se e branco ou nao
 #define dir_branco 700
-#define meio_branco 700
+#define meio_branco 50
 
 #define esq_cinza 443  // 900 DEU CERTO O VERDE; amtes = 430
 #define dir_cinza 225  // 900 DEU CERTO O VERDE; amtes = 220
@@ -56,9 +56,10 @@ int millis_ant;
 Encoder enc(3, 2);
 int enc_ant = 0;     // Valor do encoder anterior
 #define enc_fre 130  // Frente apos ver 90 ou encruzilhada / antes era 300 no tomaz / antes era 200 no erik
-#define enc_90 800 
+#define enc_90 650 
 #define enc_90_p 560
 #define enc_peq 200  // Valor que vira para completar com while / antes tava 150 (acho)
+#define enc_fre_sala3 500
 #define enc_pas 30   // Valor que vai para atras / antes tava 100
 #define enc_pas_p 10
 #define enc_gang 900
@@ -76,7 +77,7 @@ Servo servo_cacamba;
 Servo servo_garra;
 //servo_cacamba.attach(8);
 //servo_garra.attach(7);
-#define perto 2         // Valor para ficar perto o suficente
+#define perto 5         // Valor para ficar perto o suficente
 #define perto_garra 10  // Valor para caso a garra estiver decida
 #define esq_switch 51
 #define dir_switch 53
@@ -195,10 +196,23 @@ void garra_descer()
 
 void garra_subir() // duas vezes para ter certeza que vai entrar na cacamba
 {
-  servo_garra.write(garra_cima);
+  for (pos = pos_ant; pos <= garra_cima; pos++)
+  {
+    servo_garra.write(pos);
+    delay(servo_delay);
+    Serial.println("Garra - decendo");
+  }
+  pos_ant = pos;
   delay(500);
   garra_descer();
   delay(500);  
+  for (pos = pos_ant; pos <= garra_cima; pos++)
+  {
+    servo_garra.write(pos);
+    delay(servo_delay);
+    Serial.println("Garra - decendo");
+  }
+  pos_ant = pos;
 }
 
 void desv_d(int velo_esq, int velo_dir)  // Função para o robo desviar pela direita o obstaculo
