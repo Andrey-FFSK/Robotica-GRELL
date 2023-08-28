@@ -7,8 +7,7 @@ const int pinos[] = {s_leste, s_nordeste, s_noroeste, s_oeste, s_norte, esq, dir
 int enc_atual = 0;
 bool pos_esq = false;
 bool pos_dir = false;
-bool pos;
-
+bool sala3_ver = false;
 int ult_esq = 0;
 int ult_dir = 0;
 
@@ -21,14 +20,23 @@ void setup()
     pinMode(pinos[i], INPUT);
   for (int i = 7; i < 12; i++)
     pinMode(pinos[i], OUTPUT);
+  pinMode(incli, INPUT_PULLUP);
   Serial.begin(9600);
-  bool sala3_ver = false;
+  
+  
+  bool pos;
+  
+  //servo_garra.attach(7);
+  //servo_cacamba.attach(8);
+  //servo_garra.write(garra_cima);
+  delay(1000);
+  
 }
 
 void loop()
 {
   display.clearDisplay();
-
+  
   if (sala3_ver == false)
   {
     enc_ant = enc.read(); // Andando um pouco pra frante para resetar
@@ -39,6 +47,7 @@ void loop()
       Serial.print("Andando na frente: ");
       Serial.println(enc.read());
     }
+    
     enc_ant = enc.read(); // Virando para esquerda para medir se a parede esta perto
     while (enc_ant - enc.read() <= enc_90)
     {
@@ -71,6 +80,9 @@ void loop()
       Serial.print("Girando 90 para esquerda: ");
       Serial.println(enc.read());
     }
+    mot1_par();
+    mot2_par();
+    delay(1000);
     if (ult_esq >= ult_dir) // Vendo qual parte é mais perto dele
       pos = true;           // ta mais perto da direita
     else
@@ -121,12 +133,31 @@ void loop()
   }
   else // Quando ele ja ter feito a verificada e ter pego valor de pos
   {
+    display.setCursor(0, 0);
+      display.print("pos: ");
+      display.println(pos);
+      display.display();
     sala3_pas(); // ver função
+    enc_ant = enc.read();
+    while (enc.read() - enc_ant <= 5300)
+    {
+      mot1_hor(vel_esq);
+      mot2_hor(vel_dir);
+      Serial.print("Girando 90 para direita: ");
+      Serial.println(enc.read());
+      
+    }
+    /*
     while (ult_meio.read() >= perto_garra)
     {
       mot1_hor(vel_esq);
       mot2_hor(vel_dir);
-    }
+    }*/
+    mot1_par();
+    mot2_par();
+    delay(1000);
+    display.println("garra subindo");
+      display.display();
     garra_subir();
     while (ult_meio.read() >= perto) // preparativo para a sala3_pas
     {
@@ -142,7 +173,7 @@ void loop()
 
 void sala3_frente(int dis, int temp)
 {
-  if (pos = false) // Vendo qual lado da parede ele estar
+  if (pos == false) // Vendo qual lado da parede ele estar
   {
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= dis)
@@ -157,7 +188,7 @@ void sala3_frente(int dis, int temp)
       }
     }
   }
-  else if (pos = true)
+  else if (pos == true)
   {
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= dis)
@@ -179,8 +210,9 @@ void sala3_frente(int dis, int temp)
 
 void sala3_pas() // Pos = false é esq; Pos = true é dir;
 {
-  if (pos = false)
-  {
+  if (pos == false)
+  {display.println("virando direita: ");
+      display.display();
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_90)
     {
@@ -188,9 +220,10 @@ void sala3_pas() // Pos = false é esq; Pos = true é dir;
       mot2_anti(vel_dir);
       Serial.print("Girando 90 para direita: ");
       Serial.println(enc.read());
+      
     }
     garra_descer();
-    sala3_frente(enc_peq, 1500);
+    sala3_frente(enc_fre_sala3, 1500);
     enc_ant = enc.read();
     while (enc.read() - enc_ant <= enc_90)
     {
@@ -201,8 +234,9 @@ void sala3_pas() // Pos = false é esq; Pos = true é dir;
     }
     pos = true;
   }
-  else
-  {
+  else if(pos == true)
+  {display.println("virando Esquerda: ");
+      display.display();
     enc_ant = enc.read();
     while (enc_ant - enc.read() <= enc_90)
     {
@@ -210,9 +244,10 @@ void sala3_pas() // Pos = false é esq; Pos = true é dir;
       mot2_hor(vel_dir);
       Serial.print("Girando 90 para esquerda: ");
       Serial.println(enc.read());
+      
     }
     garra_descer();
-    sala3_frente(enc_peq, 1500);
+    sala3_frente(enc_fre_sala3, 1500);
     enc_ant = enc.read();
     while (enc_ant - enc.read() <= enc_90)
     {
@@ -231,7 +266,7 @@ void sala3_verifica() // Função para caso ele bater na area de resgate
   if (m_meio <= meio_branco) // Aqui que ele tem que depositar
   {
     depositar();
-    if (pos = true) // Esta invertido para ser mais facil
+    if (pos == true) // Esta invertido para ser mais facil
     {
       enc_ant = enc.read();
       while (enc_ant - enc.read() <= enc_pas)
@@ -242,7 +277,7 @@ void sala3_verifica() // Função para caso ele bater na area de resgate
         Serial.println(enc.read());
       }
     }
-    else if (pos = false)
+    else if (pos == false)
     {
       enc_ant = enc.read();
       while (enc.read() - enc_ant <= enc_pas)
