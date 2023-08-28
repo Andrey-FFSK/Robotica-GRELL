@@ -3,7 +3,7 @@
 #include "Oled.h"
 
 // Usando array para colocar todos os pinos, coloquei os sensores em uma certa posição por causa do BitSwift em baixo
-const int pinos[] = {s_oeste, s_noroeste, s_nordeste, s_leste, s_norte, esq, dir, incli, led_g, mot_in1, mot_in2, mot_in3, mot_in4};
+const int pinos[] = {s_oeste, s_noroeste, s_nordeste, s_leste, s_norte, esq, dir, led_g, mot_in1, mot_in2, mot_in3, mot_in4};
 
 bool ver = false;
 
@@ -12,10 +12,11 @@ void setup()
     display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
     display.setTextColor(WHITE);
     // Colocando os sensores como INPUT, e o resto como OUTPUT, tudo isso pelo array
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < 7; i++)
         pinMode(pinos[i], INPUT);
-    for (int i = 8; i < 12; i++)
+    for (int i = 7; i < 12; i++)
         pinMode(pinos[i], OUTPUT);
+    pinMode(incli, INPUT_PULLUP);
     Serial.begin(9600);
     servo_garra.write(garra_cima);
     bool sala3 = false;
@@ -30,11 +31,11 @@ void loop()
         leitura |= digitalRead(pinos[i]) << i; // Colocando as entrada da tabela da verdade usando um bitshift automatico, o valor do i depende dos sensores
     leitura = (~leitura) & (0b00001111);       // Colocando um inversor para que funcione com a tabela da verdade, pq o sensor dectectar no branco, AND uma mascara para ir so os bits que eu quero
 
-    if (digitalRead(incli) == 1)
+    if (digitalRead(incli) == 0)
     {
         vel_esq = 200;
         vel_dir = 180;
-        while (digitalRead(incli) == 1) // ele tem que ir bem reto
+        while (digitalRead(incli) == 0) // ele tem que ir bem reto
         {
             mot1_hor(vel_esq);
             mot2_hor(vel_dir);
