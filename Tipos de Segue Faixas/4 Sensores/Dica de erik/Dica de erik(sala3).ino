@@ -387,7 +387,41 @@ void loop()
         }
         else
         {
-            // A parte que vai ficar loopando
+            display.setCursor(0, 0);
+      display.print("pos: ");
+      display.println(pos);
+      display.display();
+    sala3_pas(); // ver função
+    enc_ant = enc.read();
+    while (enc.read() - enc_ant <= 5300)
+    {
+      mot1_hor(vel_esq);
+      mot2_hor(vel_dir);
+      Serial.print("Girando 90 para direita: ");
+      Serial.println(enc.read());
+      
+    }
+    /*
+    while (ult_meio.read() >= perto_garra)
+    {
+      mot1_hor(vel_esq);
+      mot2_hor(vel_dir);
+    }*/
+    mot1_par();
+    mot2_par();
+    delay(1000);
+    display.println("garra subindo");
+      display.display();
+    garra_subir();
+    while (ult_meio.read() >= perto) // preparativo para a sala3_pas
+    {
+      mot1_hor(vel_esq);
+      mot2_hor(vel_dir);
+      Serial.print("Andando na frente: ");
+      Serial.println(enc.read());
+    }
+    delay(300);
+    sala3_verifica();
         }
     }
 }
