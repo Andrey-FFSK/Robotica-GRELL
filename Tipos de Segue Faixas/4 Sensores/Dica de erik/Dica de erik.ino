@@ -36,6 +36,9 @@ void loop() {
         display.setCursor(0, 0);
         display.println("Inclinação");
         display.display();
+        mot1_par();
+        mot2_par();
+        delay(1500);
         enc_ant = enc.read();
         while (enc.read() - enc_ant <= enc_gang) {
           mot1_hor(vel_esq);
