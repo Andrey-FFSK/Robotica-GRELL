@@ -36,6 +36,9 @@ void setup()
   for (int i = 10; i < 17; i++)
     pinMode(pinos[i], OUTPUT);
   pinMode(incli, INPUT_PULLUP);
+  servo_garra.attach(7);
+  //servo_cacamba.attach(8);
+  servo_garra.write(garra_cima);
   
   n = 0;
 }
@@ -51,11 +54,12 @@ void loop()
 
   //analogWrite(mot_in2, o);
 
-  //mot1_hor(vel_esq);
-  //mot2_hor(vel_dir);
+  mot1_hor(vel_esq);
+  mot2_hor(vel_dir);
 
   // mot1_anti(vel_esq);
   // mot2_anti(vel_dir);
+  
 
   byte leitura = 0;
   for (int i = 0; i < 5; i++)
