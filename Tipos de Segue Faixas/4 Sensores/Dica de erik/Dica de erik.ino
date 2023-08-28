@@ -3,7 +3,7 @@
 #include "Oled.h"
 
 // Usando array para colocar todos os pinos, coloquei os sensores em uma certa posição por causa do BitSwift em baixo
-const int pinos[] = { s_oeste, s_noroeste, s_nordeste, s_leste, s_norte, esq, dir, incli, led_g, mot_in1, mot_in2, mot_in3, mot_in4 };
+const int pinos[] = { s_oeste, s_noroeste, s_nordeste, s_leste, s_norte, esq, dir, led_g, mot_in1, mot_in2, mot_in3, mot_in4 };
 
 bool ver = false;
 
@@ -11,10 +11,11 @@ void setup() {
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
   display.setTextColor(WHITE);
   // Colocando os sensores como INPUT, e o resto como OUTPUT, tudo isso pelo array
-  for (int i = 0; i < 8; i++)
+  for (int i = 0; i < 7; i++)
     pinMode(pinos[i], INPUT);
-  for (int i = 8; i < 12; i++)
+  for (int i = 8; i < 11; i++)
     pinMode(pinos[i], OUTPUT);
+  pinMode(incli, INPUT_PULLUP);
   Serial.begin(9600);
   servo_garra.attach(7);
   servo_garra.write(garra_cima);
