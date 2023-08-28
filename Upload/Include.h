@@ -18,13 +18,14 @@
 #define mot_in4 9   // verde e amarelo, esquerda, tras
 
 // Definindo portas para o sensor de cor
-#define led_r 36       // Led vermelho para o sensor de coer
-#define led_g 35       // Led verde para o sensor de cor
-#define led_b 37       // Led azul para o sensor de cor
-#define led_g_meio 44  // Led para o meio
+#define led_r 98       // Led vermelho para o sensor de coer
+#define led_g 29      // Led verde para o sensor de cor
+#define led_b 99       // Led azul para o sensor de cor
+#define led_g_meio 36  // Led para o meio
 #define esq A0         // Sensor que fica na esq
 #define dir A1         // Sensor que fica na dir
-#define meio A14       // sensor que fica apontado pra frente no meio
+#define meio A14  // sensor que fica apontado pra frente no meio
+bool ver = false;     
 int m_esq = 0;         // Declarando o map e constrain do sensor
 int m_dir = 0;
 int m_meio = 0;
@@ -40,9 +41,12 @@ int m_meio = 0;
 #define dir_verde 215  // 880 DEU CERTO O VERDE; amtes = cinza - 10
 
 // Definindo velocidades e inclinação
-int vel_esq = 190;  // PWM usado para a velocidade, min == 0 e max == 255
-int vel_dir = 170;  // PWM da direita
-#define incli 52
+int vel_esq = 170;  // PWM usado para a velocidade, min == 0 e max == 255
+int vel_dir = 150;  // PWM da direita
+#define incli A14
+#define tg 1000
+bool incli_ant;
+int millis_ant;
 #define vel_esq_p 100  //
 #define vel_esq_g 220  // Valores para um sistema de ir so pra frente
 #define vel_dir_p 80   //
@@ -52,11 +56,13 @@ int vel_dir = 170;  // PWM da direita
 Encoder enc(3, 2);
 int enc_ant = 0;     // Valor do encoder anterior
 #define enc_fre 130  // Frente apos ver 90 ou encruzilhada / antes era 300 no tomaz / antes era 200 no erik
-#define enc_90 900
+#define enc_90 800 
 #define enc_90_p 560
 #define enc_peq 200  // Valor que vira para completar com while / antes tava 150 (acho)
 #define enc_pas 30   // Valor que vai para atras / antes tava 100
 #define enc_pas_p 10
+#define enc_gang 900
+#define enc_ramp 900
 
 // Variaveis tipo bool para indetif
 bool frente = false;
@@ -76,8 +82,9 @@ Servo servo_garra;
 #define dir_switch 53
 int pos = 0;
 int pos_ant;
-#define garra_cima 112  // talvez valores invertidos
-#define garra_baixo 15  // esse tbm
+#define servo_delay 2
+#define garra_cima 133  // talvez valores invertidos
+#define garra_baixo 39  // esse tbm
 #define cacamba_aberta 107
 #define cacamba_fechada 9
 
@@ -119,13 +126,13 @@ void sensi() {
   m_dir = map(constrain(analogRead(dir), 427, 642), 427, 642, 0, 1023);
   m_meio = map(constrain(analogRead(dir), 135, 246), 135, 246, 0, 1023);
 }
-/*
+
 void cacamba_abrir()
 {
   for (pos = pos_ant; pos <= cacamba_aberta; pos++)
   {
     servo_cacamba.write(pos);
-    delay(10);
+    delay(servo_delay);
     Serial.println("Caçamba - subindo");
   }
   pos_ant = pos;
@@ -136,7 +143,7 @@ void cacamba_fechar()
   for (pos = pos_ant; pos >= cacamba_fechada; pos--)
   {
     servo_cacamba.write(pos);
-    delay(10);
+    delay(servo_delay);
     Serial.println("Caçamba - decendo");
   }
   pos_ant = pos;
@@ -154,8 +161,8 @@ void depositar()
   mot1_par();
   mot2_par();
   delay(500);
-  mot1_anti();
-  mot2_anti();
+  mot1_anti(vel_esq);
+  mot2_anti(vel_dir);
   delay(1000);
   mot1_par();
   mot2_par();
@@ -170,28 +177,9 @@ void depositar()
       Serial.print("dando 180");
       Serial.println(enc.read());
     }
-  mot1_hor();
-  mot2_hor();
+  mot1_hor(vel_esq);
+  mot2_hor(vel_dir);
   delay(2000);
-}
-
-void garra_subir() // duas vezes para ter certeza que vai entrar na cacamba
-{
-  for (pos = pos_ant; pos <= garra_cima; pos++)
-  {
-    servo_garra.write(pos);
-    delay(10);
-    Serial.println("Garra - subindo");
-  }
-  pos_ant = pos;
-  garra_descer();
-  for (pos = pos_ant; pos <= garra_cima; pos++)
-  {
-    servo_garra.write(pos);
-    delay(10);
-    Serial.println("Garra - subindo");
-  }
-  pos_ant = pos;
 }
 
 void garra_descer()
@@ -199,11 +187,19 @@ void garra_descer()
   for (pos = pos_ant; pos >= garra_baixo; pos--)
   {
     servo_garra.write(pos);
-    delay(10);
+    delay(servo_delay);
     Serial.println("Garra - decendo");
   }
   pos_ant = pos;
-}*/
+}
+
+void garra_subir() // duas vezes para ter certeza que vai entrar na cacamba
+{
+  servo_garra.write(garra_cima);
+  delay(500);
+  garra_descer();
+  delay(500);  
+}
 
 void desv_d(int velo_esq, int velo_dir)  // Função para o robo desviar pela direita o obstaculo
 {
@@ -219,7 +215,7 @@ void desv_d(int velo_esq, int velo_dir)  // Função para o robo desviar pela di
   }
   // while(digitalRead(s_norte) == 1){
   enc_ant = enc.read();
-  while (enc.read() - enc_ant <= 1200) {
+  while (enc.read() - enc_ant <= 1300) {
     mot1_hor(velo_esq);
     mot2_hor(velo_dir);
     Serial.print("andando na frente");
@@ -233,7 +229,7 @@ void desv_d(int velo_esq, int velo_dir)  // Função para o robo desviar pela di
     Serial.println(enc.read());
   }
   enc_ant = enc.read();
-  while (enc.read() - enc_ant <= 1200) {
+  while (enc.read() - enc_ant <= 1600) {
     mot1_hor(velo_esq);
     mot2_hor(velo_dir);
     Serial.print("andando na frente");
