@@ -75,39 +75,37 @@ void loop()
   display.print(tensaoA0);
   display.print(" V");*/
 
-  display.setCursor(0, lh * 4);
+  display.setCursor(0, lh * 3);
   display.print("Olho: ");
   display.print(ult_meio.read());
   display.print(" cm");
 
-  display.setCursor(0, lh * 5);
+  display.setCursor(0, lh * 4);
   display.print("Esq: ");
   display.print(m_esq);
   display.print("(");
   display.print(analogRead(esq));
   display.print(")");
 
-  display.setCursor(0, lh * 6);
+  display.setCursor(0, lh * 5);
   display.print("Dir: ");
   display.print(m_dir);
   display.print("(");
   display.print(analogRead(dir));
   display.print(")");
 
-  display.setCursor(0, lh * 7);
+  display.setCursor(0, lh * 6);
   display.print("Meio: ");
   display.print(m_meio);
   display.print("(");
   display.print(analogRead(meio));
   display.print(")");
 
-  display.setCursor(0, lh * 8);
+  display.setCursor(0, lh * 7);
   display.print("Enc: ");
   display.print(enc.read());
-  display.print(" pas");
 
-  display.setCursor(0, lh * 9);
-  display.print("Incli: ");
+  display.print(" Incli: ");
   display.print(digitalRead(incli));
 
   display.drawBitmap(W - 32, H - 32 + sin(n * PI / 180) * 3, aeia, 32, 32, WHITE);
