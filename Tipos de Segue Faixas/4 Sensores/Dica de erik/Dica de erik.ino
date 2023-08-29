@@ -3,7 +3,7 @@
 #include "Oled.h"
 
 // Usando array para colocar todos os pinos, coloquei os sensores em uma certa posição por causa do BitSwift em baixo
-const int pinos[] = { s_oeste, s_noroeste, s_nordeste, s_leste, s_norte, esq, dir, led_g, mot_in1, mot_in2, mot_in3, mot_in4 };
+const int pinos[] = { s_oeste, s_noroeste, s_nordeste, s_leste, s_norte, esq, dir, led_g, led_g_meio, mot_in1, mot_in2, mot_in3, mot_in4 };
 
 void setup() {
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
@@ -11,15 +11,16 @@ void setup() {
   // Colocando os sensores como INPUT, e o resto como OUTPUT, tudo isso pelo array
   for (int i = 0; i < 7; i++)
     pinMode(pinos[i], INPUT);
-  for (int i = 7; i < 12; i++)
+  for (int i = 7; i < 13; i++)
     pinMode(pinos[i], OUTPUT);
   pinMode(incli, INPUT_PULLUP);
   Serial.begin(9600);
   servo_garra.attach(7);
-  servo_garra.write(garra_cima);
+  servo_cacamba.attach(8);
+  servo_garra.write(garra_meio);
+  servo_cacamba.write(cacamba_fechada);
   delay(1000);
 }
-
 void loop() {
   display.clearDisplay();
   // Essa parte é o bitSwift, criar uma variavel leitura do tipo byte, porem a gente so usa os bits dessa varaivel, a quantidade de bits depende de quantos sensores estao usando
@@ -28,43 +29,7 @@ void loop() {
     leitura |= digitalRead(pinos[i]) << i;  // Colocando as entrada da tabela da verdade usando um bitshift automatico, o valor do i depende dos sensores
   leitura = (~leitura) & (0b00001111);      // Colocando um inversor para que funcione com a tabela da verdade, pq o sensor dectectar no branco, AND uma mascara para ir so os bits que eu quero
 
-  if ((incli_ant == 1) && (digitalRead(incli) == 0)) {
-    millis_ant = millis();
-  } else if ((incli_ant == 0) && (digitalRead(incli) == 0)) {
-    if (millis() - millis_ant >= tg) {
-      while (digitalRead(incli) == 0) {
-        display.setCursor(0, 0);
-        display.println("Inclinação");
-        display.display();
-        mot1_par();
-        mot2_par();
-        delay(1500);
-        enc_ant = enc.read();
-        while (enc.read() - enc_ant <= enc_gang) {
-          mot1_hor(vel_esq);
-          mot2_hor(vel_dir);
-          Serial.print("andando na frente");
-          Serial.println(enc.read());
-        }
-        mot1_par();
-        mot2_par();
-        delay(1000);
-      } /* PARTE PARA A SALA 3
-      if(digitalRead(incli) == 0)
-      {
-        enc_ant = enc.read();
-        while (enc.read() - enc_ant <= enc_ramp) {
-          mot1_hor(vel_esq);
-          mot2_hor(vel_dir);
-          Serial.print("andando na frente");
-          Serial.println(enc.read());
-        }
-      }*/
-    }
-  }
-  incli_ant = digitalRead(incli);
-
-  if (ult_meio.read() <= 4)  // Se o sensor dectar que esta distancia ativa a função de desviar
+  if (ult_meio.read() <= 3)  // Se o sensor dectar que esta distancia ativa a função de desviar
   {
     desv_d(vel_esq, vel_dir);
     display.setCursor(0, 0);
@@ -187,7 +152,7 @@ void loop() {
 
       display.println("lei == 0b1000 / Esq_90");
       display.display();
-      delay(3000);
+ 
       esq_90();  // virar a direita; antes tava encruzilhada();
     }
   }
@@ -230,8 +195,6 @@ void loop() {
       display.println("lei == 0001 / Dir_90");
       display.display();
 
-      delay(3000);
-
       dir_90();  // virar a esquerda; antes era encruzilhada();
     }
   } else if ((leitura == 0b1001) || (leitura == 0b1111) || (leitura == 0b1011) || (leitura == 0b1101))  // ENCRUZILHADA
@@ -272,12 +235,7 @@ void loop() {
       display.println("lei == 0b1111 / Encruzi");
       display.display();
 
-      delay(3000);
-
       encruzilhada();  // encruzilhada
     }
   }
 }
-/*
-COMO ELE VAI PARAR? ele nao para.
-*/
