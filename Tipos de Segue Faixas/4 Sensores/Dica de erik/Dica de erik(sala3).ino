@@ -5,9 +5,6 @@
 // Usando array para colocar todos os pinos, coloquei os sensores em uma certa posição por causa do BitSwift em baixo
 const int pinos[] = { s_oeste, s_noroeste, s_nordeste, s_leste, s_norte, esq, dir, led_g, led_g_meio, mot_in1, mot_in2, mot_in3, mot_in4 };
 
-bool sala3 = false;
-bool sala3_ver = false;
-
 void setup() {
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
   display.setTextColor(WHITE);
@@ -19,8 +16,9 @@ void setup() {
   pinMode(incli, INPUT_PULLUP);
   Serial.begin(9600);
   servo_garra.attach(7);
-  servo_cacamba.attach(8);
+  //servo_cacamba.attach(8);
   servo_garra.write(garra_meio);
+  servo_cacamba.write(cacamba_fechada);
   delay(1000);
 }
 void loop() {
@@ -58,12 +56,13 @@ void loop() {
     }
     incli_ant = digitalRead(incli);
 
-    if (ult_meio.read() <= 4)  // Se o sensor dectar que esta distancia ativa a função de desviar
+    if (ult_meio.read() <= 14)  // Se o sensor dectar que esta distancia ativa a função de desviar
     {
-      desv_d(vel_esq, vel_dir);
       display.setCursor(0, 0);
       display.println("Desviando obsta");
       display.display();
+      desv_d(vel_esq, vel_dir);
+
     }
 
     // Condições que usa a melhor situação dos sensores, o bit mais da direita é o s_leste e o bit mais na esquerda é o s_oeste
@@ -292,8 +291,9 @@ void loop() {
       display.display();
 
       delay(3000);
-
-      encruzilhada();  // encruzilhada
+      
+        encruzilhada();  // encruzilhada
+     
     }
   }
 
@@ -301,7 +301,7 @@ void loop() {
 else {
   if (sala3_ver == false) {
     enc_ant = enc.read();  // Andando um pouco pra frante para resetar
-    while (enc.read() - enc_ant <= enc_pas) {
+    while (enc.read() - enc_ant <= enc_fre_sala3) {
       mot1_hor(vel_esq);
       mot2_hor(vel_dir);
       Serial.print("Andando na frente: ");
