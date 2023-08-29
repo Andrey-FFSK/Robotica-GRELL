@@ -22,7 +22,6 @@ void setup() {
   servo_cacamba.attach(8);
   servo_garra.write(garra_meio);
   delay(1000);
-  
 }
 void loop() {
   display.clearDisplay();
@@ -33,7 +32,6 @@ void loop() {
   leitura = (~leitura) & (0b00001111);      // Colocando um inversor para que funcione com a tabela da verdade, pq o sensor dectectar no branco, AND uma mascara para ir so os bits que eu quero
 
   if (sala3 == false) {
-
     if ((incli_ant == 1) && (digitalRead(incli) == 0)) {
       millis_ant = millis();
     } else if ((incli_ant == 0) && (digitalRead(incli) == 0)) {
@@ -55,7 +53,7 @@ void loop() {
           mot1_par();
           mot2_par();
           delay(1000);
-        } 
+        }
       }
     }
     incli_ant = digitalRead(incli);
@@ -150,274 +148,277 @@ void loop() {
       if (ver == false) {
         mot1_hor(vel_esq);
         mot2_hor(vel_dir);
-        
+
         display.setCursor(0, 0);
         display.println("lei = 0000");
         display.display();
-      
+
         Serial.println("leitura = 0000; leitura == 0110");
       }
-      } else {
-        display.setCursor(0, 0);
-        display.println("lei == 0000 / Tras");
-        display.display();
-        enc_ant = enc.read();
-        while (enc_ant - enc.read() <= enc_pas) {
-          mot1_anti(vel_esq);
-          mot2_anti(vel_dir);
-          Serial.print("Indo para tras: ");
-          Serial.println(enc.read());
-        }
-        ver = false;
-      }
-    } else if ((leitura == 0b1000) || (leitura == 0b1100) || (leitura == 0b1110) || (leitura == 0b1010))  // Condição 4
+     else 
     {
-      if (ver == false) {
-        digitalWrite(led_g, 1);
-        mot1_par();
-        mot2_par();
-        delay(1000);
-        sensi();
-        digitalWrite(led_g, 0);
-        ver = true;
-      } else {
-        ver = false;
-        Serial.print("Esq: ");
-        Serial.print(m_esq);
-        Serial.print("(");
-        Serial.print(analogRead(esq));
-        Serial.print(") / Dir: ");
-        Serial.print(m_dir);
-        Serial.print("(");
-        Serial.print(analogRead(dir));
-        Serial.println(")");
-
-        display.setCursor(0, 0);
-        display.print("Esq: ");
-        display.print(m_esq);
-        display.print("(");
-        display.print(analogRead(esq));
-        display.println(")");
-
-        display.print("Dir: ");
-        display.print(m_dir);
-        display.print("(");
-        display.print(analogRead(dir));
-        display.println(")");
-
-        display.println("lei == 0b1000 / Esq_90");
-        display.display();
-        delay(3000);
-        esq_90();  // virar a direita; antes tava encruzilhada();
-      }
-    }
-
-    else if ((leitura == 0b0001) || (leitura == 0b0011) || (leitura == 0b0111) || (leitura == 0b0101))  // Condição 7
-    {
-      if (ver == false) {
-        digitalWrite(led_g, 1);
-        mot1_par();
-        mot2_par();
-        delay(1000);
-        sensi();
-        digitalWrite(led_g, 0);
-        ver = true;
-      } else {
-        ver = false;
-        Serial.print("Esq: ");
-        Serial.print(m_esq);
-        Serial.print("(");
-        Serial.print(analogRead(esq));
-        Serial.print(") / Dir: ");
-        Serial.print(m_dir);
-        Serial.print("(");
-        Serial.print(analogRead(dir));
-        Serial.println(")");
-
-        display.setCursor(0, 0);
-        display.print("Esq: ");
-        display.print(m_esq);
-        display.print("(");
-        display.print(analogRead(esq));
-        display.println(")");
-
-        display.print("Dir: ");
-        display.print(m_dir);
-        display.print("(");
-        display.print(analogRead(dir));
-        display.println(")");
-
-        display.println("lei == 0001 / Dir_90");
-        display.display();
-
-        delay(3000);
-
-        dir_90();  // virar a esquerda; antes era encruzilhada();
-      }
-    } else if ((leitura == 0b1001) || (leitura == 0b1111) || (leitura == 0b1011) || (leitura == 0b1101))  // ENCRUZILHADA
-    {
-      if (ver == false) {
-        mot1_par();
-        mot2_par();
-        digitalWrite(led_g, 1);
-        delay(1000);
-        sensi();
-        digitalWrite(led_g, 0);
-        ver = true;
-      } else {
-        ver = false;
-        Serial.print("Esq: ");
-        Serial.print(m_esq);
-        Serial.print("(");
-        Serial.print(analogRead(esq));
-        Serial.print(") / Dir: ");
-        Serial.print(m_dir);
-        Serial.print("(");
-        Serial.print(analogRead(dir));
-        Serial.println(")");
-
-        display.setCursor(0, 0);
-        display.print("Esq: ");
-        display.print(m_esq);
-        display.print("(");
-        display.print(analogRead(esq));
-        display.println(")");
-
-        display.print("Dir: ");
-        display.print(m_dir);
-        display.print("(");
-        display.print(analogRead(dir));
-        display.println(")");
-
-        display.println("lei == 0b1111 / Encruzi");
-        display.display();
-
-        delay(3000);
-
-        encruzilhada();  // encruzilhada
-      }
-    }
-  } else {
-    if (sala3_ver == false) {
-      enc_ant = enc.read();  // Andando um pouco pra frante para resetar
-      while (enc.read() - enc_ant <= enc_pas) {
-        mot1_hor(vel_esq);
-        mot2_hor(vel_dir);
-        Serial.print("Andando na frente: ");
-        Serial.println(enc.read());
-      }
-
-      enc_ant = enc.read();  // Virando para esquerda para medir se a parede esta perto
-      while (enc_ant - enc.read() <= enc_90) {
-        mot1_anti(vel_esq);
-        mot2_hor(vel_dir);
-        Serial.print("Girando 90 para esquerda: ");
-        Serial.println(enc.read());
-      }
-      ult_esq = ult_meio.read();  // guardando valor
-      display.print("Esq: ");
-      display.println(ult_esq);
+      display.setCursor(0, 0);
+      display.println("lei == 0000 / Tras");
       display.display();
-      enc_ant = enc.read();  // Dando 180 para ver a distancia da parede da direita
-      while (enc.read() - enc_ant <= enc_90 * 2) {
-        mot1_hor(vel_esq);
+      enc_ant = enc.read();
+      while (enc_ant - enc.read() <= enc_pas) {
+        mot1_anti(vel_esq);
         mot2_anti(vel_dir);
-        Serial.print("Girando 180 para direita: ");
+        Serial.print("Indo para tras: ");
         Serial.println(enc.read());
       }
-      ult_dir = ult_meio.read();
-      display.print("Dir: ");
-      display.println(ult_dir);
-      display.display();
-      enc_ant = enc.read();  // voltando para etapa inicial
-      while (enc_ant - enc.read() <= enc_90) {
-        mot1_anti(vel_esq);
-        mot2_hor(vel_dir);
-        Serial.print("Girando 90 para esquerda: ");
-        Serial.println(enc.read());
-      }
+      ver = false;
+    }
+  } else if ((leitura == 0b1000) || (leitura == 0b1100) || (leitura == 0b1110) || (leitura == 0b1010))  // Condição 4
+  {
+    if (ver == false) {
+      digitalWrite(led_g, 1);
       mot1_par();
       mot2_par();
       delay(1000);
-      if (ult_esq >= ult_dir)  // Vendo qual parte é mais perto dele
-        pos = true;            // ta mais perto da direita
-      else
-        pos = false;  // ta mais perto da esquerda
-      display.print("Pos: ");
-      display.print(pos);
-      display.display();
-      if (pos == false)  // ajeitando para a função sala3_pas
-      {
-        display.print(" / Esquerda");
-        display.display();
-        enc_ant = enc.read();
-        while (enc_ant - enc.read() <= enc_90) {
-          mot1_anti(vel_esq);
-          mot2_hor(vel_dir);
-          Serial.print("Girando 90 para esquerda: ");
-          Serial.println(enc.read());
-        }
-      } else {
-        display.print(" / Direita");
-        display.display();
-        enc_ant = enc.read();
-        while (enc.read() - enc_ant <= enc_90) {
-          mot1_hor(vel_esq);
-          mot2_anti(vel_dir);
-          Serial.print("Girando 90 para direita: ");
-          Serial.println(enc.read());
-        }
-      }
-      while (ult_meio.read() >= perto)  // preparativo para a sala3_pas
-      {
-        mot1_hor(vel_esq);
-        mot2_hor(vel_dir);
-        Serial.print("Andando na frente: ");
-        Serial.println(enc.read());
-        display.clearDisplay();
-        display.setCursor(0, 0);
-        display.print("Meio: ");
-        display.print(ult_meio.read());
-        display.display();
-      }
-      delay(300);  // delay para ele ficar encostado na parede
-      sala3_ver = true;
+      sensi();
+      digitalWrite(led_g, 0);
+      ver = true;
     } else {
+      ver = false;
+      Serial.print("Esq: ");
+      Serial.print(m_esq);
+      Serial.print("(");
+      Serial.print(analogRead(esq));
+      Serial.print(") / Dir: ");
+      Serial.print(m_dir);
+      Serial.print("(");
+      Serial.print(analogRead(dir));
+      Serial.println(")");
+
       display.setCursor(0, 0);
-      display.print("pos: ");
-      display.println(pos);
+      display.print("Esq: ");
+      display.print(m_esq);
+      display.print("(");
+      display.print(analogRead(esq));
+      display.println(")");
+
+      display.print("Dir: ");
+      display.print(m_dir);
+      display.print("(");
+      display.print(analogRead(dir));
+      display.println(")");
+
+      display.println("lei == 0b1000 / Esq_90");
       display.display();
-      sala3_pas();  // ver função
+      delay(3000);
+      esq_90();  // virar a direita; antes tava encruzilhada();
+    }
+  }
+
+  else if ((leitura == 0b0001) || (leitura == 0b0011) || (leitura == 0b0111) || (leitura == 0b0101))  // Condição 7
+  {
+    if (ver == false) {
+      digitalWrite(led_g, 1);
+      mot1_par();
+      mot2_par();
+      delay(1000);
+      sensi();
+      digitalWrite(led_g, 0);
+      ver = true;
+    } else {
+      ver = false;
+      Serial.print("Esq: ");
+      Serial.print(m_esq);
+      Serial.print("(");
+      Serial.print(analogRead(esq));
+      Serial.print(") / Dir: ");
+      Serial.print(m_dir);
+      Serial.print("(");
+      Serial.print(analogRead(dir));
+      Serial.println(")");
+
+      display.setCursor(0, 0);
+      display.print("Esq: ");
+      display.print(m_esq);
+      display.print("(");
+      display.print(analogRead(esq));
+      display.println(")");
+
+      display.print("Dir: ");
+      display.print(m_dir);
+      display.print("(");
+      display.print(analogRead(dir));
+      display.println(")");
+
+      display.println("lei == 0001 / Dir_90");
+      display.display();
+
+      delay(3000);
+
+      dir_90();  // virar a esquerda; antes era encruzilhada();
+    }
+  } else if ((leitura == 0b1001) || (leitura == 0b1111) || (leitura == 0b1011) || (leitura == 0b1101))  // ENCRUZILHADA
+  {
+    if (ver == false) {
+      mot1_par();
+      mot2_par();
+      digitalWrite(led_g, 1);
+      delay(1000);
+      sensi();
+      digitalWrite(led_g, 0);
+      ver = true;
+    } else {
+      ver = false;
+      Serial.print("Esq: ");
+      Serial.print(m_esq);
+      Serial.print("(");
+      Serial.print(analogRead(esq));
+      Serial.print(") / Dir: ");
+      Serial.print(m_dir);
+      Serial.print("(");
+      Serial.print(analogRead(dir));
+      Serial.println(")");
+
+      display.setCursor(0, 0);
+      display.print("Esq: ");
+      display.print(m_esq);
+      display.print("(");
+      display.print(analogRead(esq));
+      display.println(")");
+
+      display.print("Dir: ");
+      display.print(m_dir);
+      display.print("(");
+      display.print(analogRead(dir));
+      display.println(")");
+
+      display.println("lei == 0b1111 / Encruzi");
+      display.display();
+
+      delay(3000);
+
+      encruzilhada();  // encruzilhada
+    }
+  }
+
+}
+else {
+  if (sala3_ver == false) {
+    enc_ant = enc.read();  // Andando um pouco pra frante para resetar
+    while (enc.read() - enc_ant <= enc_pas) {
+      mot1_hor(vel_esq);
+      mot2_hor(vel_dir);
+      Serial.print("Andando na frente: ");
+      Serial.println(enc.read());
+    }
+
+    enc_ant = enc.read();  // Virando para esquerda para medir se a parede esta perto
+    while (enc_ant - enc.read() <= enc_90) {
+      mot1_anti(vel_esq);
+      mot2_hor(vel_dir);
+      Serial.print("Girando 90 para esquerda: ");
+      Serial.println(enc.read());
+    }
+    ult_esq = ult_meio.read();  // guardando valor
+    display.print("Esq: ");
+    display.println(ult_esq);
+    display.display();
+    enc_ant = enc.read();  // Dando 180 para ver a distancia da parede da direita
+    while (enc.read() - enc_ant <= enc_90 * 2) {
+      mot1_hor(vel_esq);
+      mot2_anti(vel_dir);
+      Serial.print("Girando 180 para direita: ");
+      Serial.println(enc.read());
+    }
+    ult_dir = ult_meio.read();
+    display.print("Dir: ");
+    display.println(ult_dir);
+    display.display();
+    enc_ant = enc.read();  // voltando para etapa inicial
+    while (enc_ant - enc.read() <= enc_90) {
+      mot1_anti(vel_esq);
+      mot2_hor(vel_dir);
+      Serial.print("Girando 90 para esquerda: ");
+      Serial.println(enc.read());
+    }
+    mot1_par();
+    mot2_par();
+    delay(1000);
+    if (ult_esq >= ult_dir)  // Vendo qual parte é mais perto dele
+      pos = true;            // ta mais perto da direita
+    else
+      pos = false;  // ta mais perto da esquerda
+    display.print("Pos: ");
+    display.print(pos);
+    display.display();
+    if (pos == false)  // ajeitando para a função sala3_pas
+    {
+      display.print(" / Esquerda");
+      display.display();
       enc_ant = enc.read();
-      while (enc.read() - enc_ant <= 5300) {
-        mot1_hor(vel_esq);
+      while (enc_ant - enc.read() <= enc_90) {
+        mot1_anti(vel_esq);
         mot2_hor(vel_dir);
+        Serial.print("Girando 90 para esquerda: ");
+        Serial.println(enc.read());
+      }
+    } else {
+      display.print(" / Direita");
+      display.display();
+      enc_ant = enc.read();
+      while (enc.read() - enc_ant <= enc_90) {
+        mot1_hor(vel_esq);
+        mot2_anti(vel_dir);
         Serial.print("Girando 90 para direita: ");
         Serial.println(enc.read());
       }
-      /*
+    }
+    while (ult_meio.read() >= perto)  // preparativo para a sala3_pas
+    {
+      mot1_hor(vel_esq);
+      mot2_hor(vel_dir);
+      Serial.print("Andando na frente: ");
+      Serial.println(enc.read());
+      display.clearDisplay();
+      display.setCursor(0, 0);
+      display.print("Meio: ");
+      display.print(ult_meio.read());
+      display.display();
+    }
+    delay(300);  // delay para ele ficar encostado na parede
+    sala3_ver = true;
+  } else {
+    display.setCursor(0, 0);
+    display.print("pos: ");
+    display.println(pos);
+    display.display();
+    sala3_pas();  // ver função
+    enc_ant = enc.read();
+    while (enc.read() - enc_ant <= 5300) {
+      mot1_hor(vel_esq);
+      mot2_hor(vel_dir);
+      Serial.print("Girando 90 para direita: ");
+      Serial.println(enc.read());
+    }
+    /*
     while (ult_meio.read() >= perto_garra)
     {
       mot1_hor(vel_esq);
       mot2_hor(vel_dir);
     }*/
-      mot1_par();
-      mot2_par();
-      delay(1000);
-      display.println("garra subindo");
-      display.display();
-      garra_subir();
-      while (ult_meio.read() >= perto)  // preparativo para a sala3_pas
-      {
-        mot1_hor(vel_esq);
-        mot2_hor(vel_dir);
-        Serial.print("Andando na frente: ");
-        Serial.println(enc.read());
-      }
-      delay(300);
-      sala3_verifica();
+    mot1_par();
+    mot2_par();
+    delay(1000);
+    display.println("garra subindo");
+    display.display();
+    garra_subir();
+    while (ult_meio.read() >= perto)  // preparativo para a sala3_pas
+    {
+      mot1_hor(vel_esq);
+      mot2_hor(vel_dir);
+      Serial.print("Andando na frente: ");
+      Serial.println(enc.read());
     }
+    delay(300);
+    sala3_verifica();
   }
+}
 }
 
 void sala3_pas()  // Pos = false é esq; Pos = true é dir;
