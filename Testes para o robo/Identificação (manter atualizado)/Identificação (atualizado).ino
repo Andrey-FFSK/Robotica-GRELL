@@ -19,7 +19,7 @@ const unsigned char aeiapeqena[] PROGMEM = {
     0x79, 0x88, 0x7b, 0x90, 0x7b, 0x98, 0x3f, 0x98, 0x17, 0x10, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00};
 
 // Usando array para colocar todos os pinos, coloquei os sensores invertido por causa do BitSwift em baixo
-const int pinos[] = {s_oeste, s_noroeste, s_norte, s_nordeste, s_leste, esq, dir, esq_switch, dir_switch, led_g, led_g_meio, led_r, led_b, mot_in1, mot_in2, mot_in3, mot_in4};
+const int pinos[] = { s_oeste, s_noroeste, s_nordeste, s_leste, s_norte, esq, dir, led_g, mot_in1, mot_in2, mot_in3, mot_in4 };
 
 float tensaoA0;
 
@@ -31,9 +31,9 @@ void setup()
   display.setTextColor(WHITE);
   display.setCursor(0, 0);
   Serial.begin(9600);
-  for (int i; i < 9; i++)
+  for (int i = 0; i < 7; i++)
     pinMode(pinos[i], INPUT);
-  for (int i = 9; i < 17; i++)
+  for (int i = 7; i < 12; i++)
     pinMode(pinos[i], OUTPUT);
   pinMode(incli, INPUT_PULLUP);
   //servo_garra.attach(7);
@@ -101,17 +101,11 @@ void loop()
   display.print(")");
 
   display.setCursor(0, lh * 6);
-  display.print("Meio: ");
-  display.print(m_meio);
-  display.print("(");
-  display.print(analogRead(meio));
-  display.print(")");
-
-  display.setCursor(0, lh * 7);
   display.print("Enc: ");
   display.print(enc.read());
 
-  display.print(" Incli: ");
+  display.setCursor(0, lh * 7);
+  display.print("Incli: ");
   display.print(digitalRead(incli));
 
   display.drawBitmap(W - 32, H - 32 + sin(n * PI / 180) * 3, aeia, 32, 32, WHITE);
@@ -136,15 +130,13 @@ void loop()
   Serial.print("(");
   Serial.print(analogRead(dir));
   Serial.print(") / Meio: ");
-  Serial.print(m_meio);
   Serial.print("(");
-  Serial.print(analogRead(meio));
   Serial.print(") / Enc: ");
   Serial.print(enc.read());
   Serial.print("pas / esq_switch: ");
-  Serial.print(digitalRead(esq_switch));
+  //Serial.print(digitalRead(esq_switch));
   Serial.print(" / dir_switch: ");
-  Serial.print(digitalRead(dir_switch));
+  //Serial.print(digitalRead(dir_switch));
   Serial.print(" / Incli: ");
   Serial.print(digitalRead(incli));
   Serial.println(" / ");
