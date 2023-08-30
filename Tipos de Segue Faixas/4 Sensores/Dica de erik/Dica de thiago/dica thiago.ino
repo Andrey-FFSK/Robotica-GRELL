@@ -30,24 +30,26 @@ void loop() {
     leitura |= digitalRead(pinos[i]) << i;  // Colocando as entrada da tabela da verdade usando um bitshift automatico, o valor do i depende dos sensores
   leitura = (~leitura) & (0b00001111);      // Colocando um inversor para que funcione com a tabela da verdade, pq o sensor dectectar no branco, AND uma mascara para ir so os bits que eu quero
 
-  vel_esq = 150;  // valor normal dos motores
-  vel_dir = 130;  // 
-
+  vel_esq = 130;  // valor normal dos motores
+  vel_dir = 110;  // 
+  /*
   if (ult_meio.read() <= 3)  // Se o sensor dectar que esta distancia ativa a função de desviar
   {
     display.setCursor(0, 0); // Pritando no oled
     display.println("Desviando obsta");
     display.display();
     desv(vel_esq, vel_dir);
-  }
+  }*/
 
   // Condições que usa a melhor situação dos sensores, o bit mais da direita é o s_leste e o bit mais na esquerda é o s_oeste
   // Algumas tem if com OR por conta que eles fazem a mesma coisa na condição.
   if (leitura == 0b0010)  // Condição mini ajuste para direita
   {
     if (ver == false) {
+      vel_esq = 230;  // 
+      //vel_dir = 220;  // 
       mot1_hor(vel_esq);
-      mot2_anti(vel_dir);
+      mot2_hor(vel_dir);
 
       display.setCursor(0, 0);
       display.println("0010 / Direita");
@@ -71,7 +73,9 @@ void loop() {
   } else if (leitura == 0b0100)  // mini ajuste para esquerda
   {
     if (ver == false) {
-      mot1_anti(vel_esq);
+      //vel_esq = 240;  // 
+      vel_dir = 210;  // 
+      mot1_hor(vel_esq);
       mot2_hor(vel_dir);
 
       display.setCursor(0, 0);
@@ -155,6 +159,14 @@ void loop() {
 
       display.println("1000 / Esq_90");
       display.display();
+
+      enc_ant = enc.read();
+    while (enc_ant - enc.read() <= enc_pas_outro) {
+      mot1_anti(vel_esq);
+      mot2_anti(vel_dir);
+      Serial.print("Indo para tras: ");
+      Serial.println(enc.read());
+    }
  
       esq_90();  // virar a direita; antes tava encruzilhada();
     }
@@ -198,6 +210,14 @@ void loop() {
       display.println("0001 / Dir_90");
       display.display();
 
+      enc_ant = enc.read();
+    while (enc_ant - enc.read() <= enc_pas_outro) {
+      mot1_anti(vel_esq);
+      mot2_anti(vel_dir);
+      Serial.print("Indo para tras: ");
+      Serial.println(enc.read());
+    }
+
       dir_90();  // virar a esquerda; antes era encruzilhada();
     }
   } else if ((leitura == 0b1001) || (leitura == 0b1111) || (leitura == 0b1011) || (leitura == 0b1101))  // ENCRUZILHADA
@@ -237,6 +257,14 @@ void loop() {
 
       display.println("1111 / Encruzi");
       display.display();
+
+      enc_ant = enc.read();
+    while (enc_ant - enc.read() <= enc_pas_outro) {
+      mot1_anti(vel_esq);
+      mot2_anti(vel_dir);
+      Serial.print("Indo para tras: ");
+      Serial.println(enc.read());
+    }
 
       encruzilhada();  // encruzilhada
     }
