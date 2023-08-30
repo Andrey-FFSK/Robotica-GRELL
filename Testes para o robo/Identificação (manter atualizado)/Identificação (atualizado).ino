@@ -36,9 +36,9 @@ void setup()
   for (int i = 9; i < 17; i++)
     pinMode(pinos[i], OUTPUT);
   pinMode(incli, INPUT_PULLUP);
-  servo_garra.attach(7);
+  //servo_garra.attach(7);
   //servo_cacamba.attach(8);
-  servo_garra.write(garra_cima);
+  //servo_garra.write(garra_cima);
   
   n = 0;
 }
@@ -50,7 +50,7 @@ void loop()
   //digitalWrite(led_r, 1);
   digitalWrite(led_g, 1);
   //digitalWrite(led_b, 1);
-  digitalWrite(led_g_meio, 1);
+  //digitalWrite(led_g_meio, 1);
 
   //analogWrite(mot_in2, o);
 
