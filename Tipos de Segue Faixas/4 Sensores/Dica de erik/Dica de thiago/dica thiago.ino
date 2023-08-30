@@ -32,14 +32,14 @@ void loop() {
 
   vel_esq = 130;  // valor normal dos motores
   vel_dir = 110;  // 
-  /*
-  if (ult_meio.read() <= 3)  // Se o sensor dectar que esta distancia ativa a função de desviar
+  
+  if (ult_meio.read() <= 4)  // Se o sensor dectar que esta distancia ativa a função de desviar
   {
     display.setCursor(0, 0); // Pritando no oled
     display.println("Desviando obsta");
     display.display();
     desv(vel_esq, vel_dir);
-  }*/
+  }
 
   // Condições que usa a melhor situação dos sensores, o bit mais da direita é o s_leste e o bit mais na esquerda é o s_oeste
   // Algumas tem if com OR por conta que eles fazem a mesma coisa na condição.
