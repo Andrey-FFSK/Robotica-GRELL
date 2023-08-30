@@ -55,20 +55,21 @@ int vel_dir;  //
 // Valor para encoders
 Encoder enc(3, 2); //Encoder do motor da esquerda
 int enc_ant = 0;     // Valor do encoder anterior
-#define enc_fre 94  // Frente apos ver 90 ou encruzilhada / antes era 250 no erik
-#define enc_fre_encru 200
+#define enc_fre 250  // Frente apos ver 90 ou encruzilhada / antes era 250 no erik / 98
+#define enc_fre_encru 250
 #define enc_90 678 
-#define enc_90_p 560
-#define enc_peq 200  // Valor que vira para completar com while / antesta tava 200 no erik / 220 -230
-#define enc_pas 110   // Valor que vai para atras / antes tava 80 no erik / 130
+#define enc_peq 150  // Valor que vira para completar com while / antesta tava 200 no erik / 220 -230
+#define enc_pas 180   // Valor que vai para atras / antes tava 80 no erik / 80
+#define enc_pas_encru 180
 #define enc_pas_outro 40
-#define enc_180 750
+#define enc_180 1256
+//#define enc_90_p 560
 //#define enc_fre_sala3 500
 //#define enc_pas_p 10
 //#define enc_gang 900
 //#define enc_ramp 900
 
-Ultrasonic ult_meio(36, 37);  // trig == prim; echo == segun | trig = amarelo e ech = marrom
+Ultrasonic ult_meio(30, 31);  // trig == prim; echo == segun | trig = marrom e ech = amarelo
 
 /* Valores para a sala 3
 bool sala3 = false;
@@ -227,7 +228,7 @@ void encruzilhada() {
       Serial.println(enc.read());
     }
     enc_ant = enc.read();
-    while (enc_ant - enc.read() <= enc_pas) {
+    while (enc_ant - enc.read() <= enc_pas_encru) {
       mot1_anti(vel_esq);
       mot2_anti(vel_dir);
       Serial.print("Indo para tras: ");
@@ -252,7 +253,7 @@ void encruzilhada() {
     }
 
     enc_ant = enc.read();
-    while (enc_ant - enc.read() <= enc_pas) {
+    while (enc_ant - enc.read() <= enc_pas_encru) {
       mot1_anti(vel_esq);
       mot2_anti(vel_dir);
       Serial.print("Indo para tras: ");
