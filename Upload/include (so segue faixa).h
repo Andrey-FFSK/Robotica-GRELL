@@ -37,9 +37,10 @@ int vel_dir;  //
 Encoder enc(3, 2); //Encoder do motor da esquerda
 int enc_ant = 0;     // Valor do encoder anterior
 #define enc_fre 250  // Frente apos ver 90 ou encruzilhada / antes era 250 no erik / 98
-#define enc_fre_encru 250
+#define enc_fre_encru 260
 #define enc_90 678 
-#define enc_peq 150  // Valor que vira para completar com while / antesta tava 200 no erik / 220 -230
+#define enc_peq 230  // Valor que vira para completar com while / 270
+#define delay_while 100
 #define enc_pas 180   // Valor que vai para atras / antes tava 80 no erik / 80
 #define enc_pas_encru 180
 #define enc_pas_outro 40
@@ -179,6 +180,7 @@ void encruzilhada() {
       Serial.print("Virando para esquerda: ");
       Serial.println(enc.read());
     }
+    delay(delay_while); //delay para ficar direitinho na linha
     enc_ant = enc.read();
     while (enc_ant - enc.read() <= enc_pas_encru) {
       mot1_anti(vel_esq);
@@ -203,7 +205,7 @@ void encruzilhada() {
       Serial.print("Virando para direita: ");
       Serial.println(enc.read());
     }
-
+    delay(delay_while); //delay para ficar direitinho na linha
     enc_ant = enc.read();
     while (enc_ant - enc.read() <= enc_pas_encru) {
       mot1_anti(vel_esq);
@@ -216,6 +218,7 @@ void encruzilhada() {
     Serial.println("Encruzilhada; Nao tem verde");
   } else  // Tem 2 quadrado verde
   {
+    /*
     enc_ant = enc.read(); // Fazendo o maior percuso com encoder
     while (enc.read() - enc_ant <= enc_180) {
       mot1_hor(vel_esq);
@@ -229,7 +232,7 @@ void encruzilhada() {
       mot2_anti(vel_dir);
       Serial.print("Virando para direita: ");
       Serial.println(enc.read());
-    }
+    }*/
   }
 }
 
@@ -257,6 +260,7 @@ void esq_90() {
       Serial.print("Virando pra esquerda: ");
       Serial.println(enc.read());
     }
+    delay(delay_while); //delay para ficar direitinho na linha
     enc_ant = enc.read();
     while (enc_ant - enc.read() <= enc_pas) {
       mot1_anti(vel_esq);
@@ -282,6 +286,7 @@ void esq_90() {
         Serial.print("Virando pra esquerda: ");
         Serial.println(enc.read());
       }
+      delay(delay_while); //delay para ficar direitinho na linha
       enc_ant = enc.read();
       while (enc_ant - enc.read() <= enc_pas) {
         mot1_anti(vel_esq);
@@ -316,6 +321,7 @@ void dir_90() {
       Serial.print("Virando para direita: ");
       Serial.println(enc.read());
     }
+    delay(delay_while); //delay para ficar direitinho na linha
     enc_ant = enc.read();
     while (enc_ant - enc.read() <= enc_pas) {
       mot1_anti(vel_esq);
@@ -341,6 +347,7 @@ void dir_90() {
         Serial.print("Virando para direita: ");
         Serial.println(enc.read());
       }
+      delay(delay_while); //delay para ficar direitinho na linha
       enc_ant = enc.read();
       while (enc_ant - enc.read() <= enc_pas) {
         mot1_anti(vel_esq);
