@@ -18,39 +18,20 @@
 #define mot_in4 9   // verde e amarelo, esquerda, tras
 
 // Definindo portas para o sensor de cor
-//#define led_r 98       // Led vermelho para o sensor de coer
 #define led_g 29      // Led verde para o sensor de cor
-//#define led_b 99     // Led azul para o sensor de cor
-//#define led_g_meio 36  // Led para o meio
 #define esq A0         // Sensor que fica na esq
 #define dir A1         // Sensor que fica na dir
-//#define meio A8  // sensor que fica apontado pra frente no meio
 bool ver = false;     
 int m_esq = 0;         // Declarando o map e constrain do sensor
 int m_dir = 0;
-//int m_meio = 0;
 
 #define esq_branco 700  // Valor para verificar se e branco ou nao
 #define dir_branco 700
-//#define meio_branco 50
-
-//#define esq_cinza 500  // 900 DEU CERTO O VERDE; amtes = 430
-//#define dir_cinza 500  // 900 DEU CERTO O VERDE; amtes = 220
-
-//#define esq_verde 433  // 880 DEU CERTO O VERDE; amtes = cinza - 10
-//#define dir_verde 215  // 880 DEU CERTO O VERDE; amtes = cinza - 10
 
 // Definindo velocidades e inclinação
 int vel_esq;  // PWM usado para a velocidade, min == 0 e max == 255
 int vel_dir;  // 
 #define incli A14
-//#define tg 3000
-//bool incli_ant;
-//int millis_ant;
-//#define vel_esq_p 100  //
-//#define vel_esq_g 220  // Valores para um sistema de ir so pra frente
-//#define vel_dir_p 80   //
-//#define vel_dir_g 200  //
 
 // Valor para encoders
 Encoder enc(3, 2); //Encoder do motor da esquerda
@@ -63,37 +44,8 @@ int enc_ant = 0;     // Valor do encoder anterior
 #define enc_pas_encru 180
 #define enc_pas_outro 40
 #define enc_180 1256
-//#define enc_90_p 560
-//#define enc_fre_sala3 500
-//#define enc_pas_p 10
-//#define enc_gang 900
-//#define enc_ramp 900
 
 Ultrasonic ult_meio(30, 31);  // trig == prim; echo == segun | trig = marrom e ech = amarelo
-
-/* Valores para a sala 3
-bool sala3 = false;
-bool sala3_ver = false;
-int conta;
-#define conta_max 10
-int ult_esq = 0;
-int ult_dir = 0;
-Servo servo_cacamba;
-Servo servo_garra;
-//servo_cacamba.attach(8);
-//servo_garra.attach(7);
-#define perto 5         // Valor para ficar perto o suficente
-#define perto_garra 10  // Valor para caso a garra estiver decida
-#define esq_switch 51
-#define dir_switch 53
-int pos = 0;
-int pos_ant;
-#define servo_delay 2
-#define garra_cima 160  // talvez valores invertidos
-#define garra_meio 130
-#define garra_baixo 35  // esse tbm
-#define cacamba_aberta 170
-#define cacamba_fechada 40*/
 
 // Inicio das funções, para cada caso
 void mot1_anti(int velo)  // Função para o motor da esquerda girar no sentido anti horario com a velocidade variavel
