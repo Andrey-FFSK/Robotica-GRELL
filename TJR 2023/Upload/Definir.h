@@ -298,7 +298,6 @@ void esq_90()
     mot1_anti(vel_esq);
     mot2_hor(vel_dir);
     Serial.print("Virando pra esquerda: ");
-    Serial.println(enc.read());
   }
 
   enc_re(enc_pas);
@@ -314,7 +313,6 @@ void dir_90()
     mot1_hor(vel_esq);
     mot2_anti(vel_dir);
     Serial.print("Virando para direita: ");
-    Serial.println(enc.read());
   }
 
   enc_re(enc_pas);
