@@ -9,7 +9,7 @@ void setup()
 {
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C); // Protocolo para iniciar o display
   display.setTextColor(WHITE);               // Colocando cor para o texto
-             
+
   // Colocando os sensores como INPUT, e o resto como OUTPUT, tudo isso pelo array
   for (int i = 0; i < 7; i++) // Usando o array para fazer os pinmode como input
     pinMode(pinos[i], INPUT);
@@ -49,49 +49,55 @@ void loop()
       mot1_hor(vel_esq);
       mot2_hor(vel_dir);
       display.print("lei = 0000");
+      display.display();
       Serial.println("leitura = 0000; leitura = 0110");
     }
     else
     {
       display.print("0000 / Tras");
-      // funcao de encoder de ir para atras com um passinho
+      display.display();
+      enc_re(enc_pas_outro);
       ver = false;
     }
     break;
-  case 0b0010:
+  case 0b0010: // Caso dele fazer micro ajuste para direita
     if (ver == false)
     {
       mot1_hor(vel_esq);
       mot2_anti(vel_dir);
       display.print("0010 / Direita");
-      Serial.println("leitura == 0010 / ajustando para direita: ");
+      display.display();
+      Serial.println("leitura == 0010 / ajustando para direita");
     }
     else
     {
       display.print("0010 / Tras");
-      // funcao de encoder de ir para atras com um passinho
+      display.display();
+      enc_re(enc_pas_outro);
       ver = false;
     }
     break;
-  case 0b0100:
+  case 0b0100: // Caso dele fazer micro ajuste para esquerda
     if (ver == false)
     {
       mot1_anti(vel_esq);
       mot2_hor(vel_dir);
       display.print("0100 / Esquerda");
+      display.display();
       Serial.println("leitura == 0100 / ajustando para esquerda");
     }
     else
     {
       display.print("0100 / Tras");
-      // funcao de encoder de ir para atras com um passinho
+      display.display();
+      enc_re(enc_pas_outro);
       ver = false;
     }
     break;
   case 0b1000:
   case 0b1100:
   case 0b1110:
-  case 0b1010:
+  case 0b1010: // Casos de fazer o esquerda 90
     if (ver == false)
     {
       mot1_par();
@@ -103,13 +109,14 @@ void loop()
     {
       ver = false;
       display.println("1000 / Esq_90");
+      display.display();
       esq_90();
     }
     break;
   case 0b0001:
   case 0b0011:
   case 0b0111:
-  case 0b0101:
+  case 0b0101: // Casos de fazer o direita 90
     if (ver == false)
     {
       mot1_par();
@@ -121,11 +128,11 @@ void loop()
     {
       ver = false;
       display.println("0001 / Dir_90");
+      display.display();
       dir_90();
     }
     break;
   default:
     break;
   }
-  display.display();
 }
