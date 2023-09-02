@@ -102,7 +102,7 @@ void loop()
     {
       mot1_par();
       mot2_par();
-      delay(400);
+      delay(mot_par);
       ver = true;
     }
     else
@@ -121,7 +121,7 @@ void loop()
     {
       mot1_par();
       mot2_par();
-      delay(400);
+      delay(mot_par);
       ver = true;
     }
     else

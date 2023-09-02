@@ -31,23 +31,31 @@ int m_dir = 0;
 // Definindo velocidades
 int vel_esq; // PWM usado para a velocidade, min == 0 e max == 255
 int vel_dir; //
+#define mot_par 200
 
 // Valores com Millis
 // int millis_ant = 0;
 // #define time_if 8000
 // #define time_while 1500
 
-// Valor para encoders
+// Valores para encoders
 Encoder enc(3, 2);  // Encoder do motor da esquerda
 int enc_ant = 0;    // Valor do encoder anterior
-#define enc_fre 200 // Frente apos ver 90 ou encruzilhada / 
+#define enc_fre 200 // Frente apos ver 90 ou encruzilhada /
 // #define enc_fre_encru 200
 #define enc_90 790
 #define enc_peq 130 // Valor que vira para completar com while / 130
-#define enc_pas 100 // Valor que vai para atras / 
+#define enc_pas 100 // Valor que vai para atras /
 // #define enc_pas_encru 100
 #define enc_pas_outro 40
 // #define enc_180 1256
+
+// Valores para desviar obstaculo
+#define frente_1 1100         // Valor que ele se distancia do obstaculo
+#define frente_2 2100         // Valor que faz ele ultrapassar o obstaculo
+#define frente_3 600          // Valor que faz ele nao se perder em qualquer linha
+#define enc_90_2 enc_90 - 70  // Seguunda vez que ele executa o 90
+#define enc_90_3 enc_90 - 170 // E a terceira
 
 Ultrasonic ult_meio(30, 31); // trig == prim; echo == segun | trig = marrom e ech = amarelo
 
@@ -133,25 +141,25 @@ void enc_re(int enc_valor)
 }
 
 /*
-void desv(int velo_esq, int velo_dir)  // Função para o robo desviar pela esquerda o obstaculo
+void desv(int velo_esq, int velo_dir) // Função para o robo desviar pela esquerda o obstaculo
 {
   enc_re(enc_pas_outro); // Dando um passo para atras, isso e bom caso a traseira do robo e maior do que na frente
-  
+
   mot1_par();
   mot2_par();
-  delay(200);
+  delay(mot_par);
 
   enc_esquerda(enc_90); // Girando para esquerda
 
-  enc_frente(1100); // Se distanciando do obstaculo
+  enc_frente(frente_1); // Se distanciando do obstaculo
 
-  enc_direita(enc_90 - 70); // Virando para direita, com valor reduzido para nao girar demais
+  enc_direita(enc_90_2); // Virando para direita, com valor reduzido para nao girar demais
 
-  enc_frente(2100); // Passando do obstaculo
+  enc_frente(frente_2); // Passando do obstaculo
 
-  enc_direita(enc_90 - 170); // Virando para direita, mesmo moitvo anterior
+  enc_direita(enc_90_3); // Virando para direita, mesmo moitvo anterior
 
-  enc_frente(600); // Andando em frente, para ele nao se confundir linhas aleatorias 
+  enc_frente(frente_3); // Andando em frente, para ele nao se confundir linhas aleatorias
 
   while (digitalRead(s_norte) == 1) // Terminando com while para ele encontrar a linah correta
   {
@@ -170,7 +178,8 @@ void desv(int velo_esq, int velo_dir)  // Função para o robo desviar pela esqu
     Serial.print("Virando direita");
     Serial.println(enc.read());
   }
-} */
+}
+*/
 
 void desv(int velo_esq, int velo_dir) // Função para o robo desviar pela direita o obstaculo
 {
@@ -178,19 +187,19 @@ void desv(int velo_esq, int velo_dir) // Função para o robo desviar pela direi
 
   mot1_par(); // Colocando pra parar bem rapido pq sim
   mot2_par();
-  delay(200);
+  delay(mot_par);
 
   enc_direita(enc_90); // Girando para direita
 
-  enc_frente(1100); // Se distanciando do obstaculo
+  enc_frente(frente_1); // Se distanciando do obstaculo
 
-  enc_esquerda(enc_90 - 70); // Virando para esquerda, com valor reduzido para nao girar demais
+  enc_esquerda(enc_90_2); // Virando para esquerda, com valor reduzido para nao girar demais
 
-  enc_frente(2100); // Passando do obstaculo
+  enc_frente(frente_2); // Passando do obstaculo
 
-  enc_esquerda(enc_90 - 170); // Virando para esquerda, mesmo moitvo anterior
+  enc_esquerda(enc_90_3); // Virando para esquerda, mesmo moitvo anterior
 
-  enc_frente(600); // Andando em frente, para ele nao se confundir linhas aleatorias 
+  enc_frente(frente_3); // Andando em frente, para ele nao se confundir linhas aleatorias
 
   while (digitalRead(s_norte) == 1) // Terminando com while para ele encontrar a linah correta
   {
