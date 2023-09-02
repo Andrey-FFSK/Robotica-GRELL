@@ -43,7 +43,7 @@ void loop()
   switch (leitura)
   {
   case 0b0000:
-  case 0b0110: // Caso de ele ir so pra frente
+  case 0b0110: //! Caso de ele ir so pra frente
     if (ver == false)
     {
       mot1_hor(vel_esq);
@@ -60,7 +60,7 @@ void loop()
       ver = false;
     }
     break;
-  case 0b0010: // Caso dele fazer micro ajuste para direita
+  case 0b0010: //! Caso dele fazer micro ajuste para direita
     if (ver == false)
     {
       mot1_hor(vel_esq);
@@ -77,7 +77,7 @@ void loop()
       ver = false;
     }
     break;
-  case 0b0100: // Caso dele fazer micro ajuste para esquerda
+  case 0b0100: //! Caso dele fazer micro ajuste para esquerda
     if (ver == false)
     {
       mot1_anti(vel_esq);
@@ -97,7 +97,7 @@ void loop()
   case 0b1000:
   case 0b1100:
   case 0b1110:
-  case 0b1010: // Casos de fazer o esquerda 90
+  case 0b1010: //! Casos de fazer o esquerda 90
     if (ver == false)
     {
       mot1_par();
@@ -116,7 +116,7 @@ void loop()
   case 0b0001:
   case 0b0011:
   case 0b0111:
-  case 0b0101: // Casos de fazer o direita 90
+  case 0b0101: //! Casos de fazer o direita 90
     if (ver == false)
     {
       mot1_par();

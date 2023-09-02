@@ -4,20 +4,20 @@
 #include <Ultrasonic.h> //Incluindo a biblioteca do ultrasonic de erik simoes
 #include <Encoder.h>
 
-// Definindo as portas dos sensores
+//* Definindo as portas dos sensores
 #define s_oeste 22    //
 #define s_noroeste 24 // Trocar para analog
 #define s_norte 27    //
 #define s_nordeste 25 // Trocar para analog
 #define s_leste 26    //
 
-// Motor 1 = Esquerda; Motor 2 = Direita; mot1 que tem encoder
+//* Motor 1 = Esquerda; Motor 2 = Direita; mot1 que tem encoder
 #define mot_in1 12 // amarelo, direita, tras
 #define mot_in2 11 // marrom, direita, frente
 #define mot_in3 10 // azul, esquerda, frente
 #define mot_in4 9  // verde e amarelo, esquerda, tras
 
-// Definindo portas para o sensor de cor
+//* Definindo portas para o sensor de cor
 #define led_g 29  // Led verde para o sensor de cor
 #define esq A0    // Sensor que fica na esq
 #define dir A1    // Sensor que fica na dir
@@ -28,17 +28,17 @@ int m_dir = 0;
 #define esq_branco 700 // Valor para verificar se e branco ou nao
 #define dir_branco 700
 
-// Definindo velocidades
+//* Definindo velocidades
 int vel_esq; // PWM usado para a velocidade, min == 0 e max == 255
 int vel_dir; //
 #define mot_par 200
 
-// Valores com Millis
+//* Valores com Millis
 // int millis_ant = 0;
 // #define time_if 8000
 // #define time_while 1500
 
-// Valores para encoders
+//* Valores para encoders
 Encoder enc(3, 2);  // Encoder do motor da esquerda
 int enc_ant = 0;    // Valor do encoder anterior
 #define enc_fre 200 // Frente apos ver 90 ou encruzilhada /
@@ -50,16 +50,16 @@ int enc_ant = 0;    // Valor do encoder anterior
 #define enc_pas_outro 40
 // #define enc_180 1256
 
-// Valores para desviar obstaculo
+//* Valores para desviar obstaculo
 #define frente_1 1100         // Valor que ele se distancia do obstaculo
 #define frente_2 2100         // Valor que faz ele ultrapassar o obstaculo
 #define frente_3 600          // Valor que faz ele nao se perder em qualquer linha
 #define enc_90_2 enc_90 - 70  // Seguunda vez que ele executa o 90
 #define enc_90_3 enc_90 - 170 // E a terceira
 
-Ultrasonic ult_meio(30, 31); // trig == prim; echo == segun | trig = marrom e ech = amarelo
+Ultrasonic ult_meio(30, 31); // trig == prim; echo == segun | trig = marrom e echo = amarelo
 
-// Inicio das funções, para cada caso
+//* Inicio das funções, para cada caso
 void mot1_anti(int velo) // Função para o motor da esquerda girar no sentido anti horario com a velocidade variavel
 {
   analogWrite(mot_in4, velo);
@@ -141,37 +141,27 @@ void enc_re(int enc_valor)
 }
 
 /*
-void desv(int velo_esq, int velo_dir) // Função para o robo desviar pela esquerda o obstaculo
+void desv(int velo_esq, int velo_dir) //* Função para o robo desviar pela esquerda o obstaculo
 {
-  enc_re(enc_pas_outro); // Dando um passo para atras, isso e bom caso a traseira do robo e maior do que na frente
-
-  mot1_par();
+  enc_re(enc_pas_outro); //* Dando um passo para atras, isso e bom caso a traseira do robo e maior do que na frente
+  mot1_par(); //* Colocando pra parar bem rapido pq sim
   mot2_par();
   delay(mot_par);
-
-  enc_esquerda(enc_90); // Girando para esquerda
-
-  enc_frente(frente_1); // Se distanciando do obstaculo
-
-  enc_direita(enc_90_2); // Virando para direita, com valor reduzido para nao girar demais
-
-  enc_frente(frente_2); // Passando do obstaculo
-
-  enc_direita(enc_90_3); // Virando para direita, mesmo moitvo anterior
-
-  enc_frente(frente_3); // Andando em frente, para ele nao se confundir linhas aleatorias
-
-  while (digitalRead(s_norte) == 1) // Terminando com while para ele encontrar a linah correta
+  enc_esquerda(enc_90); //* Girando para esquerda
+  enc_frente(frente_1); //* Se distanciando do obstaculo
+  enc_direita(enc_90_2); //* Virando para direita, com valor reduzido para nao girar demais
+  enc_frente(frente_2); //* Passando do obstaculo
+  enc_direita(enc_90_3); //* Virando para direita, mesmo moitvo anterior
+  enc_frente(frente_3); //* Andando em frente, para ele nao se confundir linhas aleatorias
+  while (digitalRead(s_norte) == 1) //* Terminando com while para ele encontrar a linah correta
   {
     mot1_hor(velo_esq);
     mot2_hor(velo_dir);
     Serial.print("andando para frente");
     Serial.println(enc.read());
   }
-
-  enc_frente(enc_peq); // Se afastando um pouco da linha
-
-  while (digitalRead(s_norte) == 1) // Virando para esquerda para se ajeiar na faixa
+  enc_frente(enc_peq); //* Se afastando um pouco da linha
+  while (digitalRead(s_norte) == 1) //* Virando para esquerda para se ajeiar na faixa
   {
     mot1_hor(velo_esq);
     mot2_anti(velo_dir);
@@ -181,37 +171,27 @@ void desv(int velo_esq, int velo_dir) // Função para o robo desviar pela esque
 }
 */
 
-void desv(int velo_esq, int velo_dir) // Função para o robo desviar pela direita o obstaculo
+void desv(int velo_esq, int velo_dir) // * Função para o robo desviar pela direita o obstaculo
 {
-  enc_re(enc_pas_outro); // Dando um passo para atras, isso e bom caso a traseira do robo e maior do que na frente
-
-  mot1_par(); // Colocando pra parar bem rapido pq sim
+  enc_re(enc_pas_outro); //* Dando um passo para atras, isso e bom caso a traseira do robo e maior do que na frente
+  mot1_par();            //* Colocando pra parar bem rapido pq sim
   mot2_par();
   delay(mot_par);
-
-  enc_direita(enc_90); // Girando para direita
-
-  enc_frente(frente_1); // Se distanciando do obstaculo
-
-  enc_esquerda(enc_90_2); // Virando para esquerda, com valor reduzido para nao girar demais
-
-  enc_frente(frente_2); // Passando do obstaculo
-
-  enc_esquerda(enc_90_3); // Virando para esquerda, mesmo moitvo anterior
-
-  enc_frente(frente_3); // Andando em frente, para ele nao se confundir linhas aleatorias
-
-  while (digitalRead(s_norte) == 1) // Terminando com while para ele encontrar a linah correta
+  enc_direita(enc_90);              //* Girando para direita
+  enc_frente(frente_1);             //* Se distanciando do obstaculo
+  enc_esquerda(enc_90_2);           //*Virando para esquerda, com valor reduzido para nao girar demais
+  enc_frente(frente_2);             //* Passando do obstaculo
+  enc_esquerda(enc_90_3);           //* Virando para esquerda, mesmo moitvo anterior
+  enc_frente(frente_3);             //* Andando em frente, para ele nao se confundir linhas aleatorias
+  while (digitalRead(s_norte) == 1) //* Terminando com while para ele encontrar a linah correta
   {
     mot1_hor(velo_esq);
     mot2_hor(velo_dir);
     Serial.print("andando para frente");
     Serial.println(enc.read());
   }
-
-  enc_frente(enc_peq); // Se afastando um pouco da linha
-
-  while (digitalRead(s_norte) == 1) // Virando para esquerda para se ajeiar na faixa
+  enc_frente(enc_peq);              //* Se afastando um pouco da linha
+  while (digitalRead(s_norte) == 1) //* Virando para esquerda para se ajeiar na faixa
   {
     mot1_hor(velo_esq);
     mot2_anti(velo_dir);
@@ -224,14 +204,12 @@ void esq_90()
 {
   enc_frente(enc_fre);
   enc_esquerda(enc_peq);
-
   while ((digitalRead(s_norte) == 1) && (digitalRead(s_oeste) == 1))
   {
     mot1_anti(vel_esq);
     mot2_hor(vel_dir);
     Serial.print("Virando pra esquerda: ");
   }
-
   enc_re(enc_pas);
 }
 
@@ -239,14 +217,12 @@ void dir_90()
 {
   enc_frente(enc_fre);
   enc_direita(enc_peq);
-
   while ((digitalRead(s_norte) == 1) && (digitalRead(s_leste) == 1))
   {
     mot1_hor(vel_esq);
     mot2_anti(vel_dir);
     Serial.print("Virando para direita: ");
   }
-
   enc_re(enc_pas);
 }
 
