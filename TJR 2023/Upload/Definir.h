@@ -199,6 +199,56 @@ void desv(int velo_esq, int velo_dir) // * Função para o robo desviar pela dir
     Serial.println(enc.read());
   }
 }
+/*
+void desv(int velo_esq, int velo_dir, bool esq_dir) //! Função para o robo desviar pelo lado do bool, esq = false; dir = true
+{
+  enc_re(enc_pas_outro); //* Dando um passo para atras, isso e bom caso a traseira do robo e maior do que na frente
+  mot1_par();            //* Colocando pra parar bem rapido pq sim
+  mot2_par();
+  delay(mot_par);
+  if (esq_dir == false)
+  {
+    enc_esquerda(enc_90); //* Girando para esquerda
+  }
+  else
+  {
+    enc_direita(enc_90); //* Girando para direita
+  }
+  enc_frente(frente_1); //* Se distanciando do obstaculo
+  if (esq_dir == false)
+  {
+    enc_direita(enc_90_2); //* Virando para direita, com valor reduzido para nao girar demais
+  }
+  else
+  {
+    enc_esquerda(enc_90_2); //*Virando para esquerda, com valor reduzido para nao girar demais
+  }
+  enc_frente(frente_2); //* Passando do obstaculo
+  if (esq_dir == false)
+  {
+    enc_direita(enc_90_3); //* Virando para direita, mesmo moitvo anterior
+  }
+  else
+  {
+    enc_esquerda(enc_90_3); //* Virando para esquerda, mesmo moitvo anterior
+  }
+  enc_frente(frente_3);             //* Andando em frente, para ele nao se confundir linhas aleatorias
+  while (digitalRead(s_norte) == 1) //* Terminando com while para ele encontrar a linah correta
+  {
+    mot1_hor(velo_esq);
+    mot2_hor(velo_dir);
+    Serial.print("andando para frente");
+    Serial.println(enc.read());
+  }
+  enc_frente(enc_peq);              //* Se afastando um pouco da linha
+  while (digitalRead(s_norte) == 1) //* Virando para esquerda para se ajeiar na faixa
+  {
+    mot1_hor(velo_esq);
+    mot2_anti(velo_dir);
+    Serial.print("Virando direita");
+    Serial.println(enc.read());
+  }
+}*/
 
 void esq_90()
 {
