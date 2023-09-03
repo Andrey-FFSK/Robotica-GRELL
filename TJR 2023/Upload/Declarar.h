@@ -1,0 +1,4 @@
+#ifndef _FUNCOES_VARIAVEIS_H
+#define _FUNCOES_VARIAVEIS_H
+
+#endif

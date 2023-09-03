@@ -10,6 +10,8 @@
 #define s_norte 27    //
 #define s_nordeste 25 // Trocar para analog
 #define s_leste 26    //
+int analog_esq = 0;
+int analog_dir = 0;
 
 //* Motor 1 = Esquerda; Motor 2 = Direita; mot1 que tem encoder
 #define mot_in1 12 // amarelo, direita, tras
@@ -29,9 +31,9 @@ int m_dir = 0;
 #define dir_branco 700
 
 //* Definindo velocidades
-int vel_esq; // PWM usado para a velocidade, min == 0 e max == 255
-int vel_dir; //
-#define mot_par 200
+#define vel_esq 120 // PWM usado para a velocidade, min == 0 e max == 255
+#define vel_dir 110 //
+#define mot_par 200 // Delay para o tempo dele ficar parado
 
 //* Valores com Millis
 // int millis_ant = 0;
