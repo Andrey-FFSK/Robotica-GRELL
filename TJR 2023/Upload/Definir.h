@@ -142,6 +142,11 @@ void enc_re(int enc_valor)
   }
 }
 
+void sensi() {
+  m_esq = map(constrain(analogRead(esq), 561, 795), 561, 795, 0, 1023);
+  m_dir = map(constrain(analogRead(dir), 405, 629), 405, 629, 0, 1023);
+}
+
 /*
 void desv(int velo_esq, int velo_dir) //* Função para o robo desviar pela esquerda o obstaculo
 {
