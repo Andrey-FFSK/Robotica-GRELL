@@ -52,7 +52,7 @@ void loop()
   //digitalWrite(led_b, 1);
   //digitalWrite(led_g_meio, 1);
 
-  //analogWrite(mot_in2, o);
+  //analogWrite(mot_in2, vel_esq);
 
   //mot1_hor(vel_esq);
   //mot2_hor(vel_dir);
@@ -75,38 +75,42 @@ void loop()
   for (int i = 11; i <= 15; i++)
     display.print(binString(leitura)[i]);
   display.print(" Bits");
+
+  display.setCursor(0, lh * 3);
+  display.print("Esq: ");
+  display.print(analogRead(s_noroeste));
+  display.print(" / Dir: ");
+  display.print(analogRead(s_nordeste));
+
   /*
   display.setCursor(0, lh * 3);
   display.print("Tensao: ");
   display.print(tensaoA0);
   display.print(" V");*/
 
-  display.setCursor(0, lh * 3);
+  display.setCursor(0, lh * 4);
   display.print("Olho: ");
   display.print(ult_meio.read());
-  display.print(" cm");
+  display.print("cm");
 
-  display.setCursor(0, lh * 4);
+  display.setCursor(0, lh * 5);
   display.print("Esq: ");
   display.print(m_esq);
   display.print("(");
   display.print(analogRead(esq));
   display.print(")");
 
-  display.setCursor(0, lh * 5);
+  display.setCursor(0, lh * 6);
   display.print("Dir: ");
   display.print(m_dir);
   display.print("(");
   display.print(analogRead(dir));
   display.print(")");
 
-  display.setCursor(0, lh * 6);
+  display.setCursor(0, lh * 7);
   display.print("Enc: ");
   display.print(enc.read());
 
-  display.setCursor(0, lh * 7);
-  display.print("Incli: ");
-  display.print(digitalRead(incli));
 
   display.drawBitmap(W - 32, H - 32 + sin(n * PI / 180) * 3, aeia, 32, 32, WHITE);
   display.drawBitmap(W - 16, -sin(n * PI / 180) * 1.5, aeiapeqena, 16, 16, WHITE);
@@ -117,30 +121,22 @@ void loop()
 
   Serial.print("Leitura: ");
   Serial.print(leitura, BIN);
-  Serial.print("Bits / Olho: ");
-  //Serial.print(tensaoA0);
-  //Serial.print("V / Olho:");
+  Serial.print("Bits / Esq: ");
+  Serial.print(analogRead(s_noroeste));
+  Serial.print(" / Dir: ");
+  Serial.print(analogRead(s_nordeste));
+  Serial.print(" / Olho: ");
   Serial.print(ult_meio.read());
-  Serial.print("cm / Esq: ");
+  Serial.print("cm / LDR_Esq: ");
   Serial.print(m_esq);
   Serial.print("(");
   Serial.print(analogRead(esq));
-  Serial.print(") / Dir: ");
+  Serial.print(") / LDR_Dir: ");
   Serial.print(m_dir);
   Serial.print("(");
   Serial.print(analogRead(dir));
-  Serial.print(") / Meio: ");
-  Serial.print("(");
   Serial.print(") / Enc: ");
-  Serial.print(enc.read());
-  Serial.print("pas / esq_switch: ");
-  //Serial.print(digitalRead(esq_switch));
-  Serial.print(" / dir_switch: ");
-  //Serial.print(digitalRead(dir_switch));
-  Serial.print(" / Incli: ");
-  Serial.print(digitalRead(incli));
-  Serial.println(" / ");
-  
+  Serial.println(enc.read());
 
 }
 
