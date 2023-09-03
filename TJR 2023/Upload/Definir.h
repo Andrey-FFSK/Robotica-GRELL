@@ -142,7 +142,7 @@ void enc_re(int enc_valor)
   }
 }
 
-void sensi() {
+void sensi() { //* Funcao para armazenar os valores para ver verde, bom sempre calibrar 
   m_esq = map(constrain(analogRead(esq), 561, 795), 561, 795, 0, 1023);
   m_dir = map(constrain(analogRead(dir), 405, 629), 405, 629, 0, 1023);
 }
