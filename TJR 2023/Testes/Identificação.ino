@@ -1,6 +1,6 @@
 // Identificação
 #include "Oled.h"
-#include "Include.h"
+#include "Definir.h"
 
 const unsigned char aeia[] PROGMEM = {
     // 'bfcaab3c7ed1666ef086e690ec778ad0, 32x32px
@@ -19,7 +19,7 @@ const unsigned char aeiapeqena[] PROGMEM = {
     0x79, 0x88, 0x7b, 0x90, 0x7b, 0x98, 0x3f, 0x98, 0x17, 0x10, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00};
 
 // Usando array para colocar todos os pinos, coloquei os sensores invertido por causa do BitSwift em baixo
-const int pinos[] = { s_oeste, s_noroeste, s_nordeste, s_leste, s_norte, esq, dir, led_g, mot_in1, mot_in2, mot_in3, mot_in4 };
+const int pinos[] = { s_oeste, s_noroeste, s_norte, s_nordeste, s_leste, esq, dir, led_g, mot_in1, mot_in2, mot_in3, mot_in4 };
 
 float tensaoA0;
 
@@ -35,7 +35,7 @@ void setup()
     pinMode(pinos[i], INPUT);
   for (int i = 7; i < 12; i++)
     pinMode(pinos[i], OUTPUT);
-  pinMode(incli, INPUT_PULLUP);
+  //pinMode(incli, INPUT_PULLUP);
   //servo_garra.attach(7);
   //servo_cacamba.attach(8);
   //servo_garra.write(garra_cima);
@@ -48,7 +48,7 @@ void loop()
   display.clearDisplay();
 
   //digitalWrite(led_r, 1);
-  digitalWrite(led_g, 1);
+  //digitalWrite(led_g, 1);
   //digitalWrite(led_b, 1);
   //digitalWrite(led_g_meio, 1);
 
@@ -78,9 +78,9 @@ void loop()
 
   display.setCursor(0, lh * 3);
   display.print("Esq: ");
-  display.print(analogRead(s_noroeste));
-  display.print(" / Dir: ");
   display.print(analogRead(s_nordeste));
+  display.print(" / Dir: ");
+  display.print(analogRead(s_noroeste));
 
   /*
   display.setCursor(0, lh * 3);
@@ -122,9 +122,9 @@ void loop()
   Serial.print("Leitura: ");
   Serial.print(leitura, BIN);
   Serial.print("Bits / Esq: ");
-  Serial.print(analogRead(s_noroeste));
-  Serial.print(" / Dir: ");
   Serial.print(analogRead(s_nordeste));
+  Serial.print(" / Dir: ");
+  Serial.print(analogRead(s_noroeste));
   Serial.print(" / Olho: ");
   Serial.print(ult_meio.read());
   Serial.print("cm / LDR_Esq: ");

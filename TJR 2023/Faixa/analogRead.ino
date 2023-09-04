@@ -1,4 +1,4 @@
-// Dica de erik
+// AnalogRead
 #include "Definir.h" // Dando include nas variaveis e funções
 #include "Oled.h"    // Dando include no arquivo que tem as bibliotecas e criando o objeto do display oled
 
@@ -29,35 +29,17 @@ void loop()
   byte leitura = 0; // Definir sempre 0 quando definir algo como o for abaixo
   for (int i = 0; i < 3; i++)
     leitura |= digitalRead(pinos[i]) << i; // Colocando as entrada da tabela da verdade usando um bitshift automatico, o valor do i depende dos sensores
-  leitura = (~leitura) & (0b00001111);     // Colocando um inversor para que funcione com a tabela da verdade, pq o sensor dectectar no branco, AND uma mascara para ir so os bits que eu quero
+  leitura = (~leitura) & (0b00000111);     // Colocando um inversor para que funcione com a tabela da verdade, pq o sensor dectectar no branco, AND uma mascara para ir so os bits que eu quero
 
   if (ult_meio.read() <= 3) // Se o sensor dectar que esta distancia ativa a função de desviar
   {
     display.print("Desviando obsta");
     display.display();
-    desv(vel_esq, vel_dir);
+    desv(vel_esq, vel_dir, false);
   }
 
   //* Parte em que ele faz o micro ajuste (pensando que o valor maior fica no branco)
   if ((analogRead(s_noroeste) <= analog_esq) && (analogRead(s_nordeste) >= analog_dir)) //! Fazer micro ajuste para esquerda
-  {
-    if (ver == false)
-    {
-      mot1_anti(vel_esq);
-      mot2_hor(vel_dir);
-      display.print("0100 / Esquerda");
-      display.display();
-      Serial.println("leitura == 0100 / ajustando para esquerda");
-    }
-    else
-    {
-      display.print("0100 / Tras");
-      display.display();
-      enc_re(enc_pas_outro);
-      ver = false;
-    }
-  }
-  else if ((analogRead(s_noroeste) >= analog_esq) && (analogRead(s_nordeste) <= analog_dir)) //! Fazer micro ajuste para direita
   {
     if (ver == false)
     {
@@ -71,12 +53,31 @@ void loop()
     {
       display.print("0010 / Tras");
       display.display();
-      enc_re(enc_pas_outro);
+      enc_re(vel_esq, vel_dir, enc_pas_outro);
       ver = false;
     }
   }
-  else //! Eu nao sei se precisa desse else para o switch 
+  else if ((analogRead(s_noroeste) >= analog_esq) && (analogRead(s_nordeste) <= analog_dir)) //! Fazer micro ajuste para direita
   {
+    if (ver == false)
+    {
+      mot1_anti(vel_esq);
+      mot2_hor(vel_dir);
+      display.print("0100 / Esquerda");
+      display.display();
+      Serial.println("leitura == 0100 / ajustando para esquerda");
+    }
+    else
+    {
+      display.print("0100 / Tras");
+      display.display();
+      enc_re(vel_esq, vel_dir, enc_pas_outro);
+      ver = false;
+    }
+  }
+  /*
+  else //! Eu nao sei se precisa desse else para o switch 
+  {*/
     // Condições que usa a melhor situação dos sensores, o bit mais da direita é o s_leste e o bit mais na esquerda é o s_oeste
     // Alguns nao tem break; porque faz a mesma coisa
     switch (leitura)
@@ -95,7 +96,7 @@ void loop()
       {
         display.print("000 / Tras");
         display.display();
-        enc_re(enc_pas_outro);
+        enc_re(vel_esq, vel_dir, enc_pas_outro);
         ver = false;
       }
       break;
@@ -140,5 +141,5 @@ void loop()
     default:
       break;
     }
-  }
+  //}
 }

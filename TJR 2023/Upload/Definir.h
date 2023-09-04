@@ -6,12 +6,12 @@
 
 //* Definindo as portas dos sensores
 #define s_oeste 22    //
-#define s_noroeste 24 // Trocar para analog
+#define s_noroeste A15 // Trocar para analog
 #define s_norte 27    //
-#define s_nordeste 25 // Trocar para analog
+#define s_nordeste A14 // Trocar para analog
 #define s_leste 26    //
-int analog_esq = 0;
-int analog_dir = 0;
+int analog_esq = 501;
+int analog_dir = 501;
 
 //* Motor 1 = Esquerda; Motor 2 = Direita; mot1 que tem encoder
 #define mot_in1 12 // amarelo, direita, tras
