@@ -35,7 +35,7 @@ void loop()
   {
     display.print("Desviando obsta");
     display.display();
-    desv(vel_esq, vel_dir);
+    desv(vel_esq, vel_dir, false);
   }
 
   // Condições que usa a melhor situação dos sensores, o bit mais da direita é o s_leste e o bit mais na esquerda é o s_oeste
@@ -56,7 +56,7 @@ void loop()
     {
       display.print("0000 / Tras");
       display.display();
-      enc_re(enc_pas_outro);
+      enc_re(vel_esq, vel_dir, enc_pas_outro);
       ver = false;
     }
     break;
@@ -73,7 +73,7 @@ void loop()
     {
       display.print("0010 / Tras");
       display.display();
-      enc_re(enc_pas_outro);
+      enc_re(vel_esq, vel_dir, enc_pas_outro);
       ver = false;
     }
     break;
@@ -90,7 +90,7 @@ void loop()
     {
       display.print("0100 / Tras");
       display.display();
-      enc_re(enc_pas_outro);
+      enc_re(vel_esq, vel_dir, enc_pas_outro);
       ver = false;
     }
     break;
