@@ -6,7 +6,7 @@
 
 //* Definindo as portas dos sensores
 #define s_oeste 22     //
-#define s_noroeste A15 // 
+#define s_noroeste A15 //
 #define s_norte 27     //
 #define s_nordeste A14 //
 #define s_leste 26     //
@@ -85,12 +85,12 @@ void mot2_anti(int velo)
   analogWrite(mot_in2, 0);
   analogWrite(mot_in1, velo);
 }
-void mot2_hor(int velo) 
+void mot2_hor(int velo)
 {
   analogWrite(mot_in2, velo);
   analogWrite(mot_in1, 0);
 }
-void mot2_par() 
+void mot2_par()
 {
   analogWrite(mot_in1, 0);
   analogWrite(mot_in2, 0);
@@ -145,7 +145,7 @@ void enc_re(int velo_esq, int velo_dir, int enc_valor)
 }
 
 void sensi()
-{ 
+{
   m_esq = map(constrain(analogRead(esq), 561, 795), 561, 795, 0, 1023);
   m_dir = map(constrain(analogRead(dir), 405, 629), 405, 629, 0, 1023);
 }
@@ -187,16 +187,29 @@ void desv(int velo_esq, int velo_dir, bool esq_dir)
   {
     mot1_hor(velo_esq);
     mot2_hor(velo_dir);
-    Serial.print("andando para frente");
+    Serial.print("andando para frente: ");
     Serial.println(enc.read());
   }
   enc_frente(velo_esq, velo_dir, enc_peq); //* Se afastando um pouco da linha
-  while (digitalRead(s_norte) == 1)        //* Virando para esquerda para se ajeiar na faixa
+  if (esq_dir == false)
   {
-    mot1_hor(velo_esq);
-    mot2_anti(velo_dir);
-    Serial.print("Virando direita");
-    Serial.println(enc.read());
+    while (digitalRead(s_norte) == 1) //* Virando para esquerda para se ajeiar na faixa
+    {
+      mot1_hor(velo_esq);
+      mot2_anti(velo_dir);
+      Serial.print("Virando esquerda: ");
+      Serial.println(enc.read());
+    }
+  }
+  else
+  {
+    while (digitalRead(s_norte) == 1) //* Virando para direita para se ajeiar na faixa
+    {
+      mot1_anti(velo_esq);
+      mot2_hor(velo_dir);
+      Serial.print("Virando direita: ");
+      Serial.println(enc.read());
+    }
   }
 }
 
