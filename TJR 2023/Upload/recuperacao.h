@@ -5,11 +5,11 @@
 #include <Encoder.h>
 
 //* Definindo as portas dos sensores
-#define s_oeste 22     //
+#define s_oeste 22    //
 #define s_noroeste A15 // Trocar para analog
-#define s_norte 27     //
+#define s_norte 27    //
 #define s_nordeste A14 // Trocar para analog
-#define s_leste 26     //
+#define s_leste 26    //
 int analog_esq = 501;
 int analog_dir = 501;
 
@@ -62,33 +62,33 @@ int enc_ant = 0;    // Valor do encoder anterior
 Ultrasonic ult_meio(30, 31); // trig == prim; echo == segun | trig = marrom e echo = amarelo
 
 //* Inicio das funções, para cada caso
-void mot1_anti(int velo)
+void mot1_anti(int velo) // Função para o motor da esquerda girar no sentido anti horario com a velocidade variavel
 {
   analogWrite(mot_in4, velo);
   analogWrite(mot_in3, 0);
 }
-void mot1_hor(int velo)
+void mot1_hor(int velo) // Função para o motor da esquerda girar no sentido horario com a velocidade variavel
 {
   analogWrite(mot_in4, 0);
   analogWrite(mot_in3, velo);
 }
-void mot1_par()
+void mot1_par() // Função para o motor da esquerda ficar parado
 {
   analogWrite(mot_in4, 0);
   analogWrite(mot_in3, 0);
 }
 
-void mot2_anti(int velo)
+void mot2_anti(int velo) // Função para o motor da direita girar no sentido anti horario com a velocidade variavel
 {
   analogWrite(mot_in2, 0);
   analogWrite(mot_in1, velo);
 }
-void mot2_hor(int velo) 
+void mot2_hor(int velo) // Função para o motor da direita girar no sentido horario com a velocidade variavel
 {
   analogWrite(mot_in2, velo);
   analogWrite(mot_in1, 0);
 }
-void mot2_par() 
+void mot2_par() // Função para o motor da direita ficar parado
 {
   analogWrite(mot_in1, 0);
   analogWrite(mot_in2, 0);
@@ -142,16 +142,75 @@ void enc_re(int velo_esq, int velo_dir, int enc_valor)
   }
 }
 
-void sensi()
-{ 
+void sensi() { //* Funcao para armazenar os valores para ver verde, bom sempre calibrar 
   m_esq = map(constrain(analogRead(esq), 561, 795), 561, 795, 0, 1023);
   m_dir = map(constrain(analogRead(dir), 405, 629), 405, 629, 0, 1023);
 }
 
-void desv(int velo_esq, int velo_dir, bool esq_dir)
+/*
+void desv(int velo_esq, int velo_dir) //* Função para o robo desviar pela esquerda o obstaculo
+{
+  enc_re(enc_pas_outro); //* Dando um passo para atras, isso e bom caso a traseira do robo e maior do que na frente
+  mot1_par(); //* Colocando pra parar bem rapido pq sim
+  mot2_par();
+  delay(mot_par);
+  enc_esquerda(enc_90); //* Girando para esquerda
+  enc_frente(frente_1); //* Se distanciando do obstaculo
+  enc_direita(enc_90_2); //* Virando para direita, com valor reduzido para nao girar demais
+  enc_frente(frente_2); //* Passando do obstaculo
+  enc_direita(enc_90_3); //* Virando para direita, mesmo moitvo anterior
+  enc_frente(frente_3); //* Andando em frente, para ele nao se confundir linhas aleatorias
+  while (digitalRead(s_norte) == 1) //* Terminando com while para ele encontrar a linah correta
+  {
+    mot1_hor(velo_esq);
+    mot2_hor(velo_dir);
+    Serial.print("andando para frente");
+    Serial.println(enc.read());
+  }
+  enc_frente(enc_peq); //* Se afastando um pouco da linha
+  while (digitalRead(s_norte) == 1) //* Virando para esquerda para se ajeiar na faixa
+  {
+    mot1_hor(velo_esq);
+    mot2_anti(velo_dir);
+    Serial.print("Virando direita");
+    Serial.println(enc.read());
+  }
+}
+*/
+/*
+void desv(int velo_esq, int velo_dir) // * Função para o robo desviar pela direita o obstaculo
 {
   enc_re(velo_esq, velo_dir, enc_pas_outro); //* Dando um passo para atras, isso e bom caso a traseira do robo e maior do que na frente
-  mot1_par();                                //* Colocando pra parar bem rapido pq sim
+  mot1_par();            //* Colocando pra parar bem rapido pq sim
+  mot2_par();
+  delay(mot_par);
+  enc_direita(velo_esq, velo_dir, enc_90);              //* Girando para direita
+  enc_frente(velo_esq, velo_dir, frente_1);             //* Se distanciando do obstaculo
+  enc_esquerda(velo_esq, velo_dir, enc_90_2);           //*Virando para esquerda, com valor reduzido para nao girar demais
+  enc_frente(velo_esq, velo_dir, frente_2);             //* Passando do obstaculo
+  enc_esquerda(velo_esq, velo_dir, enc_90_3);           //* Virando para esquerda, mesmo moitvo anterior
+  enc_frente(velo_esq, velo_dir, frente_3);             //* Andando em frente, para ele nao se confundir linhas aleatorias
+  while (digitalRead(s_norte) == 1) //* Terminando com while para ele encontrar a linah correta
+  {
+    mot1_hor(velo_esq);
+    mot2_hor(velo_dir);
+    Serial.print("andando para frente");
+    Serial.println(enc.read());
+  }
+  enc_frente(velo_esq, velo_dir, enc_peq);              //* Se afastando um pouco da linha
+  while (digitalRead(s_norte) == 1) //* Virando para esquerda para se ajeiar na faixa
+  {
+    mot1_hor(velo_esq);
+    mot2_anti(velo_dir);
+    Serial.print("Virando direita");
+    Serial.println(enc.read());
+  }
+} */
+
+void desv(int velo_esq, int velo_dir, bool esq_dir) //! Função para o robo desviar pelo lado do bool, esq = false; dir = true
+{
+  enc_re(velo_esq, velo_dir, enc_pas_outro); //* Dando um passo para atras, isso e bom caso a traseira do robo e maior do que na frente
+  mot1_par();            //* Colocando pra parar bem rapido pq sim
   mot2_par();
   delay(mot_par);
   if (esq_dir == false)
@@ -180,16 +239,16 @@ void desv(int velo_esq, int velo_dir, bool esq_dir)
   {
     enc_esquerda(velo_esq, velo_dir, enc_90_3); //* Virando para esquerda, mesmo moitvo anterior
   }
-  enc_frente(velo_esq, velo_dir, frente_3); //* Andando em frente, para ele nao se confundir linhas aleatorias
-  while (digitalRead(s_norte) == 1)         //* Terminando com while para ele encontrar a linah correta
+  enc_frente(velo_esq, velo_dir, frente_3);             //* Andando em frente, para ele nao se confundir linhas aleatorias
+  while (digitalRead(s_norte) == 1) //* Terminando com while para ele encontrar a linah correta
   {
     mot1_hor(velo_esq);
     mot2_hor(velo_dir);
     Serial.print("andando para frente");
     Serial.println(enc.read());
   }
-  enc_frente(velo_esq, velo_dir, enc_peq); //* Se afastando um pouco da linha
-  while (digitalRead(s_norte) == 1)        //* Virando para esquerda para se ajeiar na faixa
+  enc_frente(velo_esq, velo_dir, enc_peq);              //* Se afastando um pouco da linha
+  while (digitalRead(s_norte) == 1) //* Virando para esquerda para se ajeiar na faixa
   {
     mot1_hor(velo_esq);
     mot2_anti(velo_dir);

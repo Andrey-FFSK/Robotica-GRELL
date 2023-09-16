@@ -1,4 +1,5 @@
 // AnalogRead
+#include "Declarar.h"
 #include "Definir.h" // Dando include nas variaveis e funções
 #include "Oled.h"    // Dando include no arquivo que tem as bibliotecas e criando o objeto do display oled
 
@@ -76,70 +77,70 @@ void loop()
     }
   }
   /*
-  else //! Eu nao sei se precisa desse else para o switch 
+  else //! Eu nao sei se precisa desse else para o switch
   {*/
-    // Condições que usa a melhor situação dos sensores, o bit mais da direita é o s_leste e o bit mais na esquerda é o s_oeste
-    // Alguns nao tem break; porque faz a mesma coisa
-    switch (leitura)
+  // Condições que usa a melhor situação dos sensores, o bit mais da direita é o s_leste e o bit mais na esquerda é o s_oeste
+  // Alguns nao tem break; porque faz a mesma coisa
+  switch (leitura)
+  {
+  case 0b000:
+  case 0b010: //! Caso de ele ir so pra frente
+    if (ver == false)
     {
-    case 0b000:
-    case 0b010: //! Caso de ele ir so pra frente
-      if (ver == false)
-      {
-        mot1_hor(vel_esq);
-        mot2_hor(vel_dir);
-        display.print("lei = 000");
-        display.display();
-        Serial.println("leitura = 000; leitura = 010");
-      }
-      else
-      {
-        display.print("000 / Tras");
-        display.display();
-        enc_re(vel_esq, vel_dir, enc_pas_outro);
-        ver = false;
-      }
-      break;
-    case 0b100:
-    case 0b110: //! Casos de fazer o esquerda 90
-      if (ver == false)
-      {
-        display.print("100 / parar");
-        display.display();
-        mot1_par();
-        mot2_par();
-        delay(mot_par);
-        ver = true;
-      }
-      else
-      {
-        ver = false;
-        display.print("100 / Esq_90");
-        display.display();
-        esq_90();
-      }
-      break;
-    case 0b001:
-    case 0b011: //! Casos de fazer o direita 90
-      if (ver == false)
-      {
-        display.print("001 / parar");
-        display.display();
-        mot1_par();
-        mot2_par();
-        delay(mot_par);
-        ver = true;
-      }
-      else
-      {
-        ver = false;
-        display.print("001 / Dir_90");
-        display.display();
-        dir_90();
-      }
-      break;
-    default:
-      break;
+      mot1_hor(vel_esq);
+      mot2_hor(vel_dir);
+      display.print("lei = 000");
+      display.display();
+      Serial.println("leitura = 000; leitura = 010");
     }
+    else
+    {
+      display.print("000 / Tras");
+      display.display();
+      enc_re(vel_esq, vel_dir, enc_pas_outro);
+      ver = false;
+    }
+    break;
+  case 0b100:
+  case 0b110: //! Casos de fazer o esquerda 90
+    if (ver == false)
+    {
+      display.print("100 / parar");
+      display.display();
+      mot1_par();
+      mot2_par();
+      delay(mot_par);
+      ver = true;
+    }
+    else
+    {
+      ver = false;
+      display.print("100 / Esq_90");
+      display.display();
+      esq_90();
+    }
+    break;
+  case 0b001:
+  case 0b011: //! Casos de fazer o direita 90
+    if (ver == false)
+    {
+      display.print("001 / parar");
+      display.display();
+      mot1_par();
+      mot2_par();
+      delay(mot_par);
+      ver = true;
+    }
+    else
+    {
+      ver = false;
+      display.print("001 / Dir_90");
+      display.display();
+      dir_90();
+    }
+    break;
+  default:
+    break;
+  }
   //}
 }

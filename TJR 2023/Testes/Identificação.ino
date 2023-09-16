@@ -1,4 +1,5 @@
 // Identificação
+#include "Declarar.h"
 #include "Oled.h"
 #include "Definir.h"
 

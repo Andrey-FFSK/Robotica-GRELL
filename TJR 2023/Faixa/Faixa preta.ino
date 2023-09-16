@@ -1,4 +1,5 @@
 // Dica de erik
+#include "Declarar.h"// Dando include nas declaracoes de funcoes
 #include "Definir.h" // Dando include nas variaveis e funções
 #include "Oled.h"    // Dando include no arquivo que tem as bibliotecas e criando o objeto do display oled
 
