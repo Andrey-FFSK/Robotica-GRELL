@@ -19,7 +19,7 @@ void setup()
 
   Serial.begin(9600); // Iniciando o serial monitor
 
-  byte leitura = 0;
+  byte leitura;
 
   // vel_esq = 120; // valor normal dos motores
   // vel_dir = 110; //
@@ -37,9 +37,17 @@ void loop()
 
   if (ult_meio.read() <= 3) // Se o sensor dectar que esta distancia ativa a função de desviar
   {
-    display.print("Desviando obsta");
-    display.display();
-    desv(vel_esq, vel_dir, false);
+    if (cont_desv < max_cont_desv)
+    {
+      display.print("Desviando obsta");
+      display.display();
+      desv(vel_esq, vel_dir, false); //* esq = false; dir = true
+      cont_desv++;
+    }
+    else
+    {
+      // Colocar aqui a habilitacao de area de resgate
+    }
   }
 
   //* Parte em que ele faz o micro ajuste (pensando que o valor maior fica no branco)
@@ -49,13 +57,13 @@ void loop()
     {
       mot1_hor(vel_esq);
       mot2_anti(vel_dir);
-      display.print("0010 / Direita");
+      display.print("Esquerda");
       display.display();
       Serial.println("leitura == 0010 / ajustando para esquerda");
     }
     else
     {
-      display.print("0010 / Tras");
+      display.print("E_Tras");
       display.display();
       enc_re(vel_esq, vel_dir, enc_pas_outro);
       ver = false;
@@ -67,13 +75,13 @@ void loop()
     {
       mot1_anti(vel_esq);
       mot2_hor(vel_dir);
-      display.print("0100 / Esquerda");
+      display.print("Direita");
       display.display();
       Serial.println("leitura == 0100 / ajustando para direita");
     }
     else
     {
-      display.print("0100 / Tras");
+      display.print("D_Tras");
       display.display();
       enc_re(vel_esq, vel_dir, enc_pas_outro);
       ver = false;

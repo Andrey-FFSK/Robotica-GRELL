@@ -10,8 +10,8 @@
 #define s_norte 27     //
 #define s_nordeste A14 //
 #define s_leste 26     //
-int analog_esq = 501;
-int analog_dir = 501;
+#define analog_esq 501
+#define analog_dir 501
 
 //* Motor 1 = Esquerda; Motor 2 = Direita; mot1 que tem encoder
 #define mot_in1 12 // amarelo, direita, tras
@@ -33,7 +33,7 @@ int m_dir = 0;
 //* Definindo velocidades
 #define vel_esq 120 // PWM usado para a velocidade, min == 0 e max == 255
 #define vel_dir 110 //
-#define mot_par 200 // Delay para o tempo dele ficar parado
+#define mot_par 100 // Delay para o tempo dele ficar parado
 
 //* Valores com Millis
 // int millis_ant = 0;
@@ -53,6 +53,8 @@ int enc_ant = 0;    // Valor do encoder anterior
 // #define enc_180 1256
 
 //* Valores para desviar obstaculo
+int cont_desv = 0;
+#define max_cont_desv 1       // Valor de quantidade de obstaculos
 #define frente_1 1100         // Valor que ele se distancia do obstaculo
 #define frente_2 2100         // Valor que faz ele ultrapassar o obstaculo
 #define frente_3 600          // Valor que faz ele nao se perder em qualquer linha
