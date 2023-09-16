@@ -6,9 +6,9 @@
 
 //* Definindo as portas dos sensores
 #define s_oeste 22     //
-#define s_noroeste A15 // Trocar para analog
+#define s_noroeste A15 // 
 #define s_norte 27     //
-#define s_nordeste A14 // Trocar para analog
+#define s_nordeste A14 //
 #define s_leste 26     //
 int analog_esq = 501;
 int analog_dir = 501;

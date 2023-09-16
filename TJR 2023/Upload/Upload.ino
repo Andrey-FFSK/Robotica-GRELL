@@ -19,6 +19,8 @@ void setup()
 
   Serial.begin(9600); // Iniciando o serial monitor
 
+  byte leitura = 0;
+
   // vel_esq = 120; // valor normal dos motores
   // vel_dir = 110; //
 }
@@ -26,8 +28,9 @@ void loop()
 {
   display.clearDisplay();  // Limpando o display no inicio do loop
   display.setCursor(0, 0); // Setando para todos iniciar no inicio da tela
+
   //  Essa parte é o bitSwift, criar uma variavel leitura do tipo byte, porem a gente so usa os bits dessa varaivel, a quantidade de bits depende de quantos sensores estao usando
-  byte leitura = 0; // Definir sempre 0 quando definir algo como o for abaixo
+  leitura = 0; // Definir sempre 0 quando definir algo como o for abaixo
   for (int i = 0; i < 3; i++)
     leitura |= digitalRead(pinos[i]) << i; // Colocando as entrada da tabela da verdade usando um bitshift automatico, o valor do i depende dos sensores
   leitura = (~leitura) & (0b00000111);     // Colocando um inversor para que funcione com a tabela da verdade, pq o sensor dectectar no branco, AND uma mascara para ir so os bits que eu quero
@@ -48,7 +51,7 @@ void loop()
       mot2_anti(vel_dir);
       display.print("0010 / Direita");
       display.display();
-      Serial.println("leitura == 0010 / ajustando para direita");
+      Serial.println("leitura == 0010 / ajustando para esquerda");
     }
     else
     {
@@ -66,7 +69,7 @@ void loop()
       mot2_hor(vel_dir);
       display.print("0100 / Esquerda");
       display.display();
-      Serial.println("leitura == 0100 / ajustando para esquerda");
+      Serial.println("leitura == 0100 / ajustando para direita");
     }
     else
     {
