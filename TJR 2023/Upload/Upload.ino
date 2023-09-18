@@ -6,6 +6,8 @@
 // Usando array para colocar todos os pinos, coloquei os sensores em uma certa posição por causa do BitSwift em baixo
 const int pinos[] = {s_oeste, s_norte, s_leste, s_noroeste, s_nordeste, esq, dir, led_g, mot_in1, mot_in2, mot_in3, mot_in4};
 
+byte leitura;
+
 void setup()
 {
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C); // Protocolo para iniciar o display
@@ -18,8 +20,6 @@ void setup()
     pinMode(pinos[i], OUTPUT);
 
   Serial.begin(9600); // Iniciando o serial monitor
-
-  byte leitura;
 
   // vel_esq = 120; // valor normal dos motores
   // vel_dir = 110; //
@@ -87,71 +87,71 @@ void loop()
       ver = false;
     }
   }
-  /*
-  else //! Eu nao sei se precisa desse else para o switch
-  {*/
-  // Condições que usa a melhor situação dos sensores, o bit mais da direita é o s_leste e o bit mais na esquerda é o s_oeste
-  // Alguns nao tem break; porque faz a mesma coisa
-  switch (leitura)
+
+  else //! Pescisa_d_else_paa_egula_dieit
   {
-  case 0b000:
-  case 0b010: //! Caso de ele ir so pra frente
-    if (ver == false)
+    // Condições que usa a melhor situação dos sensores, o bit mais da direita é o s_leste e o bit mais na esquerda é o s_oeste
+    // Alguns nao tem break; porque faz a mesma coisa
+    switch (leitura)
     {
-      mot1_hor(vel_esq);
-      mot2_hor(vel_dir);
-      display.print("lei = 000");
-      display.display();
-      Serial.println("leitura = 000; leitura = 010");
+    case 0b000:
+    case 0b010: //! Caso de ele ir so pra frente
+      if (ver == false)
+      {
+        mot1_hor(vel_esq);
+        mot2_hor(vel_dir);
+        display.print("lei = 000");
+        display.display();
+        Serial.println("leitura = 000; leitura = 010");
+      }
+      else
+      {
+        display.print("000 / Tras");
+        display.display();
+        enc_re(vel_esq, vel_dir, enc_pas_outro);
+        ver = false;
+      }
+      break;
+    case 0b100:
+    case 0b110: //! Casos de fazer o esquerda 90
+      if (ver == false)
+      {
+        display.print("100 / parar");
+        display.display();
+        mot1_par();
+        mot2_par();
+        delay(mot_par);
+        ver = true;
+      }
+      else
+      {
+        ver = false;
+        display.print("100 / Esq_90");
+        display.display();
+        esq_90();
+      }
+      break;
+    case 0b001:
+    case 0b011: //! Casos de fazer o direita 90
+      if (ver == false)
+      {
+        display.print("001 / parar");
+        display.display();
+        mot1_par();
+        mot2_par();
+        delay(mot_par);
+        ver = true;
+      }
+      else
+      {
+        ver = false;
+        display.print("001 / Dir_90");
+        display.display();
+        dir_90();
+      }
+      break;
+    default:
+      break;
     }
-    else
-    {
-      display.print("000 / Tras");
-      display.display();
-      enc_re(vel_esq, vel_dir, enc_pas_outro);
-      ver = false;
-    }
-    break;
-  case 0b100:
-  case 0b110: //! Casos de fazer o esquerda 90
-    if (ver == false)
-    {
-      display.print("100 / parar");
-      display.display();
-      mot1_par();
-      mot2_par();
-      delay(mot_par);
-      ver = true;
-    }
-    else
-    {
-      ver = false;
-      display.print("100 / Esq_90");
-      display.display();
-      esq_90();
-    }
-    break;
-  case 0b001:
-  case 0b011: //! Casos de fazer o direita 90
-    if (ver == false)
-    {
-      display.print("001 / parar");
-      display.display();
-      mot1_par();
-      mot2_par();
-      delay(mot_par);
-      ver = true;
-    }
-    else
-    {
-      ver = false;
-      display.print("001 / Dir_90");
-      display.display();
-      dir_90();
-    }
-    break;
-  default:
-    break;
   }
-  //}
 }
