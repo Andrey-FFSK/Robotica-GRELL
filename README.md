@@ -1,7 +1,8 @@
-# Torneios
+# Torneios - 28/10
 
 ## TJR 2023
 Se esforcando para passar nessa.
+- [Regras da TJR](https://drive.google.com/drive/folders/1RvpM9uKfgFhN3XrgKtUdl-A_iGBHtTMd)
 
 ## OBR 2023
 Ficamos em 6° na regional, e 27° na estadual, com a pontuação de 145 e 105 respectivamente.
