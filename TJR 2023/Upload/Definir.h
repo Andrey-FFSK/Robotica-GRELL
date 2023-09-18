@@ -31,8 +31,8 @@ int m_dir = 0;
 #define dir_branco 700
 
 //* Definindo velocidades
-#define vel_esq 120 // PWM usado para a velocidade, min == 0 e max == 255
-#define vel_dir 110 //
+#define vel_esq 130 // PWM usado para a velocidade, min == 0 e max == 255
+#define vel_dir 120 //
 #define mot_par 100 // Delay para o tempo dele ficar parado
 
 //* Valores com Millis

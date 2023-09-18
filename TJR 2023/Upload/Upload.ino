@@ -95,12 +95,14 @@ void loop()
     switch (leitura)
     {
     case 0b000:
+    display.println("lei = 000");
+        display.display();
     case 0b010: //! Caso de ele ir so pra frente
       if (ver == false)
       {
         mot1_hor(vel_esq);
         mot2_hor(vel_dir);
-        display.print("lei = 000");
+        display.print("lei = 010");
         display.display();
         Serial.println("leitura = 000; leitura = 010");
       }
