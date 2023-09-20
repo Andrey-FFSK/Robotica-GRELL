@@ -156,7 +156,7 @@ namespace OLED {
     };
 
     // funcoes pra desenha cada abelha
-    inline void abeia_grande(const int x, const int y, int ) { 
+    inline void abeia_grande(const int x, const int y) { 
         display.drawBitmap(x, y + sin(16 * FRAME_i * PI/180)*3, abeia, 32, 32, WHITE);
     }
 
