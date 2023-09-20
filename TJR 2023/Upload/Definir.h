@@ -33,7 +33,7 @@ int m_dir = 0;
 //* Definindo velocidades
 #define vel_esq 130 // PWM usado para a velocidade, min == 0 e max == 255
 #define vel_dir 120 //
-#define mot_par 100 // Delay para o tempo dele ficar parado
+#define mot_par 50 // Delay para o tempo dele ficar parado
 
 //* Valores com Millis
 // int millis_ant = 0;
@@ -43,11 +43,11 @@ int m_dir = 0;
 //* Valores para encoders
 Encoder enc(3, 2);  // Encoder do motor da esquerda
 int enc_ant = 0;    // Valor do encoder anterior
-#define enc_fre 200 // Frente apos ver 90 ou encruzilhada /
+#define enc_fre 170 // Frente apos ver 90 /
 // #define enc_fre_encru 200
 #define enc_90 790
 #define enc_peq 130 // Valor que vira para completar com while / 130
-#define enc_pas 100 // Valor que vai para atras /
+#define enc_pas 70 // Valor que vai para atras /
 // #define enc_pas_encru 100
 #define enc_pas_outro 40
 // #define enc_180 1256
