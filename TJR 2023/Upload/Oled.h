@@ -3,6 +3,8 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 
+void setRotation(uint8_t rotation);
+
 #define OLED_W 128 // largura em pixels
 #define OLED_H 64  // altura em pixels
 
@@ -154,7 +156,7 @@ namespace OLED {
     };
 
     // funcoes pra desenha cada abelha
-    inline void abeia_grande(const int x, const int y) { 
+    inline void abeia_grande(const int x, const int y, int ) { 
         display.drawBitmap(x, y + sin(16 * FRAME_i * PI/180)*3, abeia, 32, 32, WHITE);
     }
 

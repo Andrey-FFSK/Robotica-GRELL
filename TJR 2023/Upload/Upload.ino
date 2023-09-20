@@ -12,6 +12,7 @@ void setup()
 {
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C); // Protocolo para iniciar o display
   display.setTextColor(WHITE);               // Colocando cor para o texto
+  display.setRotation(3);
 
   // Colocando os sensores como INPUT, e o resto como OUTPUT, tudo isso pelo array
   for (int i = 0; i < 7; i++) // Usando o array para fazer os pinmode como input
@@ -34,6 +35,9 @@ void loop()
   for (int i = 0; i < 3; i++)
     leitura |= digitalRead(pinos[i]) << i; // Colocando as entrada da tabela da verdade usando um bitshift automatico, o valor do i depende dos sensores
   leitura = (~leitura) & (0b00000111);     // Colocando um inversor para que funcione com a tabela da verdade, pq o sensor dectectar no branco, AND uma mascara para ir so os bits que eu quero
+
+  OLED::abeia_grande(24 - 16, 85 - 16);
+  OLED::setas();
 
   if (ult_meio.read() <= 3) // Se o sensor dectar que esta distancia ativa a função de desviar
   {
@@ -58,6 +62,7 @@ void loop()
       mot1_hor(vel_esq);
       mot2_anti(vel_dir);
       display.print("Esquerda");
+      OLED::seta_esq();
       display.display();
       Serial.println("leitura == 0010 / ajustando para esquerda");
     }
@@ -76,6 +81,7 @@ void loop()
       mot1_anti(vel_esq);
       mot2_hor(vel_dir);
       display.print("Direita");
+      OLED::seta_dir();
       display.display();
       Serial.println("leitura == 0100 / ajustando para direita");
     }
@@ -95,14 +101,13 @@ void loop()
     switch (leitura)
     {
     case 0b000:
-    display.println("lei = 000");
-        display.display();
     case 0b010: //! Caso de ele ir so pra frente
       if (ver == false)
       {
         mot1_hor(vel_esq);
         mot2_hor(vel_dir);
         display.print("lei = 010");
+        OLED::seta_cima();
         display.display();
         Serial.println("leitura = 000; leitura = 010");
       }
@@ -129,6 +134,7 @@ void loop()
       {
         ver = false;
         display.print("100 / Esq_90");
+        OLED::seta_esq();
         display.display();
         esq_90();
       }
@@ -148,6 +154,7 @@ void loop()
       {
         ver = false;
         display.print("001 / Dir_90");
+        OLED::seta_dir();
         display.display();
         dir_90();
       }
@@ -156,4 +163,5 @@ void loop()
       break;
     }
   }
+  OLED::frame_incr();
 }
