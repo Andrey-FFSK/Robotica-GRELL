@@ -21,9 +21,6 @@ void setup()
     pinMode(pinos[i], OUTPUT);
 
   Serial.begin(9600); // Iniciando o serial monitor
-
-  // vel_esq = 120; // valor normal dos motores
-  // vel_dir = 110; //
 }
 void loop()
 {
