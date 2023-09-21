@@ -95,8 +95,7 @@ void loop()
       ver = false;
     }
   }
-
-  else //! Pescisa_d_else_paa_egula_dieit
+  else //! Precisa de else para regular direito
   {
     // Condições que usa a melhor situação dos sensores, o bit mais da direita é o s_leste e o bit mais na esquerda é o s_oeste
     // Alguns nao tem break; porque faz a mesma coisa
