@@ -103,7 +103,7 @@ void loop()
       {
         mot1_hor(vel_esq);
         mot2_hor(vel_dir);
-        display.print("lei = 010");
+        display.print("010 / frente");
         OLED::seta_cima();
         Serial.println("leitura = 000; leitura = 010");
       }
@@ -159,7 +159,6 @@ void loop()
         display.print("111 / frente");
         mot1_hor(vel_esq);
         mot2_hor(vel_dir);
-        ver = true;
       }
       else
       {
@@ -167,6 +166,7 @@ void loop()
         enc_re(vel_esq, vel_dir, enc_pas_outro);
         ver = false;
       }
+      break;
     default:
       break;
     }
