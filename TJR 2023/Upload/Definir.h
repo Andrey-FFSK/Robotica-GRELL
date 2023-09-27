@@ -44,9 +44,10 @@ int m_dir = 0;
 //* Valores para encoders
 Encoder enc(3, 2);  // Encoder do motor da esquerda
 int enc_ant = 0;    // Valor do encoder anterior
-#define enc_fre 170 // Frente apos ver 90 /
-#define enc_90 790
+#define enc_fre 150 // Frente apos ver 90 / 170
+#define enc_90 730
 #define enc_peq 130      // Valor que vira para completar com while /
+#define enc_peq_desv 180
 #define enc_pas 70       // Valor que vai para atras /
 #define enc_pas_outro 40 // Valor que vai para atras na passagem ver /
 // #define enc_fre_encru 200
@@ -191,24 +192,25 @@ void desv(int velo_esq, int velo_dir, bool esq_dir)
     Serial.print("andando para frente: ");
     Serial.println(enc.read());
   }
-  enc_frente(velo_esq, velo_dir, enc_peq); //* Se afastando um pouco da linha
+  enc_frente(velo_esq, velo_dir, enc_peq_desv); //* Se afastando um pouco da linha
   if (esq_dir == false)
-  {
-    while (digitalRead(s_norte) == 1) //* Virando para esquerda para se ajeiar na faixa
-    {
-      mot1_hor(velo_esq);
-      mot2_anti(velo_dir);
-      Serial.print("Virando esquerda: ");
-      Serial.println(enc.read());
-    }
-  }
-  else
   {
     while (digitalRead(s_norte) == 1) //* Virando para direita para se ajeiar na faixa
     {
       mot1_anti(velo_esq);
       mot2_hor(velo_dir);
       Serial.print("Virando direita: ");
+      Serial.println(enc.read());
+    }
+  }
+  else
+  {
+    
+    while (digitalRead(s_norte) == 1) //* Virando para esquerda para se ajeiar na faixa
+    {
+      mot1_hor(velo_esq);
+      mot2_anti(velo_dir);
+      Serial.print("Virando esquerda: ");
       Serial.println(enc.read());
     }
   }
