@@ -43,7 +43,7 @@ int m_dir = 0;
 
 //* Valores para encoders
 Encoder enc(3, 2);  // Encoder do motor da esquerda
-int enc_ant = 0;    // Valor do encoder anterior
+unsigned long int enc_ant = 0;    // Valor do encoder anterior
 #define enc_fre 140 // Frente apos ver 90 / 170 / 150
 #define enc_90 730
 #define enc_peq 130      // Valor que vira para completar com while /
