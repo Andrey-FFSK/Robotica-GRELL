@@ -44,11 +44,14 @@ void loop()
     {
       display.print("Desviando obsta");
       display.display();
-      desv(vel_esq, vel_dir, false); //* esq = false; dir = true
+      desv(false); //* esq = false; dir = true
       cont_desv++;
     }
     else
     {
+      mot1_par();
+      mot2_par();
+      delay(100000000);
       // Colocar aqui a habilitacao de area de resgate
     }
   }
@@ -58,8 +61,8 @@ void loop()
   {
     if (ver == false)
     {
-      mot1_hor(vel_esq);
-      mot2_anti(vel_dir);
+      mot1_hor();
+      mot2_anti();
       display.print("Esquerda");
       OLED::seta_esq();
       Serial.println("leitura == 0010 / ajustando para esquerda");
@@ -67,7 +70,7 @@ void loop()
     else
     {
       display.print("E_Tras");
-      enc_re(vel_esq, vel_dir, enc_pas_outro);
+      enc_re(enc_pas_outro);
       ver = false;
     }
   }
@@ -75,8 +78,8 @@ void loop()
   {
     if (ver == false)
     {
-      mot1_anti(vel_esq);
-      mot2_hor(vel_dir);
+      mot1_anti();
+      mot2_hor();
       display.print("Direita");
       OLED::seta_dir();
       Serial.println("leitura == 0100 / ajustando para direita");
@@ -84,7 +87,7 @@ void loop()
     else
     {
       display.print("D_Tras");
-      enc_re(vel_esq, vel_dir, enc_pas_outro);
+      enc_re(enc_pas_outro);
       ver = false;
     }
   }
@@ -98,8 +101,8 @@ void loop()
     case 0b010: //! Caso de ele ir so pra frente
       if (ver == false)
       {
-        mot1_hor(vel_esq);
-        mot2_hor(vel_dir);
+        mot1_hor();
+        mot2_hor();
         display.print("010 / frente");
         OLED::seta_cima();
         Serial.println("leitura = 000; leitura = 010");
@@ -107,7 +110,7 @@ void loop()
       else
       {
         display.print("000 / Tras");
-        enc_re(vel_esq, vel_dir, enc_pas_outro);
+        enc_re(enc_pas_outro);
         ver = false;
       }
       break;
@@ -154,13 +157,13 @@ void loop()
       if (ver == false)
       {
         display.print("111 / frente");
-        mot1_hor(vel_esq);
-        mot2_hor(vel_dir);
+        mot1_hor();
+        mot2_hor();
       }
       else
       {
         display.print("111 / re");
-        enc_re(vel_esq, vel_dir, enc_pas_outro);
+        enc_re(enc_pas_outro);
         ver = false;
       }
       break;

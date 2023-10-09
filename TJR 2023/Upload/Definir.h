@@ -1,7 +1,7 @@
 #ifndef _FUNCOES_VARIAVEIS_H
 #define _FUNCOES_VARIAVEIS_H
 #include "Declarar.h"
-#include <Ultrasonic.h> 
+#include <Ultrasonic.h>
 #include <Encoder.h>
 // mpu6050 i2c = 0x68
 
@@ -42,21 +42,26 @@ int m_dir = 0;
 // #define time_while 1500
 
 //* Valores para encoders
-Encoder enc(3, 2);  // Encoder do motor da esquerda
-unsigned long int enc_ant = 0;    // Valor do encoder anterior
-#define enc_fre 140 // Frente apos ver 90 / 170 / 150
+Encoder enc(3, 2);             // Encoder do motor da esquerda
+unsigned long int enc_ant = 0; // Valor do encoder anterior
+#define enc_fre 140            // Frente apos ver 90 / 170 / 150
 #define enc_90 730
 #define enc_peq 130      // Valor que vira para completar com while /
-#define enc_peq_desv 180
 #define enc_pas 70       // Valor que vai para atras /
 #define enc_pas_outro 40 // Valor que vai para atras na passagem ver /
+#define enc_passo 10
 // #define enc_fre_encru 200
 // #define enc_pas_encru 100
 // #define enc_180 1256
 
+//* Valor para verificação de branco
+#define enc_90_ver_2 enc_90 - 70
+#define enc_90_ver_3 enc_90 - 170
+
 //* Valores para desviar obstaculo
 int cont_desv = 0;
-#define max_cont_desv 99      // Valor de quantidade de obstaculos
+#define max_cont_desv 99 // Valor de quantidade de obstaculos
+#define enc_peq_desv 180
 #define frente_1 1100         // Valor que ele se distancia do obstaculo
 #define frente_2 2100         // Valor que faz ele ultrapassar o obstaculo
 #define frente_3 600          // Valor que faz ele nao se perder em qualquer linha
@@ -66,12 +71,12 @@ int cont_desv = 0;
 Ultrasonic ult_meio(30, 31); // trig == prim; echo == segun | trig = marrom e echo = amarelo
 
 //* Inicio das funções, para cada caso
-void mot1_anti(int velo)
+void mot1_anti(int velo = vel_esq)
 {
   analogWrite(mot_in4, velo);
   analogWrite(mot_in3, 0);
 }
-void mot1_hor(int velo)
+void mot1_hor(int velo = vel_esq)
 {
   analogWrite(mot_in4, 0);
   analogWrite(mot_in3, velo);
@@ -82,12 +87,12 @@ void mot1_par()
   analogWrite(mot_in3, 0);
 }
 
-void mot2_anti(int velo)
+void mot2_anti(int velo = vel_dir)
 {
   analogWrite(mot_in2, 0);
   analogWrite(mot_in1, velo);
 }
-void mot2_hor(int velo)
+void mot2_hor(int velo = vel_dir)
 {
   analogWrite(mot_in2, velo);
   analogWrite(mot_in1, 0);
@@ -98,7 +103,7 @@ void mot2_par()
   analogWrite(mot_in2, 0);
 }
 
-void enc_frente(int velo_esq, int velo_dir, int enc_valor)
+void enc_frente(int enc_valor = enc_passo, int velo_esq = vel_esq, int velo_dir = vel_dir)
 {
   enc_ant = enc.read();
   while (enc.read() - enc_ant <= enc_valor)
@@ -110,7 +115,7 @@ void enc_frente(int velo_esq, int velo_dir, int enc_valor)
   }
 }
 
-void enc_direita(int velo_esq, int velo_dir, int enc_valor)
+void enc_direita(int enc_valor = enc_passo, int velo_esq = vel_esq, int velo_dir = vel_dir)
 {
   enc_ant = enc.read();
   while (enc.read() - enc_ant <= enc_valor)
@@ -122,7 +127,7 @@ void enc_direita(int velo_esq, int velo_dir, int enc_valor)
   }
 }
 
-void enc_esquerda(int velo_esq, int velo_dir, int enc_valor)
+void enc_esquerda(int enc_valor = enc_passo, int velo_esq = vel_esq, int velo_dir = vel_dir)
 {
   enc_ant = enc.read();
   while (enc_ant - enc.read() <= enc_valor)
@@ -134,7 +139,7 @@ void enc_esquerda(int velo_esq, int velo_dir, int enc_valor)
   }
 }
 
-void enc_re(int velo_esq, int velo_dir, int enc_valor)
+void enc_re(int enc_valor = enc_passo, int velo_esq = vel_esq, int velo_dir = vel_dir)
 {
   enc_ant = enc.read();
   while (enc_ant - enc.read() <= enc_valor)
@@ -152,39 +157,39 @@ void sensi()
   m_dir = map(constrain(analogRead(dir), 405, 629), 405, 629, 0, 1023);
 }
 
-void desv(int velo_esq, int velo_dir, bool esq_dir)
+void desv(bool esq_dir, int velo_esq = vel_esq, int velo_dir = vel_dir)
 {
-  enc_re(velo_esq, velo_dir, enc_pas_outro); //* Dando um passo para atras, isso e bom caso a traseira do robo e maior do que na frente
+  enc_re(enc_pas_outro, velo_esq, velo_dir); //* Dando um passo para atras, isso e bom caso a traseira do robo e maior do que na frente
   mot1_par();                                //* Colocando pra parar bem rapido pq sim
   mot2_par();
   delay(mot_par);
   if (esq_dir == false)
   {
-    enc_esquerda(velo_esq, velo_dir, enc_90); //* Girando para esquerda
+    enc_esquerda(enc_90, velo_esq, velo_dir); //* Girando para esquerda
   }
   else
   {
-    enc_direita(velo_esq, velo_dir, enc_90); //* Girando para direita
+    enc_direita(enc_90, velo_esq, velo_dir); //* Girando para direita
   }
-  enc_frente(velo_esq, velo_dir, frente_1); //* Se distanciando do obstaculo
+  enc_frente(frente_1, velo_esq, velo_dir); //* Se distanciando do obstaculo
   if (esq_dir == false)
   {
-    enc_direita(velo_esq, velo_dir, enc_90_2); //* Virando para direita, com valor reduzido para nao girar demais
+    enc_direita(enc_90_2, velo_esq, velo_dir); //* Virando para direita, com valor reduzido para nao girar demais
   }
   else
   {
-    enc_esquerda(velo_esq, velo_dir, enc_90_2); //*Virando para esquerda, com valor reduzido para nao girar demais
+    enc_esquerda(enc_90_2, velo_esq, velo_dir); //*Virando para esquerda, com valor reduzido para nao girar demais
   }
-  enc_frente(velo_esq, velo_dir, frente_2); //* Passando do obstaculo
+  enc_frente(frente_2, velo_esq, velo_dir); //* Passando do obstaculo
   if (esq_dir == false)
   {
-    enc_direita(velo_esq, velo_dir, enc_90_3); //* Virando para direita, mesmo moitvo anterior
+    enc_direita(enc_90_3, velo_esq, velo_dir); //* Virando para direita, mesmo moitvo anterior
   }
   else
   {
-    enc_esquerda(velo_esq, velo_dir, enc_90_3); //* Virando para esquerda, mesmo moitvo anterior
+    enc_esquerda(enc_90_3, velo_esq, velo_dir); //* Virando para esquerda, mesmo moitvo anterior
   }
-  enc_frente(velo_esq, velo_dir, frente_3); //* Andando em frente, para ele nao se confundir linhas aleatorias
+  enc_frente(frente_3, velo_esq, velo_dir); //* Andando em frente, para ele nao se confundir linhas aleatorias
   while (digitalRead(s_norte) == 1)         //* Terminando com while para ele encontrar a linah correta
   {
     mot1_hor(velo_esq);
@@ -192,7 +197,7 @@ void desv(int velo_esq, int velo_dir, bool esq_dir)
     Serial.print("andando para frente: ");
     Serial.println(enc.read());
   }
-  enc_frente(velo_esq, velo_dir, enc_peq_desv); //* Se afastando um pouco da linha
+  enc_frente(enc_peq_desv, velo_esq, velo_dir); //* Se afastando um pouco da linha
   if (esq_dir == false)
   {
     while (digitalRead(s_norte) == 1) //* Virando para direita para se ajeiar na faixa
@@ -205,7 +210,6 @@ void desv(int velo_esq, int velo_dir, bool esq_dir)
   }
   else
   {
-    
     while (digitalRead(s_norte) == 1) //* Virando para esquerda para se ajeiar na faixa
     {
       mot1_hor(velo_esq);
@@ -218,26 +222,30 @@ void desv(int velo_esq, int velo_dir, bool esq_dir)
 
 void esq_90()
 {
-  enc_frente(vel_esq, vel_dir, enc_fre);
-  enc_esquerda(vel_esq, vel_dir, enc_peq);
+  enc_frente(enc_fre);
+  enc_esquerda(enc_peq);
   while ((digitalRead(s_norte) == 1) && (digitalRead(s_oeste) == 1))
   {
-    mot1_anti(vel_esq);
-    mot2_hor(vel_dir);
+    mot1_anti();
+    mot2_hor();
   }
-  enc_re(vel_esq, vel_dir, enc_pas);
+  enc_re(enc_pas);
 }
 
 void dir_90()
 {
-  enc_frente(vel_esq, vel_dir, enc_fre);
-  enc_direita(vel_esq, vel_dir, enc_peq);
+  enc_frente(enc_fre);
+  enc_direita(enc_peq);
   while ((digitalRead(s_norte) == 1) && (digitalRead(s_leste) == 1))
   {
     mot1_hor(vel_esq);
     mot2_anti(vel_dir);
   }
-  enc_re(vel_esq, vel_dir, enc_pas);
+  enc_re(enc_pas);
+}
+
+void ver_branco()
+{
 }
 
 /*
