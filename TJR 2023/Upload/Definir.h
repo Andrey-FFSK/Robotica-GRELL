@@ -55,8 +55,13 @@ unsigned long int enc_ant = 0; // Valor do encoder anterior
 // #define enc_180 1256
 
 //* Valor para verificação de branco
-#define enc_90_ver_2 enc_90 - 70
-#define enc_90_ver_3 enc_90 - 170
+unsigned long int enc_ant_verb = 0;
+bool verb_d = false;
+bool verb_e = false;
+#define enc_verb_fren 140
+#define enc_verb_90_2 enc_90 - 70
+#define enc_verb_90_3 enc_90 - 170
+#define enc_verb_gap 1000
 
 //* Valores para desviar obstaculo
 int cont_desv = 0;
@@ -246,6 +251,28 @@ void dir_90()
 
 void ver_branco()
 {
+  enc_frente(enc_verb_fren); //Passinho para frente, talvezs trocar para uma paradinha
+  enc_ant_verb = enc.read();
+  while(enc.read() - enc_ant_verb <= enc_90) //while para ele ir de passinho ate fazer um 90 verificando se o sensor pega uma linha preta
+  {
+    enc_direita();
+    if(digitalRead(s_leste) == 0) verb_d = true;
+  }
+  if(verb_d == false)
+  {
+    enc_esquerda(enc_verb_90_2); //Voltando para ficar reto com a linha
+    enc_ant_verb = enc.read();
+    while(enc.read() - enc_ant_verb <= enc_90) //while para ele ir de passinho ate fazer um 90 verificando se o sensor pega uma linha preta
+    {
+      enc_esquerda();
+      if(digitalRead(s_oeste) == 0) verb_e = true;
+    }
+    if(verb_e == false)
+    {
+      enc_direita(enc_verb_90_2); //Voltando para ficar reto na linha, pode ser que coloque a 3
+      enc_frente(enc_verb_gap); //Apos verificar tudo, imaginando que e um gap entao ultrapassando
+    }
+  }
 }
 
 /*
