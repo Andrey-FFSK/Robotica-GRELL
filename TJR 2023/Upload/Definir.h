@@ -269,7 +269,7 @@ void ver_branco()
     }
     if(verb_e == false)
     {
-      enc_direita(enc_verb_90_2); //Voltando para ficar reto na linha, pode ser que coloque a 3
+      enc_direita(enc_verb_90_2); //Voltando para ficar reto na linha, pode ser que coloque a versao 3
       enc_frente(enc_verb_gap); //Apos verificar tudo, imaginando que e um gap entao ultrapassando
     }
   }
