@@ -252,8 +252,11 @@ void dir_90()
 void ver_branco()
 {
   enc_frente(enc_verb_fren); //Passinho para frente, talvezs trocar para uma paradinha
+  mot1_par();
+  mot2_par();
+  delay(mot_par);
   enc_ant_verb = enc.read();
-  while(enc.read() - enc_ant_verb <= enc_90) //while para ele ir de passinho ate fazer um 90 verificando se o sensor pega uma linha preta
+  while((enc.read() - enc_ant_verb <= enc_90) && (digitalRead(s_norte) == 1)) //while para ele ir de passinho ate fazer um 90 verificando se o sensor pega uma linha preta
   {
     enc_direita();
     if(digitalRead(s_leste) == 0) verb_d = true;
@@ -262,7 +265,7 @@ void ver_branco()
   {
     enc_esquerda(enc_verb_90_2); //Voltando para ficar reto com a linha
     enc_ant_verb = enc.read();
-    while(enc.read() - enc_ant_verb <= enc_90) //while para ele ir de passinho ate fazer um 90 verificando se o sensor pega uma linha preta
+    while((enc.read() - enc_ant_verb <= enc_90) && (digitalRead(s_norte) == 1))) //while para ele ir de passinho ate fazer um 90 verificando se o sensor pega uma linha preta
     {
       enc_esquerda();
       if(digitalRead(s_oeste) == 0) verb_e = true;
