@@ -98,18 +98,10 @@ void loop()
     switch (leitura)
     {
     case 0b000:
-      /*if (ver == false)
-      {
-        display.print("000 / ver_branco");
-        ver_branco();
-      }
-      else
-      {
-        display.print("000 / re");
-        enc_re(enc_pas_outro);
-        ver = false;
-      }
-      break;*/
+        /*display.print("000 / ver_branco");
+        display.display();
+        ver_branco();*/
+      break;
     case 0b010: //! Caso de ele ir so pra frente
       if (ver == false)
       {

@@ -46,7 +46,6 @@ int m_dir = 0;
 Encoder enc(3, 2);             // Encoder do motor da esquerda
 int enc_ant = 0; // Valor do encoder anterior
 #define enc_fre 140            // Frente apos ver 90 / 170 / 150
-#define enc_90 575
 #define enc_peq 130      // Valor que vira para completar com while /
 #define enc_pas 70       // Valor que vai para atras /
 #define enc_pas_outro 40 // Valor que vai para atras na passagem ver /
@@ -60,8 +59,9 @@ int enc_ant_verb = 0;
 bool verb_d = false;
 bool verb_e = false;
 #define enc_verb_fren 140
-#define enc_verb_90_2 enc_90 - 70
-#define enc_verb_90_3 enc_90 - 170
+#define enc_verb_90 585
+#define enc_verb_90_2 enc_verb_90 + 50
+//#define enc_verb_90_3 enc_90 - 170
 #define enc_verb_gap 1000
 
 //* Valores para desviar obstaculo
@@ -71,6 +71,7 @@ int cont_desv = 0;
 #define frente_1 1100         // Valor que ele se distancia do obstaculo
 #define frente_2 1800         // Valor que faz ele ultrapassar o obstaculo
 #define frente_3 600          // Valor que faz ele nao se perder em qualquer linha
+#define enc_90 580
 #define enc_90_2 enc_90 + 70  // Seguunda vez que ele executa o 90
 #define enc_90_3 enc_90 + 140 // E a terceira
 
@@ -259,20 +260,43 @@ void ver_branco()
   mot2_par();
   delay(mot_par);
   enc_ant_verb = enc.read();
-  while((enc.read() - enc_ant_verb <= enc_90) && (digitalRead(s_norte) == 1)) //while para ele ir de passinho ate fazer um 90 verificando se o sensor pega uma linha preta
+  while((enc.read() - enc_ant_verb <= enc_verb_90) && (digitalRead(s_norte) == 1)) //while para ele ir de passinho ate fazer um 90 verificando se o sensor pega uma linha preta
   {
     enc_direita();
+    Serial.println();
     if(digitalRead(s_leste) == 0) verb_d = true;
+    Serial.print("verb_d = ");
+    Serial.println(verb_d);
+    delay(10);
+    mot1_par();
+    mot2_par();
+    delay(10);
   }
+  mot1_par();
+  mot2_par();
+  delay(2000);
+
   if(verb_d == false)
   {
     enc_esquerda(enc_verb_90_2); //Voltando para ficar reto com a linha
+    mot1_par();
+    mot2_par();
+    delay(2000);
     enc_ant_verb = enc.read();
-    while(((enc.read() - enc_ant_verb <= enc_90) && (digitalRead(s_norte) == 1))) //while para ele ir de passinho ate fazer um 90 verificando se o sensor pega uma linha preta
+    while(((enc.read() - enc_ant_verb <= enc_verb_90) && (digitalRead(s_norte) == 1))) //while para ele ir de passinho ate fazer um 90 verificando se o sensor pega uma linha preta
     {
       enc_esquerda();
       if(digitalRead(s_oeste) == 0) verb_e = true;
+      Serial.print("verb_e = ");
+      Serial.println(verb_e);
+      delay(10);
+      mot1_par();
+      mot2_par();
+      delay(10);
     }
+    mot1_par();
+    mot2_par();
+    delay(2000);
     if(verb_e == false)
     {
       enc_direita(enc_verb_90_2); //Voltando para ficar reto na linha, pode ser que coloque a versao 3
