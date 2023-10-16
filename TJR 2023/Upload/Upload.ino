@@ -100,8 +100,8 @@ void loop()
     case 0b000:
         /*display.print("000 / ver_branco");
         display.display();
-        ver_branco();*/
-      break;
+        ver_branco();
+      break;*/
     case 0b010: //! Caso de ele ir so pra frente
       if (ver == false)
       {
