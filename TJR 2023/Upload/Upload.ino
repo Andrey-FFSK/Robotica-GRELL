@@ -98,6 +98,18 @@ void loop()
     switch (leitura)
     {
     case 0b000:
+      /*if (ver == false)
+      {
+        display.print("000 / ver_branco");
+        ver_branco();
+      }
+      else
+      {
+        display.print("000 / re");
+        enc_re(enc_pas_outro);
+        ver = false;
+      }
+      break;*/
     case 0b010: //! Caso de ele ir so pra frente
       if (ver == false)
       {
@@ -153,7 +165,7 @@ void loop()
         ver = false;
       }
       break;
-    case 0b111:
+    case 0b111: //! Caso de encruzilhada
       if (ver == false)
       {
         display.print("111 / frente");

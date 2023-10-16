@@ -5,6 +5,7 @@
 #include <Encoder.h>
 // mpu6050 i2c = 0x68
 
+
 //* Definindo as portas dos sensores
 #define s_oeste 22     //
 #define s_noroeste A15 //
@@ -43,9 +44,9 @@ int m_dir = 0;
 
 //* Valores para encoders
 Encoder enc(3, 2);             // Encoder do motor da esquerda
-unsigned long int enc_ant = 0; // Valor do encoder anterior
+int enc_ant = 0; // Valor do encoder anterior
 #define enc_fre 140            // Frente apos ver 90 / 170 / 150
-#define enc_90 730
+#define enc_90 575
 #define enc_peq 130      // Valor que vira para completar com while /
 #define enc_pas 70       // Valor que vai para atras /
 #define enc_pas_outro 40 // Valor que vai para atras na passagem ver /
@@ -55,7 +56,7 @@ unsigned long int enc_ant = 0; // Valor do encoder anterior
 // #define enc_180 1256
 
 //* Valor para verificação de branco
-unsigned long int enc_ant_verb = 0;
+int enc_ant_verb = 0;
 bool verb_d = false;
 bool verb_e = false;
 #define enc_verb_fren 140
@@ -68,10 +69,10 @@ int cont_desv = 0;
 #define max_cont_desv 99 // Valor de quantidade de obstaculos
 #define enc_peq_desv 180
 #define frente_1 1100         // Valor que ele se distancia do obstaculo
-#define frente_2 2100         // Valor que faz ele ultrapassar o obstaculo
+#define frente_2 1800         // Valor que faz ele ultrapassar o obstaculo
 #define frente_3 600          // Valor que faz ele nao se perder em qualquer linha
-#define enc_90_2 enc_90 - 70  // Seguunda vez que ele executa o 90
-#define enc_90_3 enc_90 - 170 // E a terceira
+#define enc_90_2 enc_90 + 70  // Seguunda vez que ele executa o 90
+#define enc_90_3 enc_90 + 140 // E a terceira
 
 Ultrasonic ult_meio(30, 31); // trig == prim; echo == segun | trig = marrom e echo = amarelo
 
@@ -171,12 +172,14 @@ void desv(bool esq_dir, int velo_esq = vel_esq, int velo_dir = vel_dir)
   if (esq_dir == false)
   {
     enc_esquerda(enc_90, velo_esq, velo_dir); //* Girando para esquerda
+    //Serial.println("false");
   }
   else
   {
     enc_direita(enc_90, velo_esq, velo_dir); //* Girando para direita
   }
-  enc_frente(frente_1, velo_esq, velo_dir); //* Se distanciando do obstaculo
+  enc_frente(frente_1); //* Se distanciando do obstaculo
+  Serial.println("frente feito");
   if (esq_dir == false)
   {
     enc_direita(enc_90_2, velo_esq, velo_dir); //* Virando para direita, com valor reduzido para nao girar demais
@@ -243,8 +246,8 @@ void dir_90()
   enc_direita(enc_peq);
   while ((digitalRead(s_norte) == 1) && (digitalRead(s_leste) == 1))
   {
-    mot1_hor(vel_esq);
-    mot2_anti(vel_dir);
+    mot1_hor();
+    mot2_anti();
   }
   enc_re(enc_pas);
 }
@@ -265,7 +268,7 @@ void ver_branco()
   {
     enc_esquerda(enc_verb_90_2); //Voltando para ficar reto com a linha
     enc_ant_verb = enc.read();
-    while((enc.read() - enc_ant_verb <= enc_90) && (digitalRead(s_norte) == 1))) //while para ele ir de passinho ate fazer um 90 verificando se o sensor pega uma linha preta
+    while(((enc.read() - enc_ant_verb <= enc_90) && (digitalRead(s_norte) == 1))) //while para ele ir de passinho ate fazer um 90 verificando se o sensor pega uma linha preta
     {
       enc_esquerda();
       if(digitalRead(s_oeste) == 0) verb_e = true;
