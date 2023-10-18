@@ -71,8 +71,8 @@ int cont_desv = 0;
 #define frente_2 1800 // Valor que faz ele ultrapassar o obstaculo
 #define frente_3 600  // Valor que faz ele nao se perder em qualquer linha
 #define enc_90 580
-#define enc_90_2 enc_90 + 70  // Seguunda vez que ele executa o 90
-#define enc_90_3 enc_90 + 140 // E a terceira
+#define enc_90_2 enc_90 + 50  // Seguunda vez que ele executa o 90 / 70
+#define enc_90_3 enc_90 + 110 // E a terceira / 140
 
 Ultrasonic ult_meio(30, 31); // trig == prim; echo == segun | trig = marrom e echo = amarelo
 

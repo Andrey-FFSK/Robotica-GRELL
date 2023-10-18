@@ -44,7 +44,7 @@ void loop()
     {
       display.print("Desviando obsta");
       display.display();
-      desv(false); //* esq = false; dir = true
+      desv(true); //* esq = false; dir = true
       cont_desv++;
     }
     else
