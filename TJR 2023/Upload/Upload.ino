@@ -161,8 +161,9 @@ void loop()
       if (ver == false)
       {
         display.print("111 / frente");
-        mot1_hor();
-        mot2_hor();
+        //mot1_hor();
+        //mot2_hor();
+        enc_frente(enc_fre);
       }
       else
       {
