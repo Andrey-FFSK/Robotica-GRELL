@@ -71,8 +71,8 @@ int cont_desv = 0;
 #define frente_2 1800 // Valor que faz ele ultrapassar o obstaculo
 #define frente_3 600  // Valor que faz ele nao se perder em qualquer linha
 #define enc_90 580
-#define enc_90_2 enc_90 + 50  // Seguunda vez que ele executa o 90 / 70
-#define enc_90_3 enc_90 + 110 // E a terceira / 140
+#define enc_90_2 enc_90 + 10  // Seguunda vez que ele executa o 90 / 70
+#define enc_90_3 enc_90 + 10 // E a terceira / 140
 
 Ultrasonic ult_meio(30, 31); // trig == prim; echo == segun | trig = marrom e echo = amarelo
 
@@ -202,27 +202,27 @@ void desv(bool esq_dir, int velo_esq = vel_esq, int velo_dir = vel_dir)
   {
     mot1_hor(velo_esq);
     mot2_hor(velo_dir);
-    Serial.print("andando para frente: ");
+    Serial.print("andando para frente (encontrar linha): ");
     Serial.println(enc.read());
   }
   enc_frente(enc_peq_desv, velo_esq, velo_dir); //* Se afastando um pouco da linha
   if (esq_dir == false)
   {
-    while (digitalRead(s_norte) == 1) //* Virando para direita para se ajeiar na faixa
+    while (digitalRead(s_norte) == 1) //* Virando para esquerda para se ajeiar na faixa
     {
       mot1_anti(velo_esq);
       mot2_hor(velo_dir);
-      Serial.print("Virando direita: ");
+      Serial.print("Virando esquerda (se ajustar na linha): ");
       Serial.println(enc.read());
     }
   }
   else
   {
-    while (digitalRead(s_norte) == 1) //* Virando para esquerda para se ajeiar na faixa
+    while (digitalRead(s_norte) == 1) //* Virando para direita para se ajeiar na faixa
     {
       mot1_hor(velo_esq);
       mot2_anti(velo_dir);
-      Serial.print("Virando esquerda: ");
+      Serial.print("Virando direita (se ajustar na linha): ");
       Serial.println(enc.read());
     }
   }
