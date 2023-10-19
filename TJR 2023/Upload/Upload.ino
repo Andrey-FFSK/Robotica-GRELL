@@ -40,7 +40,7 @@ void loop()
 
   if (ult_meio.read() <= 3) // Se o sensor dectar que esta distancia ativa a função de desviar
   {
-    if (cont_desv < max_cont_desv)
+    if (cont_desv < max_cont_desv) // Se passar um certo de numero de vezes ele pode habilitar para empurrar
     {
       display.print("Desviando obsta");
       display.display();
@@ -161,8 +161,8 @@ void loop()
       if (ver == false)
       {
         display.print("111 / frente");
-        //mot1_hor();
-        //mot2_hor();
+        // mot1_hor();
+        // mot2_hor();
         enc_frente(enc_fre);
       }
       else

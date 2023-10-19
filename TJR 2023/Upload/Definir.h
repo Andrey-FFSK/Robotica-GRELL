@@ -228,11 +228,11 @@ void desv(bool esq_dir, int velo_esq = vel_esq, int velo_dir = vel_dir)
   }
 }
 
-void esq_90()
+void esq_90() //* 90 simples
 {
   enc_frente(enc_fre);
   enc_esquerda(enc_peq);
-  //while (((analogRead(s_noroeste) >= analog_esq) || (analogRead(s_nordeste) >= analog_dir)) && digitalRead(s_oeste) == 1)
+  // while (((analogRead(s_noroeste) >= analog_esq) || (analogRead(s_nordeste) >= analog_dir)) && digitalRead(s_oeste) == 1)
   while ((digitalRead(s_norte) == 1) && (digitalRead(s_oeste) == 1))
   {
     mot1_anti();
@@ -241,11 +241,11 @@ void esq_90()
   enc_re(enc_pas);
 }
 
-void dir_90()
+void dir_90() //* 90 simples
 {
   enc_frente(enc_fre);
   enc_direita(enc_peq);
-  //while (((analogRead(s_noroeste) >= analog_esq) || (analogRead(s_nordeste) >= analog_dir)) && digitalRead(s_leste) == 1)
+  // while (((analogRead(s_noroeste) >= analog_esq) || (analogRead(s_nordeste) >= analog_dir)) && digitalRead(s_leste) == 1)
   while ((digitalRead(s_norte) == 1) && (digitalRead(s_leste) == 1))
   {
     mot1_hor();
@@ -253,7 +253,39 @@ void dir_90()
   }
   enc_re(enc_pas);
 }
+/*
+void esq_90() //* 90 com T
+{
+  enc_frente(enc_fre);
+  if (digitalRead(s_norte) == 1)
+  {
+    enc_esquerda(enc_peq);
+    // while (((analogRead(s_noroeste) >= analog_esq) || (analogRead(s_nordeste) >= analog_dir)) && digitalRead(s_oeste) == 1)
+    while ((digitalRead(s_norte) == 1) && (digitalRead(s_oeste) == 1))
+    {
+      mot1_anti();
+      mot2_hor();
+    }
+    enc_re(enc_pas);
+  }
+}
 
+void dir_90() //* 90 com T
+{
+  enc_frente(enc_fre);
+  if (digitalRead(s_norte) == 1)
+  {
+    enc_direita(enc_peq);
+    // while (((analogRead(s_noroeste) >= analog_esq) || (analogRead(s_nordeste) >= analog_dir)) && digitalRead(s_leste) == 1)
+    while ((digitalRead(s_norte) == 1) && (digitalRead(s_leste) == 1))
+    {
+      mot1_hor();
+      mot2_anti();
+    }
+    enc_re(enc_pas);
+  }
+}
+*/
 void ver_branco()
 {
   enc_frente(enc_verb_fren); // Passinho para frente, talvezs trocar para uma paradinha
