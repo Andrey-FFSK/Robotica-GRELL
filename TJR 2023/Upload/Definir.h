@@ -8,7 +8,7 @@
 //* Definindo as portas dos sensores
 #define s_oeste 22     //
 #define s_noroeste A15 //
-#define s_norte 27     //
+#define s_norte 32     //&&
 #define s_nordeste A14 //
 #define s_leste 26     //
 #define analog_esq 501 // Valor que serve o quanto ele ver o cinza no micro ajuste
@@ -44,9 +44,9 @@ int m_dir = 0;
 //* Valores para encoders
 Encoder enc(3, 2);       // Encoder do motor da esquerda
 int enc_ant = 0;         // Valor do encoder anterior
-#define enc_fre 140      // Frente apos ver 90 / 170 / 150
+#define enc_fre 200      // Frente apos ver / 140
 #define enc_peq 130      // Valor que vira para completar com while /
-#define enc_pas 70       // Valor que vai para atras /
+#define enc_pas 50       // Valor que vai para atras /
 #define enc_pas_outro 40 // Valor que vai para atras na passagem ver /
 #define enc_passo 10
 // #define enc_fre_encru 200
@@ -67,12 +67,12 @@ bool verb_e = false;
 int cont_desv = 0;
 #define max_cont_desv 99 // Valor de quantidade de obstaculos
 #define enc_peq_desv 180
-#define frente_1 1100 // Valor que ele se distancia do obstaculo
-#define frente_2 1800 // Valor que faz ele ultrapassar o obstaculo
-#define frente_3 600  // Valor que faz ele nao se perder em qualquer linha
+#define frente_1 950  // Valor que ele se distancia do obstaculo            // era 1100
+#define frente_2 1350 // Valor que faz ele ultrapassar o obstaculo          // era 1800
+#define frente_3 550  // Valor que faz ele nao se perder em qualquer linha  // era 600 --vita
 #define enc_90 580
-#define enc_90_2 enc_90 + 10  // Seguunda vez que ele executa o 90 / 70
-#define enc_90_3 enc_90 + 10 // E a terceira / 140
+#define enc_90_2 enc_90 + 40  // Seguunda vez que ele executa o 90 / 70
+#define enc_90_3 enc_90 + 40 // E a terceira / 140
 
 Ultrasonic ult_meio(30, 31); // trig == prim; echo == segun | trig = marrom e echo = amarelo
 
@@ -166,7 +166,7 @@ void sensi()
 void desv(bool esq_dir, int velo_esq = vel_esq, int velo_dir = vel_dir)
 {
   enc_re(enc_pas_outro, velo_esq, velo_dir); //* Dando um passo para atras, isso e bom caso a traseira do robo e maior do que na frente
-  mot1_par();                                //* Colocando pra parar bem rapido pq sim
+  mot1_par();                                //* Colocando pra parar bem rapido pq sim  
   mot2_par();
   delay(mot_par);
   if (esq_dir == false)
@@ -198,7 +198,7 @@ void desv(bool esq_dir, int velo_esq = vel_esq, int velo_dir = vel_dir)
     enc_esquerda(enc_90_3, velo_esq, velo_dir); //* Virando para esquerda, mesmo moitvo anterior
   }
   enc_frente(frente_3, velo_esq, velo_dir); //* Andando em frente, para ele nao se confundir linhas aleatorias
-  while (digitalRead(s_norte) == 1)         //* Terminando com while para ele encontrar a linah correta
+  while ((digitalRead(s_noroeste) == 1) && (digitalRead(s_nordeste) == 1))         //* Terminando com while para ele encontrar a linah correta
   {
     mot1_hor(velo_esq);
     mot2_hor(velo_dir);
@@ -208,7 +208,7 @@ void desv(bool esq_dir, int velo_esq = vel_esq, int velo_dir = vel_dir)
   enc_frente(enc_peq_desv, velo_esq, velo_dir); //* Se afastando um pouco da linha
   if (esq_dir == false)
   {
-    while (digitalRead(s_norte) == 1) //* Virando para esquerda para se ajeiar na faixa
+    while ((digitalRead(s_noroeste) == 1) && (digitalRead(s_nordeste) == 1)) //* Virando para esquerda para se ajeiar na faixa
     {
       mot1_anti(velo_esq);
       mot2_hor(velo_dir);
@@ -218,7 +218,7 @@ void desv(bool esq_dir, int velo_esq = vel_esq, int velo_dir = vel_dir)
   }
   else
   {
-    while (digitalRead(s_norte) == 1) //* Virando para direita para se ajeiar na faixa
+    while ((digitalRead(s_noroeste) == 1) && (digitalRead(s_nordeste) == 1)) //* Virando para direita para se ajeiar na faixa
     {
       mot1_hor(velo_esq);
       mot2_anti(velo_dir);
@@ -233,7 +233,7 @@ void esq_90() //* 90 simples
   enc_frente(enc_fre);
   enc_esquerda(enc_peq);
   // while (((analogRead(s_noroeste) >= analog_esq) || (analogRead(s_nordeste) >= analog_dir)) && digitalRead(s_oeste) == 1)
-  while ((digitalRead(s_norte) == 1) && (digitalRead(s_oeste) == 1))
+  while ((digitalRead(s_noroeste) == 1) && (digitalRead(s_nordeste) == 1) && (digitalRead(s_oeste) == 1))
   {
     mot1_anti();
     mot2_hor();
@@ -246,7 +246,7 @@ void dir_90() //* 90 simples
   enc_frente(enc_fre);
   enc_direita(enc_peq);
   // while (((analogRead(s_noroeste) >= analog_esq) || (analogRead(s_nordeste) >= analog_dir)) && digitalRead(s_leste) == 1)
-  while ((digitalRead(s_norte) == 1) && (digitalRead(s_leste) == 1))
+  while ((digitalRead(s_noroeste) == 1) && (digitalRead(s_nordeste) == 1) && (digitalRead(s_leste) == 1))
   {
     mot1_hor();
     mot2_anti();
@@ -286,6 +286,7 @@ void dir_90() //* 90 com T
   }
 }
 */
+/*
 void ver_branco()
 {
   enc_frente(enc_verb_fren); // Passinho para frente, talvezs trocar para uma paradinha
@@ -338,8 +339,7 @@ void ver_branco()
       enc_frente(enc_verb_gap);   // Apos verificar tudo, imaginando que e um gap entao ultrapassando
     }
   }
-}
-
+}*/
 /*
 void encruzilhada() {
   enc_ant = enc.read();
