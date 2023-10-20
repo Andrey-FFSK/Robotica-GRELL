@@ -8,6 +8,11 @@ void setRotation(uint8_t rotation);
 #define OLED_W 128 // largura em pixels
 #define OLED_H 64  // altura em pixels
 
+#define W 128
+#define H 64
+#define lw 6
+#define lh 8
+
 Adafruit_SSD1306 display(128, 64, &Wire, -1);
 
 namespace OLED {
