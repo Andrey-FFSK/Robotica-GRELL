@@ -1,8 +1,33 @@
 // AnalogRead
 #include "Declarar.h"
 #include "Definir.h" // Dando include nas variaveis e funções
-#include "Oled.h"    // Dando include no arquivo que tem as bibliotecas e criando o objeto do display oled
+//#include "Oled.h"    // Dando include no arquivo que tem as bibliotecas e criando o objeto do display oled
 
+namespace OLED {
+  void seta_dir();
+  void seta_esq();
+  void seta_cima();
+  void seta_baixo();
+  void setas();
+  void abeia_grande(const int x, const int y, int amp = 1, int freq = -12);
+  void abeia_pequena(const int x, const int y, int amp = 1, int freq = -12);
+  void frame_incr();
+};
+
+class _Display {
+public:
+  _display(int a=0);
+  void display();
+  void begin(int a, int b);
+  void setTextColor(int a);
+  void setTextRotation(int a);
+  void clearDisplay();
+  void setCursor(int a, int b);
+};
+//const _Display display();
+const int SSD1306_SWITCHAPVCC = 0;
+const int WHITE = 0;
+const int BLACK = 0;
 // Usando array para colocar todos os pinos, coloquei os sensores em uma certa posição por causa do BitSwift em baixo
 const int pinos[] = {s_oeste, s_norte, s_leste, s_noroeste, s_nordeste, esq, dir, led_g, mot_in1, mot_in2, mot_in3, mot_in4};
 
@@ -10,9 +35,9 @@ byte leitura;
 
 void setup()
 {
-  display.begin(SSD1306_SWITCHCAPVCC, 0x3C); // Protocolo para iniciar o display
-  display.setTextColor(WHITE);               // Colocando cor para o texto
-  display.setRotation(3);                    // rotacionando a tela para ficar condizente com as setas
+  //display.begin(SSD1306_SWITCHCAPVCC, 0x3C); // Protocolo para iniciar o display
+  //display.setTextColor(WHITE);               // Colocando cor para o texto
+  //display.setRotation(3);                    // rotacionando a tela para ficar condizente com as setas
 
   // Colocando os sensores como INPUT, e o resto como OUTPUT, tudo isso pelo array
   for (int i = 0; i < 7; i++) // Usando o array para fazer os pinmode como input
@@ -24,8 +49,8 @@ void setup()
 }
 void loop()
 {
-  display.clearDisplay();  // Limpando o display no inicio do loop
-  display.setCursor(0, 0); // Setando para todos iniciar no inicio da tela
+  //display.clearDisplay();  // Limpando o display no inicio do loop
+  //display.setCursor(0, 0); // Setando para todos iniciar no inicio da tela
 
   //  Essa parte é o bitSwift, criar uma variavel leitura do tipo byte, porem a gente so usa os bits dessa varaivel, a quantidade de bits depende de quantos sensores estao usando
   leitura = 0; // Definir sempre 0 quando definir algo como o for abaixo
@@ -33,17 +58,17 @@ void loop()
     leitura |= digitalRead(pinos[i]) << i; // Colocando as entrada da tabela da verdade usando um bitshift automatico, o valor do i depende dos sensores
   leitura = (~leitura) & (0b00000111);     // Colocando um inversor para que funcione com a tabela da verdade, pq o sensor dectectar no branco, AND uma mascara para ir so os bits que eu quero
 
-  OLED::abeia_grande(26 - 24, 85 - 24);
-  OLED::abeia_pequena(55 - 8, 75 - 8, 40, -6);
-  OLED::setas();
-  // display.display();
+  //OLED::abeia_grande(26 - 24, 85 - 24);
+  //OLED::abeia_pequena(55 - 8, 75 - 8, 40, -6);
+  //OLED::setas();
+  // //display.display();
 
   if (ult_meio.read() <= 3) // Se o sensor dectar que esta distancia ativa a função de desviar
   {
     if (cont_desv < max_cont_desv) // Se passar um certo de numero de vezes ele pode habilitar para empurrar
     {
-      display.print("Desviando obsta");
-      display.display();
+      //display.print("Desviando obsta");
+      //display.display();
       desv(false); //* esq = false; dir = true
       cont_desv++;
     }
@@ -63,13 +88,13 @@ void loop()
     {
       mot1_hor();
       mot2_anti();
-      display.print("Esquerda");
-      OLED::seta_esq();
+      //display.print("Esquerda");
+      //OLED::seta_esq();
       Serial.println("leitura == 0010 / ajustando para esquerda");
     }
     else
     {
-      display.print("E_Tras");
+      //display.print("E_Tras");
       enc_re(enc_pas_outro);
       ver = false;
     }
@@ -80,13 +105,13 @@ void loop()
     {
       mot1_anti();
       mot2_hor();
-      display.print("Direita");
-      OLED::seta_dir();
+      //display.print("Direita");
+      //OLED::seta_dir();
       Serial.println("leitura == 0100 / ajustando para direita");
     }
     else
     {
-      display.print("D_Tras");
+      //display.print("D_Tras");
       enc_re(enc_pas_outro);
       ver = false;
     }
@@ -98,8 +123,8 @@ void loop()
     switch (leitura)
     {
     case 0b000:
-      /*display.print("000 / ver_branco");
-      display.display();
+      /*//display.print("000 / ver_branco");
+      //display.display();
       ver_branco();
     break;*/
     case 0b010: //! Caso de ele ir so pra frente
@@ -107,13 +132,13 @@ void loop()
       {
         mot1_hor();
         mot2_hor();
-        display.print("010 / frente");
-        OLED::seta_cima();
+        //display.print("010 / frente");
+        //OLED::seta_cima();
         Serial.println("leitura = 000; leitura = 010");
       }
       else
       {
-        display.print("000 / Tras");
+        //display.print("000 / Tras");
         enc_re(enc_pas_outro);
         ver = false;
       }
@@ -122,7 +147,7 @@ void loop()
     case 0b110: //! Casos de fazer o esquerda 90
       if (ver == false)
       {
-        display.print("100 / parar");
+        //display.print("100 / parar");
         mot1_par();
         mot2_par();
         delay(mot_par);
@@ -131,9 +156,9 @@ void loop()
       else
       {
         ver = false;
-        display.print("100 / Esq_90");
-        OLED::seta_esq();
-        display.display();
+        //display.print("100 / Esq_90");
+        //OLED::seta_esq();
+        //display.display();
         esq_90();
       }
       break;
@@ -141,8 +166,8 @@ void loop()
     case 0b011: //! Casos de fazer o direita 90
       if (ver == false)
       {
-        display.print("001 / parar");
-        display.display();
+        //display.print("001 / parar");
+        //display.display();
         mot1_par();
         mot2_par();
         delay(mot_par);
@@ -150,9 +175,9 @@ void loop()
       }
       else
       {
-        display.print("001 / Dir_90");
-        OLED::seta_dir();
-        display.display();
+        //display.print("001 / Dir_90");
+        //OLED::seta_dir();
+        //display.display();
         dir_90();
         ver = false;
       }
@@ -160,14 +185,14 @@ void loop()
     case 0b111: //! Caso de encruzilhada
       if (ver == false)
       {
-        display.print("111 / frente");
+        //display.print("111 / frente");
         // mot1_hor();
         // mot2_hor();
         enc_frente(enc_fre);
       }
       else
       {
-        display.print("111 / re");
+        //display.print("111 / re");
         enc_re(enc_pas_outro);
         ver = false;
       }
@@ -176,6 +201,6 @@ void loop()
       break;
     }
   }
-  display.display();
-  OLED::frame_incr();
+  //display.display();
+  //OLED::frame_incr();
 }
