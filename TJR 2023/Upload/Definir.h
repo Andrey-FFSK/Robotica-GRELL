@@ -46,7 +46,7 @@ Encoder enc(3, 2);       // Encoder do motor da esquerda
 int enc_ant = 0;         // Valor do encoder anterior
 #define enc_fre 200      // Frente apos ver / 140
 #define enc_peq 130      // Valor que vira para completar com while /
-#define enc_pas 50       // Valor que vai para atras /
+#define enc_pas 40       // Valor que vai para atras /
 #define enc_pas_outro 40 // Valor que vai para atras na passagem ver /
 #define enc_passo 10
 // #define enc_fre_encru 200
@@ -67,12 +67,12 @@ bool verb_e = false;
 int cont_desv = 0;
 #define max_cont_desv 99 // Valor de quantidade de obstaculos
 #define enc_peq_desv 180
-#define frente_1 950  // Valor que ele se distancia do obstaculo            // era 1100
-#define frente_2 1350 // Valor que faz ele ultrapassar o obstaculo          // era 1800
+#define frente_1 900  // Valor que ele se distancia do obstaculo            // era 1100
+#define frente_2 1450 // Valor que faz ele ultrapassar o obstaculo          // era 1800
 #define frente_3 550  // Valor que faz ele nao se perder em qualquer linha  // era 600 --vita
 #define enc_90 580
 #define enc_90_2 enc_90 + 40  // Seguunda vez que ele executa o 90 / 70
-#define enc_90_3 enc_90 + 40 // E a terceira / 140
+#define enc_90_3 enc_90 + 27 // E a terceira / 140
 
 Ultrasonic ult_meio(30, 31); // trig == prim; echo == segun | trig = marrom e echo = amarelo
 
