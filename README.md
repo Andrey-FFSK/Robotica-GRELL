@@ -1,7 +1,7 @@
 # Torneios - 28/10
 
 ## TJR 2023
-Se esforcando para passar nessa.
+Ficamos em 3° na regional e passamos para a nacional :)
 - [Regras da TJR](https://drive.google.com/drive/folders/1RvpM9uKfgFhN3XrgKtUdl-A_iGBHtTMd)
 
 ## OBR 2023
