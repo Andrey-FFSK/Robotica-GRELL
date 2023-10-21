@@ -1,4 +1,4 @@
-# Torneios - 28/10
+# Torneios
 
 ## TJR 2023
 Ficamos em 3° na regional e passamos para a nacional :)
