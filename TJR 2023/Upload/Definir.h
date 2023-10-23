@@ -233,7 +233,7 @@ void esq_90() //* 90 simples
   enc_frente(enc_fre);
   enc_esquerda(enc_peq);
   // while (((analogRead(s_noroeste) >= analog_esq) || (analogRead(s_nordeste) >= analog_dir)) && digitalRead(s_oeste) == 1)
-  while ((digitalRead(s_noroeste) == 1) && (digitalRead(s_nordeste) == 1) && (digitalRead(s_oeste) == 1))
+  while ((digitalRead(s_norte) == 1) && (digitalRead(s_oeste) == 1))
   {
     mot1_anti();
     mot2_hor();
@@ -246,7 +246,7 @@ void dir_90() //* 90 simples
   enc_frente(enc_fre);
   enc_direita(enc_peq);
   // while (((analogRead(s_noroeste) >= analog_esq) || (analogRead(s_nordeste) >= analog_dir)) && digitalRead(s_leste) == 1)
-  while ((digitalRead(s_noroeste) == 1) && (digitalRead(s_nordeste) == 1) && (digitalRead(s_leste) == 1))
+  while ((digitalRead(s_norte) == 1) && (digitalRead(s_leste) == 1))
   {
     mot1_hor();
     mot2_anti();
