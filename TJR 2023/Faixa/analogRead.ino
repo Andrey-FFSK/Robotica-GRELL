@@ -1,7 +1,41 @@
 // AnalogRead
 #include "Declarar.h"
 #include "Definir.h" // Dando include nas variaveis e funções
-#include "Oled.h"    // Dando include no arquivo que tem as bibliotecas e criando o objeto do display oled
+//#include "Oled.h"    // Dando include no arquivo que tem as bibliotecas e criando o objeto do display oled
+
+// definicoes das funcoes do oled vazias para quando nao for usar
+#ifndef _OLED_H
+#define _OLED_H
+
+namespace OLED {
+  void frame_incr() { return; };
+  void ponto()      { return; };
+  void seta_dir()   { return; };
+  void seta_esq()   { return; };
+  void seta_cima()  { return; };
+  void seta_baixo() { return; };
+  void setas()      { return; };
+  void abeia_grande(int a, int b, int c, int d)  { return; };
+  void abeia_pequena(int a, int b, int c, int d) { return; };
+};
+
+struct _DisplayPlaceHolder {
+  _DisplayPlaceHolder() { return; };
+  void begin(int a, int b) { return; };
+  void setTextColor(int a) { return; };
+  void setRotation(int a) { return; };
+  void clearDisplay() { return; };
+  void setCursor(int a, int b) { return; };
+  void display() { return; };
+  void print(String a) { return; };
+}
+
+_DispalyPlaceHolder display();
+const int SSD1306_SWITCHAPVCC = 0;
+const int WHITE = 0;
+const int BLACK = 0;
+
+#endif
 
 // Usando array para colocar todos os pinos, coloquei os sensores em uma certa posição por causa do BitSwift em baixo
 const int pinos[] = {s_oeste, s_norte, s_leste, s_noroeste, s_nordeste, esq, dir, led_g, mot_in1, mot_in2, mot_in3, mot_in4};
@@ -36,7 +70,7 @@ void loop()
   OLED::abeia_grande(26 - 24, 85 - 24);
   OLED::abeia_pequena(55 - 8, 75 - 8, 40, -6);
   OLED::setas();
-  // display.display();
+  display.display();
 
   if (ult_meio.read() <= 3) // Se o sensor dectar que esta distancia ativa a função de desviar
   {
