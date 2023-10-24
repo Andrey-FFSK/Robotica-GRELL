@@ -72,7 +72,7 @@ void loop()
   OLED::setas();
   display.display();
 
-  if (ult_meio.read() <= 3) // Se o sensor dectar que esta distancia ativa a função de desviar
+  if ((ult_meio.read() <= 3) && (ult_meio.read() > 0)) // Se o sensor dectar que esta distancia ativa a função de desviar
   {
     if (cont_desv < max_cont_desv) // Se passar um certo de numero de vezes ele pode habilitar para empurrar
     {
