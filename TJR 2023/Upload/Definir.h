@@ -8,17 +8,17 @@
 //* Definindo as portas dos sensores
 #define s_oeste 22     //
 #define s_noroeste A15 //
-#define s_norte 32     //&&
+#define s_norte 32     //
 #define s_nordeste A14 //
 #define s_leste 26     //
 #define analog_esq 501 // Valor que serve o quanto ele ver o cinza no micro ajuste
 #define analog_dir 501 // =
 
 //* Motor 1 = Esquerda; Motor 2 = Direita; mot1 que tem encoder
-#define mot_in1 12 // amarelo, direita, tras
-#define mot_in2 11 // marrom, direita, frente
-#define mot_in3 10 // azul, esquerda, frente
-#define mot_in4 9  // verde e amarelo, esquerda, tras
+#define mot_in1 12 // verde, direita, tras
+#define mot_in2 11 // vermelho, direita, frente
+#define mot_in3 10 // preto, esquerda, frente
+#define mot_in4 9  // laranja, esquerda, tras
 
 //* Definindo portas para o sensor de cor
 #define led_g 29  // Led verde para o sensor de cor
@@ -31,9 +31,12 @@ int m_dir = 0;
 #define esq_branco 700 // Valor para verificar se e branco ou nao
 #define dir_branco 700
 
+#define esq_marrom 500
+#define dir_marrom 500
+
 //* Definindo velocidades
-#define vel_esq 140 // PWM usado para a velocidade, min == 0 e max == 255
-#define vel_dir 130 //
+#define vel_esq 150 // PWM usado para a velocidade, min == 0 e max == 255
+#define vel_dir 140 //
 #define mot_par 50  // Delay para o tempo dele ficar parado
 
 //* Valores com Millis
@@ -44,10 +47,10 @@ int m_dir = 0;
 //* Valores para encoders
 Encoder enc(3, 2);       // Encoder do motor da esquerda
 int enc_ant = 0;         // Valor do encoder anterior
-#define enc_fre 200      // Frente apos ver / 140
+#define enc_fre 180      // Frente apos ver 90 / 140
 #define enc_peq 130      // Valor que vira para completar com while /
-#define enc_pas 40       // Valor que vai para atras /
-#define enc_pas_outro 40 // Valor que vai para atras na passagem ver /
+#define enc_pas 30       // Valor que vai para atras /
+#define enc_pas_outro 20 // Valor que vai para atras na passagem ver /
 #define enc_passo 10
 // #define enc_fre_encru 200
 // #define enc_pas_encru 100
@@ -71,8 +74,11 @@ int cont_desv = 0;
 #define frente_2 1450 // Valor que faz ele ultrapassar o obstaculo          // era 1800
 #define frente_3 550  // Valor que faz ele nao se perder em qualquer linha  // era 600 --vita
 #define enc_90 580
-#define enc_90_2 enc_90 + 40  // Seguunda vez que ele executa o 90 / 70
+#define enc_90_2 enc_90 + 40 // Seguunda vez que ele executa o 90 / 70
 #define enc_90_3 enc_90 + 27 // E a terceira / 140
+
+//* Valor para resgate
+bool resgate = false;
 
 Ultrasonic ult_meio(30, 31); // trig == prim; echo == segun | trig = marrom e echo = amarelo
 
@@ -166,9 +172,9 @@ void sensi()
 void desv(bool esq_dir, int velo_esq = vel_esq, int velo_dir = vel_dir)
 {
   enc_re(enc_pas_outro, velo_esq, velo_dir); //* Dando um passo para atras, isso e bom caso a traseira do robo e maior do que na frente
-  mot1_par();                                //* Colocando pra parar bem rapido pq sim  
+  /*mot1_par();                                //* Colocando pra parar bem rapido pq sim
   mot2_par();
-  delay(mot_par);
+  delay(mot_par);*/
   if (esq_dir == false)
   {
     enc_esquerda(enc_90, velo_esq, velo_dir); //* Girando para esquerda
@@ -197,8 +203,8 @@ void desv(bool esq_dir, int velo_esq = vel_esq, int velo_dir = vel_dir)
   {
     enc_esquerda(enc_90_3, velo_esq, velo_dir); //* Virando para esquerda, mesmo moitvo anterior
   }
-  enc_frente(frente_3, velo_esq, velo_dir); //* Andando em frente, para ele nao se confundir linhas aleatorias
-  while ((digitalRead(s_noroeste) == 1) && (digitalRead(s_nordeste) == 1))         //* Terminando com while para ele encontrar a linah correta
+  enc_frente(frente_3, velo_esq, velo_dir);                                //* Andando em frente, para ele nao se confundir linhas aleatorias
+  while ((digitalRead(s_noroeste) == 1) && (digitalRead(s_nordeste) == 1)) //* Terminando com while para ele encontrar a linah correta
   {
     mot1_hor(velo_esq);
     mot2_hor(velo_dir);
@@ -253,6 +259,8 @@ void dir_90() //* 90 simples
   }
   enc_re(enc_pas);
 }
+
+void resga(){}
 /*
 void esq_90() //* 90 com T
 {
@@ -337,85 +345,6 @@ void ver_branco()
     {
       enc_direita(enc_verb_90_2); // Voltando para ficar reto na linha, pode ser que coloque a versao 3
       enc_frente(enc_verb_gap);   // Apos verificar tudo, imaginando que e um gap entao ultrapassando
-    }
-  }
-}*/
-/*
-void encruzilhada() {
-  enc_ant = enc.read();
-    while (enc.read() - enc_ant <= enc_fre_encru) {
-      mot1_hor(vel_esq);
-      mot2_hor(vel_dir);
-    }
-
-  if ((m_esq <= esq_branco) & (m_dir >= dir_branco))  // Tem 1 quadrado verde na esquerda
-  {
-    Serial.println("Encruzilhada; Verde na esquerda");
-
-    enc_ant = enc.read();
-    while (enc_ant - enc.read() <= enc_peq) {
-      mot1_anti(vel_esq);
-      mot2_hor(vel_dir);
-      Serial.print("Virando para esquerda: ");
-      Serial.println(enc.read());
-    }
-    while ((digitalRead(s_norte) == 1) && (digitalRead(s_oeste) == 1)) {
-      mot1_anti(vel_esq);
-      mot2_hor(vel_dir);
-      Serial.print("Virando para esquerda: ");
-      Serial.println(enc.read());
-    }
-
-    enc_ant = enc.read();
-    while (enc_ant - enc.read() <= enc_pas_encru) {
-      mot1_anti(vel_esq);
-      mot2_anti(vel_dir);
-      Serial.print("Indo para tras: ");
-      Serial.println(enc.read());
-    }
-  } else if ((m_esq >= esq_branco) & (m_dir <= dir_branco))  // Tem 1 quadrado verde na direita
-  {
-    Serial.println("Encruzilhada; Verde na direita");
-
-    enc_ant = enc.read();
-    while (enc.read() - enc_ant <= enc_peq) {
-      mot1_hor(vel_esq);
-      mot2_anti(vel_dir);
-      Serial.print("Virando para direita: ");
-      Serial.println(enc.read());
-    }
-    while ((digitalRead(s_norte) == 1) && (digitalRead(s_leste) == 1)) {
-      mot1_hor(vel_esq);
-      mot2_anti(vel_dir);
-      Serial.print("Virando para direita: ");
-      Serial.println(enc.read());
-    }
-
-    enc_ant = enc.read();
-    while (enc_ant - enc.read() <= enc_pas_encru) {
-      mot1_anti(vel_esq);
-      mot2_anti(vel_dir);
-      Serial.print("Indo para tras: ");
-      Serial.println(enc.read());
-    }
-  } else if ((m_esq >= esq_branco) & (m_dir >= dir_branco))  // Nao tem quadrado verde
-  {
-    Serial.println("Encruzilhada; Nao tem verde");
-  } else  // Tem 2 quadrado verde
-  { /*
-    enc_ant = enc.read(); // Fazendo o maior percuso com encoder
-    while (enc.read() - enc_ant <= enc_180) {
-      mot1_hor(vel_esq);
-      mot2_anti(vel_dir);
-      Serial.print("Virando para direita: ");
-      Serial.println(enc.read());
-    }
-    while(digitalRead(s_norte) == 1) // Termiando com while para se endireitar na faixa
-    {
-      mot1_hor(vel_esq);
-      mot2_anti(vel_dir);
-      Serial.print("Virando para direita: ");
-      Serial.println(enc.read());
     }
   }
 }*/
