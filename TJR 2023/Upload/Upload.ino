@@ -71,6 +71,15 @@ void loop()
   OLED::abeia_pequena(55 - 8, 75 - 8, 40, -6);
   OLED::setas();
 
+  if(resgate)
+  {
+    digitalWrite(led_g, 1);
+    sensi();
+    if((m_esq <= esq_marrom) && (m_dir <= dir_marrom))
+    {}
+    
+  }
+
   if ((ult_meio.read() <= 3) && (ult_meio.read() > 0)) // Se o sensor dectar que esta distancia ativa a função de desviar
   {
     if (cont_desv < max_cont_desv) // Se passar um certo de numero de vezes ele pode habilitar para empurrar
@@ -82,10 +91,8 @@ void loop()
     }
     else
     {
-      mot1_par();
-      mot2_par();
-      delay(100000000);
-      // Colocar aqui a habilitacao de area de resgate
+      // Função de pegar latinha
+      resgate = true;
     }
   }
 

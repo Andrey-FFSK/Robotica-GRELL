@@ -31,9 +31,12 @@ int m_dir = 0;
 #define esq_branco 700 // Valor para verificar se e branco ou nao
 #define dir_branco 700
 
+#define esq_marrom 500
+#define dir_marrom 500
+
 //* Definindo velocidades
-#define vel_esq 140 // PWM usado para a velocidade, min == 0 e max == 255
-#define vel_dir 130 //
+#define vel_esq 150 // PWM usado para a velocidade, min == 0 e max == 255
+#define vel_dir 140 //
 #define mot_par 50  // Delay para o tempo dele ficar parado
 
 //* Valores com Millis
@@ -44,10 +47,10 @@ int m_dir = 0;
 //* Valores para encoders
 Encoder enc(3, 2);       // Encoder do motor da esquerda
 int enc_ant = 0;         // Valor do encoder anterior
-#define enc_fre 200      // Frente apos ver 90 / 140
+#define enc_fre 180      // Frente apos ver 90 / 140
 #define enc_peq 130      // Valor que vira para completar com while /
-#define enc_pas 50       // Valor que vai para atras /
-#define enc_pas_outro 40 // Valor que vai para atras na passagem ver /
+#define enc_pas 30       // Valor que vai para atras /
+#define enc_pas_outro 20 // Valor que vai para atras na passagem ver /
 #define enc_passo 10
 // #define enc_fre_encru 200
 // #define enc_pas_encru 100
@@ -73,6 +76,9 @@ int cont_desv = 0;
 #define enc_90 580
 #define enc_90_2 enc_90 + 40 // Seguunda vez que ele executa o 90 / 70
 #define enc_90_3 enc_90 + 27 // E a terceira / 140
+
+//* Valor para resgate
+bool resgate = false;
 
 Ultrasonic ult_meio(30, 31); // trig == prim; echo == segun | trig = marrom e echo = amarelo
 
@@ -253,6 +259,8 @@ void dir_90() //* 90 simples
   }
   enc_re(enc_pas);
 }
+
+void resga(){}
 /*
 void esq_90() //* 90 com T
 {
