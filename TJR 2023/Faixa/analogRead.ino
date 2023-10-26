@@ -1,8 +1,8 @@
 // AnalogRead
 #include "Declarar.h"
 #include "Definir.h" // Dando include nas variaveis e funções
-//#include "Oled.h"    // Dando include no arquivo que tem as bibliotecas e criando o objeto do display oled
-
+#include "Oled.h"    // Dando include no arquivo que tem as bibliotecas e criando o objeto do display oled
+/*
 // definicoes das funcoes do oled vazias para quando nao for usar
 #ifndef _OLED_H
 #define _OLED_H
@@ -36,7 +36,7 @@ const int WHITE = 0;
 const int BLACK = 0;
 
 #endif
-
+*/
 // Usando array para colocar todos os pinos, coloquei os sensores em uma certa posição por causa do BitSwift em baixo
 const int pinos[] = {s_oeste, s_norte, s_leste, s_noroeste, s_nordeste, esq, dir, led_g, mot_in1, mot_in2, mot_in3, mot_in4};
 
@@ -70,7 +70,15 @@ void loop()
   OLED::abeia_grande(26 - 24, 85 - 24);
   OLED::abeia_pequena(55 - 8, 75 - 8, 40, -6);
   OLED::setas();
-  display.display();
+
+  if(resgate)
+  {
+    digitalWrite(led_g, 1);
+    sensi();
+    if((m_esq <= esq_marrom) && (m_dir <= dir_marrom))
+    {}
+    
+  }
 
   if ((ult_meio.read() <= 3) && (ult_meio.read() > 0)) // Se o sensor dectar que esta distancia ativa a função de desviar
   {
@@ -83,21 +91,21 @@ void loop()
     }
     else
     {
-      mot1_par();
-      mot2_par();
-      delay(100000000);
-      // Colocar aqui a habilitacao de area de resgate
+      // Função de pegar latinha
+      resgate = true;
     }
   }
 
   //* Parte em que ele faz o micro ajuste (pensando que o valor maior fica no branco)
+  //if (analogRead(s_noroeste) <= analog_esq) //! Fazer micro ajuste para esquerda
   if ((analogRead(s_noroeste) <= analog_esq) && (analogRead(s_nordeste) >= analog_dir)) //! Fazer micro ajuste para esquerda
   {
     if (ver == false)
     {
       mot1_hor();
       mot2_anti();
-      display.print("Esquerda");
+      display.print("Esquerda ");
+      display.print(analogRead(s_nordeste));
       OLED::seta_esq();
       Serial.println("leitura == 0010 / ajustando para esquerda");
     }
@@ -108,13 +116,15 @@ void loop()
       ver = false;
     }
   }
+  //else if (analogRead(s_nordeste) <= analog_dir) //! Fazer micro ajuste para direita
   else if ((analogRead(s_noroeste) >= analog_esq) && (analogRead(s_nordeste) <= analog_dir)) //! Fazer micro ajuste para direita
   {
     if (ver == false)
     {
       mot1_anti();
       mot2_hor();
-      display.print("Direita");
+      display.print("Direita ");
+      display.print(analogRead(s_noroeste));
       OLED::seta_dir();
       Serial.println("leitura == 0100 / ajustando para direita");
     }
