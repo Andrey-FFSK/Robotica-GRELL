@@ -7,18 +7,13 @@ using namespace std;
 
 enum EEPROM_C {
     NUL = 0x0,
+
     OBJ,
     ESQ,
     DIR,
     ENCRU,
 
-    TIME_INI = 0xfa,
-    TIME_SEP,
-    TIME_END,
-    L_INI,
-
-    NL = 0xfe,
-    L_EOF = 0xff
+    NL = 0xff
 };
 
 
@@ -48,20 +43,25 @@ void print() {
 
 void addLn(unsigned long mills, EEPROM_C code, int val) {
 
-    float secs = mills/1000.0f;
-    int mins = (int)secs % 60;
-    float sec_ = secs - (mins * 60.0f);
+    int secst = mills / 1000;
+    int mins = secst / 60;
+    int secs = secst - (60*mins);
 
     string mins_str = std::to_string(mins);
-    string secs_str = std::to_string(sec_);
+    string secs_str = std::to_string(secs);
 
-    EEPROM[EEPROM_i++] = TIME_INI;
-    EEPROM[EEPROM_i++] = mins_str.at(mins_str.length() - 2);
     EEPROM[EEPROM_i++] = mins_str.at(mins_str.length() - 1);
-    EEPROM[EEPROM_i++] = TIME_SEP;
-    EEPROM[EEPROM_i++] = secs_str.at(secs_str.length() - 2);
-    EEPROM[EEPROM_i++] = secs_str.at(secs_str.length() - 1);
-    EEPROM[EEPROM_i++] = TIME_END;
+    EEPROM[EEPROM_i++] = secs_str.at(0);
+    EEPROM[EEPROM_i++] = secs_str.at(1);
+
+    // EEPROM[EEPROM_i++] = TIME_INI;
+    // EEPROM[EEPROM_i++] = mins_str.at(mins_str.length() - 2);
+    // EEPROM[EEPROM_i++] = mins_str.at(mins_str.length() - 1);
+    // EEPROM[EEPROM_i++] = TIME_SEP;
+    // EEPROM[EEPROM_i++] = secs_str.at(0);
+    // EEPROM[EEPROM_i++] = secs_str.at(1);
+    // EEPROM[EEPROM_i++] = TIME_END;
+
     EEPROM[EEPROM_i++] = code;
 
     string val_str = std::to_string(val);
@@ -84,9 +84,9 @@ string decod_c_debug(unsigned char inp) {
         case ESQ  : return "90 esquerda " ; break;
         case DIR  : return "90 direita "  ; break;
         case ENCRU: return "encruzilhada "; break;
-        case TIME_INI: return "[ "        ; break;
-        case TIME_SEP: return ": "        ; break;
-        case TIME_END: return "] "        ; break;
+        // case TIME_INI: return "tempo "        ; break;
+        // case TIME_SEP: return ": "        ; break;
+        // case TIME_END: return "] "        ; break;
         default: return "{{val}} " ; break;
     }
 }
@@ -99,9 +99,9 @@ string decod_c(unsigned char inp) {
         case ESQ  : return "90 esquerda " ; break;
         case DIR  : return "90 direita "  ; break;
         case ENCRU: return "encruzilhada "; break;
-        case TIME_INI: return "[ "        ; break;
-        case TIME_SEP: return ":"         ; break;
-        case TIME_END: return " ] "       ; break;
+        // case TIME_INI: return "[ "        ; break;
+        // case TIME_SEP: return ":"         ; break;
+        // case TIME_END: return " ] "       ; break;
         default: 
             string out = "";
             out += inp;
@@ -111,11 +111,21 @@ string decod_c(unsigned char inp) {
 }
 
 void print_decode() {
-    for(int i=0; i<EEPROM_S; i++) {
-        if(EEPROM[i] == NUL)
+    for(int i=0; i<EEPROM_S;) {
+        if(EEPROM[i] == NUL) {
+            i++;
             continue;
-        
-        cout << decod_c(EEPROM[i]);
+        }
+
+        cout << "[";
+        cout << decod_c(EEPROM[i++]);
+        cout << ":";
+        cout << decod_c(EEPROM[i++]);
+        cout << decod_c(EEPROM[i++]);
+        cout << "] ";
+        while(EEPROM[i] != NL)
+            cout << decod_c(EEPROM[i++]);
+        cout << decod_c(EEPROM[i++]);
     }
 }
 
@@ -127,13 +137,6 @@ void print_raw() {
         cout << i << ": ";
         cout << EEPROM[i] << " / " << decod_c_debug(EEPROM[i]).c_str() << endl;
     }
-}
-
-void writeStr(string str) {
-    for(int i = 0; i< str.length(); i++) {
-        EEPROM[EEPROM_i++] = str.at(i);
-    }
-    EEPROM[EEPROM_i++] = '\n';
 }
 
 int main() {
