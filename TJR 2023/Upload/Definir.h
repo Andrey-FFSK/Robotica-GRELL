@@ -37,7 +37,7 @@ int m_dir = 0;
 //* Definindo velocidades
 #define vel_esq 150 // PWM usado para a velocidade, min == 0 e max == 255
 #define vel_dir 140 //
-#define mot_par 50  // Delay para o tempo dele ficar parado
+#define mot_par 40  // Delay para o tempo dele ficar parado
 
 //* Valores com Millis
 // int millis_ant = 0;
@@ -47,10 +47,10 @@ int m_dir = 0;
 //* Valores para encoders
 Encoder enc(3, 2);       // Encoder do motor da esquerda
 int enc_ant = 0;         // Valor do encoder anterior
-#define enc_fre 180      // Frente apos ver 90 / 140
+#define enc_fre 170      // Frente apos ver 90 / 140
 #define enc_peq 130      // Valor que vira para completar com while /
-#define enc_pas 30       // Valor que vai para atras /
-#define enc_pas_outro 20 // Valor que vai para atras na passagem ver /
+#define enc_pas 40       // Valor que vai para atras /
+#define enc_pas_outro 30 // Valor que vai para atras na passagem ver /
 #define enc_passo 10
 // #define enc_fre_encru 200
 // #define enc_pas_encru 100
@@ -238,8 +238,8 @@ void esq_90() //* 90 simples
 {
   enc_frente(enc_fre);
   enc_esquerda(enc_peq);
-  // while (((analogRead(s_noroeste) >= analog_esq) || (analogRead(s_nordeste) >= analog_dir)) && digitalRead(s_oeste) == 1)
-  while ((digitalRead(s_norte) == 1) && (digitalRead(s_oeste) == 1))
+  while (((analogRead(s_noroeste) >= analog_esq) || (analogRead(s_nordeste) >= analog_dir)) && digitalRead(s_oeste) == 1)
+  //while ((digitalRead(s_norte) == 1) && (digitalRead(s_oeste) == 1))
   {
     mot1_anti();
     mot2_hor();
@@ -251,8 +251,8 @@ void dir_90() //* 90 simples
 {
   enc_frente(enc_fre);
   enc_direita(enc_peq);
-  // while (((analogRead(s_noroeste) >= analog_esq) || (analogRead(s_nordeste) >= analog_dir)) && digitalRead(s_leste) == 1)
-  while ((digitalRead(s_norte) == 1) && (digitalRead(s_leste) == 1))
+   while (((analogRead(s_noroeste) >= analog_esq) || (analogRead(s_nordeste) >= analog_dir)) && digitalRead(s_leste) == 1)
+  //while ((digitalRead(s_norte) == 1) && (digitalRead(s_leste) == 1))
   {
     mot1_hor();
     mot2_anti();
