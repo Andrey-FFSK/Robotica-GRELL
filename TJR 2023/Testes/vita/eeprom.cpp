@@ -54,14 +54,6 @@ void addLn(unsigned long mills, EEPROM_C code, int val) {
     EEPROM[EEPROM_i++] = secs_str.at(0);
     EEPROM[EEPROM_i++] = secs_str.at(1);
 
-    // EEPROM[EEPROM_i++] = TIME_INI;
-    // EEPROM[EEPROM_i++] = mins_str.at(mins_str.length() - 2);
-    // EEPROM[EEPROM_i++] = mins_str.at(mins_str.length() - 1);
-    // EEPROM[EEPROM_i++] = TIME_SEP;
-    // EEPROM[EEPROM_i++] = secs_str.at(0);
-    // EEPROM[EEPROM_i++] = secs_str.at(1);
-    // EEPROM[EEPROM_i++] = TIME_END;
-
     EEPROM[EEPROM_i++] = code;
 
     string val_str = std::to_string(val);
@@ -141,7 +133,6 @@ void print_raw() {
 
 int main() {
 
-    //setup
     clear();
     addLn((unsigned long)13500, OBJ, 5);
     addLn((unsigned long)28800, ESQ, 86);
@@ -160,10 +151,6 @@ int main() {
     cout << endl << "-----------" << endl;
 
     cout << "memoria usada: " << EEPROM_free() << " / " << EEPROM_S << endl;
-
-
-    //loop
-
 
     return 0;
 }
