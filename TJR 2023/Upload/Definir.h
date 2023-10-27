@@ -15,10 +15,10 @@
 #define analog_dir 501 // =
 
 //* Motor 1 = Esquerda; Motor 2 = Direita; mot1 que tem encoder
-#define mot_in1 12 // verde, direita, tras
-#define mot_in2 11 // vermelho, direita, frente
-#define mot_in3 10 // preto, esquerda, frente
-#define mot_in4 9  // laranja, esquerda, tras
+#define mot_in1 9 // verde, direita, tras
+#define mot_in2 10 // vermelho, direita, frente
+#define mot_in3 11 // preto, esquerda, frente
+#define mot_in4 12  // laranja, esquerda, tras
 
 //* Definindo portas para o sensor de cor
 #define led_g 29  // Led verde para o sensor de cor
