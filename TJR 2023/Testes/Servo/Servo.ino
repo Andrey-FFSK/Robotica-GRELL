@@ -23,9 +23,14 @@ int pos = 0;    // variable to store the servo position
 void setup() {
   Serial.begin(9600);
   myservo.attach(pin1);  // attaches the servo on pin 9 to the servo object
+
+   EEPROMLogger::print_log();
+   EEPROMLogger::print_debug();
 }
 
 void loop() {
+  
+  /*
   myservo.write(maxx);
   Serial.println(maxx);
   EEPROMLogger::new_line(millis(), EEPROMLogger::ESQ, 0b110);
