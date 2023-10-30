@@ -61,9 +61,9 @@ namespace EEPROMLogger {
       case ENCR: return "EN"; break;
       default: 
         String out = "";
-        if(inp < 0x10)
+        if(cod < 0x10)
           out += '0';
-        out += String(inp, HEX);
+        out += String(cod, HEX);
         out.toUpperCase();
         return out;
         break;
