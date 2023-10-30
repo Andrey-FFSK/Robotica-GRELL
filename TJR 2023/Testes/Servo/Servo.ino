@@ -6,7 +6,7 @@
  by Scott Fitzgerald
  https://www.arduino.cc/en/Tutorial/LibraryExamples/Sweep
 */
-
+#include "EEPROMLogger.h"
 
 #define mim 0 
 #define maxx 200
@@ -28,10 +28,12 @@ void setup() {
 void loop() {
   myservo.write(maxx);
   Serial.println(maxx);
+  EEPROMLogger::new_line(millis(), EEPROMLogger::ESQ, 0b110);
   delay(3000);
 
   Serial.println(mim);
   myservo.write(mim);
+  EEPROMLogger::new_line(millis(), EEPROMLogger::DIR, 0b011);
   delay(3000);
   /*
   for (pos = mim; pos <= maxx; pos += 1) { // goes from 0 degrees to 180 degrees
