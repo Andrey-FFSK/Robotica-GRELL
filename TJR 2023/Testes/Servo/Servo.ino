@@ -9,7 +9,7 @@
 
 #define s_oeste 22     //
 
-#define mim 0
+#define mim 0 
 #define maxx 180
 
 #include <Servo.h>
