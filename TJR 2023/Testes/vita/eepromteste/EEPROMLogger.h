@@ -16,9 +16,7 @@ namespace EEPROMLogger {
     OBJ = 0x01,
     ESQ,
     DIR,
-    ENCR,
-    LATA,
-    MARROM
+    ENCR
   };
 
   // limpa a memoria eeprom, resetando cada valor para 0xFF
