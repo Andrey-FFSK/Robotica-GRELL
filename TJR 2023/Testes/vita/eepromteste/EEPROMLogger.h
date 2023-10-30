@@ -1,14 +1,17 @@
+#ifndef _EEPROMLOGGER_H
+#define _EEPROMLOGGER_H
+
 #include <EEPROM.h>
 
 namespace EEPROMLogger {
 
-  const int OBSTACULOS_ADDR = 0;
+  // atual endereço a ser escrito/lido
   int EEPROM_i = 0;
-  
+
+  // codigos de cada condicao a ser salva no log
   enum EEPROM_CODE {
     NUL = 0xff,
     NL = 0xfe,
-    EoF = 0xfd,
   
     OBJ = 0x01,
     ESQ,
@@ -18,15 +21,14 @@ namespace EEPROMLogger {
     MARROM
   };
 
-  inline uint8_t get_obs() { return EEPROM.read(OBSTACULOS_ADDR); }
-  inline void incr_obs() { EEPROM.write(OBSTACULOS_ADDR, get_obs() + 1); }
-
+  // limpa a memoria eeprom, resetando cada valor para 0xFF
   void limpar(){
     for(unsigned int i=0; i < EEPROM.length(); i++)
       EEPROM.update(i, NUL);  
   }
 
- int memused() {
+  // retorna a memoria usada pelo eeprom
+  int memused() {
     int n = 0;
     for(int i=0; i<EEPROM.length(); i++) {
       if(EEPROM.read(i) != NUL)
@@ -35,6 +37,7 @@ namespace EEPROMLogger {
     return n;
   } 
 
+  // string retornando a versao decodificada de cada condicao definida no EEPROM_CODE
   String str_decod(byte cod) {
     switch(cod) {
       case NL  : return "\n"           ; break;
@@ -46,8 +49,9 @@ namespace EEPROMLogger {
       default  : return "codigo n reconhecido"; break;
     }
   }
-  
-  String str_debugl(byte cod) {
+
+  // mesma coisa do str_decod, mas de forma mais curta pro debug ficar mais bonito :)
+  String str_debug(byte cod) {
     switch(cod) {
       case NL  : return "NL"; break;
       case NUL : return ".."; break;
@@ -66,6 +70,7 @@ namespace EEPROMLogger {
     }
   }
 
+  // printa o log👍
   void print_log() {
     for(int i=0; i<EEPROM.length();) {
       if(EEPROM.read(i) != NUL) {
@@ -90,9 +95,6 @@ namespace EEPROMLogger {
     }
 
     Serial.println("");
-
-    Serial.print("obstaculos contados: ");
-    Serial.println(get_obs());
     
     Serial.print("memoria usada: ");
     Serial.print(memused());
@@ -100,6 +102,7 @@ namespace EEPROMLogger {
     Serial.println(EEPROM.length());
   }
 
+  // printa o log de forma completa para debugs
   void print_debug() {
     for(int i=0; i<EEPROM.length();) {
       
@@ -121,15 +124,22 @@ namespace EEPROMLogger {
     }
   }
 
-  void new_line(unsigned long mills, EEPROM_CODE code, int val) {
+  // adiciona uma nova linha para o log
+  // parametros: 
+  // mills: tempo, em milissegundos, desde q o codigo comecou a rodar
+  // cod: codigo a ser adicionado, definido no enum EEPROM_CODE
+  // val: valor a ser adicionado junto ao codigo
+  void new_line(unsigned long mills, EEPROM_CODE cod, int val) {
     int secst = mills/1000;
     int mins = secst/60;
     int secs = secst - (60*mins);
   
     EEPROM.write(EEPROM_i++, mins);
     EEPROM.write(EEPROM_i++, secs);
-    EEPROM.write(EEPROM_i++, code);
+    EEPROM.write(EEPROM_i++, cod);
     EEPROM.write(EEPROM_i++, val);
     EEPROM.write(EEPROM_i++, NL);
   }
 }
+
+#endif
