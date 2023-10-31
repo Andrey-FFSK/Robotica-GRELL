@@ -8,7 +8,7 @@
 */
 #include "EEPROMLogger.h"
 
-#define mim 12 
+#define mim 20 
 #define maxx 90
 
 #define pin1 7
@@ -43,6 +43,12 @@ void loop() {
   //EEPROMLogger::new_line(millis(), EEPROMLogger::DIR, 0b011);
   //delay(500);
   
+  //myservo.write(mim);
+  //delay(1500);
+  myservo.write(maxx);
+  //delay(1500);
+
+  /*
   for (pos = mim; pos <= maxx; pos += 1) { // goes from 0 degrees to 180 degrees
     // in steps of 1 degree
     myservo.write(pos); 
@@ -55,5 +61,5 @@ void loop() {
     Serial.println(pos);             // tell servo to go to position in variable 'pos'
     delay(15);                       // waits 15 ms for the servo to reach the position
   }
-  delay(1500);
+  delay(1500);*/
 }
