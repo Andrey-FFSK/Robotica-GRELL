@@ -36,11 +36,10 @@ void setup()
     pinMode(pinos[i], INPUT);
   for (int i = 7; i < 12; i++)
     pinMode(pinos[i], OUTPUT);
-  //pinMode(incli, INPUT_PULLUP);
-  //servo_garra.attach(7);
-  //servo_cacamba.attach(8);
-  //servo_garra.write(garra_cima);
-  
+  serv_robo.attach(serv_robo_pin);
+  serv_garra.attach(serv_garra_pin);
+
+
   n = 0;
 }
 

@@ -1,8 +1,10 @@
 #ifndef _FUNCOES_VARIAVEIS_H
 #define _FUNCOES_VARIAVEIS_H
 #include "Declarar.h"
+#include "EEPROMLogger.h"
 #include <Ultrasonic.h>
 #include <Encoder.h>
+#include <Servo.h>
 // mpu6050 i2c = 0x68
 
 //* Definindo as portas dos sensores
@@ -15,10 +17,10 @@
 #define analog_dir 501 // =
 
 //* Motor 1 = Esquerda; Motor 2 = Direita; mot1 que tem encoder
-#define mot_in1 9 // verde, direita, tras
-#define mot_in2 10 // vermelho, direita, frente
-#define mot_in3 11 // preto, esquerda, frente
-#define mot_in4 12  // laranja, esquerda, tras
+#define mot_in1 9 // laranja, direita, tras
+#define mot_in2 10 // preto, direita, frente
+#define mot_in3 11 // vermelho, esquerda, frente
+#define mot_in4 12  // verde, esquerda, tras
 
 //* Definindo portas para o sensor de cor
 #define led_g 29  // Led verde para o sensor de cor
@@ -77,7 +79,18 @@ int cont_desv = 0;
 #define enc_90_2 enc_90 + 40 // Seguunda vez que ele executa o 90 / 70
 #define enc_90_3 enc_90 + 27 // E a terceira / 140
 
+//* Valores para servo
+Servo serv_robo;
+#define serv_robo_pin 7
+#define serv_robo_min 12
+#define serv_robo_max 90
+Servo serv_garra;
+#define serv_garra_pin 6
+#define serv_garra_min 0
+#define serv_garra_max 180
+
 //* Valor para resgate
+
 bool resgate = false;
 
 Ultrasonic ult_meio(30, 31); // trig == prim; echo == segun | trig = marrom e echo = amarelo

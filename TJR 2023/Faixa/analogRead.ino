@@ -82,12 +82,16 @@ void loop()
 
   if ((ult_meio.read() <= 3) && (ult_meio.read() > 0)) // Se o sensor dectar que esta distancia ativa a função de desviar
   {
+
     if (cont_desv < max_cont_desv) // Se passar um certo de numero de vezes ele pode habilitar para empurrar
     {
-      display.print("Desviando obsta");
+      cont_desv++;
+      
+      display.print("Desviando obsta ");
+      display.print(ult_meio.read());
       display.display();
       desv(false); //* esq = false; dir = true
-      cont_desv++;
+      
     }
     else
     {
@@ -107,7 +111,7 @@ void loop()
       display.print("Esquerda ");
       display.print(analogRead(s_nordeste));
       OLED::seta_esq();
-      Serial.println("leitura == 0010 / ajustando para esquerda");
+      Serial.println("leitura == 0010 / ");
     }
     else
     {

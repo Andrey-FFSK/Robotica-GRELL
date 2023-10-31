@@ -83,9 +83,16 @@ namespace EEPROMLogger {
         Serial.print(EEPROM.read(i++)); //sec
   
         Serial.print("] ");
-        Serial.print(str_decod(EEPROM.read(i++))); //c
+        Serial.print(str_decod(EEPROM.read(i))); //c
         Serial.print(" ");
-        Serial.print(EEPROM.read(i++)); //val
+
+        if(EEPROM.read(i++) == OBJ) {
+          Serial.print(EEPROM.read(i)); //val
+        } else {
+          Serial.print(EEPROM.read(i), BIN); //val
+        }
+        i++;
+        
         Serial.print(str_decod(EEPROM.read(i++))); //nl
       }else{
         i++;
