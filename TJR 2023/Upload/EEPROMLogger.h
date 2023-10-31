@@ -16,9 +16,7 @@ namespace EEPROMLogger {
     OBJ = 0x01,
     ESQ,
     DIR,
-    ENCR,
-    LATA,
-    MARROM
+    ENCR
   };
 
   // limpa a memoria eeprom, resetando cada valor para 0xFF
@@ -61,9 +59,9 @@ namespace EEPROMLogger {
       case ENCR: return "EN"; break;
       default: 
         String out = "";
-        if(inp < 0x10)
+        if(cod < 0x10)
           out += '0';
-        out += String(inp, HEX);
+        out += String(cod, HEX);
         out.toUpperCase();
         return out;
         break;
@@ -85,9 +83,16 @@ namespace EEPROMLogger {
         Serial.print(EEPROM.read(i++)); //sec
   
         Serial.print("] ");
-        Serial.print(str_decod(EEPROM.read(i++))); //c
+        Serial.print(str_decod(EEPROM.read(i))); //c
         Serial.print(" ");
-        Serial.print(EEPROM.read(i++)); //val
+
+        if(EEPROM.read(i++) == OBJ) {
+          Serial.print(EEPROM.read(i)); //val
+        } else {
+          Serial.print(EEPROM.read(i), BIN); //val
+        }
+        i++;
+        
         Serial.print(str_decod(EEPROM.read(i++))); //nl
       }else{
         i++;

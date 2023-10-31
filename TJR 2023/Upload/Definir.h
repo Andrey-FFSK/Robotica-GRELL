@@ -88,6 +88,7 @@ Servo serv_garra;
 #define serv_garra_pin 6
 #define serv_garra_min 0
 #define serv_garra_max 180
+#define serv_delay 500
 
 //* Valor para resgate
 

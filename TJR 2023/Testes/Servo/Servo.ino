@@ -23,7 +23,7 @@ int pos = 0;    // variable to store the servo position
 void setup() {
   Serial.begin(9600);
   myservo.attach(pin1);  // attaches the servo on pin 9 to the servo object
-    //EEPROMLogger::limpar();
+  //EEPROMLogger::limpar();
    //EEPROMLogger::print_log();
    //EEPROMLogger::print_debug();
    //bool est = true;
