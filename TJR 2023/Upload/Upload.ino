@@ -94,7 +94,7 @@ void loop()
     {
       cont_desv++;
       
-      display.print("Desviando obsta ");
+      display.print("Desvia ");
       display.print(ult_meio.read());
       display.display();
       desv(false); //* esq = false; dir = true
@@ -115,7 +115,7 @@ void loop()
     {
       mot1_hor();
       mot2_anti();
-      display.print("Esquerda ");
+      display.println("Esquerda ");
       display.print(analogRead(s_nordeste));
       OLED::seta_esq();
       Serial.println("leitura == 0010 / ajustando para esquerda");
@@ -134,7 +134,7 @@ void loop()
     {
       mot1_anti();
       mot2_hor();
-      display.print("Direita ");
+      display.println("Direita ");
       display.print(analogRead(s_noroeste));
       OLED::seta_dir();
       Serial.println("leitura == 0100 / ajustando para direita");
