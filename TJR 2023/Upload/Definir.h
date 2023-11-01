@@ -96,6 +96,8 @@ bool resgate = false;
 
 Ultrasonic ult_meio(30, 31); // trig == prim; echo == segun | trig = marrom e echo = amarelo
 
+#define bot 40
+
 //* Inicio das funções, para cada caso
 void mot1_anti(int velo = vel_esq)
 {

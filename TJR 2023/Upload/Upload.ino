@@ -53,8 +53,14 @@ void setup()
     pinMode(pinos[i], INPUT);
   for (int i = 7; i < 12; i++) // Usando o array para fazer que o resto seja como output
     pinMode(pinos[i], OUTPUT);
+  pinMode(bot, INPUT_PULLUP);
 
   Serial.begin(9600); // Iniciando o serial monitor
+
+  if(!bot){
+    EEPROMLogger::print_log();
+    EEPROMLogger::print_debug();
+  }
 
   serv_robo.attach(serv_robo_pin);
   serv_garra.attach(serv_garra_pin);

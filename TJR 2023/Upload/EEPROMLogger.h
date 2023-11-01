@@ -16,7 +16,8 @@ namespace EEPROMLogger {
         OBJ,
         ESQ,
         DIR,
-        ENCR
+        MAR,
+        LAT
     };
 
     // limpa a memoria eeprom, resetando cada valor para 0x00
@@ -24,6 +25,7 @@ namespace EEPROMLogger {
         for(unsigned int i = 0; i < EEPROM.length(); i++)
         EEPROM.update(i, NUL);  
     }
+    
 
     // retorna a memoria usada pelo eeprom
     int memused() {
@@ -43,7 +45,8 @@ namespace EEPROMLogger {
         case OBJ : return "desviando"    ; break;
         case ESQ : return "90 esquerda"  ; break;
         case DIR : return "90 direita"   ; break;
-        case ENCR: return "encruzilhada" ; break;
+        case MAR: return "marrom" ; break;
+        case LAT: return "latinha" ; break;
         default  : return "codigo n reconhecido"; break;
         }
     }
@@ -56,7 +59,8 @@ namespace EEPROMLogger {
         case OBJ : return "DV"; break;
         case ESQ : return "EQ"; break;
         case DIR : return "DR"; break;
-        case ENCR: return "EN"; break;
+        case MAR: return "MR" ; break;
+        case LAT: return "LT" ; break;        
         default: 
             String out = "";
             if(cod < 0x10)
