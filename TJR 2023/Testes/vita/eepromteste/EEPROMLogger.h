@@ -21,7 +21,7 @@ namespace EEPROMLogger {
 
     // limpa a memoria eeprom, resetando cada valor para 0x00
     void limpar(){
-        for(unsigned int i = sizeof(uint16_t); i < EEPROM.length(); i++)
+        for(unsigned int i = 0; i < EEPROM.length(); i++)
         EEPROM.update(i, NUL);  
     }
 
