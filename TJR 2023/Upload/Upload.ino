@@ -60,6 +60,7 @@ void setup()
   if(!bot){
     EEPROMLogger::print_log();
     EEPROMLogger::print_debug();
+    
   }
 
   serv_robo.attach(serv_robo_pin);

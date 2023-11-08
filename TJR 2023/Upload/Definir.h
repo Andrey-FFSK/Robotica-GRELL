@@ -42,9 +42,9 @@ int m_dir = 0;
 #define mot_par 40  // Delay para o tempo dele ficar parado
 
 //* Valores com Millis
-// int millis_ant = 0;
-// #define time_if 8000
-// #define time_while 1500
+int millis_ant = 0;
+#define time_if 8000
+#define time_while 1500
 
 //* Valores para encoders
 Encoder enc(3, 2);       // Encoder do motor da esquerda
@@ -58,7 +58,7 @@ int enc_ant = 0;         // Valor do encoder anterior
 // #define enc_pas_encru 100
 // #define enc_180 1256
 
-//* Valor para verificação de branco
+/* Valor para verificação de branco
 int enc_ant_verb = 0;
 bool verb_d = false;
 bool verb_e = false;
@@ -66,7 +66,7 @@ bool verb_e = false;
 #define enc_verb_90 585
 #define enc_verb_90_2 enc_verb_90 + 50
 // #define enc_verb_90_3 enc_90 - 170
-#define enc_verb_gap 1000
+#define enc_verb_gap 1000*/
 
 //* Valores para desviar obstaculo
 int cont_desv = 0;
@@ -96,6 +96,7 @@ bool resgate = false;
 
 Ultrasonic ult_meio(30, 31); // trig == prim; echo == segun | trig = marrom e echo = amarelo
 
+//* Definicao variadas
 #define bot 40
 
 //* Inicio das funções, para cada caso
