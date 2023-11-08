@@ -185,13 +185,13 @@ void sensi()
   m_esq = map(constrain(analogRead(esq), 561, 795), 561, 795, 0, 1023);
   m_dir = map(constrain(analogRead(dir), 405, 629), 405, 629, 0, 1023);
 }
-
+/*
 void desv(bool esq_dir, int velo_esq = vel_esq, int velo_dir = vel_dir)
 {
   enc_re(enc_pas_outro, velo_esq, velo_dir); //* Dando um passo para atras, isso e bom caso a traseira do robo e maior do que na frente
   /*mot1_par();                                //* Colocando pra parar bem rapido pq sim
   mot2_par();
-  delay(mot_par);*/
+  delay(mot_par);
   if (!esq_dir)
   {
     enc_esquerda(enc_90, velo_esq, velo_dir); //* Girando para esquerda
@@ -249,7 +249,7 @@ void desv(bool esq_dir, int velo_esq = vel_esq, int velo_dir = vel_dir)
       Serial.println(enc.read());
     }
   }
-}
+}*/
 
 void desv(bool esq_dir, int velo_esq = vel_esq, int velo_dir = vel_dir) //! false = esquerda; true = direita
 {
