@@ -91,7 +91,7 @@ void loop()
 
   if (resgate)
   {
-    digitalWrite(led_g, 1);
+    
     sensi();
     if ((m_esq <= esq_marrom) && (m_dir <= dir_marrom))
     {
@@ -112,8 +112,9 @@ void loop()
     }
     else
     {
-      
+      while(ult_meio.read() >= res_dist)
       resgate = true;
+      digitalWrite(led_g, 1);
     }
   }
 

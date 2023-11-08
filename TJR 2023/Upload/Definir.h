@@ -92,8 +92,8 @@ Servo serv_garra;
 #define serv_delay 500
 
 //* Valor para resgate
-
 bool resgate = false;
+#define res_dist 4
 
 Ultrasonic ult_meio(30, 31); // trig == prim; echo == segun | trig = marrom e echo = amarelo
 
