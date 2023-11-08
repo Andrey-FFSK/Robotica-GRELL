@@ -43,6 +43,7 @@ int m_dir = 0;
 
 //* Valores com Millis
 int millis_ant = 0;
+#define time_log 5000
 #define time_if 8000
 #define time_while 1500
 
