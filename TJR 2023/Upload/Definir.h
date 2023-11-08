@@ -17,10 +17,10 @@
 #define analog_dir 501 // =
 
 //* Motor 1 = Esquerda; Motor 2 = Direita; mot1 que tem encoder
-#define mot_in1 9 // laranja, direita, tras
+#define mot_in1 9  // laranja, direita, tras
 #define mot_in2 10 // preto, direita, frente
 #define mot_in3 11 // vermelho, esquerda, frente
-#define mot_in4 12  // verde, esquerda, tras
+#define mot_in4 12 // verde, esquerda, tras
 
 //* Definindo portas para o sensor de cor
 #define led_g 29  // Led verde para o sensor de cor
@@ -192,7 +192,7 @@ void desv(bool esq_dir, int velo_esq = vel_esq, int velo_dir = vel_dir)
   /*mot1_par();                                //* Colocando pra parar bem rapido pq sim
   mot2_par();
   delay(mot_par);*/
-  if (esq_dir == false)
+  if (!esq_dir)
   {
     enc_esquerda(enc_90, velo_esq, velo_dir); //* Girando para esquerda
     // Serial.println("false");
@@ -203,7 +203,7 @@ void desv(bool esq_dir, int velo_esq = vel_esq, int velo_dir = vel_dir)
   }
   enc_frente(frente_1); //* Se distanciando do obstaculo
   Serial.println("frente feito");
-  if (esq_dir == false)
+  if (!esq_dir)
   {
     enc_direita(enc_90_2, velo_esq, velo_dir); //* Virando para direita, com valor reduzido para nao girar demais
   }
@@ -212,7 +212,7 @@ void desv(bool esq_dir, int velo_esq = vel_esq, int velo_dir = vel_dir)
     enc_esquerda(enc_90_2, velo_esq, velo_dir); //*Virando para esquerda, com valor reduzido para nao girar demais
   }
   enc_frente(frente_2, velo_esq, velo_dir); //* Passando do obstaculo
-  if (esq_dir == false)
+  if (!esq_dir)
   {
     enc_direita(enc_90_3, velo_esq, velo_dir); //* Virando para direita, mesmo moitvo anterior
   }
@@ -229,7 +229,7 @@ void desv(bool esq_dir, int velo_esq = vel_esq, int velo_dir = vel_dir)
     Serial.println(enc.read());
   }
   enc_frente(enc_peq_desv, velo_esq, velo_dir); //* Se afastando um pouco da linha
-  if (esq_dir == false)
+  if (!esq_dir)
   {
     while ((digitalRead(s_noroeste) == 1) && (digitalRead(s_nordeste) == 1)) //* Virando para esquerda para se ajeiar na faixa
     {
@@ -251,12 +251,68 @@ void desv(bool esq_dir, int velo_esq = vel_esq, int velo_dir = vel_dir)
   }
 }
 
+void desv(bool esq_dir, int velo_esq = vel_esq, int velo_dir = vel_dir) //! false = esquerda; true = direita
+{
+  enc_re(enc_pas_outro, velo_esq, velo_dir); //* Dando um passo para atras, isso e bom caso a traseira do robo e maior do que na frente
+  /*mot1_par();                                //* Colocando pra parar bem rapido pq sim
+  mot2_par();
+  delay(mot_par);*/
+  if (!esq_dir) //! Desviando para esquerda
+  {
+    enc_esquerda(enc_90, velo_esq, velo_dir);                                //* Girando para esquerda
+    enc_frente(frente_1);                                                    //* Se distanciando do obstaculo
+    enc_direita(enc_90_2, velo_esq, velo_dir);                               //* Virando para direita, com valor variado para nao girar demais
+    enc_frente(frente_2, velo_esq, velo_dir);                                //* Passando do obstaculo
+    enc_direita(enc_90_3, velo_esq, velo_dir);                               //* Virando para direita, mesmo moitvo anterior
+    enc_frente(frente_3, velo_esq, velo_dir);                                //* Andando em frente, para ele nao se confundir linhas aleatorias
+    while ((digitalRead(s_noroeste) == 1) && (digitalRead(s_nordeste) == 1)) //* Terminando com while para ele encontrar a linah correta
+    {
+      mot1_hor(velo_esq);
+      mot2_hor(velo_dir);
+      Serial.print("andando para frente (encontrar linha): ");
+      Serial.println(enc.read());
+    }
+    enc_frente(enc_peq_desv, velo_esq, velo_dir);                            //* Se afastando um pouco da linha
+    while ((digitalRead(s_noroeste) == 1) && (digitalRead(s_nordeste) == 1)) //* Virando para esquerda para se ajeiar na faixa
+    {
+      mot1_anti(velo_esq);
+      mot2_hor(velo_dir);
+      Serial.print("Virando esquerda (se ajustar na linha): ");
+      Serial.println(enc.read());
+    }
+  }
+  else //! Desviando para direita
+  {
+    enc_direita(enc_90, velo_esq, velo_dir);                                 //* Girando para direita
+    enc_frente(frente_1);                                                    //* Se distanciando do obstaculo
+    enc_esquerda(enc_90_2, velo_esq, velo_dir);                              //* Virando para esquerda, com valor variado para nao girar demais
+    enc_frente(frente_2, velo_esq, velo_dir);                                //* Passando do obstaculo
+    enc_esquerda(enc_90_3, velo_esq, velo_dir);                              //* Virando para esquerda, mesmo moitvo anterior
+    enc_frente(frente_3, velo_esq, velo_dir);                                //* Andando em frente, para ele nao se confundir linhas aleatorias
+    while ((digitalRead(s_noroeste) == 1) && (digitalRead(s_nordeste) == 1)) //* Terminando com while para ele encontrar a linah correta
+    {
+      mot1_hor(velo_esq);
+      mot2_hor(velo_dir);
+      Serial.print("andando para frente (encontrar linha): ");
+      Serial.println(enc.read());
+    }
+    enc_frente(enc_peq_desv, velo_esq, velo_dir);                            //* Se afastando um pouco da linha
+    while ((digitalRead(s_noroeste) == 1) && (digitalRead(s_nordeste) == 1)) //* Virando para direita para se ajeiar na faixa
+    {
+      mot1_hor(velo_esq);
+      mot2_anti(velo_dir);
+      Serial.print("Virando direita (se ajustar na linha): ");
+      Serial.println(enc.read());
+    }
+  }
+}
+
 void esq_90() //* 90 simples
 {
   enc_frente(enc_fre);
   enc_esquerda(enc_peq);
   while (((analogRead(s_noroeste) >= analog_esq) && (analogRead(s_nordeste) >= analog_dir)) && digitalRead(s_oeste) == 1)
-  //while ((digitalRead(s_norte) == 1) && (digitalRead(s_oeste) == 1))
+  // while ((digitalRead(s_norte) == 1) && (digitalRead(s_oeste) == 1))
   {
     mot1_anti();
     mot2_hor();
@@ -268,8 +324,8 @@ void dir_90() //* 90 simples
 {
   enc_frente(enc_fre);
   enc_direita(enc_peq);
-   while (((analogRead(s_noroeste) >= analog_esq) && (analogRead(s_nordeste) >= analog_dir)) && digitalRead(s_leste) == 1)
-  //while ((digitalRead(s_norte) == 1) && (digitalRead(s_leste) == 1))
+  while (((analogRead(s_noroeste) >= analog_esq) && (analogRead(s_nordeste) >= analog_dir)) && digitalRead(s_leste) == 1)
+  // while ((digitalRead(s_norte) == 1) && (digitalRead(s_leste) == 1))
   {
     mot1_hor();
     mot2_anti();
@@ -277,7 +333,7 @@ void dir_90() //* 90 simples
   enc_re(enc_pas);
 }
 
-void resga(){}
+void resga() {}
 /*
 void esq_90() //* 90 com T
 {
