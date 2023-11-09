@@ -22,11 +22,11 @@ namespace EEPROMLogger {
     // limpa a memoria eeprom, resetando cada valor para 0x00
     void limpar(){
         for(unsigned int i = 0; i < EEPROM.length(); i++)
-        EEPROM.update(i, NUL);  
+            EEPROM.update(i, NUL);  
     }
 
     // retorna a memoria usada pelo eeprom
-    int memused() {
+    unsigned int memused() {
         unsigned int n = 0;
         for(unsigned int i=0; i<EEPROM.length(); i++) {
         if(EEPROM.read(i) != NUL)
@@ -140,7 +140,9 @@ namespace EEPROMLogger {
      - fmrt (opcional): formato no qual o valor será adicionado (DEC, BIN, HEX)
     */
     void new_line(unsigned long mills, EEPROM_CODE cod, int val = 0xffff, int frmt = DEC) {
-        uint16_t EEPROM_i = EEPROM.read(EEPROM_I_ADDR);
+        uint16_t EEPROM_i = 0;
+        EEPROM.get(EEPROM_I_ADDR, EEPROM_i);
+
         int secst = mills/1000;
         int mins = secst/60;
         int secs = secst - (60*mins);
@@ -152,7 +154,6 @@ namespace EEPROMLogger {
             EEPROM.write(EEPROM_i++, val);
             EEPROM.write(EEPROM_i++, frmt);
         }
-        
         EEPROM.write(EEPROM_i++, NL);
 
         EEPROM.put(EEPROM_I_ADDR, EEPROM_i);
