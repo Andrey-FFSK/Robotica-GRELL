@@ -57,9 +57,14 @@ void setup()
 
   Serial.begin(9600); // Iniciando o serial monitor
 
-  if(!bot){
+  if (!digitalRead(bot))
+  {
     EEPROMLogger::print_log();
     EEPROMLogger::print_debug();
+    millis_ant = millis();
+    while (!digitalRead(bot))
+      if (millis() - millis_ant >= time_log)
+        limpar();
   }
 
   serv_robo.attach(serv_robo_pin);
@@ -84,13 +89,13 @@ void loop()
   OLED::abeia_pequena(55 - 8, 75 - 8, 40, -6);
   OLED::setas();
 
-  if(resgate)
+  if (resgate)
   {
-    digitalWrite(led_g, 1);
-    sensi();
-    if((m_esq <= esq_marrom) && (m_dir <= dir_marrom))
-    {}
     
+    sensi();
+    if ((m_esq <= esq_marrom) && (m_dir <= dir_marrom))
+    {
+    }
   }
 
   if ((ult_meio.read() <= 3) && (ult_meio.read() > 0)) // Se o sensor dectar que esta distancia ativa a função de desviar
@@ -99,22 +104,22 @@ void loop()
     if (cont_desv < max_cont_desv) // Se passar um certo de numero de vezes ele pode habilitar para empurrar
     {
       cont_desv++;
-      
+
       display.print("Desvia ");
       display.print(ult_meio.read());
       display.display();
-      desv(false); //* esq = false; dir = true
-      
+      desv(false); //! esq = false; dir = true
     }
     else
     {
-      // Função de pegar latinha
+      while(ult_meio.read() >= res_dist)
       resgate = true;
+      digitalWrite(led_g, 1);
     }
   }
 
   //* Parte em que ele faz o micro ajuste (pensando que o valor maior fica no branco)
-  //if (analogRead(s_noroeste) <= analog_esq) //! Fazer micro ajuste para esquerda
+  // if (analogRead(s_noroeste) <= analog_esq) //! Fazer micro ajuste para esquerda
   if ((analogRead(s_noroeste) <= analog_esq) && (analogRead(s_nordeste) >= analog_dir)) //! Fazer micro ajuste para esquerda
   {
     if (ver == false)
@@ -133,7 +138,7 @@ void loop()
       ver = false;
     }
   }
-  //else if (analogRead(s_nordeste) <= analog_dir) //! Fazer micro ajuste para direita
+  // else if (analogRead(s_nordeste) <= analog_dir) //! Fazer micro ajuste para direita
   else if ((analogRead(s_noroeste) >= analog_esq) && (analogRead(s_nordeste) <= analog_dir)) //! Fazer micro ajuste para direita
   {
     if (ver == false)
