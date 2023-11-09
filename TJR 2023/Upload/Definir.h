@@ -1,6 +1,6 @@
 #ifndef _FUNCOES_VARIAVEIS_H
 #define _FUNCOES_VARIAVEIS_H
-#include "Declarar.h"
+//#include "Declarar.h"
 #include "EEPROMLogger.h"
 #include <Ultrasonic.h>
 #include <Encoder.h>

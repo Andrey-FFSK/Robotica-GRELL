@@ -1,5 +1,5 @@
 // AnalogRead
-#include "Declarar.h"
+//#include "Declarar.h"
 #include "Definir.h" // Dando include nas variaveis e funções
 #include "Oled.h"    // Dando include no arquivo que tem as bibliotecas e criando o objeto do display oled
 /*
@@ -128,7 +128,6 @@ void loop()
   leitura = (~leitura) & (0b00000111);     // Colocando um inversor para que funcione com a tabela da verdade, pq o sensor dectectar no branco, AND uma mascara para ir so os bits que eu quero
 
   //* Parte em que ele faz o micro ajuste (pensando que o valor maior fica no branco)
-  // if (analogRead(s_noroeste) <= analog_esq) //! Fazer micro ajuste para esquerda
   if ((analogRead(s_noroeste) <= analog_esq) && (analogRead(s_nordeste) >= analog_dir)) //! Fazer micro ajuste para esquerda
   {
     if (ver == false)
@@ -147,7 +146,6 @@ void loop()
       ver = false;
     }
   }
-  // else if (analogRead(s_nordeste) <= analog_dir) //! Fazer micro ajuste para direita
   else if ((analogRead(s_noroeste) >= analog_esq) && (analogRead(s_nordeste) <= analog_dir)) //! Fazer micro ajuste para direita
   {
     if (ver == false)
