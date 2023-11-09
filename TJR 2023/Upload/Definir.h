@@ -94,6 +94,9 @@ Servo serv_garra;
 //* Valor para resgate
 bool resgate = false;
 #define res_dist 4
+#define res_abaixa 300
+#define res_fechar 1250
+#define res_levantar 400
 
 Ultrasonic ult_meio(30, 31); // trig == prim; echo == segun | trig = marrom e echo = amarelo
 

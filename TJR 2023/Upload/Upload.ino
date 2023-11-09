@@ -71,27 +71,20 @@ void setup()
   serv_garra.attach(serv_garra_pin);
 
   serv_robo.write(serv_robo_max);
-  serv_garra.write(serv_garra_min);
+  serv_garra.write(serv_garra_max);
   delay(serv_delay);
 }
 void loop()
 {
   display.clearDisplay();  // Limpando o display no inicio do loop
   display.setCursor(0, 0); // Setando para todos iniciar no inicio da tela
-
-  //  Essa parte é o bitSwift, criar uma variavel leitura do tipo byte, porem a gente so usa os bits dessa varaivel, a quantidade de bits depende de quantos sensores estao usando
-  leitura = 0; // Definir sempre 0 quando definir algo como o for abaixo
-  for (int i = 0; i < 3; i++)
-    leitura |= digitalRead(pinos[i]) << i; // Colocando as entrada da tabela da verdade usando um bitshift automatico, o valor do i depende dos sensores
-  leitura = (~leitura) & (0b00000111);     // Colocando um inversor para que funcione com a tabela da verdade, pq o sensor dectectar no branco, AND uma mascara para ir so os bits que eu quero
-
   OLED::abeia_grande(26 - 24, 85 - 24);
   OLED::abeia_pequena(55 - 8, 75 - 8, 40, -6);
   OLED::setas();
 
   if (resgate)
   {
-    
+
     sensi();
     if ((m_esq <= esq_marrom) && (m_dir <= dir_marrom))
     {
@@ -112,11 +105,27 @@ void loop()
     }
     else
     {
-      while(ult_meio.read() >= res_dist)
+      while (ult_meio.read() >= res_dist)
+      {
+        mot1_anti();
+        mot2_anti();
+      }
+      serv_robo.write(serv_robo_min);
+      delay(res_abaixa);
+      serv_garra.write(serv_garra_max);
+      delay(res_fechar);
+      serv_robo.write(serv_robo_max);
+      delay(res_levantar);
       resgate = true;
       digitalWrite(led_g, 1);
     }
   }
+
+  //  Essa parte é o bitSwift, criar uma variavel leitura do tipo byte, porem a gente so usa os bits dessa varaivel, a quantidade de bits depende de quantos sensores estao usando
+  leitura = 0; // Definir sempre 0 quando definir algo como o for abaixo
+  for (int i = 0; i < 3; i++)
+    leitura |= digitalRead(pinos[i]) << i; // Colocando as entrada da tabela da verdade usando um bitshift automatico, o valor do i depende dos sensores
+  leitura = (~leitura) & (0b00000111);     // Colocando um inversor para que funcione com a tabela da verdade, pq o sensor dectectar no branco, AND uma mascara para ir so os bits que eu quero
 
   //* Parte em que ele faz o micro ajuste (pensando que o valor maior fica no branco)
   // if (analogRead(s_noroeste) <= analog_esq) //! Fazer micro ajuste para esquerda
