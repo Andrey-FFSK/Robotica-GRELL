@@ -341,56 +341,7 @@ void dir_90() //* 90 simples
 
 void resga()
 {
-  if (resgate)
-  {
-    sensi();
-    if ((m_esq <= esq_marrom) && (m_dir <= dir_marrom))
-    {
-      enc_frente(res_frente);
-      enc_esquerda(enc_90);
-      enc_frente(res_while);
-      while (digitalRead(s_norte))
-      {
-        mot1_hor();
-        mot2_hor();
-      }
-      serv_robo.write(serv_robo_min);
-      delay(res_abaixa);
-      serv_garra.write(serv_garra_min);
-      delay(res_fechar);
-      enc_re(res_re);
-      mot1_par();
-      mot2_par();
-      delay(100000);
-    }
-  }
-  else if ((ult_meio.read() <= 3) && (ult_meio.read() > 0)) // Se o sensor dectar que esta distancia ativa a função de desviar
-  {
-    if (cont_desv < max_cont_desv) // Se passar um certo de numero de vezes ele pode habilitar para empurrar
-    {
-      cont_desv++;
-      display.print("Desvia ");
-      display.print(ult_meio.read());
-      display.display();
-      desv(false); //! esq = false; dir = true
-    }
-    else
-    {
-      while (ult_meio.read() >= res_dist)
-      {
-        mot1_anti();
-        mot2_anti();
-      }
-      serv_robo.write(serv_robo_min);
-      delay(res_abaixa);
-      serv_garra.write(serv_garra_max);
-      delay(res_fechar);
-      serv_robo.write(serv_robo_max);
-      delay(res_levantar);
-      resgate = true;
-      digitalWrite(led_g, 1);
-    }
-  }
+  
 }
 /*
 void esq_90() //* 90 com T
