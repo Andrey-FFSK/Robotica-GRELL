@@ -96,6 +96,9 @@ bool resgate = false;
 #define res_abaixa 300
 #define res_fechar 1250
 #define res_levantar 400
+#define res_frente 5000
+#define res_while 3000
+#define res_re 400
 
 Ultrasonic ult_meio(30, 31); // trig == prim; echo == segun | trig = marrom e echo = amarelo
 
@@ -192,7 +195,7 @@ void sensi()
 void desv(bool esq_dir, int velo_esq = vel_esq, int velo_dir = vel_dir)
 {
   enc_re(enc_pas_outro, velo_esq, velo_dir); //* Dando um passo para atras, isso e bom caso a traseira do robo e maior do que na frente
-  /*mot1_par();                                //* Colocando pra parar bem rapido pq sim
+  mot1_par();                                //* Colocando pra parar bem rapido pq sim
   mot2_par();
   delay(mot_par);
   if (!esq_dir)
@@ -336,7 +339,59 @@ void dir_90() //* 90 simples
   enc_re(enc_pas);
 }
 
-void resga() {}
+void resga()
+{
+  if (resgate)
+  {
+    sensi();
+    if ((m_esq <= esq_marrom) && (m_dir <= dir_marrom))
+    {
+      enc_frente(res_frente);
+      enc_esquerda(enc_90);
+      enc_frente(res_while);
+      while (digitalRead(s_norte))
+      {
+        mot1_hor();
+        mot2_hor();
+      }
+      serv_robo.write(serv_robo_min);
+      delay(res_abaixa);
+      serv_garra.write(serv_garra_min);
+      delay(res_fechar);
+      enc_re(res_re);
+      mot1_par();
+      mot2_par();
+      delay(100000);
+    }
+  }
+  else if ((ult_meio.read() <= 3) && (ult_meio.read() > 0)) // Se o sensor dectar que esta distancia ativa a função de desviar
+  {
+    if (cont_desv < max_cont_desv) // Se passar um certo de numero de vezes ele pode habilitar para empurrar
+    {
+      cont_desv++;
+      display.print("Desvia ");
+      display.print(ult_meio.read());
+      display.display();
+      desv(false); //! esq = false; dir = true
+    }
+    else
+    {
+      while (ult_meio.read() >= res_dist)
+      {
+        mot1_anti();
+        mot2_anti();
+      }
+      serv_robo.write(serv_robo_min);
+      delay(res_abaixa);
+      serv_garra.write(serv_garra_max);
+      delay(res_fechar);
+      serv_robo.write(serv_robo_max);
+      delay(res_levantar);
+      resgate = true;
+      digitalWrite(led_g, 1);
+    }
+  }
+}
 /*
 void esq_90() //* 90 com T
 {

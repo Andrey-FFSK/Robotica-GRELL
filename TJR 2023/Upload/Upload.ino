@@ -81,44 +81,7 @@ void loop()
   OLED::abeia_pequena(55 - 8, 75 - 8, 40, -6);
   OLED::setas();
 
-  if (resgate)
-  {
-
-    sensi();
-    if ((m_esq <= esq_marrom) && (m_dir <= dir_marrom))
-    {
-    }
-  }
-
-  if ((ult_meio.read() <= 3) && (ult_meio.read() > 0)) // Se o sensor dectar que esta distancia ativa a função de desviar
-  {
-
-    if (cont_desv < max_cont_desv) // Se passar um certo de numero de vezes ele pode habilitar para empurrar
-    {
-      cont_desv++;
-
-      display.print("Desvia ");
-      display.print(ult_meio.read());
-      display.display();
-      desv(false); //! esq = false; dir = true
-    }
-    else
-    {
-      while (ult_meio.read() >= res_dist)
-      {
-        mot1_anti();
-        mot2_anti();
-      }
-      serv_robo.write(serv_robo_min);
-      delay(res_abaixa);
-      serv_garra.write(serv_garra_max);
-      delay(res_fechar);
-      serv_robo.write(serv_robo_max);
-      delay(res_levantar);
-      resgate = true;
-      digitalWrite(led_g, 1);
-    }
-  }
+  resga();
 
   //  Essa parte é o bitSwift, criar uma variavel leitura do tipo byte, porem a gente so usa os bits dessa varaivel, a quantidade de bits depende de quantos sensores estao usando
   leitura = 0; // Definir sempre 0 quando definir algo como o for abaixo
