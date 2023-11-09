@@ -64,7 +64,7 @@ void setup()
     millis_ant = millis();
     while (!digitalRead(bot))
       if (millis() - millis_ant >= time_log)
-        limpar();
+        EEPROMLogger::limpar();
   }
 
   serv_robo.attach(serv_robo_pin);
