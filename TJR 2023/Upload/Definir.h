@@ -339,10 +339,6 @@ void dir_90() //* 90 simples
   enc_re(enc_pas);
 }
 
-void resga()
-{
-  
-}
 /*
 void esq_90() //* 90 com T
 {
