@@ -7,7 +7,8 @@ namespace EEPROMLogger
 {
 
     // endereço segurando o endereço a ser escrito/lido (lendo isso dnv ta meio confuso)
-    const uint8_t EEPROM_I_ADDR = 0x00;
+    const uint8_t EEPROM_LOGi_ADDR = 0x00;//16
+    const uint8_t EEPROM_OBSi_ADDR = sizeof(uint16_t);//8
 
     // codigos de cada condicao a ser salva no log
     enum EEPROM_CODE
@@ -114,7 +115,7 @@ namespace EEPROMLogger
     // printa o log👍
     void print_log()
     {
-        for (unsigned int i = sizeof(uint16_t); i < EEPROM.length();)
+        for (unsigned int i = sizeof(uint16_t) + sizeof(uint8_t); i < EEPROM.length();)
         {
             if (EEPROM.read(i) != NUL)
             { //[ i0:i1 ] i2 i3?<-4? i5?(3)
@@ -196,7 +197,9 @@ namespace EEPROMLogger
     */
     void new_line(unsigned long mills, EEPROM_CODE cod, int val = 0xffff, int frmt = DEC)
     {
-        uint16_t EEPROM_i = EEPROM.read(EEPROM_I_ADDR);
+        uint16_t EEPROM_i = 0;
+        EEPROM.get(EEPROM_LOGi_ADDR, EEPROM_i);
+
         int secst = mills / 1000;
         int mins = secst / 60;
         int secs = secst - (60 * mins);
@@ -209,11 +212,13 @@ namespace EEPROMLogger
             EEPROM.write(EEPROM_i++, val);
             EEPROM.write(EEPROM_i++, frmt);
         }
-
         EEPROM.write(EEPROM_i++, NL);
 
-        EEPROM.put(EEPROM_I_ADDR, EEPROM_i);
+        EEPROM.put(EEPROM_LOGi_ADDR, EEPROM_i);
     }
+
+    inline uint8_t getObsCount() { return EEPROM.read(EEPROM_OBSi_ADDR); }
+    inline void incrObsCount() { EEPROM.write(EEPROM_OBSi_ADDR, EEPROM.read(EEPROM_OBSi_ADDR) + 1); }
 }
 
 #endif
