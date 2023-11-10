@@ -106,9 +106,9 @@ void loop()
   }
   else if ((ult_meio.read() <= 3) && (ult_meio.read() > 0)) // Se o sensor dectar que esta distancia ativa a função de desviar
   {
-    if (cont_desv < max_cont_desv) // Se passar um certo de numero de vezes ele pode habilitar para empurrar
+    if (getObsCount() < max_cont_desv) // Se passar um certo de numero de vezes ele pode habilitar para empurrar
     {
-      cont_desv++;
+      incrObsCount()
       display.print("Desvia ");
       display.print(ult_meio.read());
       display.display();
