@@ -200,7 +200,7 @@ namespace EEPROMLogger
         uint16_t EEPROM_i = 0;
         EEPROM.get(EEPROM_LOGi_ADDR, EEPROM_i);
 
-        int secst = mills / 1000;
+        int secst = millis() / 1000;
         int mins = secst / 60;
         int secs = secst - (60 * mins);
 

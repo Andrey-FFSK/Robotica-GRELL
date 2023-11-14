@@ -56,6 +56,7 @@ void setup()
 
   Serial.begin(9600); // Iniciando o serial monitor
 
+  //Serial.println( )
   if (!digitalRead(bot))
   {
     EEPROMLogger::print_log();
@@ -86,6 +87,7 @@ void loop()
     sensi();
     if ((m_esq <= esq_marrom) && (m_dir <= dir_marrom))
     {
+      EEPROMLogger::new_line(millis(), EEPROMLogger::MAR);
       enc_frente(res_frente);
       enc_esquerda(enc_90);
       enc_frente(res_while);
@@ -106,16 +108,18 @@ void loop()
   }
   else if ((ult_meio.read() <= 3) && (ult_meio.read() > 0)) // Se o sensor dectar que esta distancia ativa a função de desviar
   {
-    if (getObsCount() < max_cont_desv) // Se passar um certo de numero de vezes ele pode habilitar para empurrar
+    if (EEPROMLogger::getObsCount() < max_cont_desv) // Se passar um certo de numero de vezes ele pode habilitar para empurrar
     {
-      incrObsCount()
+      EEPROMLogger::incrObsCount();
       display.print("Desvia ");
       display.print(ult_meio.read());
       display.display();
+      EEPROMLogger::new_line(millis(), EEPROMLogger::OBJ, ult_meio.read());
       desv(false); //! esq = false; dir = true
     }
     else
     {
+      EEPROMLogger::new_line(millis(), EEPROMLogger::LAT, ult_meio.read());
       while (ult_meio.read() >= res_dist)
       {
         mot1_anti();
@@ -215,6 +219,7 @@ void loop()
       else
       {
         ver = false;
+        EEPROMLogger::new_line(millis(), EEPROMLogger::ESQ, leitura, BIN);
         display.print("100 / Esq_90");
         OLED::seta_esq();
         display.display();
@@ -234,6 +239,7 @@ void loop()
       }
       else
       {
+        EEPROMLogger::new_line(millis(), EEPROMLogger::DIR, leitura, BIN);
         display.print("001 / Dir_90");
         OLED::seta_dir();
         display.display();
@@ -241,6 +247,7 @@ void loop()
         ver = false;
       }
       break;
+      /*
     case 0b111: //! Caso de encruzilhada
       if (ver == false)
       {
@@ -255,7 +262,7 @@ void loop()
         enc_re(enc_pas_outro);
         ver = false;
       }
-      break;
+      break;*/
     default:
       break;
     }

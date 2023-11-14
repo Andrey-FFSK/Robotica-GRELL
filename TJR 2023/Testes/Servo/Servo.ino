@@ -6,10 +6,10 @@
  by Scott Fitzgerald
  https://www.arduino.cc/en/Tutorial/LibraryExamples/Sweep
 */
-#include "EEPROMLogger.h"
+//#include "EEPROMLogger.h"
 
-#define mim 20 
-#define maxx 90
+#define mim 0 
+#define maxx 180
 
 #define pin1 7
 
@@ -45,10 +45,10 @@ void loop() {
   
   //myservo.write(mim);
   //delay(1500);
-  myservo.write(maxx);
+  //myservo.write(maxx);
   //delay(1500);
 
-  /*
+  
   for (pos = mim; pos <= maxx; pos += 1) { // goes from 0 degrees to 180 degrees
     // in steps of 1 degree
     myservo.write(pos); 
@@ -61,5 +61,5 @@ void loop() {
     Serial.println(pos);             // tell servo to go to position in variable 'pos'
     delay(15);                       // waits 15 ms for the servo to reach the position
   }
-  delay(1500);*/
+  delay(1500);
 }

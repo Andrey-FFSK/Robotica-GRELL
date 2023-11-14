@@ -36,19 +36,19 @@ int m_dir = 0;
 #define dir_marrom 500
 
 //* Definindo velocidades
-#define vel_esq 150 // PWM usado para a velocidade, min == 0 e max == 255
-#define vel_dir 140 //
+#define vel_esq 140 // PWM usado para a velocidade, min == 0 e max == 255
+#define vel_dir 130 //
 #define mot_par 40  // Delay para o tempo dele ficar parado
 
 //* Valores com Millis
 int millis_ant = 0;
-#define time_log 5000
+#define time_log 2000
 #define time_if 8000
 #define time_while 1500
 
 //* Valores para encoders
 Encoder enc(3, 2);       // Encoder do motor da esquerda
-int enc_ant = 0;         // Valor do encoder anterior
+long int enc_ant = 0;         // Valor do encoder anterior
 #define enc_fre 170      // Frente apos ver 90 / 140
 #define enc_peq 130      // Valor que vira para completar com while /
 #define enc_pas 40       // Valor que vai para atras /
@@ -103,7 +103,7 @@ bool resgate = false;
 Ultrasonic ult_meio(30, 31); // trig == prim; echo == segun | trig = marrom e echo = amarelo
 
 //* Definicao variadas
-#define bot 40
+#define bot A10
 
 //* Inicio das funções, para cada caso
 void mot1_anti(int velo = vel_esq)
@@ -317,7 +317,7 @@ void esq_90() //* 90 simples
 {
   enc_frente(enc_fre);
   enc_esquerda(enc_peq);
-  while (((analogRead(s_noroeste) >= analog_esq) && (analogRead(s_nordeste) >= analog_dir)) && digitalRead(s_oeste) == 1)
+  while (((analogRead(s_noroeste) >= analog_esq) || (analogRead(s_nordeste) >= analog_dir)) && digitalRead(s_oeste) == 1)
   // while ((digitalRead(s_norte) == 1) && (digitalRead(s_oeste) == 1))
   {
     mot1_anti();
@@ -330,7 +330,7 @@ void dir_90() //* 90 simples
 {
   enc_frente(enc_fre);
   enc_direita(enc_peq);
-  while (((analogRead(s_noroeste) >= analog_esq) && (analogRead(s_nordeste) >= analog_dir)) && digitalRead(s_leste) == 1)
+  while (((analogRead(s_noroeste) >= analog_esq) || (analogRead(s_nordeste) >= analog_dir)) && digitalRead(s_leste) == 1)
   // while ((digitalRead(s_norte) == 1) && (digitalRead(s_leste) == 1))
   {
     mot1_hor();
