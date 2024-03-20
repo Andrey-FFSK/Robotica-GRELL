@@ -56,7 +56,7 @@ void setup()
 
   Serial.begin(9600); // Iniciando o serial monitor
 
-  //Serial.println( )
+  // Serial.println( )
   if (!digitalRead(bot))
   {
     EEPROMLogger::print_log();
